@@ -94,32 +94,12 @@ Each file should be uploaded into the directory listed below.
 
 ## atlas/  — Visual Atlas (structural plates)
 
-(*Upload later if we generate new Atlas plates.*)
-(no required files yet)
+(none yet)
 
 ---
 
 ## utilities/  — Misc, Shared Tools
 
-(no required files yet)
-
----
-
-# Upload Instructions
-
-1. Switch to the **structure** branch.  
-2. Navigate to the appropriate directory.  
-3. Use **Add file → Upload files**.  
-4. Drag the corresponding `.py` files into each folder.  
-5. Commit directly into the structure branch.  
-
-After all files are uploaded, we will:
-
-- Validate directory mapping  
-- Create `v1.0` GitHub Release  
-- Mint Zenodo DOI  
-- Merge structure → main
-
----
+(none yet)
 
 # End of Manifest
