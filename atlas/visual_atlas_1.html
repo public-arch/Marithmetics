@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Root Pattern Explorer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .title {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+        }
+        .intro-section {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .intro-title {
+            font-size: 1.6em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .pattern-selector {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .selector-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+            background: white;
+        }
+        .pattern-display {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 30px;
+            min-height: 600px;
+        }
+        .pattern-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+        .pattern-subtitle {
+            text-align: center;
+            font-size: 1.1em;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin: 20px 0;
+        }
+        .data-table th,
+        .data-table td {
+            border: 1px solid #333;
+            padding: 6px 4px;
+            text-align: center;
+        }
+        .data-table th {
+            background: #e9ecef;
+            font-weight: bold;
+        }
+        .row-header {
+            background: #e9ecef;
+            font-weight: bold;
+        }
+        
+        .highlight-inverse-1 {
+            background: #ffcdd2 !important;
+            border: 2px solid #d32f2f !important;
+            font-weight: bold;
+        }
+        .highlight-inverse-2 {
+            background: #c8e6c9 !important;
+            border: 2px solid #388e3c !important;
+            font-weight: bold;
+        }
+        .highlight-attractor {
+            background: #bbdefb !important;
+            border: 2px solid #1976d2 !important;
+            font-weight: bold;
+        }
+        .highlight-cycle {
+            background: linear-gradient(90deg, #fff9c4 0%, #ffe0b2 100%) !important;
+            border: 2px solid #ff8f00 !important;
+            font-weight: bold;
+        }
+        .highlight-identity {
+            background: #ff5722 !important;
+            border: 3px solid #d84315 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-echo-1 {
+            background: #e91e63 !important;
+            border: 3px solid #ad1457 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-echo-2 {
+            background: #9c27b0 !important;
+            border: 3px solid #6a1b9a !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-echo-3 {
+            background: #673ab7 !important;
+            border: 3px solid #4527a0 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-diagonal-1 {
+            background: #4caf50 !important;
+            border: 3px solid #2e7d32 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-diagonal-2 {
+            background: #ff9800 !important;
+            border: 3px solid #e65100 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-oscillation {
+            background: #2196f3 !important;
+            border: 3px solid #1565c0 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        
+        .pattern-explanation {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .explanation-title {
+            font-weight: 600;
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+        .cylinder-container {
+            perspective: 1000px;
+            height: 400px;
+            position: relative;
+            margin: 30px 0;
+        }
+        .cylinder {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform-style: preserve-3d;
+            animation: rotate 8s linear infinite;
+        }
+        .cylinder.paused {
+            animation-play-state: paused;
+        }
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotateY(0deg); }
+            to { transform: translate(-50%, -50%) rotateY(360deg); }
+        }
+        .cylinder-row {
+            position: absolute;
+            width: 400px;
+            height: 40px;
+            transform-style: preserve-3d;
+        }
+        .cylinder-cell {
+            position: absolute;
+            width: 44px;
+            height: 38px;
+            border: 1px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn.secondary {
+            background: #6c757d;
+        }
+        .btn.secondary:hover {
+            background: #545b62;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">Digital Root Pattern Explorer</div>
+            <div class="subtitle">Discover mathematical patterns across different base systems</div>
+        </div>
+
+        <div class="intro-section">
+            <div class="intro-title">Understanding Digital Roots</div>
+            <p>A <strong>digital root</strong> is obtained by repeatedly summing digits until one remains. This creates patterns when applied to powers!</p>
+            <p><strong>Example:</strong> 789 → 7+8+9=24 → 2+4=6 (digital root is 6)</p>
+        </div>
+
+        <div class="pattern-selector">
+            <div class="selector-label">Select Numerical Base:</div>
+            <select id="baseSelect" onchange="changeBase()">
+                <option value="10">Base 10 (Decimal - mod 9)</option>
+                <option value="8">Base 8 (Octal - mod 7)</option>
+                <option value="12">Base 12 (Dozenal - mod 11)</option>
+                <option value="16">Base 16 (Hexadecimal - mod 15)</option>
+                <option value="6">Base 6 (Senary - mod 5)</option>
+                <option value="7">Base 7 (Septenary - mod 6)</option>
+                <option value="9">Base 9 (Nonary - mod 8)</option>
+                <option value="11">Base 11 (mod 10)</option>
+                <option value="13">Base 13 (mod 12)</option>
+                <option value="14">Base 14 (mod 13)</option>
+                <option value="15">Base 15 (mod 14)</option>
+            </select>
+        </div>
+
+        <div class="pattern-selector">
+            <div class="selector-label">Select Pattern to Explore:</div>
+            <select id="patternSelect" onchange="loadPattern()">
+                <option value="inverse-1">Pattern 1: Primary Multiplicative Inverse Pair</option>
+                <option value="inverse-2">Pattern 2: Secondary Multiplicative Inverse Pair</option>
+                <option value="attractors">Pattern 3: Attractor Bases</option>
+                <option value="cycles">Pattern 4: Cycle Lengths</option>
+                <option value="identity">Pattern 5: Identity Element (Value 1)</option>
+                <option value="echoes">Pattern 6: Frequent Value Patterns</option>
+                <option value="diagonals">Pattern 7: Diagonal Chains</option>
+                <option value="oscillations">Pattern 8: Oscillating Sequences</option>
+                <option value="cylinder">Pattern 9: 3D Cylindrical View</option>
+            </select>
+        </div>
+
+        <div class="pattern-display" id="patternDisplay"></div>
+    </div>
+
+    <script>
+        let currentBase = 10;
+        let gridData = [];
+
+        function digitalRoot(num, base) {
+            const modulus = base - 1;
+            if (num === 0) return 0;
+            const result = num % modulus;
+            return result === 0 ? modulus : result;
+        }
+
+        function generateGridData() {
+            gridData = [];
+            const maxBase = currentBase - 1;
+            for (let base = 1; base <= maxBase; base++) {
+                const row = [base];
+                for (let power = 1; power <= 12; power++) {
+                    const value = Math.pow(base, power);
+                    const dr = digitalRoot(value, currentBase);
+                    row.push(dr);
+                }
+                gridData.push(row);
+            }
+        }
+
+        function changeBase() {
+            currentBase = parseInt(document.getElementById('baseSelect').value);
+            generateGridData();
+            loadPattern();
+        }
+
+        generateGridData();
+
+        function findMultiplicativeInverses() {
+            const modulus = currentBase - 1;
+            const pairs = [];
+            for (let a = 2; a < modulus; a++) {
+                for (let b = a + 1; b <= modulus; b++) {
+                    if ((a * b) % modulus === 1) {
+                        pairs.push([a, b]);
+                    }
+                }
+            }
+            return pairs;
+        }
+
+        function findAttractors() {
+            const modulus = currentBase - 1;
+            const attractors = [];
+            for (let base = 1; base <= modulus; base++) {
+                const row = gridData[base - 1];
+                if (!row) continue;
+                
+                // Check if it converges to a fixed value
+                const convergedValue = row[row.length - 1];
+                let isAttractor = true;
+                
+                // Find where it stabilizes
+                let stabilizePoint = -1;
+                for (let i = 2; i < row.length; i++) {
+                    if (row[i] === convergedValue) {
+                        // Check if all subsequent values are the same
+                        let allSame = true;
+                        for (let j = i; j < row.length; j++) {
+                            if (row[j] !== convergedValue) {
+                                allSame = false;
+                                break;
+                            }
+                        }
+                        if (allSame) {
+                            stabilizePoint = i;
+                            break;
+                        }
+                    }
+                }
+                
+                if (stabilizePoint !== -1 && stabilizePoint <= 4 && base > 1) {
+                    attractors.push(base);
+                }
+            }
+            return attractors;
+        }
+
+        // FIXED: Cycle detection that handles attractors properly
+        function findCycleLength(baseIndex) {
+            const row = gridData[baseIndex];
+            if (!row) return 1;
+            
+            // Check if it's an attractor first
+            const lastValue = row[row.length - 1];
+            let isAttractor = true;
+            for (let i = Math.max(2, row.length - 6); i < row.length; i++) {
+                if (row[i] !== lastValue) {
+                    isAttractor = false;
+                    break;
+                }
+            }
+            
+            // If attractor, return 1 (the converged value repeats)
+            if (isAttractor) return 1;
+            
+            // Otherwise find the actual cycle
+            for (let len = 1; len <= 12; len++) {
+                let isCycle = true;
+                const checkLength = Math.min(6, row.length - len - 1);
+                for (let i = 1; i <= checkLength; i++) {
+                    if (row[i] !== row[i + len]) {
+                        isCycle = false;
+                        break;
+                    }
+                }
+                if (isCycle && checkLength > 0) return len;
+            }
+            return 12;
+        }
+
+        // FIXED: Better pattern detection that actually finds patterns
+        function findFrequentValues() {
+            const valueCounts = {};
+            const valuePositions = {};
+            
+            for (let row = 0; row < gridData.length; row++) {
+                for (let col = 1; col < gridData[row].length; col++) {
+                    const val = gridData[row][col];
+                    valueCounts[val] = (valueCounts[val] || 0) + 1;
+                    if (!valuePositions[val]) valuePositions[val] = [];
+                    valuePositions[val].push({base: row + 1, power: col});
+                }
+            }
+            
+            // Get top 3 most frequent values (excluding 1 and the modulus)
+            const modulus = currentBase - 1;
+            const patterns = Object.entries(valueCounts)
+                .filter(([val, count]) => val !== '1' && parseInt(val) !== modulus && count >= 4)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3)
+                .map(([val, count]) => ({
+                    value: parseInt(val),
+                    count: count,
+                    positions: valuePositions[val]
+                }));
+            
+            return patterns;
+        }
+
+        function findAllDiagonals() {
+            const diagonals = [];
+            
+            // Down-right
+            for (let startRow = 0; startRow < gridData.length; startRow++) {
+                for (let startCol = 1; startCol < 13; startCol++) {
+                    const diagonal = [];
+                    let r = startRow, c = startCol;
+                    while (r < gridData.length && c < 13) {
+                        diagonal.push({base: r + 1, power: c, value: gridData[r][c]});
+                        r++; c++;
+                    }
+                    
+                    if (diagonal.length >= 3) {
+                        const valueCounts = {};
+                        diagonal.forEach(d => {
+                            valueCounts[d.value] = (valueCounts[d.value] || 0) + 1;
+                        });
+                        
+                        for (const [val, count] of Object.entries(valueCounts)) {
+                            if (count >= 3) {
+                                const cells = diagonal.filter(d => d.value === parseInt(val));
+                                diagonals.push({
+                                    direction: 'down-right',
+                                    value: parseInt(val),
+                                    cells: cells,
+                                    count: count
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Up-right
+            for (let startRow = 0; startRow < gridData.length; startRow++) {
+                for (let startCol = 1; startCol < 13; startCol++) {
+                    const diagonal = [];
+                    let r = startRow, c = startCol;
+                    while (r >= 0 && c < 13) {
+                        diagonal.push({base: r + 1, power: c, value: gridData[r][c]});
+                        r--; c++;
+                    }
+                    
+                    if (diagonal.length >= 3) {
+                        const valueCounts = {};
+                        diagonal.forEach(d => {
+                            valueCounts[d.value] = (valueCounts[d.value] || 0) + 1;
+                        });
+                        
+                        for (const [val, count] of Object.entries(valueCounts)) {
+                            if (count >= 3) {
+                                const cells = diagonal.filter(d => d.value === parseInt(val));
+                                diagonals.push({
+                                    direction: 'up-right',
+                                    value: parseInt(val),
+                                    cells: cells,
+                                    count: count
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return diagonals.sort((a, b) => b.count - a.count).slice(0, 5);
+        }
+
+        function findOscillations() {
+            const patterns = [];
+            
+            for (let row = 0; row < gridData.length; row++) {
+                const rowData = gridData[row].slice(1);
+                for (let i = 0; i < rowData.length - 3; i++) {
+                    if (rowData[i] === rowData[i + 2] && 
+                        rowData[i + 1] === rowData[i + 3] &&
+                        rowData[i] !== rowData[i + 1]) {
+                        patterns.push({
+                            type: 'row',
+                            cells: [
+                                {base: row + 1, power: i + 1, value: rowData[i]},
+                                {base: row + 1, power: i + 2, value: rowData[i + 1]},
+                                {base: row + 1, power: i + 3, value: rowData[i + 2]},
+                                {base: row + 1, power: i + 4, value: rowData[i + 3]}
+                            ],
+                            values: [rowData[i], rowData[i + 1]]
+                        });
+                    }
+                }
+            }
+            
+            for (let col = 1; col < 13; col++) {
+                const colData = gridData.map(row => row[col]);
+                for (let i = 0; i < colData.length - 3; i++) {
+                    if (colData[i] === colData[i + 2] && 
+                        colData[i + 1] === colData[i + 3] &&
+                        colData[i] !== colData[i + 1]) {
+                        patterns.push({
+                            type: 'column',
+                            cells: [
+                                {base: i + 1, power: col, value: colData[i]},
+                                {base: i + 2, power: col, value: colData[i + 1]},
+                                {base: i + 3, power: col, value: colData[i + 2]},
+                                {base: i + 4, power: col, value: colData[i + 3]}
+                            ],
+                            values: [colData[i], colData[i + 1]]
+                        });
+                    }
+                }
+            }
+            
+            return patterns;
+        }
+
+        function createBaseTable(highlightFunction = null) {
+            const maxBase = currentBase - 1;
+            let html = `
+                <table class="data-table">
+                    <tr>
+                        <th>Base</th>
+                        ${Array.from({length: 12}, (_, i) => `<th>^${i+1}</th>`).join('')}
+                    </tr>
+            `;
+
+            for (let row = 0; row < maxBase; row++) {
+                html += '<tr>';
+                html += `<td class="row-header">${row + 1}</td>`;
+                
+                for (let col = 1; col <= 12; col++) {
+                    const value = gridData[row][col];
+                    const cellClass = highlightFunction ? highlightFunction(row + 1, col, value) : '';
+                    html += `<td class="${cellClass}">${value}</td>`;
+                }
+                html += '</tr>';
+            }
+
+            html += '</table>';
+            return html;
+        }
+
+        function loadPattern() {
+            const pattern = document.getElementById('patternSelect').value;
+            const display = document.getElementById('patternDisplay');
+            const modulus = currentBase - 1;
+
+            switch(pattern) {
+                case 'inverse-1':
+                    const inversePairs = findMultiplicativeInverses();
+                    const firstPair = inversePairs[0];
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Primary Multiplicative Inverse Pair</div>
+                        <div class="pattern-subtitle">${firstPair ? `${firstPair[0]} × ${firstPair[1]} ≡ 1 (mod ${modulus})` : 'No pairs exist'} in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            if (!firstPair) return '';
+                            if (base === firstPair[0]) return 'highlight-inverse-1';
+                            if (base === firstPair[1]) return 'highlight-inverse-2';
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Analysis</div>
+                            ${firstPair ? `
+                                <p><strong>Red (Base ${firstPair[0]}):</strong> [${gridData[firstPair[0]-1].slice(1, 8).join(', ')}]</p>
+                                <p><strong>Green (Base ${firstPair[1]}):</strong> [${gridData[firstPair[1]-1].slice(1, 8).join(', ')}]</p>
+                                <p><strong>Verification:</strong> ${firstPair[0]} × ${firstPair[1]} = ${firstPair[0] * firstPair[1]} ≡ ${(firstPair[0] * firstPair[1]) % modulus || modulus} (mod ${modulus}) ✓</p>
+                            ` : '<p>No multiplicative inverse pairs exist in this base.</p>'}
+                            ${inversePairs.length > 1 ? `<p><strong>All pairs:</strong> ${inversePairs.map(p => `${p[0]}↔${p[1]}`).join(', ')}</p>` : ''}
+                        </div>
+                    `;
+                    break;
+
+                case 'inverse-2':
+                    const allPairs = findMultiplicativeInverses();
+                    const secondPair = allPairs.length > 1 ? allPairs[1] : allPairs[0];
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Secondary Multiplicative Inverse Pair</div>
+                        <div class="pattern-subtitle">${secondPair ? `${secondPair[0]} × ${secondPair[1]} ≡ 1 (mod ${modulus})` : 'No pairs'} in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            if (!secondPair) return '';
+                            if (base === secondPair[0]) return 'highlight-inverse-1';
+                            if (base === secondPair[1]) return 'highlight-inverse-2';
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Analysis</div>
+                            ${secondPair ? `
+                                <p><strong>Red (Base ${secondPair[0]}):</strong> [${gridData[secondPair[0]-1].slice(1, 8).join(', ')}]</p>
+                                <p><strong>Green (Base ${secondPair[1]}):</strong> [${gridData[secondPair[1]-1].slice(1, 8).join(', ')}]</p>
+                            ` : '<p>Only one pair exists.</p>'}
+                            ${allPairs.length > 0 ? `<p><strong>All pairs in Base ${currentBase}:</strong> ${allPairs.map(p => `${p[0]}↔${p[1]}`).join(', ')}</p>` : ''}
+                        </div>
+                    `;
+                    break;
+
+                case 'attractors':
+                    const attractors = findAttractors();
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Attractor Bases</div>
+                        <div class="pattern-subtitle">Bases that converge to fixed values in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            if (attractors.includes(base)) return 'highlight-attractor';
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Analysis</div>
+                            ${attractors.length > 0 ? `
+                                <p><strong>Attractors found:</strong> ${attractors.join(', ')}</p>
+                                ${attractors.map(b => {
+                                    const seq = gridData[b-1].slice(1, 8);
+                                    return `<p><strong>Base ${b}:</strong> ${seq.join(' → ')} (converges to ${seq[seq.length-1]})</p>`;
+                                }).join('')}
+                            ` : '<p>No attractor bases found in this system.</p>'}
+                        </div>
+                    `;
+                    break;
+
+                case 'cycles':
+                    display.innerHTML = `
+                        <div class="pattern-title">Cycle Lengths</div>
+                        <div class="pattern-subtitle">Repeating patterns for each base in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            const cycleLen = findCycleLength(base - 1);
+                            if (power <= cycleLen) return 'highlight-cycle';
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Cycle Analysis</div>
+                            <p><strong>Highlighted cells show each base's repeating cycle.</strong></p>
+                            ${gridData.slice(0, Math.min(10, gridData.length)).map((row, idx) => {
+                                const cycleLen = findCycleLength(idx);
+                                const pattern = row.slice(1, Math.min(cycleLen + 1, 8));
+                                return `<p><strong>Base ${idx + 1}:</strong> Length ${cycleLen}, Pattern [${pattern.join(', ')}]${cycleLen === 1 ? ' (attractor)' : ''}</p>`;
+                            }).join('')}
+                        </div>
+                    `;
+                    break;
+
+                case 'identity':
+                    display.innerHTML = `
+                        <div class="pattern-title">Identity Element (Value 1)</div>
+                        <div class="pattern-subtitle">Positions where base^power ≡ 1 (mod ${modulus})</div>
+                        ${createBaseTable((base, power, value) => {
+                            if (value === 1) return 'highlight-identity';
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Analysis</div>
+                            <p>Value 1 appears at cycle completion points in mod ${modulus}.</p>
+                        </div>
+                    `;
+                    break;
+
+                case 'echoes':
+                    const echoes = findFrequentValues();
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Frequent Value Patterns</div>
+                        <div class="pattern-subtitle">Most common values in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            for (let i = 0; i < Math.min(3, echoes.length); i++) {
+                                if (value === echoes[i].value) {
+                                    return 'highlight-echo-' + (i + 1);
+                                }
+                            }
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Analysis</div>
+                            ${echoes.length > 0 ? `
+                                <p><strong>Most frequent values:</strong></p>
+                                ${echoes.map((e, i) => {
+                                    const colors = ['Pink', 'Purple', 'Violet'];
+                                    return `<p><strong>${colors[i]}: Value ${e.value}</strong> appears ${e.count} times</p>`;
+                                }).join('')}
+                            ` : '<p>No strong patterns detected.</p>'}
+                        </div>
+                    `;
+                    break;
+
+                case 'diagonals':
+                    const diagonals = findAllDiagonals();
+                    const topDiags = diagonals.slice(0, 2);
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Diagonal Chains</div>
+                        <div class="pattern-subtitle">Values forming diagonal lines in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            if (topDiags.length > 0 && topDiags[0].cells.some(c => c.base === base && c.power === power)) {
+                                return 'highlight-diagonal-1';
+                            }
+                            if (topDiags.length > 1 && topDiags[1].cells.some(c => c.base === base && c.power === power)) {
+                                return 'highlight-diagonal-2';
+                            }
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Analysis</div>
+                            ${topDiags.length > 0 ? `
+                                <p><strong>Diagonals found:</strong> ${diagonals.length} total</p>
+                                ${topDiags.map((d, i) => {
+                                    const colors = ['Green', 'Orange'];
+                                    return `<p><strong>${colors[i]}: Value ${d.value}</strong> repeats ${d.count} times (${d.direction})</p>`;
+                                }).join('')}
+                            ` : '<p>No diagonal patterns found.</p>'}
+                        </div>
+                    `;
+                    break;
+
+                case 'oscillations':
+                    const oscillations = findOscillations();
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Oscillating Sequences</div>
+                        <div class="pattern-subtitle">A-B-A-B patterns in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            for (const osc of oscillations) {
+                                if (osc.cells.some(c => c.base === base && c.power === power)) {
+                                    return 'highlight-oscillation';
+                                }
+                            }
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Analysis</div>
+                            ${oscillations.length > 0 ? `
+                                <p><strong>Oscillations found:</strong> ${oscillations.length} patterns</p>
+                                <p><strong>Rows:</strong> ${oscillations.filter(o => o.type === 'row').length}, <strong>Columns:</strong> ${oscillations.filter(o => o.type === 'column').length}</p>
+                            ` : '<p>No oscillating patterns detected.</p>'}
+                        </div>
+                    `;
+                    break;
+
+                case 'cylinder':
+                    const pairForCyl = findMultiplicativeInverses()[0];
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">3D Cylindrical View</div>
+                        <div class="pattern-subtitle">Visualizing cycles as wrapped loops in Base ${currentBase}</div>
+                        
+                        <div class="controls">
+                            <button class="btn" onclick="showCylinderDemo()">Show 3D View</button>
+                            <button class="btn secondary" onclick="toggleCylinderRotation()" id="rotateBtn" style="display: none;">Pause</button>
+                        </div>
+                        
+                        <div id="cylinderDemo" style="display: none;">
+                            <div class="cylinder-container">
+                                <div class="cylinder" id="cylinder"></div>
+                            </div>
+                        </div>
+                        
+                        ${createBaseTable((base, power, value) => {
+                            if (pairForCyl) {
+                                if (base === pairForCyl[0]) return 'highlight-inverse-1';
+                                if (base === pairForCyl[1]) return 'highlight-inverse-2';
+                            }
+                            return '';
+                        })}
+                        
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} 3D Visualization</div>
+                            ${pairForCyl ? `
+                                <p><strong>Showing:</strong> Base ${pairForCyl[0]} (red) and ${pairForCyl[1]} (green)</p>
+                                <p>These multiplicative inverse pairs rotate in opposite directions.</p>
+                            ` : '<p>Showing available bases from this system.</p>'}
+                        </div>
+                    `;
+                    break;
+            }
+        }
+
+        function createCylinder() {
+            const container = document.getElementById('cylinder');
+            container.innerHTML = '';
+
+            const inversePairs = findMultiplicativeInverses();
+            let base1Index = 1, base2Index = 2;
+            
+            if (inversePairs.length > 0) {
+                base1Index = inversePairs[0][0] - 1;
+                base2Index = inversePairs[0][1] - 1;
+            }
+            
+            if (base1Index < gridData.length) {
+                const base1Data = gridData[base1Index].slice(1, 13);
+                const row1 = document.createElement('div');
+                row1.className = 'cylinder-row';
+                row1.style.transform = 'translateY(-20px)';
+                
+                base1Data.forEach((value, index) => {
+                    const cell = document.createElement('div');
+                    cell.className = 'cylinder-cell';
+                    cell.textContent = value;
+                    cell.style.background = '#ffcdd2';
+                    cell.style.border = '1px solid #d32f2f';
+                    cell.style.color = '#b71c1c';
+                    cell.style.transform = `rotateY(${index * 30}deg) translateZ(80px)`;
+                    row1.appendChild(cell);
+                });
+                
+                container.appendChild(row1);
+            }
+
+            if (base2Index < gridData.length && base2Index !== base1Index) {
+                const base2Data = gridData[base2Index].slice(1, 13);
+                const row2 = document.createElement('div');
+                row2.className = 'cylinder-row';
+                row2.style.transform = 'translateY(20px)';
+                
+                base2Data.forEach((value, index) => {
+                    const cell = document.createElement('div');
+                    cell.className = 'cylinder-cell';
+                    cell.textContent = value;
+                    cell.style.background = '#c8e6c9';
+                    cell.style.border = '1px solid #388e3c';
+                    cell.style.color = '#1b5e20';
+                    cell.style.transform = `rotateY(${-index * 30}deg) translateZ(80px)`;
+                    row2.appendChild(cell);
+                });
+                
+                container.appendChild(row2);
+            }
+        }
+
+        let cylinderRotating = true;
+
+        function showCylinderDemo() {
+            document.getElementById('cylinderDemo').style.display = 'block';
+            document.getElementById('rotateBtn').style.display = 'inline-block';
+            createCylinder();
+        }
+
+        function toggleCylinderRotation() {
+            const cylinder = document.getElementById('cylinder');
+            const btn = document.getElementById('rotateBtn');
+            
+            if (cylinderRotating) {
+                cylinder.classList.add('paused');
+                btn.textContent = 'Resume';
+                cylinderRotating = false;
+            } else {
+                cylinder.classList.remove('paused');
+                btn.textContent = 'Pause';
+                cylinderRotating = true;
+            }
+        }
+
+        loadPattern();
+    </script>
+</body>
+</html>
