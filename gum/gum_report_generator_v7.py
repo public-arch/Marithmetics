@@ -180,7 +180,7 @@ def run_gum_and_collect():
     This is intentionally defensive: it inspects the signatures of the
     GUM helper functions and calls them with the right number of args.
     """
-# --- Layer 0: substrate ---
+  # --- Layer 0: substrate ---
     # --- Layer 0: substrate ---
     sub = gum.build_substrate()
 
@@ -1235,6 +1235,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
