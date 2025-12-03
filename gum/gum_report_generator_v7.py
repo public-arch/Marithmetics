@@ -182,7 +182,8 @@ def run_gum_and_collect():
     """
 
     # --- Layer 0: substrate ---
-    sub_sig = inspect.signature(gum.build_substrate)
+    sub_sig = None  # Disabled: Python 3.12 cannot inspect staticmethod wrappers
+
     if len(sub_sig.parameters) == 0:
         sub = gum.build_substrate()
     else:
@@ -1267,4 +1268,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
