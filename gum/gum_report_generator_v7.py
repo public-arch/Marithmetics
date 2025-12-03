@@ -180,50 +180,18 @@ def run_gum_and_collect():
     This is intentionally defensive: it inspects the signatures of the
     GUM helper functions and calls them with the right number of args.
     """
-
+# --- Layer 0: substrate ---
     # --- Layer 0: substrate ---
-    sub_sig = None  # Disabled: Python 3.12 cannot inspect staticmethod wrappers
-
-    if len(sub_sig.parameters) == 0:
-        sub = gum.build_substrate()
-    else:
-        # If you ever change build_substrate to accept options,
-        # we can adapt later; for now, call with no args.
-        sub = gum.build_substrate()
+    sub = gum.build_substrate()
 
     # --- Layer 1: math kernel ---
-    math_sig = inspect.signature(gum.build_math_layer)
-    n_math_args = len(math_sig.parameters)
-    if n_math_args == 0:
-        # This matches your current gum driver
-        mathL = gum.build_math_layer()
-    else:
-        # If you later extend it to depend on sub, this will still work.
-        mathL = gum.build_math_layer(sub)
+    mathL = gum.build_math_layer()
 
     # --- Layer 2A: SM engine ---
-    phys_sig = inspect.signature(gum.build_physics_layer)
-    n_phys_args = len(phys_sig.parameters)
-    if n_phys_args == 0:
-        physL = gum.build_physics_layer()
-    elif n_phys_args == 1:
-        physL = gum.build_physics_layer(sub)
-    else:
-        # If you ever pass additional context (e.g., mathL), this covers it.
-        physL = gum.build_physics_layer(sub, mathL)
+    physL = gum.build_physics_layer(sub)
 
-    # --- Layer 2B: cosmology engine ---
-    cosmo_sig = inspect.signature(gum.build_cosmo_layer)
-    n_cosmo_args = len(cosmo_sig.parameters)
-    if n_cosmo_args == 0:
-        cosmoL, engine = gum.build_cosmo_layer()
-    elif n_cosmo_args == 1:
-        cosmoL, engine = gum.build_cosmo_layer(sub)
-    elif n_cosmo_args == 2:
-        cosmoL, engine = gum.build_cosmo_layer(sub, mathL)
-    else:
-        # Most flexible: (sub, mathL, physL)
-        cosmoL, engine = gum.build_cosmo_layer(sub, mathL, physL)
+    # --- Layer 2B: cosmology ---
+    cosmoL, engine = gum.build_cosmo_layer(sub)
 
     # --- Full SM-MATH-9 output + refs ---
     math_res = gum.smath.compute_all()
@@ -240,7 +208,6 @@ def run_gum_and_collect():
         "REF_MATH": REF_MATH,
         "PDG": PDG,
     }
-
 
 # ---------------------------------------------------------------------------
 # Build numeric manifest hash over cross-domain constants
@@ -1268,5 +1235,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
