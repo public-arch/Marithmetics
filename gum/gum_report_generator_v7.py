@@ -51,7 +51,9 @@ try:
         sm33
     )
 except ImportError:
-    raise SystemExit("Could not import gum_v1 from gum/ directory.")
+    print("Could not import gum_v1 from gum/ directory.")
+    print("Actual error:")
+    raise
 
 # Recreate gum namespace expected by the report generator
 class GumNamespace:
