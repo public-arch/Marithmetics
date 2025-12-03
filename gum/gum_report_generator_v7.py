@@ -57,12 +57,25 @@ except ImportError:
 
 # Recreate gum namespace expected by the report generator
 class GumNamespace:
-    build_substrate = build_substrate
-    build_math_layer = build_math_layer
-    build_physics_layer = build_physics_layer
-    build_cosmo_layer = build_cosmo_layer
+    @staticmethod
+    def build_substrate(*args, **kwargs):
+        return build_substrate(*args, **kwargs)
+
+    @staticmethod
+    def build_math_layer(*args, **kwargs):
+        return build_math_layer(*args, **kwargs)
+
+    @staticmethod
+    def build_physics_layer(*args, **kwargs):
+        return build_physics_layer(*args, **kwargs)
+
+    @staticmethod
+    def build_cosmo_layer(*args, **kwargs):
+        return build_cosmo_layer(*args, **kwargs)
+
     smath = smath
     sm33 = sm33
+
 
 gum = GumNamespace()
 
@@ -1254,3 +1267,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
