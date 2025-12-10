@@ -25,6 +25,11 @@ import hashlib
 import os 
 import sys
 
+import sys, os
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 # Ensure project root is FIRST in PYTHONPATH
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if ROOT not in sys.path:
@@ -1633,6 +1638,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
