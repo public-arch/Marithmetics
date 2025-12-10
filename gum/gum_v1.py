@@ -33,10 +33,15 @@ from datetime import datetime
 # ---------------------------------------------------------------------------
 # Adjust these imports to match your actual filenames
 # ---------------------------------------------------------------------------
-# --- Structured imports for SM and cosmology engines ---
-from sm import sm_math_model_demo_v1 as smath
-from sm import sm_standard_model_demo_v1 as sm33
-from cosmo import bb_grand_emergence_masterpiece_runner_v1 as bb36
+
+# SM‑MATH‑9 (Demo 37)
+import sm_math_model_demo_v1 as smath        
+
+# DEMO‑33 Standard Model
+import sm_standard_model_demo_v1 as sm33        
+
+# BB‑36 SCFP Universe
+import bb_grand_emergence_masterpiece_runner_v1 as bb36    
 
 
 # ---------------------------------------------------------------------------
