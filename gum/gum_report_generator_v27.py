@@ -84,10 +84,14 @@ import sys
 sys.path.append(os.path.dirname(__file__))
 
 try:
-    import gum_v1 as gum
-    import sm_math_model_demo_v1 as smath
-    import sm_standard_model_demo_v1 as sm33  # noqa: F401
-    import bb_grand_emergence_masterpiece_runner_v1 as bb36
+
+# Structured imports: pull modules from the correct package folders
+    from gum import gum_v1 as gum
+    from sm import sm_math_model_demo_v1 as smath
+    from sm import sm_standard_model_demo_v1 as sm33
+    from cosmo import bb_grand_emergence_masterpiece_runner_v1 as bb36
+
+
 except ImportError as e:
     raise SystemExit(
         "Could not import one of the local GUM modules.\n"
@@ -1619,3 +1623,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
