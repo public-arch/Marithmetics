@@ -22,15 +22,19 @@ from __future__ import annotations
 import math
 import json
 import hashlib
-import os
+import os 
 import sys
 
-
-# Ensure project root is FIRST in Python path
-import os, sys
+# Ensure project root is FIRST in PYTHONPATH
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
+
+# Ensure gum/ is SECOND in PYTHONPATH
+GUM = os.path.dirname(__file__)
+if GUM not in sys.path:
+    sys.path.insert(1, GUM)
+
 
 
 # Ensure gum/ is on PYTHONPATH
@@ -1636,6 +1640,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
