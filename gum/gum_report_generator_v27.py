@@ -82,6 +82,7 @@ except Exception:
 
 import sys
 sys.path.append(os.path.dirname(__file__))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 try:
 
@@ -1623,5 +1624,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
