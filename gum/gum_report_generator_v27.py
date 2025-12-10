@@ -36,13 +36,6 @@ if GUM not in sys.path:
     sys.path.insert(1, GUM)
 
 
-
-# Ensure gum/ is on PYTHONPATH
-GUM = os.path.dirname(__file__)
-if GUM not in sys.path:
-    sys.path.insert(0, GUM)
-
-
 from datetime import datetime
 from typing import Any, Dict, List, Tuple, Optional
 from datetime import datetime
@@ -1640,6 +1633,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
