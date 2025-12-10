@@ -25,21 +25,15 @@ import hashlib
 import os 
 import sys
 
-import sys, os
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+# Absolute project root
+PROJECT_ROOT = "/workspaces/Marithmetics"
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-# Ensure project root is FIRST in PYTHONPATH
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if ROOT not in sys.path:
-    sys.path.insert(0, ROOT)
-
-# Ensure gum/ is SECOND in PYTHONPATH
-GUM = os.path.dirname(__file__)
-if GUM not in sys.path:
-    sys.path.insert(1, GUM)
-
+# Ensure gum/ is also directly importable
+GUM_DIR = os.path.join(PROJECT_ROOT, "gum")
+if GUM_DIR not in sys.path:
+    sys.path.insert(0, GUM_DIR)
 
 from datetime import datetime
 from typing import Any, Dict, List, Tuple, Optional
@@ -1638,6 +1632,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
