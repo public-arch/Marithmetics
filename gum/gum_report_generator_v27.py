@@ -1566,8 +1566,8 @@ def build_pdf_report(pdf_path: str,
     def footer(canvas, doc_obj):
         """
         Two-line footer:
-          Line 1: report title + timestamp (left) and page number (right)
-          Line 2: short SHA-256(manifest) in the center.
+          Line 1: report title + timestamp (left), page number (right)
+          Line 2: full SHA-256(manifest) (left)
         """
         canvas.saveState()
         canvas.setFont("Helvetica", 8)
@@ -1587,13 +1587,12 @@ def build_pdf_report(pdf_path: str,
             right_text,
         )
 
-        # Line 2: shortened SHA in the center so it never collides
-        short_sha = numeric_sha[:16] + "…"  # first 16 chars + ellipsis
-        center_x  = doc_obj.pagesize[0] / 2.0
-        sha_text  = f"SHA-256(manifest)={short_sha}"
-        canvas.drawCentredString(center_x, y2, sha_text)
+        # Line 2: full SHA-256(manifest), left aligned
+        sha_text = f"SHA-256(manifest) = {numeric_sha}"
+        canvas.drawString(doc_obj.leftMargin, y2, sha_text)
 
         canvas.restoreState()
+
 
 
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
@@ -1653,6 +1652,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
