@@ -868,9 +868,8 @@ def build_pdf_report(pdf_path: str,
 
     story.append(Spacer(1, 0.2 * inch))
     
-# DRPT identity + echo patterns (2x2 grid)
+    # DRPT identity + echo patterns (2x2 grid)
     story.append(Spacer(1, 0.2 * inch))
-
     # DRPT identity + echo patterns (2x2 grid)
     id9_path   = os.path.join(ASSETS_DIR, "Identity9.png")
     id10_path  = os.path.join(ASSETS_DIR, "Identity10.png")
@@ -1633,6 +1632,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
