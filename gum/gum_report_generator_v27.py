@@ -82,6 +82,10 @@ except Exception:
 # Local GUM stack
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Local GUM stack
+# ---------------------------------------------------------------------------
+
 try:
     # Structured imports: pull modules from the correct package folders
     from gum import gum_v1 as gum
@@ -99,7 +103,12 @@ except ImportError as e:
         f"Original error: {e}"
     )
 
-from gum_v1 import Substrate, MathLayer, PhysicsLayer, CosmoLayer  # type: ignore
+# If you like direct type names:
+Substrate = gum.Substrate
+MathLayer = gum.MathLayer
+PhysicsLayer = gum.PhysicsLayer
+CosmoLayer = gum.CosmoLayer
+
 
 # ---------------------------------------------------------------------------
 # Reference constants
@@ -1619,6 +1628,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
