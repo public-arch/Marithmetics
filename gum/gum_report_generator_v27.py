@@ -1564,18 +1564,37 @@ def build_pdf_report(pdf_path: str,
     )
 
     def footer(canvas, doc_obj):
+        """
+        Two-line footer:
+          Line 1: report title + timestamp (left) and page number (right)
+          Line 2: short SHA-256(manifest) in the center.
+        """
         canvas.saveState()
         canvas.setFont("Helvetica", 8)
         canvas.setFillColor(colors.grey)
-        left_text = f"GUM report v25 - generated {timestamp}"
-        right_text = f"Page {doc_obj.page} - SHA-256(manifest)={numeric_sha}"
-        canvas.drawString(doc_obj.leftMargin, 0.5 * inch, left_text)
+
+        # Vertical positions for the two lines
+        y1 = 0.55 * inch  # first line
+        y2 = 0.40 * inch  # second line
+
+        # Line 1: title + timestamp (left) and page number (right)
+        left_text  = f"GUM report v27 – generated {timestamp} (UTC)"
+        right_text = f"Page {doc_obj.page}"
+        canvas.drawString(doc_obj.leftMargin, y1, left_text)
         canvas.drawRightString(
             doc_obj.pagesize[0] - doc_obj.rightMargin,
-            0.5 * inch,
+            y1,
             right_text,
         )
+
+        # Line 2: shortened SHA in the center so it never collides
+        short_sha = numeric_sha[:16] + "…"  # first 16 chars + ellipsis
+        center_x  = doc_obj.pagesize[0] / 2.0
+        sha_text  = f"SHA-256(manifest)={short_sha}"
+        canvas.drawCentredString(center_x, y2, sha_text)
+
         canvas.restoreState()
+
 
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
 
@@ -1634,6 +1653,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
