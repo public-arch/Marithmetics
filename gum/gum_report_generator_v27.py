@@ -869,41 +869,43 @@ def build_pdf_report(pdf_path: str,
     story.append(Spacer(1, 0.2 * inch))
     
 # DRPT identity + echo patterns (2x2 grid)
-id9_path   = os.path.join(ASSETS_DIR, "Identity9.png")
-id10_path  = os.path.join(ASSETS_DIR, "Identity10.png")
-echo6_path = os.path.join(ASSETS_DIR, "Echo6.png")
-echo10_path= os.path.join(ASSETS_DIR, "Echo10.png")
+    story.append(Spacer(1, 0.2 * inch))
 
-if all(os.path.exists(p) for p in [id9_path, id10_path, echo6_path, echo10_path]):
-    img_id9   = Image(id9_path,   width=3.1 * inch, height=1.6 * inch)
-    img_id10  = Image(id10_path,  width=3.1 * inch, height=1.6 * inch)
-    img_echo6 = Image(echo6_path, width=3.1 * inch, height=1.6 * inch)
-    img_echo10= Image(echo10_path,width=3.1 * inch, height=1.6 * inch)
+    # DRPT identity + echo patterns (2x2 grid)
+    id9_path   = os.path.join(ASSETS_DIR, "Identity9.png")
+    id10_path  = os.path.join(ASSETS_DIR, "Identity10.png")
+    echo6_path = os.path.join(ASSETS_DIR, "Echo6.png")
+    echo10_path= os.path.join(ASSETS_DIR, "Echo10.png")
 
-    drpt_grid = Table(
-        [[img_id9, img_id10], [img_echo6, img_echo10]],
-        colWidths=[3.2 * inch, 3.2 * inch],
-    )
-    drpt_grid.hAlign = "CENTER"
-    story.append(drpt_grid)
-else:
-    missing = [
-        name for name, path in [
-            ("Identity9.png", id9_path),
-            ("Identity10.png", id10_path),
-            ("Echo6.png", echo6_path),
-            ("Echo10.png", echo10_path),
-        ]
-        if not os.path.exists(path)
-    ]
-    story.append(
-        Paragraph(
-            "DRPT identity / echo assets are missing ({}); skipping this panel."
-            .format(", ".join(missing) or "unknown"),
-            body_italic,
+    if all(os.path.exists(p) for p in [id9_path, id10_path, echo6_path, echo10_path]):
+        img_id9   = Image(id9_path,   width=3.1 * inch, height=1.6 * inch)
+        img_id10  = Image(id10_path,  width=3.1 * inch, height=1.6 * inch)
+        img_echo6 = Image(echo6_path, width=3.1 * inch, height=1.6 * inch)
+        img_echo10= Image(echo10_path,width=3.1 * inch, height=1.6 * inch)
+
+        drpt_grid = Table(
+            [[img_id9, img_id10], [img_echo6, img_echo10]],
+            colWidths=[3.2 * inch, 3.2 * inch],
         )
-    )
-
+        drpt_grid.hAlign = "CENTER"
+        story.append(drpt_grid)
+    else:
+        missing = [
+            name for name, path in [
+                ("Identity9.png", id9_path),
+                ("Identity10.png", id10_path),
+                ("Echo6.png",    echo6_path),
+                ("Echo10.png",   echo10_path),
+            ]
+            if not os.path.exists(path)
+        ]
+        story.append(
+            Paragraph(
+                "DRPT identity / echo assets are missing ({}); skipping this panel."
+                .format(", ".join(missing) or "unknown"),
+                body_italic,
+            )
+        )
 
     story.append(Spacer(1, 0.15 * inch))
     story.append(
@@ -918,6 +920,9 @@ else:
 
     story.append(Spacer(1, 0.3 * inch))
     story.append(Paragraph("0.2 Analytic filter: Fejer smoothing on DRPT", h2))
+    ...
+    # keep the rest of the Fejér and survivor-table code indented exactly like this
+
     story.append(
         Paragraph(
             "The analytic layer does not alter the DRPT substrate; it alters how the "
@@ -1628,6 +1633,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
