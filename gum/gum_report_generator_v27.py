@@ -78,23 +78,24 @@ except Exception:
 # Local GUM stack
 # ---------------------------------------------------------------------------
 
-try:
+# ---------------------------------------------------------------------------
+# Local GUM stack
+# ---------------------------------------------------------------------------
 
-# Structured imports: pull modules from the correct package folders
+try:
+    # Structured imports: pull modules from the correct package folders
     from gum import gum_v1 as gum
     from sm import sm_math_model_demo_v1 as smath
     from sm import sm_standard_model_demo_v1 as sm33
     from cosmo import bb_grand_emergence_masterpiece_runner_v1 as bb36
-
-
 except ImportError as e:
     raise SystemExit(
         "Could not import one of the local GUM modules.\n"
-        "Make sure the following files are in the same directory:\n"
-        "  - gum_v1.py\n"
-        "  - sm_math_model_demo_v1.py\n"
-        "  - sm_standard_model_demo_v1.py\n"
-        "  - bb_grand_emergence_masterpiece_runner_v1.py\n"
+        "Expected structure:\n"
+        "  gum/gum_v1.py\n"
+        "  sm/sm_math_model_demo_v1.py\n"
+        "  sm/sm_standard_model_demo_v1.py\n"
+        "  cosmo/bb_grand_emergence_masterpiece_runner_v1.py\n"
         f"Original error: {e}"
     )
 
@@ -1618,6 +1619,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
