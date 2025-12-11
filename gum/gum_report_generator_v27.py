@@ -3,42 +3,33 @@
 
 """
 gum_report_generator_v27.py
-
-Grand Unified Model (GUM) report generator with:
-
-  - SCFP++ substrate selector (via gum_v1 + BB-36),
-  - SM-MATH-9 math kernel (sm_math_model_demo_v1),
-  - DEMO-33 Standard Model layer (sm_standard_model_demo_v1),
-  - BB-36 structural cosmology (bb_grand_emergence_masterpiece_runner_v1),
-  - Big Bang SPDE / tidal visual (5-panel PNG),
-  - Planck 2018 vs GUM CAMB TT comparison (PNG overlay embedded in the PDF),
-  - JSON manifest and numeric SHA-256 fingerprint.
-
-All PDF-visible text is ASCII-only to avoid black boxes in some viewers.
 """
+
+# --- FIX PYTHONPATH BEFORE ANY OTHER IMPORTS ---
+import os, sys
+
+# Resolve project root dynamically (NO hard-coded paths)
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+# Ensure gum/ is available
+GUM_DIR = os.path.dirname(__file__)
+if GUM_DIR not in sys.path:
+    sys.path.insert(1, GUM_DIR)
+
+# ------------------------------------------------
+# Continue with normal imports
+# ------------------------------------------------
 
 from __future__ import annotations
 
 import math
 import json
 import hashlib
-import os 
-import sys
-
-# Absolute project root
-PROJECT_ROOT = "/workspaces/Marithmetics"
-if PROJECT_ROOT not in sys.path:
-    sys.path.insert(0, PROJECT_ROOT)
-
-# Ensure gum/ is also directly importable
-GUM_DIR = os.path.join(PROJECT_ROOT, "gum")
-if GUM_DIR not in sys.path:
-    sys.path.insert(0, GUM_DIR)
-
 from datetime import datetime
 from typing import Any, Dict, List, Tuple, Optional
-from datetime import datetime
-from typing import Any, Dict, List, Tuple, Optional
+
 
 ASSETS_DIR = os.path.join(os.path.dirname(__file__), "Assets")
 
@@ -1632,6 +1623,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
