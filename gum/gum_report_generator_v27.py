@@ -787,8 +787,9 @@ def build_pdf_report(pdf_path: str,
     story: List[Any] = []
 
      # Title page
-    story.append(Paragraph("Grand Unified Model", title_style))
-    story.append(Paragraph("Executive Technical Report", subtitle_style))
+    story.append(Paragraph("Digital Root Power Tables and Cross-Base Structural Invariants", title_style))
+    story.append(Paragraph("Executive Technical Repor", subtitle_style))
+    story.append(Paragraph("A Reproducible Computational Pipeline for Emergent Integer-Derived Mathematical Constants and Physical Parameters", subtitle_style))
 
     story.append(Spacer(1, 0.3 * inch))
     story.append(Paragraph(f"Generated (UTC): {timestamp}", small))
@@ -1646,6 +1647,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
