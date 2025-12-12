@@ -807,9 +807,9 @@ def build_pdf_report(pdf_path: str,
     story.append(Spacer(1, 0.15 * inch))
     story.append(
         Paragraph(
-            "This program is not a cathedral; it is a single brick, laid on a structure "
-            "built by generations of human curiosity. May the pursuit of the light "
-            "never diminish, and may it become ever more steadfast.",
+            "Within everything accepted lies everything overlooked.
+            This work does not propose new empirical measurements. It provides a reproducible computational pipeline built on digital-root power tables and cross-base invariants, and reports what that pipeline yields under explicit rules and constraints.
+            The central claim is structural: certain parameter families arise from discrete mechanisms that are stable across numerical bases. The reader is invited to audit that claim by running the code and verifying the outputs.",
             body,
         )
     )
@@ -1639,6 +1639,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
