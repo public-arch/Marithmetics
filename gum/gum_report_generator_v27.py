@@ -1065,12 +1065,12 @@ def build_pdf_report(pdf_path: str,
     story.append(Spacer(1, 0.2 * inch))
     try:
         img_city = Image(
-            os.path.join(ASSETS_DIR, "DRPTCity137.png"),
+            os.path.join(ASSETS_DIR, "DRPTCity137_v2.png"),
             width=6.5 * inch,
             height=2.6 * inch,
         )
         img_strip = Image(
-            os.path.join(ASSETS_DIR, "DRPTSurvivor137.png"),
+            os.path.join(ASSETS_DIR, "DRPTSurvivor137_v2.png"),
             width=6.5 * inch,
             height=1.0 * inch,
         )
@@ -1646,6 +1646,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
