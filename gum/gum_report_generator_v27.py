@@ -26,7 +26,7 @@ import os
 from datetime import datetime
 from typing import Any, Dict, List, Tuple, Optional
 
-ASSETS_DIR = os.path.join(os.path.dirname(__file__), "Assets")
+ASSETS_DIR = os.path.join(os.path.dirname(__file__), "assets")
 
 
 
@@ -1646,6 +1646,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
