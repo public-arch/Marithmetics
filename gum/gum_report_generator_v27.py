@@ -1091,13 +1091,7 @@ def build_pdf_report(pdf_path: str,
     story.append(Spacer(1, 0.15 * inch))
     story.append(
         Paragraph(
-            "The top panel shows the base-10 DRPT city view: rows are integers n and "
-            "columns are exponents k. The framed band is the lane of integers with "
-            "n congruent to 137 modulo 9, which share the same digital-root power cycle "
-            "as 137. Thin vertical markers indicate exponents where this lane hits the "
-            "identity value 1, forming identity pillars. The lower panel isolates "
-            "these identity hits as a chunky strip, making the pillar structure of "
-            "the 137 lane along the exponent axis explicit.",
+            "The top panel shows an identity-hit map extracted from the base-10 DRPT: rows are integers n and columns are exponents k. Each dark cell marks an identity hit defined exactly by dr10(n^k)=1, equivalently n^k ≡ 1 (mod 9), computed by modular exponentiation (no floating-point approximation). The highlighted row isolates n=137 and shows its stable, periodic sequence of identity pillars along the exponent axis. The lower panel renders the same n=137 identity hits as a chunky pillar strip, making the pillar spacing explicit and visually undistorted; this is the lane-level structure later leveraged by the analytic filter and SCFP++ selection logic.",
             body,
         )
     )
@@ -1652,6 +1646,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
