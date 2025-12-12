@@ -866,7 +866,7 @@ def build_pdf_report(pdf_path: str,
         )
     )
 
-    story.append(Spacer(1, 0.2 * inch))
+  
     
        # DRPT identity + echo patterns (2x2 grid)
     story.append(Spacer(1, 0.2 * inch))
@@ -1072,7 +1072,7 @@ def build_pdf_report(pdf_path: str,
         img_strip = Image(
             os.path.join(ASSETS_DIR, "DRPTSurvivor137_v2.png"),
             width=6.5 * inch,
-            height=1.0 * inch,
+            height=1.5 * inch,
         )
         img_city.hAlign = "CENTER"
         img_strip.hAlign = "CENTER"
@@ -1277,7 +1277,7 @@ def build_pdf_report(pdf_path: str,
     )
     story.append(math_table)
 
-    story.append(PageBreak())
+    story.append(Spacer(1, 0.3 * inch))
 
     # Section 4: Layer 2A (Standard Model)
     story.append(Paragraph("4. Layer 2A: DEMO-33 (Standard Model kernel)", h1))
@@ -1342,7 +1342,7 @@ def build_pdf_report(pdf_path: str,
     )
     story.append(sm_table)
 
-    story.append(PageBreak())
+    story.append(Spacer(1, 0.3 * inch))
 
     # Section 5: Layer 2B (cosmology)
     story.append(Paragraph("5. Layer 2B: BB-36 structural cosmology", h1))
@@ -1426,7 +1426,7 @@ def build_pdf_report(pdf_path: str,
     )
     story.append(cosmo_table)
 
-    story.append(PageBreak())
+    story.append(Spacer(1, 0.3 * inch))
 
     # Section 6: Field-level structure and CAMB check
     story.append(Paragraph("6. Field-level structure and CMB validation", h1))
@@ -1646,6 +1646,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
