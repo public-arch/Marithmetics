@@ -807,7 +807,7 @@ def build_pdf_report(pdf_path: str,
     story.append(Paragraph("Author note", h2))
     story.append(
         Paragraph(
-            "\"Within everything accepted lies everything overlooked.\"",
+            "\Within everything accepted lies everything overlooked.\",
             body_italic,
         )
     )
@@ -1646,6 +1646,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
