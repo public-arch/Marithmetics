@@ -830,35 +830,37 @@ def build_pdf_report(pdf_path: str,
         )
     )
 
-    story.append(Spacer(1, 0.2 * inch))
-    story.append(Paragraph("0.1 Digital-Root Power Tables and pattern families", h2))
+    # 0.1 DRPT definition + status (conservative + auditable)
     story.append(
         Paragraph(
-            "A DRPT records, for each integer n and exponent k, the digital root of "
-            "n^k in a fixed base. Visually this produces a finite heatmap of "
-            "multiplicative dynamics on the ring Z_{b-1}. Within these tables we "
-            "observe recurring combinatorial motifs, which we treat as pattern "
-            "families or identities: identity columns, echo motifs, reciprocal "
-            "chains, inverse-pair lattices, and others. To date we have catalogued "
-            "13 distinct DRPT pattern families. The catalogue is not complete; the "
-            "total number of families and their classification across all bases "
-            "remains an open combinatorial program.",
+            "A Digital Root Power Table (DRPT) records, for each integer n and exponent k, "
+            "the digital root of n^k in a fixed base. Visually, this produces a finite heatmap "
+            "of multiplicative dynamics on the ring Z_(b-1). "
+            "We have not found a standard reference that treats DRPTs as a cross-base visual substrate "
+            "with an explicit motif taxonomy and a reproducible downstream pipeline. "
+            "If related constructions exist under different terminology, this report is intended to make "
+            "the DRPT representation and its cross-base structure explicit and auditable.",
             body,
         )
     )
+
     story.append(Spacer(1, 0.1 * inch))
+
+    # 0.1 Motif families + how they are used operationally
     story.append(
         Paragraph(
-            "These families are not tied to a single base. The same motifs reappear "
-            "in multiple bases with the same qualitative geometry. This cross-base "
-            "stability is the raw material used by the SCFP++ selector and the "
-            "Rosetta layer: it ensures that the substrate is not tuned to any one "
+            "Within these tables we observe recurring combinatorial motifs, which we group into "
+            "pattern families (identity pillars/columns, echo motifs, reciprocal chains, inverse-pair lattices, "
+            "and related symmetry structures). To date we have catalogued 13 distinct DRPT families. "
+            "The catalogue is not complete; the total number of families and their classification across all bases "
+            "remains an open combinatorial program. "
+            "The cross-base recurrence of these motifs is operational in this work: the SCFP++ selector and the "
+            "Rosetta layer leverage this stability to ensure that the substrate is not tuned to any single base "
             "representation of the integers.",
             body,
         )
     )
 
-  
     
        # DRPT identity + echo patterns (2x2 grid)
     story.append(Spacer(1, 0.2 * inch))
@@ -1638,6 +1640,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
