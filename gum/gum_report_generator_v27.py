@@ -914,6 +914,7 @@ def build_pdf_report(pdf_path: str,
     )
 
     story.append(Spacer(1, 0.3 * inch))
+    story.append(PageBreak())
     story.append(Paragraph("0.2 Analytic filter: Fejer smoothing on DRPT", h2))
     ...
     # keep the rest of the Fejér and survivor-table code indented exactly like this
@@ -1196,6 +1197,20 @@ def build_pdf_report(pdf_path: str,
         )
     )
     story.append(const_table)
+    # --- Prediction highlight (explicit): SM couplings as falsifiable outputs ---
+    
+    story.append(Spacer(1, 0.12 * inch))
+    story.append(
+        Paragraph(
+            "<b>Prediction highlight (explicit).</b> In the Standard Model layer (DEMO-33), the pipeline outputs "
+            "structural values for the gauge couplings from the SCFP++ survivor substrate. In this run, "
+            "alpha_em emerges near 1/137, while sin^2(theta_W) and alpha_s(MZ) emerge in simple rational form "
+            "(see Table 1.1). These are treated as falsifiable program outputs rather than fitted parameters: "
+            "with the gate set and lifting rules held fixed, independent reruns must reproduce the same values; "
+            "changing the gates or rules changes the outputs.",
+            body,
+        )
+    )
 
     story.append(Spacer(1, 0.3 * inch))
     story.append(PageBreak())
@@ -1640,6 +1655,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
