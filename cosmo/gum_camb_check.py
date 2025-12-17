@@ -36,7 +36,6 @@ import matplotlib.pyplot as plt
 import camb
 import argparse
 from pathlib import Path
-from camb import model, initialpower
 
 def _parse_args():
     ap = argparse.ArgumentParser()
@@ -52,13 +51,13 @@ def _parse_args():
     )
     return ap.parse_args()
 
-
 # ------------------------------------------------------------
-# Output configuration
+# Output configuration (CLI)
 # ------------------------------------------------------------
 
-OUTPUT_DIR = "gum_camb_output"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+ARGS = _parse_args()
+OUTDIR = Path(ARGS.outdir).resolve()
+OUTDIR.mkdir(parents=True, exist_ok=True)
 
 ELL_MIN = 2
 ELL_MAX = 2000  # high-ℓ cutoff for comparison
@@ -216,12 +215,16 @@ def run_camb_comparison():
     plt.title("CMB TT Power Spectrum: Planck vs GUM")
     plt.legend()
     plt.grid(True, linestyle=":")
-    out_plot = os.path.join(OUTPUT_DIR, "TT_spectrum_Planck_vs_GUM.png")
-    plt.tight_layout()
-    plt.savefig(out_plot, dpi=200)
-    plt.close()
+    if ARGS.no_plot:
+        plt.close()
+        print("TT spectrum plot: SKIPPED (--no-plot)\n")
+    else:
+        out_plot = OUTDIR / "TT_spectrum_Planck_vs_GUM.png"
+        plt.tight_layout()
+        plt.savefig(out_plot, dpi=200)
+        plt.close()
+        print(f"TT spectrum plot written to: {out_plot}\n")
 
-    print(f"TT spectrum plot written to: {os.path.abspath(out_plot)}\n")
     print("NOTE:")
     print("  • If the RMS and max relative differences are small,")
     print("    your GUM cosmology lies close to the Planck ΛCDM attractor.")
@@ -233,4 +236,5 @@ def run_camb_comparison():
 
 if __name__ == "__main__":
     run_camb_comparison()
+
 
