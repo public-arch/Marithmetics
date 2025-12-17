@@ -67,8 +67,13 @@ CORE_SCRIPTS = [
 OPTIONAL_SCRIPTS = [
     # Explicitly downstream / optional diagnostic
     "cosmo/gum_camb_check.py",
+    
 ]
 
+# Extra CLI args per script (used to route outputs into the results bundle)
+SCRIPT_EXTRA_ARGS = {
+    "cosmo/gum_camb_check.py": ["--outdir", "{OUTDIR}/gum_camb_output"],
+}
 # Output hash exclusions:
 # - output_sha256.json would otherwise self-hash (unstable)
 # - BUNDLE_SHA256.txt is computed after and depends on key files
@@ -246,13 +251,17 @@ def run_one(repo_root: Path, script_rel: str, out_dir: Path) -> Dict[str, Any]:
     env["PYTHONHASHSEED"] = "0"
 
     t0 = time.time()
+    extra = SCRIPT_EXTRA_ARGS.get(script_rel, [])
+    extra = [s.replace("{OUTDIR}", str(out_dir)) for s in extra]
+
     p = subprocess.run(
-        [sys.executable, str(script_path)],
+        [sys.executable, str(script_path), *extra],
         cwd=str(repo_root),
         capture_output=True,
         text=True,
         env=env,
     )
+
     t1 = time.time()
 
     stdout_path = out_dir / f"stdout_{slug}.txt"
@@ -406,4 +415,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 
