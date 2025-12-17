@@ -3,7 +3,8 @@
 
 """
 Foundations Capsule Runner (stdlib-only)
-- Runs the canonical allowlist
+
+- Runs the canonical allowlist (Tier-A/A2) + Universe From Zero capsule
 - Captures stdout/stderr
 - Writes a frozen results bundle under audits/results/
 - Emits code + output SHA256 manifests and a single bundle fingerprint
@@ -13,7 +14,7 @@ Usage
   python audits/run_foundations_capsule.py
   python audits/run_foundations_capsule.py --include-optional
   python audits/run_foundations_capsule.py --out audits/results/foundations_a2_custom
-  python audits/run_foundations_capsule.py --verify audits/results/foundations_a2_2025_12_16T031407Z
+  python audits/run_foundations_capsule.py --verify audits/results/foundations_a2_YYYY_MM_DDTHHMMSSZ
 """
 
 from __future__ import annotations
@@ -29,15 +30,19 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import Dict, Any, List, Tuple, Optional
+from typing import Dict, Any, List, Optional
 
 
 CORE_SCRIPTS = [
+    # Tier-A / A2 authority harnesses
     "audits/tier_a_master_referee_demo_v6.py",
     "audits/a2_archive_master.py",
     "audits/marithmetics_unified_theory.py",
 
-    # Dependencies you requested to run directly as well
+    # Universe From Zero (referee capsule)
+    "audits/universe_from_zero_capsule.py",
+
+    # Engines you requested to run directly as well
     "sm/sm_standard_model_demo_v1.py",
     "cosmo/bb_grand_emergence_masterpiece_runner_v1.py",
     "omega/omega_observer_commutant_fejer_v1.py",
@@ -52,8 +57,6 @@ OPTIONAL_SCRIPTS = [
     "cosmo/gum_camb_check.py",
 ]
 
-# Best-effort extraction keys for a normalized constants table
-# This is intentionally conservative and only extracts simple "key = value" patterns.
 EXTRACT_KEYS = [
     "alpha", "alpha_s", "sin2", "sin^2", "sin2theta", "sin2w",
     "h0", "H0",
@@ -67,12 +70,6 @@ EXTRACT_KEYS = [
 ]
 
 
-def sha256_bytes(b: bytes) -> str:
-    h = hashlib.sha256()
-    h.update(b)
-    return h.hexdigest()
-
-
 def sha256_file(p: Path) -> str:
     h = hashlib.sha256()
     with p.open("rb") as f:
@@ -82,7 +79,8 @@ def sha256_file(p: Path) -> str:
 
 
 def utc_stamp() -> str:
-    return _dt.datetime.utcnow().strftime("%Y_%m_%dT%H%M%SZ")
+    # timezone-aware UTC stamp (avoids utcnow() deprecation warnings)
+    return _dt.datetime.now(_dt.timezone.utc).strftime("%Y_%m_%dT%H%M%SZ")
 
 
 def find_repo_root(start: Path) -> Path:
@@ -123,23 +121,13 @@ def git_status_porcelain(repo_root: Path) -> Optional[str]:
 
 
 def safe_slug(path_str: str) -> str:
-    # file name for stdout/stderr artifacts
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", path_str.strip().replace("/", "_").replace("\\", "_"))
 
 
 def extract_constants_from_text(text: str) -> Dict[str, Any]:
-    """
-    Best-effort extractor.
-    Looks for lines containing "<key> ... = <number>" where number is float/scientific.
-    Returns a dict key -> {value, line}.
-    """
     out: Dict[str, Any] = {}
     lines = text.splitlines()
-
-    # normalize keys for matching
     key_set = set(k.lower() for k in EXTRACT_KEYS)
-
-    # matches: key [any] = [number]
     num_re = r"([-+]?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?)"
     pat = re.compile(r"^\s*([A-Za-z0-9_^]+)\s*[:=]\s*" + num_re + r"\s*$")
 
@@ -148,8 +136,7 @@ def extract_constants_from_text(text: str) -> Dict[str, Any]:
         if not m:
             continue
         k_raw = m.group(1).strip()
-        k = k_raw.lower()
-        if k not in key_set:
+        if k_raw.lower() not in key_set:
             continue
         v_str = m.group(2)
         try:
@@ -158,20 +145,17 @@ def extract_constants_from_text(text: str) -> Dict[str, Any]:
             continue
         out[k_raw] = {"value": v, "value_str": v_str, "line": line.strip()}
 
-    # extra pass for patterns like "H0 = 70.44" embedded in longer lines
     embed_pat = re.compile(r"\b([A-Za-z0-9_^]+)\b\s*=\s*" + num_re)
     for line in lines:
         for m in embed_pat.finditer(line):
             k_raw = m.group(1).strip()
-            k = k_raw.lower()
-            if k not in key_set:
+            if k_raw.lower() not in key_set:
                 continue
             v_str = m.group(2)
             try:
                 v = float(v_str)
             except Exception:
                 continue
-            # keep the last occurrence as "most recent"
             out[k_raw] = {"value": v, "value_str": v_str, "line": line.strip()}
 
     return out
@@ -195,7 +179,6 @@ def run_one(repo_root: Path, script_rel: str, out_dir: Path) -> Dict[str, Any]:
     if not script_path.exists():
         return rec
 
-    # capture
     env = os.environ.copy()
     env["PYTHONUTF8"] = "1"
     env["PYTHONHASHSEED"] = "0"
@@ -220,8 +203,6 @@ def run_one(repo_root: Path, script_rel: str, out_dir: Path) -> Dict[str, Any]:
     rec["seconds"] = round(t1 - t0, 6)
     rec["stdout_file"] = stdout_path.name
     rec["stderr_file"] = stderr_path.name
-
-    # extract a conservative constants table
     rec["constants_extracted"] = extract_constants_from_text(p.stdout)
 
     return rec
@@ -239,14 +220,11 @@ def compute_output_hashes(out_dir: Path) -> Dict[str, str]:
     return m
 
 
-def compute_code_hashes(repo_root: Path, scripts: List[str]) -> Dict[str, str]:
-    m: Dict[str, str] = {}
+def compute_code_hashes(repo_root: Path, scripts: List[str]) -> Dict[str, Optional[str]]:
+    m: Dict[str, Optional[str]] = {}
     for rel in scripts:
         p = (repo_root / rel).resolve()
-        if p.exists() and p.is_file():
-            m[rel] = sha256_file(p)
-        else:
-            m[rel] = None  # type: ignore
+        m[rel] = sha256_file(p) if p.exists() and p.is_file() else None
     return m
 
 
@@ -266,11 +244,7 @@ def cmd_run(args: argparse.Namespace) -> int:
     repo_root = find_repo_root(Path(__file__).parent)
     stamp = utc_stamp()
 
-    if args.out:
-        out_dir = Path(args.out).resolve()
-    else:
-        out_dir = (repo_root / "audits" / "results" / f"foundations_a2_{stamp}").resolve()
-
+    out_dir = Path(args.out).resolve() if args.out else (repo_root / "audits" / "results" / f"foundations_a2_{stamp}").resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     scripts = list(CORE_SCRIPTS)
@@ -299,7 +273,6 @@ def cmd_run(args: argparse.Namespace) -> int:
     code_hashes = compute_code_hashes(repo_root, scripts)
     write_json(out_dir / "code_sha256.json", code_hashes)
 
-    # constants table merged across scripts (last write wins)
     merged_constants: Dict[str, Any] = {}
     for r in runs:
         for k, v in (r.get("constants_extracted") or {}).items():
@@ -311,22 +284,12 @@ def cmd_run(args: argparse.Namespace) -> int:
             }
     write_json(out_dir / "constants_table.json", merged_constants)
 
-    # output hashes after all writes
     out_hashes = compute_output_hashes(out_dir)
     write_json(out_dir / "output_sha256.json", out_hashes)
 
-    # bundle hash based on the key evidence files (not the raw stdout, those are covered by output_sha256)
-    key_files = [
-        "run_metadata.json",
-        "runs.json",
-        "code_sha256.json",
-        "constants_table.json",
-        "output_sha256.json",
-    ]
+    key_files = ["run_metadata.json", "runs.json", "code_sha256.json", "constants_table.json", "output_sha256.json"]
     b = bundle_sha256(out_dir, key_files)
     (out_dir / "BUNDLE_SHA256.txt").write_text(b + "\n", encoding="utf-8")
-
-    # also record the command used
     (out_dir / "RUN_COMMAND.txt").write_text(" ".join(sys.argv) + "\n", encoding="utf-8")
 
     print(f"[OK] wrote results to: {out_dir}")
@@ -340,14 +303,7 @@ def cmd_verify(args: argparse.Namespace) -> int:
         print(f"[ERR] verify path not found: {out_dir}")
         return 2
 
-    required = [
-        "run_metadata.json",
-        "runs.json",
-        "code_sha256.json",
-        "constants_table.json",
-        "output_sha256.json",
-        "BUNDLE_SHA256.txt",
-    ]
+    required = ["run_metadata.json", "runs.json", "code_sha256.json", "constants_table.json", "output_sha256.json", "BUNDLE_SHA256.txt"]
     missing = [x for x in required if not (out_dir / x).exists()]
     if missing:
         print("[ERR] missing required files:")
@@ -355,21 +311,13 @@ def cmd_verify(args: argparse.Namespace) -> int:
             print("  - " + x)
         return 3
 
-    # recompute output hashes
     recomputed_outputs = compute_output_hashes(out_dir)
     stored_outputs = json.loads((out_dir / "output_sha256.json").read_text(encoding="utf-8"))
     if recomputed_outputs != stored_outputs:
         print("[FAIL] output_sha256 mismatch")
         return 4
 
-    # recompute bundle hash
-    key_files = [
-        "run_metadata.json",
-        "runs.json",
-        "code_sha256.json",
-        "constants_table.json",
-        "output_sha256.json",
-    ]
+    key_files = ["run_metadata.json", "runs.json", "code_sha256.json", "constants_table.json", "output_sha256.json"]
     recomputed_bundle = bundle_sha256(out_dir, key_files)
     stored_bundle = (out_dir / "BUNDLE_SHA256.txt").read_text(encoding="utf-8").strip()
     if recomputed_bundle != stored_bundle:
