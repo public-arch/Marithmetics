@@ -1,2 +1,0 @@
-/workspaces/Marithmetics/doc/doc_referee_closeout_audit_v1.py:194: SyntaxWarning: invalid escape sequence '\h'
-  """
