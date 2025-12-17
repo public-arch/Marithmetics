@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/workspaces/Marithmetics/cosmo/gum_camb_check.py", line 33, in <module>
-    import numpy as np
-ModuleNotFoundError: No module named 'numpy'
