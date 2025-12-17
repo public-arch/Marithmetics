@@ -4,11 +4,21 @@
 """
 Foundations Capsule Runner (stdlib-only)
 
-- Runs the canonical allowlist (Tier-A/A2) + Universe From Zero capsule
-- Captures stdout/stderr
-- Writes a frozen results bundle under audits/results/
-- Emits code + output SHA256 manifests and a single bundle fingerprint
-- Optional verify mode
+What it does
+- Runs a canonical allowlist of scripts (Tier-A/A2) and captures stdout/stderr
+- Writes a frozen results bundle under audits/results/foundations_a2_<UTCSTAMP>/
+- Produces:
+    run_metadata.json
+    runs.json
+    code_sha256.json
+    constants_table.json
+    RUN_COMMAND.txt
+    output_sha256.json   (hashes of all artifacts EXCEPT output_sha256.json and BUNDLE_SHA256.txt)
+    BUNDLE_SHA256.txt    (hash of key evidence files)
+
+Verify mode
+- --verify <folder> recomputes output_sha256.json (with the same exclusions) and the bundle hash.
+- This is designed to be stable and not fail due to self-hashing.
 
 Usage
   python audits/run_foundations_capsule.py
@@ -30,19 +40,20 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Set
 
+
+# -----------------------------
+# Canonical allowlist
+# -----------------------------
 
 CORE_SCRIPTS = [
-    # Tier-A / A2 authority harnesses
+    # Referee harnesses / authority capsules
     "audits/tier_a_master_referee_demo_v6.py",
     "audits/a2_archive_master.py",
     "audits/marithmetics_unified_theory.py",
 
-    # Universe From Zero (referee capsule)
-    "audits/universe_from_zero_capsule.py",
-
-    # Engines you requested to run directly as well
+    # Engines run directly (as requested)
     "sm/sm_standard_model_demo_v1.py",
     "cosmo/bb_grand_emergence_masterpiece_runner_v1.py",
     "omega/omega_observer_commutant_fejer_v1.py",
@@ -54,9 +65,16 @@ CORE_SCRIPTS = [
 ]
 
 OPTIONAL_SCRIPTS = [
+    # Explicitly downstream / optional diagnostic
     "cosmo/gum_camb_check.py",
 ]
 
+# Output hash exclusions:
+# - output_sha256.json would otherwise self-hash (unstable)
+# - BUNDLE_SHA256.txt is computed after and depends on key files
+OUTPUT_HASH_EXCLUDE_DEFAULT: Set[str] = {"output_sha256.json", "BUNDLE_SHA256.txt"}
+
+# Conservative extraction keys (best-effort, not required for verification)
 EXTRACT_KEYS = [
     "alpha", "alpha_s", "sin2", "sin^2", "sin2theta", "sin2w",
     "h0", "H0",
@@ -70,6 +88,10 @@ EXTRACT_KEYS = [
 ]
 
 
+# -----------------------------
+# Utilities
+# -----------------------------
+
 def sha256_file(p: Path) -> str:
     h = hashlib.sha256()
     with p.open("rb") as f:
@@ -79,13 +101,13 @@ def sha256_file(p: Path) -> str:
 
 
 def utc_stamp() -> str:
-    # timezone-aware UTC stamp (avoids utcnow() deprecation warnings)
+    # timezone-aware UTC stamp (no utcnow() warnings)
     return _dt.datetime.now(_dt.timezone.utc).strftime("%Y_%m_%dT%H%M%SZ")
 
 
 def find_repo_root(start: Path) -> Path:
     cur = start.resolve()
-    for _ in range(10):
+    for _ in range(12):
         if (cur / ".git").exists() or (cur / "MANIFEST.md").exists() or (cur / "Readme.md").exists():
             return cur
         cur = cur.parent
@@ -124,7 +146,14 @@ def safe_slug(path_str: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", path_str.strip().replace("/", "_").replace("\\", "_"))
 
 
+def write_json(p: Path, obj: Any) -> None:
+    p.write_text(json.dumps(obj, indent=2, sort_keys=True), encoding="utf-8")
+
+
 def extract_constants_from_text(text: str) -> Dict[str, Any]:
+    """
+    Best-effort extractor. Non-critical. Used for convenience in paper table prep.
+    """
     out: Dict[str, Any] = {}
     lines = text.splitlines()
     key_set = set(k.lower() for k in EXTRACT_KEYS)
@@ -159,6 +188,39 @@ def extract_constants_from_text(text: str) -> Dict[str, Any]:
             out[k_raw] = {"value": v, "value_str": v_str, "line": line.strip()}
 
     return out
+
+
+def compute_output_hashes(out_dir: Path, exclude: Optional[Set[str]] = None) -> Dict[str, str]:
+    if exclude is None:
+        exclude = set(OUTPUT_HASH_EXCLUDE_DEFAULT)
+    m: Dict[str, str] = {}
+    for p in sorted(out_dir.glob("*")):
+        if p.is_file() and p.name not in exclude:
+            m[p.name] = sha256_file(p)
+    return m
+
+
+def compute_code_hashes(repo_root: Path, scripts: List[str]) -> Dict[str, Optional[str]]:
+    m: Dict[str, Optional[str]] = {}
+    for rel in scripts:
+        p = (repo_root / rel).resolve()
+        m[rel] = sha256_file(p) if p.exists() and p.is_file() else None
+    return m
+
+
+def bundle_sha256(out_dir: Path, key_files: List[str]) -> str:
+    """
+    Bundle fingerprint: hash the bytes of key evidence files (in order).
+    """
+    h = hashlib.sha256()
+    for name in key_files:
+        p = out_dir / name
+        if not p.exists():
+            h.update(f"MISSING:{name}\n".encode("utf-8"))
+            continue
+        h.update(p.read_bytes())
+        h.update(b"\n")
+    return h.hexdigest()
 
 
 def run_one(repo_root: Path, script_rel: str, out_dir: Path) -> Dict[str, Any]:
@@ -208,37 +270,9 @@ def run_one(repo_root: Path, script_rel: str, out_dir: Path) -> Dict[str, Any]:
     return rec
 
 
-def write_json(p: Path, obj: Any) -> None:
-    p.write_text(json.dumps(obj, indent=2, sort_keys=True), encoding="utf-8")
-
-
-def compute_output_hashes(out_dir: Path) -> Dict[str, str]:
-    m: Dict[str, str] = {}
-    for p in sorted(out_dir.glob("*")):
-        if p.is_file():
-            m[p.name] = sha256_file(p)
-    return m
-
-
-def compute_code_hashes(repo_root: Path, scripts: List[str]) -> Dict[str, Optional[str]]:
-    m: Dict[str, Optional[str]] = {}
-    for rel in scripts:
-        p = (repo_root / rel).resolve()
-        m[rel] = sha256_file(p) if p.exists() and p.is_file() else None
-    return m
-
-
-def bundle_sha256(out_dir: Path, key_files: List[str]) -> str:
-    h = hashlib.sha256()
-    for name in key_files:
-        p = out_dir / name
-        if not p.exists():
-            h.update(f"MISSING:{name}\n".encode("utf-8"))
-            continue
-        h.update(p.read_bytes())
-        h.update(b"\n")
-    return h.hexdigest()
-
+# -----------------------------
+# Commands
+# -----------------------------
 
 def cmd_run(args: argparse.Namespace) -> int:
     repo_root = find_repo_root(Path(__file__).parent)
@@ -250,6 +284,9 @@ def cmd_run(args: argparse.Namespace) -> int:
     scripts = list(CORE_SCRIPTS)
     if args.include_optional:
         scripts += OPTIONAL_SCRIPTS
+
+    # Write command early so it is included in output hashes
+    (out_dir / "RUN_COMMAND.txt").write_text(" ".join(sys.argv) + "\n", encoding="utf-8")
 
     meta = {
         "utc_stamp": stamp,
@@ -284,13 +321,20 @@ def cmd_run(args: argparse.Namespace) -> int:
             }
     write_json(out_dir / "constants_table.json", merged_constants)
 
+    # Output hashes exclude output_sha256.json and BUNDLE_SHA256.txt
     out_hashes = compute_output_hashes(out_dir)
     write_json(out_dir / "output_sha256.json", out_hashes)
 
-    key_files = ["run_metadata.json", "runs.json", "code_sha256.json", "constants_table.json", "output_sha256.json"]
+    key_files = [
+        "run_metadata.json",
+        "runs.json",
+        "code_sha256.json",
+        "constants_table.json",
+        "RUN_COMMAND.txt",
+        "output_sha256.json",
+    ]
     b = bundle_sha256(out_dir, key_files)
     (out_dir / "BUNDLE_SHA256.txt").write_text(b + "\n", encoding="utf-8")
-    (out_dir / "RUN_COMMAND.txt").write_text(" ".join(sys.argv) + "\n", encoding="utf-8")
 
     print(f"[OK] wrote results to: {out_dir}")
     print(f"[OK] BUNDLE_SHA256: {b}")
@@ -303,7 +347,15 @@ def cmd_verify(args: argparse.Namespace) -> int:
         print(f"[ERR] verify path not found: {out_dir}")
         return 2
 
-    required = ["run_metadata.json", "runs.json", "code_sha256.json", "constants_table.json", "output_sha256.json", "BUNDLE_SHA256.txt"]
+    required = [
+        "run_metadata.json",
+        "runs.json",
+        "code_sha256.json",
+        "constants_table.json",
+        "RUN_COMMAND.txt",
+        "output_sha256.json",
+        "BUNDLE_SHA256.txt",
+    ]
     missing = [x for x in required if not (out_dir / x).exists()]
     if missing:
         print("[ERR] missing required files:")
@@ -311,15 +363,24 @@ def cmd_verify(args: argparse.Namespace) -> int:
             print("  - " + x)
         return 3
 
-    recomputed_outputs = compute_output_hashes(out_dir)
     stored_outputs = json.loads((out_dir / "output_sha256.json").read_text(encoding="utf-8"))
+    recomputed_outputs = compute_output_hashes(out_dir)
+
     if recomputed_outputs != stored_outputs:
         print("[FAIL] output_sha256 mismatch")
         return 4
 
-    key_files = ["run_metadata.json", "runs.json", "code_sha256.json", "constants_table.json", "output_sha256.json"]
+    key_files = [
+        "run_metadata.json",
+        "runs.json",
+        "code_sha256.json",
+        "constants_table.json",
+        "RUN_COMMAND.txt",
+        "output_sha256.json",
+    ]
     recomputed_bundle = bundle_sha256(out_dir, key_files)
     stored_bundle = (out_dir / "BUNDLE_SHA256.txt").read_text(encoding="utf-8").strip()
+
     if recomputed_bundle != stored_bundle:
         print("[FAIL] BUNDLE_SHA256 mismatch")
         print("  stored    :", stored_bundle)
@@ -345,3 +406,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
