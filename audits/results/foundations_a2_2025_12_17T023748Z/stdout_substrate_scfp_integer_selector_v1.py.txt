@@ -1,0 +1,118 @@
+=====================================================================
+SCFP++ Integer Selector (v4) — Phi-derived mod-8 class + 2-adic branch
+=====================================================================
+[Setup] scan range: [80, 800]
+  Gates:
+    C4'   q = largest odd prime factor of (w-1), require q % 4 == 1 and q > sqrt(w)
+    C4''  Phi-parity via Legendre(2|q) (disable with --loose-parity)
+    C2''  2-adic branch v2(w-1) from Fejer/MST (disable with --loose-v2)
+    C5''  wheel orientation via Legendre(5|q) for PC2 (disable with --loose-5)
+    C6'   simplicity: prime-first, then minimal w
+
+
+Channel: alpha
+  Required (derived from Phi):
+    - Legendre(2|q) = +1
+    - v2(w-1) = 3
+    - (no 5-orientation constraint)
+       w   prime?   q=oddPF    q%4==1   q>sqrt(w)    Leg2 OK     v2 OK    Leg5 OK     w%8
+     137      yes        17       yes         yes        yes       yes        yes       1
+     329       no        41       yes         yes        yes       yes        yes       1
+     585       no        73       yes         yes        yes       yes        yes       1
+     713       no        89       yes         yes        yes       yes        yes       1
+     777       no        97       yes         yes        yes       yes        yes       1
+
+  Minimal survivor (simplicity -> minimality): w* = 137
+    C4'   period extremality: 🟢 ✅  (q=17, q%4=1, q>sqrt(w))
+    C4''  Phi-parity (Legendre(2|q)): 🟢 ✅
+    C2''  2-adic branch v2(w-1):     🟢 ✅
+    C5''  wheel orientation (5):      (none)
+    C6'   simplicity (prime):         🟢 ✅
+
+Channel: su2
+  Required (derived from Phi):
+    - Legendre(2|q) = -1
+    - v2(w-1) = 1
+    - (no 5-orientation constraint)
+       w   prime?   q=oddPF    q%4==1   q>sqrt(w)    Leg2 OK     v2 OK    Leg5 OK     w%8
+     107      yes        53       yes         yes        yes       yes        yes       3
+     131      yes        13       yes         yes        yes       yes        yes       3
+     223      yes        37       yes         yes        yes       yes        yes       7
+     347      yes       173       yes         yes        yes       yes        yes       3
+     367      yes        61       yes         yes        yes       yes        yes       7
+     523      yes        29       yes         yes        yes       yes        yes       3
+     587      yes       293       yes         yes        yes       yes        yes       3
+     607      yes       101       yes         yes        yes       yes        yes       7
+     743      yes        53       yes         yes        yes       yes        yes       7
+     123       no        61       yes         yes        yes       yes        yes       3
+     175       no        29       yes         yes        yes       yes        yes       7
+     203       no       101       yes         yes        yes       yes        yes       3
+     219       no       109       yes         yes        yes       yes        yes       3
+     291       no        29       yes         yes        yes       yes        yes       3
+     299       no       149       yes         yes        yes       yes        yes       3
+     315       no       157       yes         yes        yes       yes        yes       3
+     319       no        53       yes         yes        yes       yes        yes       7
+     363       no       181       yes         yes        yes       yes        yes       3
+     371       no        37       yes         yes        yes       yes        yes       3
+     395       no       197       yes         yes        yes       yes        yes       3
+     407       no        29       yes         yes        yes       yes        yes       7
+     459       no       229       yes         yes        yes       yes        yes       3
+     519       no        37       yes         yes        yes       yes        yes       7
+     531       no        53       yes         yes        yes       yes        yes       3
+     539       no       269       yes         yes        yes       yes        yes       3
+     555       no       277       yes         yes        yes       yes        yes       3
+     611       no        61       yes         yes        yes       yes        yes       3
+     635       no       317       yes         yes        yes       yes        yes       3
+     639       no        29       yes         yes        yes       yes        yes       7
+     655       no       109       yes         yes        yes       yes        yes       7
+     667       no        37       yes         yes        yes       yes        yes       3
+     699       no       349       yes         yes        yes       yes        yes       3
+     747       no       373       yes         yes        yes       yes        yes       3
+     755       no        29       yes         yes        yes       yes        yes       3
+     779       no       389       yes         yes        yes       yes        yes       3
+     795       no       397       yes         yes        yes       yes        yes       3
+
+  Minimal survivor (simplicity -> minimality): w* = 107
+    C4'   period extremality: 🟢 ✅  (q=53, q%4=1, q>sqrt(w))
+    C4''  Phi-parity (Legendre(2|q)): 🟢 ✅
+    C2''  2-adic branch v2(w-1):     🟢 ✅
+    C5''  wheel orientation (5):      (none)
+    C6'   simplicity (prime):         🟢 ✅
+
+Channel: pc2
+  Required (derived from Phi):
+    - Legendre(2|q) = +1
+    - v2(w-1) = 1
+    - Legendre(5|q) = -1
+       w   prime?   q=oddPF    q%4==1   q>sqrt(w)    Leg2 OK     v2 OK    Leg5 OK     w%8
+     103      yes        17       yes         yes        yes       yes        yes       7
+     227      yes       113       yes         yes        yes       yes        yes       3
+     239      yes        17       yes         yes        yes       yes        yes       7
+     439      yes        73       yes         yes        yes       yes        yes       7
+     467      yes       233       yes         yes        yes       yes        yes       3
+     147       no        73       yes         yes        yes       yes        yes       3
+     171       no        17       yes         yes        yes       yes        yes       3
+     195       no        97       yes         yes        yes       yes        yes       3
+     275       no       137       yes         yes        yes       yes        yes       3
+     387       no       193       yes         yes        yes       yes        yes       3
+     515       no       257       yes         yes        yes       yes        yes       3
+     583       no        97       yes         yes        yes       yes        yes       7
+     627       no       313       yes         yes        yes       yes        yes       3
+     675       no       337       yes         yes        yes       yes        yes       3
+     679       no       113       yes         yes        yes       yes        yes       7
+     707       no       353       yes         yes        yes       yes        yes       3
+     731       no        73       yes         yes        yes       yes        yes       3
+
+  Minimal survivor (simplicity -> minimality): w* = 103
+    C4'   period extremality: 🟢 ✅  (q=17, q%4=1, q>sqrt(w))
+    C4''  Phi-parity (Legendre(2|q)): 🟢 ✅
+    C2''  2-adic branch v2(w-1):     🟢 ✅
+    C5''  wheel orientation (5):      🟢 ✅
+    C6'   simplicity (prime):         🟢 ✅
+
+=====================================================================
+Grand Selection Summary
+=====================================================================
+  alpha: w* =  137   🟢 ✅  (expect 137)
+  su2  : w* =  107   🟢 ✅  (expect 107)
+  pc2  : w* =  103   🟢 ✅  (expect 103)

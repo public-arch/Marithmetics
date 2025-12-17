@@ -1,0 +1,113 @@
+[
+  {
+    "constants_extracted": {},
+    "exists": true,
+    "returncode": 2,
+    "script_abs": "/workspaces/Marithmetics/audits/tier_a_master_referee_demo_v6.py",
+    "script_rel": "audits/tier_a_master_referee_demo_v6.py",
+    "seconds": 0.213879,
+    "stderr_file": "stderr_audits_tier_a_master_referee_demo_v6.py.txt",
+    "stdout_file": "stdout_audits_tier_a_master_referee_demo_v6.py.txt"
+  },
+  {
+    "constants_extracted": {
+      "H0": {
+        "line": "BEST: H0=70.4493959643776719  exps=(-6, 1, 2, 7)  rank=1",
+        "value": 70.44939596437767,
+        "value_str": "70.4493959643776719"
+      },
+      "sin^2": {
+        "line": "\u2705 CLOSED: \u03b1=1/137, \u03b1s=2/17, sin^2=7/30.",
+        "value": 7.0,
+        "value_str": "7"
+      }
+    },
+    "exists": true,
+    "returncode": 0,
+    "script_abs": "/workspaces/Marithmetics/audits/a2_archive_master.py",
+    "script_rel": "audits/a2_archive_master.py",
+    "seconds": 0.333005,
+    "stderr_file": "stderr_audits_a2_archive_master.py.txt",
+    "stdout_file": "stdout_audits_a2_archive_master.py.txt"
+  },
+  {
+    "constants_extracted": {},
+    "exists": true,
+    "returncode": 0,
+    "script_abs": "/workspaces/Marithmetics/audits/marithmetics_unified_theory.py",
+    "script_rel": "audits/marithmetics_unified_theory.py",
+    "seconds": 0.716612,
+    "stderr_file": "stderr_audits_marithmetics_unified_theory.py.txt",
+    "stdout_file": "stdout_audits_marithmetics_unified_theory.py.txt"
+  },
+  {
+    "constants_extracted": {},
+    "exists": true,
+    "returncode": 0,
+    "script_abs": "/workspaces/Marithmetics/sm/sm_standard_model_demo_v1.py",
+    "script_rel": "sm/sm_standard_model_demo_v1.py",
+    "seconds": 0.03789,
+    "stderr_file": "stderr_sm_sm_standard_model_demo_v1.py.txt",
+    "stdout_file": "stdout_sm_sm_standard_model_demo_v1.py.txt"
+  },
+  {
+    "constants_extracted": {},
+    "exists": true,
+    "returncode": 0,
+    "script_abs": "/workspaces/Marithmetics/cosmo/bb_grand_emergence_masterpiece_runner_v1.py",
+    "script_rel": "cosmo/bb_grand_emergence_masterpiece_runner_v1.py",
+    "seconds": 0.025155,
+    "stderr_file": "stderr_cosmo_bb_grand_emergence_masterpiece_runner_v1.py.txt",
+    "stdout_file": "stdout_cosmo_bb_grand_emergence_masterpiece_runner_v1.py.txt"
+  },
+  {
+    "constants_extracted": {},
+    "exists": true,
+    "returncode": 0,
+    "script_abs": "/workspaces/Marithmetics/omega/omega_observer_commutant_fejer_v1.py",
+    "script_rel": "omega/omega_observer_commutant_fejer_v1.py",
+    "seconds": 0.056074,
+    "stderr_file": "stderr_omega_omega_observer_commutant_fejer_v1.py.txt",
+    "stdout_file": "stdout_omega_omega_observer_commutant_fejer_v1.py.txt"
+  },
+  {
+    "constants_extracted": {},
+    "exists": true,
+    "returncode": 0,
+    "script_abs": "/workspaces/Marithmetics/substrate/scfp_integer_selector_v1.py",
+    "script_rel": "substrate/scfp_integer_selector_v1.py",
+    "seconds": 0.041008,
+    "stderr_file": "stderr_substrate_scfp_integer_selector_v1.py.txt",
+    "stdout_file": "stdout_substrate_scfp_integer_selector_v1.py.txt"
+  },
+  {
+    "constants_extracted": {},
+    "exists": true,
+    "returncode": 0,
+    "script_abs": "/workspaces/Marithmetics/doc/doc_rosetta_base_gauge_v1.py",
+    "script_rel": "doc/doc_rosetta_base_gauge_v1.py",
+    "seconds": 0.022996,
+    "stderr_file": "stderr_doc_doc_rosetta_base_gauge_v1.py.txt",
+    "stdout_file": "stdout_doc_doc_rosetta_base_gauge_v1.py.txt"
+  },
+  {
+    "constants_extracted": {},
+    "exists": true,
+    "returncode": 0,
+    "script_abs": "/workspaces/Marithmetics/doc/doc_referee_closeout_audit_v1.py",
+    "script_rel": "doc/doc_referee_closeout_audit_v1.py",
+    "seconds": 0.298509,
+    "stderr_file": "stderr_doc_doc_referee_closeout_audit_v1.py.txt",
+    "stdout_file": "stdout_doc_doc_referee_closeout_audit_v1.py.txt"
+  },
+  {
+    "constants_extracted": {},
+    "exists": true,
+    "returncode": 1,
+    "script_abs": "/workspaces/Marithmetics/cosmo/gum_camb_check.py",
+    "script_rel": "cosmo/gum_camb_check.py",
+    "seconds": 0.014747,
+    "stderr_file": "stderr_cosmo_gum_camb_check.py.txt",
+    "stdout_file": "stdout_cosmo_gum_camb_check.py.txt"
+  }
+]
