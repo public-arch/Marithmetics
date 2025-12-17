@@ -1,0 +1,129 @@
+{
+  "alias_ladder": [
+    {
+      "M": 97.0,
+      "r": 3.0,
+      "r_over_M": 0.030927835051546393
+    },
+    {
+      "M": 193.0,
+      "r": 3.0,
+      "r_over_M": 0.015544041450777202
+    },
+    {
+      "M": 389.0,
+      "r": 3.0,
+      "r_over_M": 0.007712082262210797
+    },
+    {
+      "M": 769.0,
+      "r": 4.0,
+      "r_over_M": 0.005201560468140442
+    }
+  ],
+  "beta": {
+    "\u03b2 RMSE (toy ladder)": "2.343e-03",
+    "\u03b2-signs (U1 up / SU down)": "PASS"
+  },
+  "config": {
+    "M": 97,
+    "Phi_alphabet": [
+      "pi",
+      "zeta(3)",
+      "log2",
+      "phi"
+    ],
+    "bases": [
+      7,
+      10,
+      16
+    ],
+    "beta_dt": 0.1,
+    "r": 12,
+    "seed": 137,
+    "wheel": "235"
+  },
+  "digits_drift": {
+    "Expected": "FAIL (base-dependent drift appears)",
+    "drift": "1.800e-09",
+    "\u03a6_bad(b) values": "1.999999999400, 2.000000000000, 2.000000001200"
+  },
+  "fejer_spectrum_head": [
+    [
+      0,
+      1.0
+    ],
+    [
+      1,
+      0.9509858663964551
+    ],
+    [
+      2,
+      0.8152834255354456
+    ],
+    [
+      3,
+      0.6234355107007022
+    ],
+    [
+      4,
+      0.41598564185433995
+    ],
+    [
+      5,
+      0.231764525428582
+    ],
+    [
+      6,
+      0.09763746523483212
+    ]
+  ],
+  "noncoprime": {
+    "D": 810,
+    "noncoprime_collisions": 720
+  },
+  "prereg_sha256": "485d338c92064cc8f65382771e5af29a193b293096512557a18fce308f27cce4",
+  "rosetta": {
+    "CRT injectivity (2,3,5)": "PASS",
+    "Rosetta \u03a6_\u03b1 equality b\u2208{7,10,16}": "PASS",
+    "\u03a6_\u03b1 values": "2.000000, 2.000000, 2.000000"
+  },
+  "scfp": {
+    "C1\u2192C6 counts": "4\u21924\u21923\u21921\u21921\u21921",
+    "PASS": "PASS",
+    "Survivor": "P6_pair_2_5"
+  },
+  "sharp_plus_one": 0.4444444444444444,
+  "sharp_plus_one_sweep": [
+    {
+      "delta": 0.4,
+      "r": 5,
+      "theory": 0.4
+    },
+    {
+      "delta": 0.4285714285714286,
+      "r": 7,
+      "theory": 0.42857142857142855
+    },
+    {
+      "delta": 0.4444444444444444,
+      "r": 9,
+      "theory": 0.4444444444444444
+    },
+    {
+      "delta": 0.4545454545454546,
+      "r": 11,
+      "theory": 0.45454545454545453
+    },
+    {
+      "delta": 0.46153846153846156,
+      "r": 13,
+      "theory": 0.46153846153846156
+    }
+  ],
+  "stationary": {
+    "Note": "Mean-free Rayleigh ratio for T=\u03a0 S \u03a0 (indicative stationary multiplier).",
+    "Rayleigh(mean)": "0.064775",
+    "Rayleigh(std)": "0.029212"
+  }
+}
