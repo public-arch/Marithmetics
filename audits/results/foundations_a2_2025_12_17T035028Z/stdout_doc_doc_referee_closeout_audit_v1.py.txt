@@ -1,0 +1,27 @@
+=== MARI Referee Close-Out Audit (full upgrade) ===
+Prereg SHA256: 485d338c92064cc8f65382771e5af29a193b293096512557a18fce308f27cce4
+
+[Rosetta] Rosetta Φ_α equality b∈{7,10,16}: PASS
+[Rosetta] CRT injectivity (2,3,5): PASS
+[Rosetta] Φ_α values: 2.000000, 2.000000, 2.000000
+
+[Stationarity] Rayleigh(mean): 0.064775
+[Stationarity] Rayleigh(std): 0.029212
+[Stationarity] Note: Mean-free Rayleigh ratio for T=Π S Π (indicative stationary multiplier).
+
+[Fejér] First multipliers (k, ˆF_r(k)): [(0, 1.0), (1, 0.9509858663964551), (2, 0.8152834255354456), (3, 0.6234355107007022), (4, 0.41598564185433995), (5, 0.231764525428582), (6, 0.09763746523483212)] 
+
+[SCFP++] C1→C6 counts: 4→4→3→1→1→1
+[SCFP++] Survivor: P6_pair_2_5
+[SCFP++] PASS: PASS
+
+[Beta] β-signs (U1 up / SU down): PASS
+[Beta] β RMSE (toy ladder): 2.343e-03
+
+[Sharp+1] Boundary delta (needs +1): 0.444444
+[Sharp+1] Sweep r (delta vs theory): [{'r': 5, 'delta': 0.4, 'theory': 0.4}, {'r': 7, 'delta': 0.4285714285714286, 'theory': 0.42857142857142855}, {'r': 9, 'delta': 0.4444444444444444, 'theory': 0.4444444444444444}, {'r': 11, 'delta': 0.4545454545454546, 'theory': 0.45454545454545453}, {'r': 13, 'delta': 0.46153846153846156, 'theory': 0.46153846153846156}]
+[UFET] Alias tail proxy r/M ladder: [{'M': 97.0, 'r': 3.0, 'r_over_M': 0.030927835051546393}, {'M': 193.0, 'r': 3.0, 'r_over_M': 0.015544041450777202}, {'M': 389.0, 'r': 3.0, 'r_over_M': 0.007712082262210797}, {'M': 769.0, 'r': 4.0, 'r_over_M': 0.005201560468140442}]
+[CRT non-coprime] collisions=720 over D=810 (expected)
+[Digits drift] Δ=1.800e-09 (expected FAIL); values: 1.999999999400, 2.000000000000, 2.000000001200
+Wrote referee_close_manifest.json
+Wrote referee_close_README.md

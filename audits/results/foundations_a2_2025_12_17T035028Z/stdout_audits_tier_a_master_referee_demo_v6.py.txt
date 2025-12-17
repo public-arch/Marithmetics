@@ -1,0 +1,255 @@
+═══════════════════ Tier‑A Master Referee Demo — v6 (Fix + Upgrade) ════════════════════
+
+
+Stage 0 — Environment & Module Discovery
+────────────────────────────────────────────────────────────────────────────────────────
+• UTC time: 2025-12-17T03:50:28Z
+• Python : 3.12.1 (Linux-6.8.0-1030-azure-x86_64-with-glibc2.39)
+• CWD    : /workspaces/Marithmetics
+• Script : /workspaces/Marithmetics/audits
+
+✔ sm/sm_standard_model_demo_v1 loaded  (sm_standard_model_demo_v1.py, sha256[:16]=263034cc277f0bf5)
+✔ cosmo/bb_grand_emergence_masterpiece_runner_v1 loaded  (bb_grand_emergence_masterpiece_runner_v1.py, sha256[:16]=95b14c0159b893c1)
+✔ omega/omega_observer_commutant_fejer_v1 loaded  (omega_observer_commutant_fejer_v1.py, sha256[:16]=776debe81eace4d6)
+✔ substrate/scfp_integer_selector_v1 loaded  (scfp_integer_selector_v1.py, sha256[:16]=eb1b56514a310ecc)
+
+Stage 1 — SCFP++ Gauge Integer Selection (C1–C4 + T1–T2)
+────────────────────────────────────────────────────────────────────────────────────────
+Canonical lane lawbook:
+  U(1) : q=17, residues=[1, 5], τ≥0.31, span=97..180
+  SU(2): q=13, residues=[3], τ≥0.3, span=97..180
+  SU(3): q=17, residues=[1], τ≥0.3, span=97..180
+  expected triple: (137, 107, 103)
+
+Lane survivors (self-contained):
+  U(1) : [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+
+Triple status: unique
+Unique triple: (137, 107, 103)
+
+✔ SM triple: (137, 107, 103)
+[96m══════════════════════════════════════════════════════════════════════════════════════════[0m
+[96m═══ [0m[96m[1mStage 0 — SCFP++ Integer Selector (Demo-18 gates, explicit search)[0m[96m ═══[0m
+[96m══════════════════════════════════════════════════════════════════════════════════════════[0m
+Lane U(1): q=17, residues=[1, 5], τ≥0.31, span=97..180
+  → Survivors (3): [103, 107, 137]
+    w=103 : Θ(w−1)=φ(w−1)/(w−1) = 0.31373
+    w=107 : Θ(w−1)=φ(w−1)/(w−1) = 0.49057
+    w=137 : Θ(w−1)=φ(w−1)/(w−1) = 0.47059
+
+Lane SU(2): q=13, residues=[3], τ≥0.3, span=97..180
+  → Survivors (1): [107]
+    w=107 : Θ(w−1)=φ(w−1)/(w−1) = 0.49057
+
+Lane SU(3): q=17, residues=[1], τ≥0.3, span=97..180
+  → Survivors (2): [103, 137]
+    w=103 : Θ(w−1)=φ(w−1)/(w−1) = 0.31373
+    w=137 : Θ(w−1)=φ(w−1)/(w−1) = 0.47059
+
+Cross-lane triples (before T1–T2):
+  (U(1), SU(2), SU(3)) = (103, 107, 103)
+  (U(1), SU(2), SU(3)) = (103, 107, 137)
+  (U(1), SU(2), SU(3)) = (107, 107, 103)
+  (U(1), SU(2), SU(3)) = (107, 107, 137)
+  (U(1), SU(2), SU(3)) = (137, 107, 103)
+  (U(1), SU(2), SU(3)) = (137, 107, 137)
+
+Triple-level structural constraints T1–T2:
+  → Admissible triples:
+      (137, 107, 103)   (passes T1, T2)
+
+Constraint failure reasons (for rejected triples):
+  (103, 107, 103) : fails T1 (distinct gauge survivors), fails T2 (q2 = w_U − s2 must be > 0)
+  (103, 107, 137) : fails T2 (q2 = w_U − s2 must be > 0)
+  (107, 107, 103) : fails T1 (distinct gauge survivors), fails T2 (q2 = w_U − s2 must be > 0)
+  (107, 107, 137) : fails T1 (distinct gauge survivors), fails T2 (q2 = w_U − s2 must be > 0)
+  (137, 107, 137) : fails T1 (distinct gauge survivors)
+
+[92mSelected SCFP++ gauge triple (unique under C1–C4 + T1–T2):[0m
+  • U(1):  wU = 137
+  • SU(2): s2 = 107
+  • SU(3): s3 = 103
+
+Lane sanity checks (Legendre, 2-adic branch, totient density):
+  Lane alpha: w=137, q=17
+    legendre(2|q)  = 1
+    v2(w−1)        = 3
+    φ(w−1)/(w−1)   = 0.47059  (τ=0.31)
+  Lane su2: w=107, q=13
+    legendre(2|q)  = 12
+    v2(w−1)        = 1
+    φ(w−1)/(w−1)   = 0.49057  (τ=0.3)
+  Lane su3: w=103, q=17
+    legendre(2|q)  = 1
+    v2(w−1)        = 1
+    φ(w−1)/(w−1)   = 0.31373  (τ=0.3)
+
+2-adic branch for U(1): wU−1=136 = 2^3 × 17, so q3=17
+
+✔ BB‑36 triple: (137, 107, 103)
+
+Stage 1b — Gauge Lawbook Robustness (τ + span neighborhood)
+────────────────────────────────────────────────────────────────────────────────────────
+Results:
+  tested:    19683
+  canonical: 8748
+  other:     0
+  multi:     0
+  none:      10935
+
+Negative control (raise SU(3) τ to 0.32): none, tri=None
+
+Stage 1c — Residue Scan (baseline τ/span)
+────────────────────────────────────────────────────────────────────────────────────────
+Scan class:
+  • U(1):  q=17, choose 2 residues from {1..16}
+  • SU(2): q=13, choose 1 residue from {1..12}
+  • SU(3): q=17, choose 1 residue from {1..16}
+  • τ and span fixed to canonical.
+
+Total residue-lawbooks tested: 23040
+Unique triple found:          3126
+  → canonical triple:         7
+  → other triples:            3119
+
+Other unique triples observed (top):
+  (173, 167, 179)  count=15
+  (173, 167, 139)  count=14
+  (173, 167, 157)  count=14
+  (173, 167, 107)  count=14
+  (173, 167, 109)  count=14
+  (173, 167, 163)  count=14
+  (173, 167, 113)  count=14
+  (173, 167, 149)  count=14
+
+Stage 1d — Residue τ‑Pressure Rigidity Scan (27 τ‑patterns, spans fixed)
+────────────────────────────────────────────────────────────────────────────────────────
+Goal: quantify whether residue tuning yields stable outputs under τ-pressure (3³ grid).
+Categories:
+  • all_27_same           : all 27 patterns produce a unique triple, always identical
+  • some_none_one_triple  : some patterns yield NONE, but whenever unique appears it’s the same triple
+  • multiple_triples      : unique outcomes change across τ-patterns
+  • multi                 : any τ-pattern yields multiple admissible triples
+  • all_none              : no τ-pattern yields a triple
+
+Rigidity distribution across residue lawbooks:
+             all_27_same: 1695
+    some_none_one_triple: 1615
+        multiple_triples: 0
+                   multi: 6698
+                all_none: 13032
+
+Canonical residue lawbook (U={1,5}, SU2={3}, SU3={1}) rigidity:
+  category: some_none_one_triple
+  unique patterns: 18/27, none patterns: 9/27
+
+Top stable triples (by # of residue-lawbooks yielding stable output):
+  (173, 167, 179) : 15
+  (173, 167, 139) : 14
+  (173, 167, 157) : 14
+  (173, 167, 107) : 14
+  (173, 167, 109) : 14
+  (173, 167, 127) : 14
+  (173, 167, 163) : 14
+  (173, 167, 113) : 14
+  (173, 167, 149) : 14
+  (173, 167, 101) : 14
+
+
+Stage 2 — Φ‑channel Gauge Couplings (exact rationals)
+────────────────────────────────────────────────────────────────────────────────────────
+α_em   = 1/137 = 0.007299270
+sin²θW = 7/30 = 0.233333333
+α_s    = 2/17 = 0.117647059
+
+✔ SM Φ constants match self-contained.
+
+Stage 3 — Yukawa Exponent Lawbook (E1–E6 + negative controls)
+────────────────────────────────────────────────────────────────────────────────────────
+Palette‑B: E1–E5=True, δ_iso=0.125000
+
+Local D¹ options per index: [2, 3, 3, 3, 3, 3, 3, 3, 3]
+Total D¹ candidates: 13122
+E1–E5 survivors:    81
+E1–E6 survivors:    81
+
+Global MC: draws=20000, E1–E5 hits=0, E1–E6 hits=0
+
+
+Stage 4 — Structural Cosmology (engine output)
+────────────────────────────────────────────────────────────────────────────────────────
+H0=70.449396, Ωtot=0.999944399
+
+
+Stage 5 — CAMB Closure (optional)
+────────────────────────────────────────────────────────────────────────────────────────
+[96m══════════════════════════════════════════════════════════════════════════════════════════[0m
+[96m═══ [0m[96m[1mStage 3 — CAMB / Einstein–Boltzmann Closure (optional)[0m[96m ═══[0m
+[96m══════════════════════════════════════════════════════════════════════════════════════════[0m
+Feeding CAMB with SCFP-derived parameters (no PDG upstream):
+  H0       = 70.449396
+  Ω_b h²   = 2.232504e-02
+  Ω_c h²   = 1.205930e-01
+  Ω_Λ      = 0.711900
+  A_s      = 2.099094e-09
+  n_s      = 0.964746
+  τ        = 0.053979
+  Σmν      = 0.059995
+
+CAMB diagnostic:
+  First acoustic peak ℓ₁ (CAMB) ≈ 218
+  Structural ℓ₁_SCFP           = 219.949
+
+
+Stage 6 — DOC / Fejér Kernel / DAO Audit (self-contained)
+────────────────────────────────────────────────────────────────────────────────────────
+symmetric_circular=True, unit_mass=True, nonneg=True, PSD=True, min_hatF=2.619e-04, max|Im|=8.635e-15
+
+═══════════════════════ Tier‑A Master Demo — Summary Scoreboard ════════════════════════
+✔ [HARD] Module present: sm/sm_standard_model_demo_v1.py
+    /workspaces/Marithmetics/sm/sm_standard_model_demo_v1.py
+✔ [HARD] Module present: cosmo/bb_grand_emergence_masterpiece_runner_v1.py
+    /workspaces/Marithmetics/cosmo/bb_grand_emergence_masterpiece_runner_v1.py
+✔ [HARD] Module present: omega/omega_observer_commutant_fejer_v1.py
+    /workspaces/Marithmetics/omega/omega_observer_commutant_fejer_v1.py
+✔ [HARD] Module present: substrate/scfp_integer_selector_v1.py
+    /workspaces/Marithmetics/substrate/scfp_integer_selector_v1.py
+✔ [HARD] Gauge triple (self-contained) equals canonical
+    kind=unique, triple=(137, 107, 103)
+✔ [HARD] Gauge triple (SM) equals canonical
+    SM=(137, 107, 103)
+✔ [HARD] Gauge triple (BB‑36) equals canonical
+    BB‑36=(137, 107, 103)
+✔ [HARD] Gauge robustness: no other/multi triples in neighborhood
+    tested=19683, canonical=8748, other=0, multi=0, none=10935
+✔ [HARD] Negative control: raising τ removes triple
+    kind=none, tri=None
+✔ [EVID] Residue scan: canonical triple appears (baseline τ/span) [evidence]
+    tested=23040, unique_any=3126, canon=7, other=3119
+✔ [EVID] Residue τ‑pressure rigidity: canonical residue lawbook is stable (not multi/variable)
+    category=some_none_one_triple, unique_patterns=18/27
+✔ [HARD] Φ‑channel: SM constants match self-contained
+    |Δα|=0.000e+00, |Δsin2|=0.000e+00, |Δαs|=0.000e+00
+✔ [HARD] Yukawa: Palette‑B satisfies E1–E5
+✔ [HARD] Yukawa: Palette‑B passes E6 (δ_iso>0.05)
+    δ_iso=0.125000
+✔ [HARD] Yukawa D¹ survivor counts match expected (81,81)
+    E1–E5=81, E1–E6=81
+✔ [HARD] Yukawa global MC yields 0 hits (deterministic)
+    draws=20000, hits15=0, hits16=0
+✔ [HARD] Negative control (Yukawa): perturb u-min breaks E2 (fails E1–E5)
+    E1–E5(p_bad1)=False
+✔ [HARD] Negative control (Yukawa): denom=5 breaks E3 (fails E1–E5)
+    E1–E5(p_bad2)=False
+✔ [HARD] Negative control (Yukawa): duplicate in u-sector violates E1 (fails E1–E5)
+    E1–E5(p_bad3)=False
+✔ [HARD] Flatness (Ω_tot≈1)
+    Ω_tot=0.999944399
+✔ [EVID] CAMB closure executed
+    bb.run_camb_eb ran
+✔ [HARD] DOC/DAO: cyclic Fejér kernel passes
+    {'symmetric_circular': True, 'unit_mass': True, 'nonneg': True, 'PSD': True, 'min_hatF': 0.0002618967249479326, 'max|Im|': 8.635453463412546e-15, 'comm_norm': 0.0}
+════════════════════════════════════════════════════════════════════════════════════════
+✅ RESULT: PASS — All HARD checks passed. (Evidence tests reported above.)
