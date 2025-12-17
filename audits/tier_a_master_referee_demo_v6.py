@@ -80,17 +80,19 @@ def sha256_head(path: str, nhex: int = 16) -> str:
 # Module loader (by filename in CWD)
 # -------------------------
 
-def load_module(module_name: str, filename: str):
-    path = os.path.abspath(filename)
-    if not os.path.exists(path):
-        raise FileNotFoundError(path)
-    spec = importlib.util.spec_from_file_location(module_name, path)
+REPO_ROOT = Path(__file__).resolve().parents[1]  # Marithmetics/ repo root
+
+def load_module(module_name: str, relpath: str):
+    path = (REPO_ROOT / relpath).resolve()
+    if not path.exists():
+        raise FileNotFoundError(str(path))
+    spec = importlib.util.spec_from_file_location(module_name, str(path))
     if spec is None or spec.loader is None:
         raise ImportError(f"Could not load spec for {module_name} from {path}")
     mod = importlib.util.module_from_spec(spec)
     sys.modules[module_name] = mod
     spec.loader.exec_module(mod)  # type: ignore
-    return mod, path
+    return mod, str(path)
 
 
 # -------------------------
@@ -423,11 +425,12 @@ def main():
 
     mods = {}
     for key, fname in [
-        ("sm", "sm_standard_model_demo_v1.py"),
-        ("bb", "bb_grand_emergence_masterpiece_runner_v1.py"),
-        ("om", "omega_observer_commutant_fejer_v1.py"),
-        ("scfp", "scfp_integer_selector_v1.py"),
+        ("sm",   "sm/sm_standard_model_demo_v1.py"),
+        ("bb",   "cosmo/bb_grand_emergence_masterpiece_runner_v1.py"),
+        ("om",   "omega/omega_observer_commutant_fejer_v1.py"),
+        ("scfp", "substrate/scfp_integer_selector_v1.py"),
     ]:
+
         try:
             mod, path = load_module(key, fname)
             mods[key] = (mod, path)
@@ -844,4 +847,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
