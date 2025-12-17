@@ -34,7 +34,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import camb
+import argparse
+from pathlib import Path
 from camb import model, initialpower
+
+def _parse_args():
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--outdir",
+        default="gum_camb_output",
+        help="Directory to write plots (default: gum_camb_output).",
+    )
+    ap.add_argument(
+        "--no-plot",
+        action="store_true",
+        help="Skip writing plot PNG (still runs CAMB and prints metrics).",
+    )
+    return ap.parse_args()
+
 
 # ------------------------------------------------------------
 # Output configuration
@@ -216,3 +233,4 @@ def run_camb_comparison():
 
 if __name__ == "__main__":
     run_camb_comparison()
+
