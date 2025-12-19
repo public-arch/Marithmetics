@@ -1,26 +1,14 @@
-cat > publication_spine/REFEREE_PACK/tools/build_claims_json.py <<'PY'
+cat > publication_spine/REFEREE_TRACK/tools/build_claims_json.py <<'PY'
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Build CLAIMS.json for the Referee Pack (stdlib-only).
-
-Key design choices:
-- Expected values come from AoR stdout artifacts (not from CAMB's echo blocks).
-- Exact rationals are stored as strings (e.g., "1/137") plus float when easy.
-- Fails fast if core expected values cannot be extracted (strict by default).
-
-Writes:
-  publication_spine/REFEREE_PACK/CLAIMS.json
-"""
-
 from __future__ import annotations
 
 import argparse
 import datetime as _dt
 import json
 import re
-from dataclasses import dataclass
 from fractions import Fraction
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -61,23 +49,6 @@ def _find_float(text: str, patterns: List[str]) -> Optional[float]:
         return None
 
 
-def _find_fraction(text: str, patterns: List[str]) -> Optional[Tuple[str, Fraction]]:
-    m = _first_match(text, patterns)
-    if not m:
-        return None
-    s = m.group(1).strip()
-    try:
-        if "/" in s:
-            num, den = s.split("/", 1)
-            fr = Fraction(int(num.strip()), int(den.strip()))
-        else:
-            # allow integers as "k/1"
-            fr = Fraction(int(s), 1)
-        return (s, fr)
-    except Exception:
-        return None
-
-
 def _find_int(text: str, patterns: List[str]) -> Optional[int]:
     m = _first_match(text, patterns)
     if not m:
@@ -88,12 +59,27 @@ def _find_int(text: str, patterns: List[str]) -> Optional[int]:
         return None
 
 
+def _find_fraction(text: str, patterns: List[str]) -> Optional[Tuple[str, Fraction]]:
+    m = _first_match(text, patterns)
+    if not m:
+        return None
+    s = m.group(1).strip()
+    try:
+        if "/" in s:
+            a, b = s.split("/", 1)
+            fr = Fraction(int(a.strip()), int(b.strip()))
+        else:
+            fr = Fraction(int(s), 1)
+        return (s, fr)
+    except Exception:
+        return None
+
+
 def _find_list_of_tokens(text: str, patterns: List[str]) -> Optional[List[str]]:
     m = _first_match(text, patterns)
     if not m:
         return None
     raw = m.group(1).strip()
-    # raw may look like: 0, 4/3, 7/4 ... or '0','4/3',...
     tokens = re.split(r"\s*,\s*", raw)
     out: List[str] = []
     for t in tokens:
@@ -115,42 +101,14 @@ def _v2(n: int) -> int:
 @dataclass
 class AoRPaths:
     root: Path
-
     @property
-    def scfp_stdout(self) -> Path:
-        return self.root / "stdout_substrate_scfp_integer_selector_v1.py.txt"
-
+    def scfp_stdout(self) -> Path: return self.root / "stdout_substrate_scfp_integer_selector_v1.py.txt"
     @property
-    def a2_stdout(self) -> Path:
-        return self.root / "stdout_audits_a2_archive_master.py.txt"
-
+    def a2_stdout(self) -> Path: return self.root / "stdout_audits_a2_archive_master.py.txt"
     @property
-    def tier_a_stdout(self) -> Path:
-        return self.root / "stdout_audits_tier_a_master_referee_demo_v6.py.txt"
-
+    def cosmo_stdout(self) -> Path: return self.root / "stdout_cosmo_bb_grand_emergence_masterpiece_runner_v1.py.txt"
     @property
-    def cosmo_stdout(self) -> Path:
-        return self.root / "stdout_cosmo_bb_grand_emergence_masterpiece_runner_v1.py.txt"
-
-    @property
-    def rosetta_stdout(self) -> Path:
-        return self.root / "stdout_doc_doc_rosetta_base_gauge_v1.py.txt"
-
-    @property
-    def closeout_stdout(self) -> Path:
-        return self.root / "stdout_doc_doc_referee_closeout_audit_v1.py.txt"
-
-    @property
-    def omega_stdout(self) -> Path:
-        return self.root / "stdout_omega_omega_observer_commutant_fejer_v1.py.txt"
-
-    @property
-    def camb_stdout(self) -> Path:
-        return self.root / "stdout_cosmo_gum_camb_check.py.txt"
-
-    @property
-    def camb_png(self) -> Path:
-        return self.root / "gum_camb_output" / "TT_spectrum_Planck_vs_GUM.png"
+    def camb_stdout(self) -> Path: return self.root / "stdout_cosmo_gum_camb_check.py.txt"
 
 
 def main() -> None:
@@ -159,9 +117,8 @@ def main() -> None:
     ap.add_argument("--commit", required=True)
     ap.add_argument("--aor-dir", required=True)
     ap.add_argument("--bundle-sha256", required=True)
-    ap.add_argument("--out", default="publication_spine/REFEREE_PACK/CLAIMS.json")
-    ap.add_argument("--non-strict", action="store_true",
-                    help="Do not fail if some expected values cannot be extracted (will write nulls).")
+    ap.add_argument("--out", default="publication_spine/REFEREE_TRACK/CLAIMS.json")
+    ap.add_argument("--non-strict", action="store_true")
     args = ap.parse_args()
 
     repo_url = args.repo_url.rstrip("/")
@@ -170,23 +127,18 @@ def main() -> None:
     out_path = Path(args.out)
 
     P = AoRPaths(root=aor_root)
-
     scfp_txt = _read_text(P.scfp_stdout)
     a2_txt = _read_text(P.a2_stdout)
     camb_txt = _read_text(P.camb_stdout)
+    cosmo_txt = _read_text(P.cosmo_stdout)
 
-    # --- Extract canonical triple (prefer direct, but allow multiple patterns) ---
+    # triple
     wU = _find_int(scfp_txt, [r"\bRecovered triple:\s*\(wU,s2,s3\)=\((\d+),\s*\d+,\s*\d+\)",
-                             r"\b\(wU,s2,s3\)\s*=\s*\((\d+),\s*\d+,\s*\d+\)",
-                             r"\bwU\s*=\s*(\d+)\b"])
+                             r"\bUnique triple:\s*\(wU,s2,s3\)=\((\d+),\s*\d+,\s*\d+\)"])
     s2 = _find_int(scfp_txt, [r"\bRecovered triple:\s*\(wU,s2,s3\)=\(\d+,\s*(\d+),\s*\d+\)",
-                             r"\b\(wU,s2,s3\)\s*=\s*\(\d+,\s*(\d+),\s*\d+\)",
-                             r"\bs2\s*=\s*(\d+)\b"])
+                             r"\bUnique triple:\s*\(wU,s2,s3\)=\(\d+,\s*(\d+),\s*\d+\)"])
     s3 = _find_int(scfp_txt, [r"\bRecovered triple:\s*\(wU,s2,s3\)=\(\d+,\s*\d+,\s*(\d+)\)",
-                             r"\b\(wU,s2,s3\)\s*=\s*\(\d+,\s*\d+,\s*(\d+)\)",
-                             r"\bs3\s*=\s*(\d+)\b"])
-
-    # fallback: A2 stdout often prints "Unique triple: (wU,s2,s3)=(...)"
+                             r"\bUnique triple:\s*\(wU,s2,s3\)=\(\d+,\s*\d+,\s*(\d+)\)"])
     if wU is None or s2 is None or s3 is None:
         m = _first_match(a2_txt, [r"Unique triple:\s*\(wU,s2,s3\)\s*=\s*\((\d+),\s*(\d+),\s*(\d+)\)"])
         if m:
@@ -199,26 +151,15 @@ def main() -> None:
         q2 = wU - s2
         v = _v2(wU - 1)
         q3 = (wU - 1) // (2 ** v)
-        expected_core.update({"wU": wU, "s2": s2, "s3": s3, "q2": q2, "v2_wU_minus_1": v, "q3": q3})
-
-        # exact rationals as strings + floats
-        alpha = Fraction(1, wU)
-        alpha_s = Fraction(2, q3)
-        sin2 = Fraction(7, q2)
+        expected_core.update({"wU": wU, "s2": s2, "s3": s3, "q2": q2, "q3": q3, "v2_wU_minus_1": v})
         expected_core.update({
-            "alpha_frac": f"1/{wU}",
-            "alpha": float(alpha),
-            "alpha_s_frac": f"2/{q3}",
-            "alpha_s": float(alpha_s),
-            "sin2_frac": f"7/{q2}",
-            "sin2": float(sin2),
+            "alpha_frac": f"1/{wU}", "alpha": float(Fraction(1, wU)),
+            "alpha_s_frac": f"2/{q3}", "alpha_s": float(Fraction(2, q3)),
+            "sin2_frac": f"7/{q2}", "sin2": float(Fraction(7, q2)),
         })
 
-    # Gauge lawbook parse
+    # gauge lawbook
     q_tuple = None
-    RU = None
-    R2 = None
-    R3 = None
     mq = _first_match(a2_txt, [r"\bq=\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\)"])
     if mq:
         q_tuple = [int(mq.group(1)), int(mq.group(2)), int(mq.group(3))]
@@ -226,48 +167,40 @@ def main() -> None:
     R2 = _find_list_of_tokens(a2_txt, [r"\bR2=\[([^\]]+)\]"])
     R3 = _find_list_of_tokens(a2_txt, [r"\bR3=\[([^\]]+)\]"])
 
-    # Yukawa parse
-    du = _find_fraction(a2_txt, [r"\bdu\s*=\s*([0-9]+/[0-9]+)\b", r"\bdu:\s*([0-9]+/[0-9]+)\b"])
-    lu = _find_fraction(a2_txt, [r"\blu\s*=\s*([0-9]+/[0-9]+)\b", r"\blu:\s*([0-9]+/[0-9]+)\b"])
+    # yukawa
+    du = _find_fraction(a2_txt, [r"\bdu\s*=\s*([0-9]+/[0-9]+)\b"])
+    lu = _find_fraction(a2_txt, [r"\blu\s*=\s*([0-9]+/[0-9]+)\b"])
     delta_iso = _find_fraction(a2_txt, [r"\bdelta[_ ]iso[^0-9]*([0-9]+/[0-9]+)\b"])
-    palette_best = _find_list_of_tokens(a2_txt, [
-        r"\bD1 best:\s*\[([^\]]+)\]",
-        r"\bD1 best:\s*\{([^\}]+)\}",
-        r"\bbest:\s*\[([^\]]+)\]",
-    ])
+    palette_best = _find_list_of_tokens(a2_txt, [r"\bD1 best:\s*\[([^\]]+)\]"])
 
-    # Omega values parse (allow unicode Ω or plain Omega_*)
+    # omega values
     def omega_val(name: str) -> Optional[float]:
-        pats = [
-            rf"\bOmega[_ ]{name}\b[^0-9\-+]*([0-9.eE+\-]+)",
-            rf"\bΩ{name}\b[^0-9\-+]*([0-9.eE+\-]+)",
-        ]
-        return _find_float(a2_txt, pats) or _find_float(_read_text(P.cosmo_stdout), pats)
+        pats = [rf"\bOmega[_ ]{name}\b[^0-9\-+]*([0-9.eE+\-]+)", rf"\bΩ{name}\b[^0-9\-+]*([0-9.eE+\-]+)"]
+        return _find_float(a2_txt, pats) or _find_float(cosmo_txt, pats)
 
     Omega_b = omega_val("b")
     Omega_c = omega_val("c")
     Omega_L = omega_val("L") or omega_val("Λ")
     Omega_r = omega_val("r")
     Omega_tot = _find_float(a2_txt, [r"\bOmega[_ ]tot\b[^0-9\-+]*([0-9.eE+\-]+)", r"\bΩtot\b[^0-9\-+]*([0-9.eE+\-]+)"]) \
-        or _find_float(_read_text(P.cosmo_stdout), [r"\bOmega[_ ]tot\b[^0-9\-+]*([0-9.eE+\-]+)", r"\bΩtot\b[^0-9\-+]*([0-9.eE+\-]+)"])
+        or _find_float(cosmo_txt, [r"\bOmega[_ ]tot\b[^0-9\-+]*([0-9.eE+\-]+)", r"\bΩtot\b[^0-9\-+]*([0-9.eE+\-]+)"])
 
-    # H0, As, ns, tau from A2 archive (not CAMB echo)
+    # H0, primordial
     H0 = _find_float(a2_txt, [r"\bH0\b[^0-9\-+]*([0-9]+\.[0-9]+)"])
     As = _find_float(a2_txt, [r"\bAs\b[^0-9\-+]*([0-9]+\.[0-9]+e[+\-]?[0-9]+)"])
     ns = _find_float(a2_txt, [r"\bns\b[^0-9\-+]*([0-9]+\.[0-9]+)"])
     tau = _find_float(a2_txt, [r"\btau\b[^0-9\-+]*([0-9]+\.[0-9]+)"])
 
-    # Neutrinos from A2 archive
+    # neutrinos
     d21 = _find_float(a2_txt, [r"\bd21\b[^0-9\-+]*([0-9]+\.[0-9]+e[+\-]?[0-9]+)"])
     d31 = _find_float(a2_txt, [r"\bd31\b[^0-9\-+]*([0-9]+\.[0-9]+)"])
     sumv = _find_float(a2_txt, [r"\bsumv\b[^0-9\-+]*([0-9]+\.[0-9]+)"])
     hierarchy = _find_float(a2_txt, [r"\bhierarchy[^0-9\-+]*([0-9]+\.[0-9]+)"])
 
-    # CAMB metrics from CAMB stdout
+    # camb metrics
     tt_rms = _find_float(camb_txt, [r"RMS rel diff\s*:\s*([0-9.eE+\-]+)"])
     tt_max = _find_float(camb_txt, [r"Max rel diff\s*:\s*([0-9.eE+\-]+)"])
 
-    # --- Build claims ---
     def add_claim(cid: str, tier: str, title: str, statement: str,
                   scripts: List[str], evidence: List[str], expected: Dict[str, Any],
                   falsifies_if: List[str], notes: str = "") -> Dict[str, Any]:
@@ -287,118 +220,93 @@ def main() -> None:
         return str((aor_root / p).as_posix())
 
     claims: List[Dict[str, Any]] = []
-
     claims.append(add_claim(
-        "FND-A2-001", "HARD",
-        "SCFP++ survivor triple",
+        "FND-A2-001","HARD","SCFP++ survivor triple",
         "SCFP++ selector yields (wU, s2, s3) and derived invariants.",
         ["substrate/scfp_integer_selector_v1.py"],
         [aor("stdout_substrate_scfp_integer_selector_v1.py.txt")],
-        {k: expected_core.get(k) for k in ("wU", "s2", "s3", "q2", "q3", "v2_wU_minus_1")},
+        {k: expected_core.get(k) for k in ("wU","s2","s3","q2","q3","v2_wU_minus_1")},
         ["Selector stdout differs for the canonical triple or AoR verify fails."]
     ))
-
     claims.append(add_claim(
-        "FND-A2-002", "HARD",
-        "Phi-channel rationals",
+        "FND-A2-002","HARD","Phi-channel rationals",
         "Exact rationals alpha=1/wU, alpha_s=2/q3, sin2=7/q2 are printed and consistent.",
         ["audits/a2_archive_master.py"],
         [aor("stdout_audits_a2_archive_master.py.txt")],
-        {k: expected_core.get(k) for k in ("alpha_frac", "alpha", "alpha_s_frac", "alpha_s", "sin2_frac", "sin2")},
+        {k: expected_core.get(k) for k in ("alpha_frac","alpha","alpha_s_frac","alpha_s","sin2_frac","sin2")},
         ["A2 archive output does not print the exact fractions or AoR verify fails."]
     ))
-
     claims.append(add_claim(
-        "FND-A2-003", "HARD",
-        "Gauge lawbook closure",
+        "FND-A2-003","HARD","Gauge lawbook closure",
         "Gauge lawbook is uniquely derived under declared contracts and yields the canonical triple.",
-        ["audits/a2_archive_master.py", "audits/tier_a_master_referee_demo_v6.py"],
+        ["audits/a2_archive_master.py","audits/tier_a_master_referee_demo_v6.py"],
         [aor("stdout_audits_a2_archive_master.py.txt"), aor("stdout_audits_tier_a_master_referee_demo_v6.py.txt")],
         {"q_tuple": q_tuple, "RU": RU, "R2": R2, "R3": R3},
         ["Gauge lawbook is not unique or neighborhood scan reports other/multi or AoR verify fails."]
     ))
-
     claims.append(add_claim(
-        "FND-A2-004", "HARD",
-        "Yukawa closure",
+        "FND-A2-004","HARD","Yukawa closure",
         "Canonical offsets and Palette-B selection close under the A2 selector.",
         ["audits/a2_archive_master.py"],
         [aor("stdout_audits_a2_archive_master.py.txt")],
         {
-            "du_frac": du[0] if du else None,
-            "du": float(du[1]) if du else None,
-            "lu_frac": lu[0] if lu else None,
-            "lu": float(lu[1]) if lu else None,
-            "delta_iso_frac": delta_iso[0] if delta_iso else None,
-            "delta_iso": float(delta_iso[1]) if delta_iso else None,
+            "du_frac": du[0] if du else None, "du": float(du[1]) if du else None,
+            "lu_frac": lu[0] if lu else None, "lu": float(lu[1]) if lu else None,
+            "delta_iso_frac": delta_iso[0] if delta_iso else None, "delta_iso": float(delta_iso[1]) if delta_iso else None,
             "palette_best": palette_best,
         },
         ["Offsets/palette differ or rank/isolation witness changes or AoR verify fails."]
     ))
-
     claims.append(add_claim(
-        "FND-A2-005", "HARD",
-        "Cosmology Omega-lawbook and near-flatness",
+        "FND-A2-005","HARD","Cosmology Omega-lawbook and near-flatness",
         "BB-36 Omega templates produce Omega_tot close to 1 with printed residual.",
-        ["cosmo/bb_grand_emergence_masterpiece_runner_v1.py", "audits/a2_archive_master.py"],
+        ["cosmo/bb_grand_emergence_masterpiece_runner_v1.py","audits/a2_archive_master.py"],
         [aor("stdout_cosmo_bb_grand_emergence_masterpiece_runner_v1.py.txt"), aor("stdout_audits_a2_archive_master.py.txt")],
         {"Omega_b": Omega_b, "Omega_c": Omega_c, "Omega_L": Omega_L, "Omega_r": Omega_r, "Omega_tot": Omega_tot},
         ["Omega templates/values differ or flatness gate fails or AoR verify fails."]
     ))
-
     claims.append(add_claim(
-        "FND-A2-006", "HARD",
-        "H0 BB-36 closure",
+        "FND-A2-006","HARD","H0 BB-36 closure",
         "BB-36 template yields H0 with rank witness in A2 archive.",
         ["audits/a2_archive_master.py"],
         [aor("stdout_audits_a2_archive_master.py.txt")],
         {"H0": H0},
         ["H0 template/value differs or AoR verify fails."]
     ))
-
     claims.append(add_claim(
-        "FND-A2-007", "HARD",
-        "Primordial trio closure",
+        "FND-A2-007","HARD","Primordial trio closure",
         "BB-36 templates produce As, ns, tau with printed witnesses.",
         ["audits/a2_archive_master.py"],
         [aor("stdout_audits_a2_archive_master.py.txt")],
         {"As": As, "ns": ns, "tau": tau},
         ["Primordial values differ or AoR verify fails."]
     ))
-
     claims.append(add_claim(
-        "FND-A2-008", "HARD",
-        "Neutrino bundle closure",
+        "FND-A2-008","HARD","Neutrino bundle closure",
         "BB-36 templates produce d21, d31, sumv with hierarchy check.",
         ["audits/a2_archive_master.py"],
         [aor("stdout_audits_a2_archive_master.py.txt")],
         {"d21": d21, "d31": d31, "sumv": sumv, "hierarchy": hierarchy},
         ["Neutrino values differ or hierarchy check fails or AoR verify fails."]
     ))
-
     claims.append(add_claim(
-        "FND-A2-009", "HARD",
-        "Representation independence",
+        "FND-A2-009","HARD","Representation independence",
         "Cross-base roundtrip, CRT injectivity/collision, digit injection designed-fail.",
-        ["doc/doc_rosetta_base_gauge_v1.py", "doc/doc_referee_closeout_audit_v1.py"],
+        ["doc/doc_rosetta_base_gauge_v1.py","doc/doc_referee_closeout_audit_v1.py"],
         [aor("stdout_doc_doc_rosetta_base_gauge_v1.py.txt"), aor("stdout_doc_doc_referee_closeout_audit_v1.py.txt")],
         {},
         ["Any representation-independence test fails or AoR verify fails."]
     ))
-
     claims.append(add_claim(
-        "FND-A2-010", "HARD",
-        "DOC/DAO Fejer legality and commutant",
+        "FND-A2-010","HARD","DOC/DAO Fejer legality and commutant",
         "Finite operator legality certificates for cyclic Fejer kernel and commutation.",
-        ["omega/omega_observer_commutant_fejer_v1.py", "audits/tier_a_master_referee_demo_v6.py"],
+        ["omega/omega_observer_commutant_fejer_v1.py","audits/tier_a_master_referee_demo_v6.py"],
         [aor("stdout_omega_omega_observer_commutant_fejer_v1.py.txt"), aor("stdout_audits_tier_a_master_referee_demo_v6.py.txt")],
         {},
         ["Fejer legality/commutation fails or AoR verify fails."]
     ))
-
     claims.append(add_claim(
-        "EVID-001", "EVIDENCE",
-        "CAMB TT structural check",
+        "EVID-001","EVIDENCE","CAMB TT structural check",
         "CAMB compares Planck vs GUM TT spectra and reports RMS/max diffs under thresholds.",
         ["cosmo/gum_camb_check.py"],
         [aor("stdout_cosmo_gum_camb_check.py.txt"), aor("gum_camb_output/TT_spectrum_Planck_vs_GUM.png")],
@@ -407,24 +315,13 @@ def main() -> None:
         notes="Evidence-only. Does not participate in any selector."
     ))
 
-    # strict validation
     if not args.non_strict:
         missing = []
-        core_needed = ["wU", "s2", "s3", "q2", "q3", "alpha_frac", "alpha_s_frac", "sin2_frac",
-                       "Omega_b", "Omega_c", "Omega_L", "Omega_r", "Omega_tot", "H0", "As", "ns", "tau",
-                       "d21", "d31", "sumv"]
-        for k in core_needed:
-            v = expected_core.get(k, None)
-            # expected_core only holds some keys; check the claims list too
-        # Check claim expected nulls
         for c in claims:
             if c["tier"] == "HARD":
-                # only enforce for keys present in expected dict
                 for ek, evv in c["expected"].items():
                     if evv is None and ek not in ("palette_best",):
                         missing.append(f"{c['id']}:{ek}")
-        # For evidence claim, allow missing tt metrics if camb stdout not present in bundle
-        missing = [m for m in missing if not m.startswith("EVID-001")]
         if missing:
             raise SystemExit("[ERR] missing expected values: " + ", ".join(missing))
 
@@ -448,4 +345,4 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 PY
-chmod +x publication_spine/REFEREE_PACK/tools/build_claims_json.py
+chmod +x publication_spine/REFEREE_TRACK/tools/build_claims_json.py
