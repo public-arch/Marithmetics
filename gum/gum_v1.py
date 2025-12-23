@@ -127,10 +127,11 @@ def build_substrate() -> Substrate:
     q3 = int(scfp["q3"])
 
     survivors = {
-        "U(1)": (wU, [wU]),
-        "SU(2)": (s2, [s2]),
-        "SU(3)": (s3, [s3]),
+        "U(1)": {"chosen": wU},
+        "SU(2)": {"chosen": s2},
+        "SU(3)": {"chosen": s3},
     }
+
 
     return Substrate(wU=wU, s2=s2, s3=s3, q3=q3, survivors=survivors)
 
@@ -426,6 +427,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
