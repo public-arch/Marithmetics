@@ -194,7 +194,8 @@ def build_physics_layer(sub: Substrate) -> PhysicsLayer:
 
 
     # BH/Unruh–KUEC seam
-    ell_star, Lambda_star, Sbar = sm33.derive_ell_star_BH_unruh(kappa, survivors)
+    Sbar, ell_star, Lambda_star = sm33.derive_ell_star_BH_unruh(kappa, survivors)
+
 
     # Structural constants α, sin²θ_W, α_s from Φ‑channel
     alpha, sin2W, alpha_s, phi_meta = sm33.structural_constants_from_survivors(survivors)
@@ -425,5 +426,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
