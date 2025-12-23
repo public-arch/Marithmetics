@@ -199,13 +199,17 @@ def build_physics_layer(sub: Substrate) -> PhysicsLayer:
 
 
     # Structural constants α, sin²θ_W, α_s from Φ‑channel
-    alpha, sin2W, alpha_s, phi_meta = sm33.structural_constants_from_survivors(survivors)
+    alpha, Theta, sin2W, alpha_s, phi_meta = sm33.structural_constants_from_survivors(survivors)
+
 
     # Gauge couplings
-    e0, g1G, g2, g3, sW, cW = sm33.couplings(alpha, sin2W, alpha_s)
+    e0, g1G, g2, sW, cW = sm33.ew_couplings(alpha, sin2W)
+    g3 = math.sqrt(4.0 * math.pi * alpha_s)
+
 
     # Palette‑B (Yukawa exponent palette)
-    palette = sm33.search_palette_B()
+    palette = sm33.search_palette_B(survivors)
+
     if palette is None:
         raise RuntimeError("Palette‑B search failed (no survivor).")
 
@@ -213,7 +217,10 @@ def build_physics_layer(sub: Substrate) -> PhysicsLayer:
     v, y_star, lam_v = sm33.derive_v_closed_form(palette, margins, survivors)
 
     # Absolute EW observables (M_W, M_Z, recomputed e,g1,g2,g3)
-    v, MW, MZ, e0, g1G, g2, g3, sW, cW = sm33.absolute_EW(alpha, sin2W, alpha_s, v)
+    MW = v * math.sqrt(math.pi * alpha) / sW
+    MZ = MW / cW
+
+  
 
     return PhysicsLayer(
         alpha_em=alpha,
@@ -427,6 +434,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
