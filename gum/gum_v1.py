@@ -189,7 +189,9 @@ def build_physics_layer(sub: Substrate) -> PhysicsLayer:
     survivors = sub.survivors
 
     # Scaling Law #1 — Fejér / KUEC anchor
-    kappa, c_a, hs, margins = sm33.derive_kappa_and_margins()
+    hs, kappa, margins = sm33.derive_kappa_and_margins()
+    c_a = math.e  # keep for compatibility / reporting if needed
+
 
     # BH/Unruh–KUEC seam
     ell_star, Lambda_star, Sbar = sm33.derive_ell_star_BH_unruh(kappa, survivors)
@@ -423,4 +425,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
