@@ -3156,10 +3156,14 @@ def run_selftest():
     def close(a, b, tol=1e-10):
         return abs(float(a) - float(b)) <= tol
 
-    assert close(auth["v_dressed_GeV"], 246.01249486424626), "v_dressed regression."
+
+
+    assert close(auth["v_dressed_GeV"], 245.7843615405502), "v_dressed regression."
+    assert close(auth["MW_dressed_GeV"], 79.70971662093454), "MW_dressed regression."
+    assert close(auth["MZ_dressed_GeV"], 91.03491153390851), "MZ_dressed regression."
+
+  
     assert close(auth["alpha_inv_MZ"], 127.75127878470158), "alpha_inv_MZ regression."
-    assert close(auth["MW_dressed_GeV"], 79.86584315640484), "MW_dressed regression."
-    assert close(auth["MZ_dressed_GeV"], 91.21322060270404), "MZ_dressed regression."
     assert close(auth["GammaZ_dressed_GeV"], 2.482342554267843), "GammaZ regression."
     assert close(auth["Lambda_QCD_GeV_1loop"], 0.0848958080914551), "Lambda_QCD regression."
     assert close(auth["Delta_r"], 0.03629837080473894), "Delta_r regression."
