@@ -1358,6 +1358,15 @@ def build_pdf_report(pdf_path: str,
         pred_rows = pred.get("sm28_table", []) or []
         raw_map = {r.get("name"): r for r in raw_rows if isinstance(r, dict) and r.get("name")}
         pred_map = {r.get("name"): r for r in pred_rows if isinstance(r, dict) and r.get("name")}
+        # Fallbacks for 1.2 table: pull dressed sin2W / alpha_s from SM-28 map if direct keys are missing
+        try:
+            if pred.get('sin2thetaW_dressed') is None and 'sin2W' in pred_map:
+                pred['sin2thetaW_dressed'] = pred_map['sin2W'].get('value')
+            if pred.get('alpha_s_MZ') is None and 'alpha_s' in pred_map:
+                pred['alpha_s_MZ'] = pred_map['alpha_s'].get('value')
+        except Exception:
+            pass
+
         names = [r.get("name") for r in pred_rows if isinstance(r, dict) and r.get("name")]
         if not names:
             names = sorted(set(list(raw_map.keys()) + list(pred_map.keys())))
@@ -1521,21 +1530,15 @@ def build_pdf_report(pdf_path: str,
         ],
         [
             "v [GeV]",
-            fmt_val(physL.v),
             fmt_val(SM_REF["v"]),
-            fmt_err(rel_err(physL.v, SM_REF["v"])),
         ],
         [
             "MW [GeV]",
-            fmt_val(physL.MW),
             fmt_val(SM_REF["MW"]),
-            fmt_err(rel_err(physL.MW, SM_REF["MW"])),
         ],
         [
             "MZ [GeV]",
-            fmt_val(physL.MZ),
             fmt_val(SM_REF["MZ"]),
-            fmt_err(rel_err(physL.MZ, SM_REF["MZ"])),
         ],
     ]
     sm_table = Table(sm_rows, hAlign="LEFT")
@@ -1550,6 +1553,33 @@ def build_pdf_report(pdf_path: str,
         )
     )
     story.append(sm_table)
+
+    # DEMO-33 v10 electroweak scale (raw vs dressed) from artifacts
+    demo = payload.get("demo33_v10", {})
+    if isinstance(demo, dict) and demo.get("ok"):
+        pure = demo.get("pure", {}) or {}
+        pred = pure.get("predictions", {}) or {}
+        story.append(Spacer(1, 0.12 * inch))
+        story.append(Paragraph("DEMO-33 v10: electroweak scale (raw vs dressed)", h2))
+        ew2 = [
+            ["Quantity", "Raw", "Dressed"],
+            ["v (GeV)", fmt_val(pure.get("v_GeV")), fmt_val(pred.get("v_dressed_GeV"))],
+            ["MW (GeV)", fmt_val(pure.get("MW_GeV")), fmt_val(pred.get("MW_dressed_GeV"))],
+            ["MZ (GeV)", fmt_val(pure.get("MZ_GeV")), fmt_val(pred.get("MZ_dressed_GeV"))],
+            ["GammaZ (GeV)", fmt_val(pure.get("GammaZ_GeV")), fmt_val(pred.get("GammaZ_dressed_GeV"))],
+            ["alpha^-1(MZ)", "NA", fmt_val(pred.get("alpha_inv_MZ"))],
+            ["sin^2(theta_W)", fmt_val(pure.get("sin2thetaW")), fmt_val(pred.get("sin2thetaW_dressed"))],
+            ["alpha_s(MZ)", fmt_val(pure.get("alpha_s_MZ")), fmt_val(pred.get("alpha_s_MZ"))],
+        ]
+        t2 = Table(ew2, hAlign="LEFT", colWidths=[140, 150, 150])
+        t2.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
+            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+            ("FONTSIZE", (0, 0), (-1, -1), 9),
+            ("GRID", (0, 0), (-1, -1), 0.25, colors.grey),
+            ("ALIGN", (1, 1), (-1, -1), "RIGHT"),
+        ]))
+        story.append(t2)
 
     story.append(Spacer(1, 0.3 * inch))
 
