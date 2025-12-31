@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-gum_report_generator_v27.py
+gum_report_generator_v28.py
 
 Grand Unified Model (GUM) report generator with:
 
@@ -1776,7 +1776,7 @@ def build_pdf_report(pdf_path: str,
     # Use Courier for paths so they read like commands
     story.append(
         Paragraph(
-            "<font face='Courier'>gum/gum_report_generator_v27.py</font>  — report generator (this PDF)",
+            "<font face='Courier'>gum/gum_report_generator_v28.py</font>  — report generator (this PDF)",
             body,
         )
     )
@@ -1814,7 +1814,7 @@ def build_pdf_report(pdf_path: str,
     )
     story.append(
         Paragraph(
-            "<font face='Courier'>python -m gum.gum_report_generator_v27</font>",
+            "<font face='Courier'>python -m gum.gum_report_generator_v28</font>",
             body,
         )
     )
@@ -1847,7 +1847,7 @@ def build_pdf_report(pdf_path: str,
         y2 = 0.40 * inch  # second line
 
         # Line 1: title + timestamp (left) and page number (right)
-        left_text  = f"GUM report v27 – generated {timestamp} (UTC)"
+        left_text  = f"GUM report v28 – generated {timestamp} (UTC)"
         right_text = f"Page {doc_obj.page}"
         canvas.drawString(doc_obj.leftMargin, y1, left_text)
         canvas.drawRightString(
