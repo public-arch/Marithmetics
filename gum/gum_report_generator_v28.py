@@ -1321,6 +1321,7 @@ def build_pdf_report(pdf_path: str,
             worst = ov_sm28.get("worst_err_pct", "NA")
             key = ov_sm28.get("worst_key", "NA")
             story.append(Paragraph(f"Overlay SM-28 closure: {flag} (worst_err_pct={worst}, worst_key={key})", small))
+            story.append(Paragraph("PASS definition: worst_err_pct < 1.0% (evaluation-only overlay gate).", small))
 
         story.append(Spacer(1, 0.10 * inch))
 
