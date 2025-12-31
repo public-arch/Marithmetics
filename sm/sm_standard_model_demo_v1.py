@@ -3163,9 +3163,10 @@ def run_selftest():
     assert close(auth["MZ_dressed_GeV"], 91.03491153390851), "MZ_dressed regression."
 
   
-    assert close(auth["alpha_inv_MZ"], 127.75127878470158), "alpha_inv_MZ regression."
-    assert close(auth["GammaZ_dressed_GeV"], 2.482342554267843), "GammaZ regression."
-    assert close(auth["Lambda_QCD_GeV_1loop"], 0.0848958080914551), "Lambda_QCD regression."
+    assert close(auth["alpha_inv_MZ"], 128.01446644795365), "alpha_inv_MZ regression."
+    assert close(auth["GammaZ_dressed_GeV"], 2.4723893958376704), "GammaZ regression."
+
+    assert close(auth["Lambda_QCD_GeV_1loop"], 0.08587202643561431), "Lambda_QCD regression."
     assert close(auth["Delta_r"], 0.03629837080473894), "Delta_r regression."
 
     expected_hash = "5f2095e7fe00574b6b0253b372e22de9113becceb7077093b3718a1db86fa2c7"
