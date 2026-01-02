@@ -809,6 +809,10 @@ def build_pdf_report(pdf_path: str,
     body.fontName = "Helvetica"
     body.fontSize = 10
     body.leading = 13
+    body.allowWidows = 0
+    body.allowOrphans = 0
+    body.allowWidows = 0
+    body.allowOrphans = 0
 
     h1 = ParagraphStyle(
         "GUM_H1",
@@ -1409,7 +1413,6 @@ def build_pdf_report(pdf_path: str,
             )
             story.append(sm28_table)
     else:
-        story.append(PageBreak())
         story.append(
             Paragraph(
                 "DEMO-33 v10 outputs were not available for this run. The report generator could not execute "
@@ -1421,7 +1424,6 @@ def build_pdf_report(pdf_path: str,
     # --- Prediction highlight (explicit): SM couplings as falsifiable outputs ---
     
     story.append(Spacer(1, 0.12 * inch))
-    story.append(PageBreak())
     story.append(
         Paragraph(
             "<b>Prediction highlight (explicit).</b> In the Standard Model layer (DEMO-33), the pipeline outputs "
