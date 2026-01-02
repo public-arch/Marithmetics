@@ -1301,6 +1301,16 @@ def build_pdf_report(pdf_path: str,
         pure = demo.get("pure", {}) or {}
         pred = pure.get("predictions", {}) or {}
 
+        # Local map from dressed SM-28 table (used when sin2W/alpha_s are not direct prediction keys)
+        _sm28_pred_map = {}
+        try:
+            for _r in (pred.get("sm28_table") or []):
+                if isinstance(_r, dict) and _r.get("name"):
+                    _sm28_pred_map[_r["name"]] = _r.get("value")
+        except Exception:
+            _sm28_pred_map = {}
+
+
         story.append(
             Paragraph(
                 "DEMO-33 v10 exports both STRUCTURAL (raw) values and an Authority v1 DRESSED prediction layer "
@@ -1325,21 +1335,15 @@ def build_pdf_report(pdf_path: str,
 
         story.append(Spacer(1, 0.10 * inch))
 
-        
-        raw_rows = (pure.get("raw", {}) or {}).get("sm28_table", []) or []
-        pred_rows = pred.get("sm28_table", []) or []
-        raw_map = {r.get("name"): r for r in raw_rows if isinstance(r, dict) and r.get("name")}
-        pred_map = {r.get("name"): r for r in pred_rows if isinstance(r, dict) and r.get("name")}
-
-ew_rows = [
+        ew_rows = [
             ["Quantity", "Raw (structural)", "Dressed (Authority v1)", "Reference"],
             ["v (GeV)", fmt_val(pure.get("v_GeV")), fmt_val(pred.get("v_dressed_GeV")), fmt_val(SM_REF.get("v"))],
             ["MW (GeV)", fmt_val(pure.get("MW_GeV")), fmt_val(pred.get("MW_dressed_GeV")), fmt_val(SM_REF.get("MW"))],
             ["MZ (GeV)", fmt_val(pure.get("MZ_GeV")), fmt_val(pred.get("MZ_dressed_GeV")), fmt_val(SM_REF.get("MZ"))],
             ["GammaZ (GeV)", fmt_val(pure.get("GammaZ_GeV")), fmt_val(pred.get("GammaZ_dressed_GeV")), "NA"],
             ["alpha_em (alpha0)", fmt_val(pure.get("alpha_em"), sci=True), fmt_val(pred.get("alpha_em_MZ"), sci=True), fmt_val(SM_REF.get("alpha_em"), sci=True)],
-                    ["sin2W", fmt_val(pure.get("sin2thetaW", pure.get("sin2W"))), fmt_val((pred_map.get("sin2W", {}) or {}).get("value")), fmt_val(SM_REF.get("sin2W"))],
-                    ["alpha_s", fmt_val(pure.get("alpha_s_MZ", pure.get("alpha_s"))), fmt_val((pred_map.get("alpha_s", {}) or {}).get("value")), fmt_val(SM_REF.get("alpha_s"))],
+                    ["sin2W", fmt_val(pure.get("sin2thetaW", pure.get("sin2W"))), fmt_val(_sm28_pred_map.get("sin2W")), fmt_val(SM_REF.get("sin2W"))],
+                    ["alpha_s", fmt_val(pure.get("alpha_s_MZ", pure.get("alpha_s"))), fmt_val(_sm28_pred_map.get("alpha_s")), fmt_val(SM_REF.get("alpha_s"))],
             ["Lambda_QCD (GeV)", fmt_val((pure.get("qcd", {}) or {}).get("Lambda_QCD_GeV_1loop")), fmt_val(pred.get("Lambda_QCD_GeV_primary")), "NA"],
             ["alpha_inv(MZ)", "NA", fmt_val(pred.get("alpha_inv_MZ")), "NA"],
         ]
@@ -1359,7 +1363,12 @@ ew_rows = [
         )
         story.append(ew_table)
 
-        # SM-28 raw vs dressed table (if present)        # Fallbacks for 1.2 table: pull dressed sin2W / alpha_s from SM-28 map if direct keys are missing
+        # SM-28 raw vs dressed table (if present)
+        raw_rows = (pure.get("raw", {}) or {}).get("sm28_table", []) or []
+        pred_rows = pred.get("sm28_table", []) or []
+        raw_map = {r.get("name"): r for r in raw_rows if isinstance(r, dict) and r.get("name")}
+        pred_map = {r.get("name"): r for r in pred_rows if isinstance(r, dict) and r.get("name")}
+        # Fallbacks for 1.2 table: pull dressed sin2W / alpha_s from SM-28 map if direct keys are missing
         try:
             if pred.get('sin2thetaW_dressed') is None and 'sin2W' in pred_map:
                 pred['sin2thetaW_dressed'] = pred_map['sin2W'].get('value')
