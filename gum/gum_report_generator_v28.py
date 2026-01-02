@@ -48,7 +48,6 @@ except Exception:
 
 try:
     from reportlab.platypus import (
-        KeepTogether,
         SimpleDocTemplate,
         Paragraph,
         Spacer,
@@ -1343,8 +1342,8 @@ def build_pdf_report(pdf_path: str,
             ["MZ (GeV)", fmt_val(pure.get("MZ_GeV")), fmt_val(pred.get("MZ_dressed_GeV")), fmt_val(SM_REF.get("MZ"))],
             ["GammaZ (GeV)", fmt_val(pure.get("GammaZ_GeV")), fmt_val(pred.get("GammaZ_dressed_GeV")), "NA"],
             ["alpha_em (alpha0)", fmt_val(pure.get("alpha_em"), sci=True), fmt_val(pred.get("alpha_em_MZ"), sci=True), fmt_val(SM_REF.get("alpha_em"), sci=True)],
-                    ["sin2W", fmt_val(pure.get("sin2thetaW", pure.get("sin2W"))), fmt_val(_sm28_pred_map.get("sin2W")), fmt_val(SM_REF.get("sin2W"))],
-                    ["alpha_s", fmt_val(pure.get("alpha_s_MZ", pure.get("alpha_s"))), fmt_val(_sm28_pred_map.get("alpha_s")), fmt_val(SM_REF.get("alpha_s"))],
+        ["sin2W", fmt_val(pure.get("sin2thetaW", pure.get("sin2W"))), fmt_val(_sm28_pred_map.get("sin2W")), fmt_val(SM_REF.get("sin2W"))],
+        ["alpha_s", fmt_val(pure.get("alpha_s_MZ", pure.get("alpha_s"))), fmt_val(_sm28_pred_map.get("alpha_s")), fmt_val(SM_REF.get("alpha_s"))],
             ["Lambda_QCD (GeV)", fmt_val((pure.get("qcd", {}) or {}).get("Lambda_QCD_GeV_1loop")), fmt_val(pred.get("Lambda_QCD_GeV_primary")), "NA"],
             ["alpha_inv(MZ)", "NA", fmt_val(pred.get("alpha_inv_MZ")), "NA"],
         ]
@@ -1362,7 +1361,8 @@ def build_pdf_report(pdf_path: str,
                 ]
             )
         )
-            story.append(KeepTogether([ew_table]))
+        story.append(ew_table)
+
         # SM-28 raw vs dressed table (if present)
         raw_rows = (pure.get("raw", {}) or {}).get("sm28_table", []) or []
         pred_rows = pred.get("sm28_table", []) or []
@@ -1570,29 +1570,27 @@ def build_pdf_report(pdf_path: str,
         pure = demo.get("pure", {}) or {}
         pred = pure.get("predictions", {}) or {}
         story.append(Spacer(1, 0.12 * inch))
-            story.append(KeepTogether([
-    story.append(Paragraph("DEMO-33 v10: electroweak scale (raw vs dressed)", h2))
-            ew2 = [
-                ["Quantity", "Raw", "Dressed"],
-                ["v (GeV)", fmt_val(pure.get("v_GeV")), fmt_val(pred.get("v_dressed_GeV"))],
-                ["MW (GeV)", fmt_val(pure.get("MW_GeV")), fmt_val(pred.get("MW_dressed_GeV"))],
-                ["MZ (GeV)", fmt_val(pure.get("MZ_GeV")), fmt_val(pred.get("MZ_dressed_GeV"))],
-                ["GammaZ (GeV)", fmt_val(pure.get("GammaZ_GeV")), fmt_val(pred.get("GammaZ_dressed_GeV"))],
-                ["alpha^-1(MZ)", "NA", fmt_val(pred.get("alpha_inv_MZ"))],
-                ["sin^2(theta_W)", fmt_val(pure.get("sin2thetaW")), fmt_val(pred.get("sin2thetaW_dressed"))],
-                ["alpha_s(MZ)", fmt_val(pure.get("alpha_s_MZ")), fmt_val(pred.get("alpha_s_MZ"))],
-            ]
-            t2 = Table(ew2, hAlign="LEFT", colWidths=[140, 150, 150])
-            t2.setStyle(TableStyle([
-                ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
-                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-                ("FONTSIZE", (0, 0), (-1, -1), 9),
-                ("GRID", (0, 0), (-1, -1), 0.25, colors.grey),
-                ("ALIGN", (1, 1), (-1, -1), "RIGHT"),
-            ]))
-            story.append(t2)
-    
-    ]))
+        story.append(Paragraph("DEMO-33 v10: electroweak scale (raw vs dressed)", h2))
+        ew2 = [
+            ["Quantity", "Raw", "Dressed"],
+            ["v (GeV)", fmt_val(pure.get("v_GeV")), fmt_val(pred.get("v_dressed_GeV"))],
+            ["MW (GeV)", fmt_val(pure.get("MW_GeV")), fmt_val(pred.get("MW_dressed_GeV"))],
+            ["MZ (GeV)", fmt_val(pure.get("MZ_GeV")), fmt_val(pred.get("MZ_dressed_GeV"))],
+            ["GammaZ (GeV)", fmt_val(pure.get("GammaZ_GeV")), fmt_val(pred.get("GammaZ_dressed_GeV"))],
+            ["alpha^-1(MZ)", "NA", fmt_val(pred.get("alpha_inv_MZ"))],
+            ["sin^2(theta_W)", fmt_val(pure.get("sin2thetaW")), fmt_val(pred.get("sin2thetaW_dressed"))],
+            ["alpha_s(MZ)", fmt_val(pure.get("alpha_s_MZ")), fmt_val(pred.get("alpha_s_MZ"))],
+        ]
+        t2 = Table(ew2, hAlign="LEFT", colWidths=[140, 150, 150], repeatRows=1)
+        t2.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
+            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+            ("FONTSIZE", (0, 0), (-1, -1), 8),
+            ("GRID", (0, 0), (-1, -1), 0.25, colors.grey),
+            ("ALIGN", (1, 1), (-1, -1), "RIGHT"),
+        ]))
+        story.append(t2)
+
     story.append(Spacer(1, 0.3 * inch))
 
     # Section 5: Layer 2B (cosmology)
@@ -1777,6 +1775,7 @@ def build_pdf_report(pdf_path: str,
     story.append(Spacer(1, 0.3 * inch))
 
     # Section 7: Closing remarks
+    story.append(PageBreak())
     story.append(Paragraph("7. Closing remarks", h1))
     story.append(
         Paragraph(
