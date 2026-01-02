@@ -48,6 +48,7 @@ except Exception:
 
 try:
     from reportlab.platypus import (
+        KeepTogether,
         SimpleDocTemplate,
         Paragraph,
         Spacer,
