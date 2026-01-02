@@ -1409,6 +1409,7 @@ def build_pdf_report(pdf_path: str,
             )
             story.append(sm28_table)
     else:
+        story.append(PageBreak())
         story.append(
             Paragraph(
                 "DEMO-33 v10 outputs were not available for this run. The report generator could not execute "
@@ -1420,6 +1421,7 @@ def build_pdf_report(pdf_path: str,
     # --- Prediction highlight (explicit): SM couplings as falsifiable outputs ---
     
     story.append(Spacer(1, 0.12 * inch))
+    story.append(PageBreak())
     story.append(
         Paragraph(
             "<b>Prediction highlight (explicit).</b> In the Standard Model layer (DEMO-33), the pipeline outputs "
@@ -1571,6 +1573,7 @@ def build_pdf_report(pdf_path: str,
         pure = demo.get("pure", {}) or {}
         pred = pure.get("predictions", {}) or {}
         story.append(Spacer(1, 0.12 * inch))
+        story.append(PageBreak())
         story.append(Paragraph("DEMO-33 v10: electroweak scale (raw vs dressed)", h2))
         ew2 = [
             ["Quantity", "Raw", "Dressed"],
