@@ -1331,8 +1331,8 @@ def build_pdf_report(pdf_path: str,
             ["MZ (GeV)", fmt_val(pure.get("MZ_GeV")), fmt_val(pred.get("MZ_dressed_GeV")), fmt_val(SM_REF.get("MZ"))],
             ["GammaZ (GeV)", fmt_val(pure.get("GammaZ_GeV")), fmt_val(pred.get("GammaZ_dressed_GeV")), "NA"],
             ["alpha_em", fmt_val(pure.get("alpha_em"), sci=True), fmt_val(pred.get("alpha_em_MZ"), sci=True), fmt_val(SM_REF.get("alpha_em"), sci=True)],
-            ["sin2W", fmt_val(pure.get("sin2W")), "NA", fmt_val(SM_REF.get("sin2W"))],
-            ["alpha_s", fmt_val(pure.get("alpha_s")), "NA", fmt_val(SM_REF.get("alpha_s"))],
+            ["sin2W", fmt_val(pure.get("sin2W", pure.get("sin2thetaW"))), fmt_val(pred.get("sin2thetaW_dressed", pred.get("sin2W"))),fmt_val(SM_REF.get("sin2W"))],
+            ["alpha_s", fmt_val(pure.get("alpha_s", pure.get("alpha_s_MZ"))),fmt_val(pred.get("alpha_s_MZ", pred.get("alpha_s"))),fmt_val(SM_REF.get("alpha_s"))],
             ["Lambda_QCD (GeV)", fmt_val((pure.get("qcd", {}) or {}).get("Lambda_QCD_GeV_1loop")), fmt_val(pred.get("Lambda_QCD_GeV_primary")), "NA"],
             ["alpha_inv(MZ)", "NA", fmt_val(pred.get("alpha_inv_MZ")), "NA"],
         ]
@@ -1518,24 +1518,7 @@ def build_pdf_report(pdf_path: str,
             fmt_val(SM_REF["alpha_s"]),
             fmt_err(rel_err(physL.alpha_s, SM_REF["alpha_s"])),
         ],
-        [
-            "v [GeV]",
-            fmt_val(physL.v),
-            fmt_val(SM_REF["v"]),
-            fmt_err(rel_err(physL.v, SM_REF["v"])),
-        ],
-        [
-            "MW [GeV]",
-            fmt_val(physL.MW),
-            fmt_val(SM_REF["MW"]),
-            fmt_err(rel_err(physL.MW, SM_REF["MW"])),
-        ],
-        [
-            "MZ [GeV]",
-            fmt_val(physL.MZ),
-            fmt_val(SM_REF["MZ"]),
-            fmt_err(rel_err(physL.MZ, SM_REF["MZ"])),
-        ],
+        
     ]
     sm_table = Table(sm_rows, hAlign="LEFT")
     sm_table.setStyle(
@@ -1776,7 +1759,7 @@ def build_pdf_report(pdf_path: str,
     # Use Courier for paths so they read like commands
     story.append(
         Paragraph(
-            "<font face='Courier'>gum/gum_report_generator_v27.py</font>  — report generator (this PDF)",
+            "<font face='Courier'>gum/gum_report_generator_v28.py</font>  — report generator (this PDF)",
             body,
         )
     )
@@ -1814,7 +1797,7 @@ def build_pdf_report(pdf_path: str,
     )
     story.append(
         Paragraph(
-            "<font face='Courier'>python -m gum.gum_report_generator_v27</font>",
+            "<font face='Courier'>python -m gum.gum_report_generator_v28</font>",
             body,
         )
     )
@@ -1847,7 +1830,7 @@ def build_pdf_report(pdf_path: str,
         y2 = 0.40 * inch  # second line
 
         # Line 1: title + timestamp (left) and page number (right)
-        left_text  = f"GUM report v27 – generated {timestamp} (UTC)"
+        left_text  = f"GUM report v28 – generated {timestamp} (UTC)"
         right_text = f"Page {doc_obj.page}"
         canvas.drawString(doc_obj.leftMargin, y1, left_text)
         canvas.drawRightString(
