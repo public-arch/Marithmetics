@@ -34,3 +34,22 @@ gum/gum_report_generator_v28.py.bak.pre_safe_fix
 # Generated claims tracker
 publication_spine/REFEREE_TRACK/CLAIMS.json
 
+
+# --- Generated artifacts / local outputs ---
+gum/GUM_Report/
+gum/_runs/
+gum/GUM_Report_MASTER/
+
+**/__pycache__/
+**/*.pyc
+
+sm_outputs*.json
+
+# Local backup artifacts
+gum/gum_report_generator_v28.py.bak.*
+gum/gum_report_generator_v28.py.bak.pre_*
+gum/gum_report_generator_v28.py.bak.pre_safe_fix
+
+# Generated claims tracker (if not meant to be tracked)
+publication_spine/REFEREE_TRACK/CLAIMS.json
+
