@@ -1532,18 +1532,6 @@ def build_pdf_report(pdf_path: str,
             fmt_val(SM_REF["alpha_s"]),
             fmt_err(rel_err(physL.alpha_s, SM_REF["alpha_s"])),
         ],
-        [
-            "v [GeV]",
-            fmt_val(SM_REF["v"]),
-        ],
-        [
-            "MW [GeV]",
-            fmt_val(SM_REF["MW"]),
-        ],
-        [
-            "MZ [GeV]",
-            fmt_val(SM_REF["MZ"]),
-        ],
     ]
     sm_table = Table(sm_rows, hAlign="LEFT")
     sm_table.setStyle(
