@@ -30,8 +30,6 @@ from typing import Any, Dict, List, Tuple, Optional
 
 ASSETS_DIR = os.path.join(os.path.dirname(__file__), "assets")
 
-
-
 # ---------------------------------------------------------------------------
 # Third-party libraries
 # ---------------------------------------------------------------------------
@@ -104,7 +102,6 @@ MathLayer = gum.MathLayer
 PhysicsLayer = gum.PhysicsLayer
 CosmoLayer = gum.CosmoLayer
 
-
 # ---------------------------------------------------------------------------
 # Reference constants
 # ---------------------------------------------------------------------------
@@ -151,7 +148,6 @@ def rel_err(pred: Any, ref: Any) -> Optional[float]:
     except Exception:
         return None
 
-
 def fmt_val(x: Any, sci: bool = False, digits: int = 9) -> str:
     """Format a scalar for table display."""
     if x is None:
@@ -170,7 +166,6 @@ def fmt_val(x: Any, sci: bool = False, digits: int = 9) -> str:
     except Exception:
         return "NA"
 
-
 def fmt_err(e: Any) -> str:
     """Format a relative error."""
     if e is None:
@@ -183,14 +178,12 @@ def fmt_err(e: Any) -> str:
     except Exception:
         return "NA"
 
-
 def sha256_of_file(path: str) -> str:
     h = hashlib.sha256()
     with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(8192), b""):
             h.update(chunk)
     return h.hexdigest()
-
 
 def sha256_of_manifest_values(vals: List[float]) -> str:
     """Deterministic SHA-256 over a numeric list."""
@@ -369,7 +362,6 @@ def run_demo33_v10(report_dir: str, want_overlay: bool = True) -> Dict[str, Any]
         }
     except Exception as e:
         return {"ok": False, "stage": "exception", "error": str(e), "out_dir": out_dir}
-
 
 # ---------------------------------------------------------------------------
 # Big Bang SPDE / tidal visual
@@ -999,7 +991,6 @@ def build_pdf_report(pdf_path: str,
             )
         )
 
-
     story.append(Spacer(1, 0.15 * inch))
     story.append(
         Paragraph(
@@ -1315,7 +1306,6 @@ def build_pdf_report(pdf_path: str,
         except Exception:
             _sm28_pred_map = {}
 
-
         story.append(
             Paragraph(
                 "DEMO-33 v10 exports both STRUCTURAL (raw) values and an Authority v1 DRESSED prediction layer "
@@ -1574,7 +1564,6 @@ def build_pdf_report(pdf_path: str,
         pure = demo.get("pure", {}) or {}
         pred = pure.get("predictions", {}) or {}
         story.append(Spacer(1, 0.12 * inch))
-        story.append(PageBreak())
         story.append(Paragraph("DEMO-33 v10: electroweak scale (raw vs dressed)", h2))
         ew2 = [
             ["Quantity", "Raw", "Dressed"],
@@ -1866,7 +1855,6 @@ def build_pdf_report(pdf_path: str,
         )
     )
 
-
                        
     # Build PDF
     doc = SimpleDocTemplate(
@@ -1908,8 +1896,6 @@ def build_pdf_report(pdf_path: str,
         canvas.drawString(doc_obj.leftMargin, y2, sha_text)
 
         canvas.restoreState()
-
-
 
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
 
@@ -1969,42 +1955,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
