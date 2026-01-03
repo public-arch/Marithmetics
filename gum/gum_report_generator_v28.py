@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-gum_report_generator_v27.py
+gum_report_generator_v28.py
 
 Grand Unified Model (GUM) report generator with:
 
@@ -30,8 +30,6 @@ from typing import Any, Dict, List, Tuple, Optional
 
 ASSETS_DIR = os.path.join(os.path.dirname(__file__), "assets")
 
-
-
 # ---------------------------------------------------------------------------
 # Third-party libraries
 # ---------------------------------------------------------------------------
@@ -48,6 +46,7 @@ except Exception:
 
 try:
     from reportlab.platypus import (
+        KeepTogether,
         SimpleDocTemplate,
         Paragraph,
         Spacer,
@@ -103,7 +102,6 @@ MathLayer = gum.MathLayer
 PhysicsLayer = gum.PhysicsLayer
 CosmoLayer = gum.CosmoLayer
 
-
 # ---------------------------------------------------------------------------
 # Reference constants
 # ---------------------------------------------------------------------------
@@ -150,7 +148,6 @@ def rel_err(pred: Any, ref: Any) -> Optional[float]:
     except Exception:
         return None
 
-
 def fmt_val(x: Any, sci: bool = False, digits: int = 9) -> str:
     """Format a scalar for table display."""
     if x is None:
@@ -169,7 +166,6 @@ def fmt_val(x: Any, sci: bool = False, digits: int = 9) -> str:
     except Exception:
         return "NA"
 
-
 def fmt_err(e: Any) -> str:
     """Format a relative error."""
     if e is None:
@@ -182,14 +178,12 @@ def fmt_err(e: Any) -> str:
     except Exception:
         return "NA"
 
-
 def sha256_of_file(path: str) -> str:
     h = hashlib.sha256()
     with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(8192), b""):
             h.update(chunk)
     return h.hexdigest()
-
 
 def sha256_of_manifest_values(vals: List[float]) -> str:
     """Deterministic SHA-256 over a numeric list."""
@@ -368,7 +362,6 @@ def run_demo33_v10(report_dir: str, want_overlay: bool = True) -> Dict[str, Any]
         }
     except Exception as e:
         return {"ok": False, "stage": "exception", "error": str(e), "out_dir": out_dir}
-
 
 # ---------------------------------------------------------------------------
 # Big Bang SPDE / tidal visual
@@ -808,6 +801,10 @@ def build_pdf_report(pdf_path: str,
     body.fontName = "Helvetica"
     body.fontSize = 10
     body.leading = 13
+    body.allowWidows = 0
+    body.allowOrphans = 0
+    body.allowWidows = 0
+    body.allowOrphans = 0
 
     h1 = ParagraphStyle(
         "GUM_H1",
@@ -993,7 +990,6 @@ def build_pdf_report(pdf_path: str,
                 body_italic,
             )
         )
-
 
     story.append(Spacer(1, 0.15 * inch))
     story.append(
@@ -1301,6 +1297,15 @@ def build_pdf_report(pdf_path: str,
         pure = demo.get("pure", {}) or {}
         pred = pure.get("predictions", {}) or {}
 
+        # Local map from dressed SM-28 table (used when sin2W/alpha_s are not direct prediction keys)
+        _sm28_pred_map = {}
+        try:
+            for _r in (pred.get("sm28_table") or []):
+                if isinstance(_r, dict) and _r.get("name"):
+                    _sm28_pred_map[_r["name"]] = _r.get("value")
+        except Exception:
+            _sm28_pred_map = {}
+
         story.append(
             Paragraph(
                 "DEMO-33 v10 exports both STRUCTURAL (raw) values and an Authority v1 DRESSED prediction layer "
@@ -1321,6 +1326,7 @@ def build_pdf_report(pdf_path: str,
             worst = ov_sm28.get("worst_err_pct", "NA")
             key = ov_sm28.get("worst_key", "NA")
             story.append(Paragraph(f"Overlay SM-28 closure: {flag} (worst_err_pct={worst}, worst_key={key})", small))
+            story.append(Paragraph("PASS definition: worst_err_pct < 1.0% (evaluation-only overlay gate).", small))
 
         story.append(Spacer(1, 0.10 * inch))
 
@@ -1330,11 +1336,11 @@ def build_pdf_report(pdf_path: str,
             ["MW (GeV)", fmt_val(pure.get("MW_GeV")), fmt_val(pred.get("MW_dressed_GeV")), fmt_val(SM_REF.get("MW"))],
             ["MZ (GeV)", fmt_val(pure.get("MZ_GeV")), fmt_val(pred.get("MZ_dressed_GeV")), fmt_val(SM_REF.get("MZ"))],
             ["GammaZ (GeV)", fmt_val(pure.get("GammaZ_GeV")), fmt_val(pred.get("GammaZ_dressed_GeV")), "NA"],
-            ["alpha_em", fmt_val(pure.get("alpha_em"), sci=True), fmt_val(pred.get("alpha_em_MZ"), sci=True), fmt_val(SM_REF.get("alpha_em"), sci=True)],
-            ["sin2W", fmt_val(pure.get("sin2thetaW", pure.get("sin2W"))), fmt_val((pred_map.get("sin2W", {}) or {}).get("value")), fmt_val(SM_REF.get("sin2W"))],
-            ["alpha_s",fmt_val(pure.get("alpha_s_MZ", pure.get("alpha_s"))),fmt_val((pred_map.get("alpha_s", {}) or {}).get("value")),fmt_val(SM_REF.get("alpha_s"))],  
+            ["alpha_em (alpha0)", fmt_val(pure.get("alpha_em"), sci=True), fmt_val(pred.get("alpha_em_MZ"), sci=True), fmt_val(SM_REF.get("alpha_em"), sci=True)],
+            ["sin2W", fmt_val(pure.get("sin2thetaW", pure.get("sin2W"))), fmt_val(_sm28_pred_map.get("sin2W")), fmt_val(SM_REF.get("sin2W"))],
+            ["alpha_s", fmt_val(pure.get("alpha_s_MZ", pure.get("alpha_s"))), fmt_val(_sm28_pred_map.get("alpha_s")), fmt_val(SM_REF.get("alpha_s"))],
             ["Lambda_QCD (GeV)", fmt_val((pure.get("qcd", {}) or {}).get("Lambda_QCD_GeV_1loop")), fmt_val(pred.get("Lambda_QCD_GeV_primary")), "NA"],
-            ["alpha_inv(MZ) (dressed only)", "NA", fmt_val(pred.get("alpha_inv_MZ")), "NA"],
+            ["alpha_inv(MZ)", "NA", fmt_val(pred.get("alpha_inv_MZ")), "NA"],
         ]
 
         ew_table = Table(ew_rows, hAlign="LEFT", colWidths=[110, 120, 140, 90])
@@ -1357,6 +1363,15 @@ def build_pdf_report(pdf_path: str,
         pred_rows = pred.get("sm28_table", []) or []
         raw_map = {r.get("name"): r for r in raw_rows if isinstance(r, dict) and r.get("name")}
         pred_map = {r.get("name"): r for r in pred_rows if isinstance(r, dict) and r.get("name")}
+        # Fallbacks for 1.2 table: pull dressed sin2W / alpha_s from SM-28 map if direct keys are missing
+        try:
+            if pred.get('sin2thetaW_dressed') is None and 'sin2W' in pred_map:
+                pred['sin2thetaW_dressed'] = pred_map['sin2W'].get('value')
+            if pred.get('alpha_s_MZ') is None and 'alpha_s' in pred_map:
+                pred['alpha_s_MZ'] = pred_map['alpha_s'].get('value')
+        except Exception:
+            pass
+
         names = [r.get("name") for r in pred_rows if isinstance(r, dict) and r.get("name")]
         if not names:
             names = sorted(set(list(raw_map.keys()) + list(pred_map.keys())))
@@ -1412,7 +1427,6 @@ def build_pdf_report(pdf_path: str,
     )
 
     story.append(Spacer(1, 0.3 * inch))
-    story.append(PageBreak())
 
     # Section 2: Layer 0 and Layer 1
     story.append(Paragraph("2. Layer 0: SCFP++ substrate", h1))
@@ -1518,7 +1532,6 @@ def build_pdf_report(pdf_path: str,
             fmt_val(SM_REF["alpha_s"]),
             fmt_err(rel_err(physL.alpha_s, SM_REF["alpha_s"])),
         ],
-        
     ]
     sm_table = Table(sm_rows, hAlign="LEFT")
     sm_table.setStyle(
@@ -1532,6 +1545,33 @@ def build_pdf_report(pdf_path: str,
         )
     )
     story.append(sm_table)
+
+    # DEMO-33 v10 electroweak scale (raw vs dressed) from artifacts
+    demo = payload.get("demo33_v10", {})
+    if isinstance(demo, dict) and demo.get("ok"):
+        pure = demo.get("pure", {}) or {}
+        pred = pure.get("predictions", {}) or {}
+        story.append(Spacer(1, 0.12 * inch))
+        story.append(Paragraph("DEMO-33 v10: electroweak scale (raw vs dressed)", h2))
+        ew2 = [
+            ["Quantity", "Raw", "Dressed"],
+            ["v (GeV)", fmt_val(pure.get("v_GeV")), fmt_val(pred.get("v_dressed_GeV"))],
+            ["MW (GeV)", fmt_val(pure.get("MW_GeV")), fmt_val(pred.get("MW_dressed_GeV"))],
+            ["MZ (GeV)", fmt_val(pure.get("MZ_GeV")), fmt_val(pred.get("MZ_dressed_GeV"))],
+            ["GammaZ (GeV)", fmt_val(pure.get("GammaZ_GeV")), fmt_val(pred.get("GammaZ_dressed_GeV"))],
+            ["alpha^-1(MZ)", "NA", fmt_val(pred.get("alpha_inv_MZ"))],
+            ["sin^2(theta_W)", fmt_val(pure.get("sin2thetaW")), fmt_val(pred.get("sin2thetaW_dressed"))],
+            ["alpha_s(MZ)", fmt_val(pure.get("alpha_s_MZ")), fmt_val(pred.get("alpha_s_MZ"))],
+        ]
+        t2 = Table(ew2, hAlign="LEFT", colWidths=[140, 150, 150], repeatRows=1)
+        t2.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
+            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+            ("FONTSIZE", (0, 0), (-1, -1), 8),
+            ("GRID", (0, 0), (-1, -1), 0.25, colors.grey),
+            ("ALIGN", (1, 1), (-1, -1), "RIGHT"),
+        ]))
+        story.append(t2)
 
     story.append(Spacer(1, 0.3 * inch))
 
@@ -1717,6 +1757,7 @@ def build_pdf_report(pdf_path: str,
     story.append(Spacer(1, 0.3 * inch))
 
     # Section 7: Closing remarks
+    story.append(PageBreak())
     story.append(Paragraph("7. Closing remarks", h1))
     story.append(
         Paragraph(
@@ -1802,7 +1843,6 @@ def build_pdf_report(pdf_path: str,
         )
     )
 
-
                        
     # Build PDF
     doc = SimpleDocTemplate(
@@ -1844,8 +1884,6 @@ def build_pdf_report(pdf_path: str,
         canvas.drawString(doc_obj.leftMargin, y2, sha_text)
 
         canvas.restoreState()
-
-
 
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
 
@@ -1905,42 +1943,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,3 +1,27 @@
 
 # CAMB outputs (generated)
 gum_camb_output/
+
+# --- Generated / local artifacts ---
+**/__pycache__/
+**/*.pyc
+
+gum/GUM_Report/
+gum/_runs/
+
+audits/results/
+sm_outputs*.json
+*.zip
+
+
+# --- Generated / local artifacts ---
+**/__pycache__/
+**/*.pyc
+
+gum/GUM_Report/
+gum/_runs/
+
+audits/results/
+sm_outputs*.json
+*.zip
+
