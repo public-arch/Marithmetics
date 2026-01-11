@@ -1,0 +1,32 @@
+# demo_map.yaml
+# Maps demo number -> category + canonical folder slug
+# The script will:
+# - find the incoming .py for each demo number
+# - find the matching README in incoming for that demo number
+# - create demos/<category>/demo-<NN>-<slug>/
+# - move script -> demo.py, README -> README.md
+# - create __init__.py for packages
+
+demos:
+  "36": {category: "cosmo", slug: "big-bang-master-flagship"}
+  "37": {category: "sm", slug: "math-sm-master-flagship"}
+  "39": {category: "cosmo", slug: "bb-a2"}
+  "40": {category: "substrate", slug: "universe-from-zero"}
+  "51": {category: "gr", slug: "qft-gr-vacuum-suppression"}
+  "53": {category: "foundations", slug: "lawbook-emergence"}
+  "54": {category: "sm", slug: "master-flagship-demo"}   # adjust if you want this elsewhere
+  "55": {category: "sm", slug: "proton-charge-radius"}
+  "56": {category: "controllers", slug: "deterministic-operator-calculus-vs-fd"}
+  "58": {category: "gr", slug: "emergent-weak-field-gr"}
+  "59": {category: "controllers", slug: "electromagnetism"}
+  "60": {category: "quantum", slug: "quantum-master-flagship"}
+  "63": {category: "gr", slug: "gravitational-wave-inspiral-phasing"}
+  "64": {category: "substrate", slug: "base-gauge-invariance-integer-selector"}
+  "65": {category: "infinity", slug: "continuous-lift-paradox"}
+  "66A": {category: "quantum_gravity", slug: "quantum-gravity-master-flagship-v1"}
+  "66B": {category: "quantum_gravity", slug: "quantum-gravity-master-flagship-v2"}
+  "67": {category: "infinity", slug: "navier-stokes-master-flagship"}
+  "68": {category: "gr", slug: "general-relativity-master-flagship"}
+  "69": {category: "controllers", slug: "oatb-operator-admissibility-transfer-bridge"}
+  "70": {category: "sm", slug: "higgs-master-flagship"}
+  "71": {category: "foundations", slug: "one-action-master-flagship"}
