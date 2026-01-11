@@ -1,4 +1,0 @@
-/workspaces/Marithmetics/incoming/demo-69-oatb-master-flagship-operator-admissibility-transfer-bridge.py:795: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-  print("UTC time :", _dt.datetime.utcnow().isoformat() + "Z")
-/workspaces/Marithmetics/incoming/demo-69-oatb-master-flagship-operator-admissibility-transfer-bridge.py:1110: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-  "utc_time": _dt.datetime.utcnow().isoformat() + "Z",

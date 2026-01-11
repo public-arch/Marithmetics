@@ -1,2 +1,0 @@
-/workspaces/Marithmetics/incoming/demo-56-deterministic-operator-calculus-vs-classical-finite-differences.py:1062: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-  utc = _dt.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
