@@ -2068,11 +2068,28 @@ def build_outputs(*, overlay: bool):
 
     qcd_mu = float(MZ)
     qcd_nf, qcd_active = count_active_quarks(qcd_mu, masses)
+
+    # 1-loop diagnostic
     LQCD = qcd_lambda_1loop(alpha_s, qcd_mu, qcd_nf)
+
+    # 4-loop MS̄ definition (fixed-nf); fall back deterministically if solver is non-asymptotic here
+    LQCD_msbar_4loop = lambda_qcd_msbar_4loop(alpha_s, qcd_mu, qcd_nf)
+    LQCD_msbar_4loop_fallback = (not math.isfinite(LQCD_msbar_4loop))
+    if LQCD_msbar_4loop_fallback:
+        LQCD_msbar_4loop = LQCD
+
+    # Primary Λ used for structural reporting
+    LQCD_primary = LQCD_msbar_4loop
+
     GF = fermi_constant_from_v(v)
+
     kv("QCD μ_used", f"{qcd_mu:.12g} GeV")
     kv("QCD n_f(μ)", f"{qcd_nf} active={qcd_active}")
     kv("Λ_QCD (1-loop)", f"{LQCD:.12g} GeV")
+    kv(
+        "Λ_QCD (MS̄ 4-loop @ μ)",
+        f"{LQCD_msbar_4loop:.12g} GeV" + ("  (fallback→1-loop)" if LQCD_msbar_4loop_fallback else "")
+    )
     kv("G_F (from v)", f"{GF:.12g} GeV^-2")
 
     # Stage 12B: Authority v1 predictions
@@ -2181,7 +2198,16 @@ def build_outputs(*, overlay: bool):
         seesaw_scale_GeV=MR,
         vacuum_energy_GeV4=rhoL,
         mixing=mix_meta,
-        qcd_info={"nf": qcd_nf, "active_quarks": qcd_active, "mu_used_GeV": qcd_mu, "Lambda_QCD_GeV_1loop": LQCD},
+        qcd_info={
+            "nf": qcd_nf,
+            "active_quarks": qcd_active,
+            "mu_used_GeV": qcd_mu,
+            "Lambda_QCD_GeV_1loop": LQCD,
+            "Lambda_QCD_GeV_msbar_4loop": LQCD_msbar_4loop,
+            "Lambda_QCD_GeV_primary": LQCD_primary,
+            "Lambda_QCD_msbar_4loop_used_fallback": LQCD_msbar_4loop_fallback,
+        },
+
         lambda_H=lambda_H_raw,
         mH_GeV=mH_raw,
     )
@@ -2231,7 +2257,12 @@ def build_outputs(*, overlay: bool):
         lambda_H=lambda_H_pred,
         mH_GeV=mH_pred,
     )
-
+   
+    # Interpretation note (audit clarity; prevents PDG confusion on raw vs dressed scales)
+    print("\nInterpretation (audit):")
+    kv("STRUCTURAL", "substrate-eigenvalue witness space (not PDG-comparable by default)")
+    kv("PREDICTIONS", "Authority v1 dressed closure (comparison space; enable --overlay for evaluation-only PDG)")
+    kv("Higgs surrogate", "mH is computed as sqrt(2*lambda_H)*v; proxy only (not a full radiative/threshold-corrected Higgs mass)")
     print_sm_manifest("SM MANIFEST — STRUCTURAL (κ_refined witness)", raw_manifest)
     print_sm_manifest("SM MANIFEST — PREDICTIONS (Authority v1 dressed)", pred_manifest)
 
@@ -2502,6 +2533,72 @@ def build_outputs(*, overlay: bool):
     kv("code sha256", pure_out["code_sha256"])
 
     return pure_out, overlay_out
+# ==========================================================
+# Certificate checks (exit-code semantics for auditors / CI)
+# ==========================================================
+def cert_failures(pure_out: dict) -> list[str]:
+    """
+    Returns a list of human-readable failure reasons.
+    Empty list => PASS.
+
+    This is intentionally minimal and audit-facing:
+      - structural selection stable
+      - palette gates pass
+      - anomaly cancellation exact
+      - CKM/PMNS unitarity within tolerance
+      - QCD fields finite in the STRUCTURAL manifest
+    """
+    fails: list[str] = []
+
+    # 1) SCFP++ triple regression guard
+    try:
+        sc = pure_out["SCFP"]["survivors"]
+        triple = (int(sc["wU"]), int(sc["SU2"]), int(sc["SU3"]))
+        if triple != (137, 107, 103):
+            fails.append(f"SCFP triple mismatch: got {triple}, expected (137, 107, 103)")
+    except Exception as e:
+        fails.append(f"SCFP triple check error: {e}")
+
+    # 2) Palette gates
+    try:
+        if pure_out["paletteB"].get("E1E5_pass") is not True:
+            fails.append("Palette-B gates failed: E1–E5 not satisfied")
+    except Exception as e:
+        fails.append(f"Palette gate check error: {e}")
+
+    # 3) Exact anomalies
+    try:
+        an = pure_out["anomalies"]
+        for key in ["SU2^2U1", "SU3^2U1", "U1^3", "gravU1"]:
+            if str(an.get(key)) != "0":
+                fails.append(f"Anomaly not zero: {key}={an.get(key)}")
+    except Exception as e:
+        fails.append(f"Anomaly check error: {e}")
+
+    # 4) Unitarity defects
+    try:
+        mix = pure_out["mixing"]
+        ckm_def = float(mix.get("ckm_unitarity_defect", float("inf")))
+        pmns_def = float(mix.get("pmns_unitarity_defect", float("inf")))
+        if not (ckm_def < 1e-12):
+            fails.append(f"CKM unitarity defect too large: {ckm_def:.3e} (threshold 1e-12)")
+        if not (pmns_def < 1e-12):
+            fails.append(f"PMNS unitarity defect too large: {pmns_def:.3e} (threshold 1e-12)")
+    except Exception as e:
+        fails.append(f"Mixing unitarity check error: {e}")
+
+    # 5) QCD finiteness in STRUCTURAL manifest
+    try:
+        raw_manifest = pure_out["raw"]["sm_manifest"]
+        qcd = raw_manifest.get("qcd", {})
+        for k in ["Lambda_QCD_GeV_1loop", "Lambda_QCD_GeV_msbar_4loop", "Lambda_QCD_GeV_primary"]:
+            v = float(qcd.get(k, float("nan")))
+            if not math.isfinite(v):
+                fails.append(f"STRUCTURAL QCD field not finite: {k}={qcd.get(k)}")
+    except Exception as e:
+        fails.append(f"STRUCTURAL QCD finiteness check error: {e}")
+
+    return fails
 
 
 # ==========================================================
@@ -2606,7 +2703,8 @@ def entrypoint():
         tee_out = TeeIO()
         tee_err = TeeIO()
         with contextlib.redirect_stdout(tee_out), contextlib.redirect_stderr(tee_err):
-            build_outputs(overlay=OVERLAY)
+            pure_out, overlay_out = build_outputs(overlay=OVERLAY)
+
         stdout_text = tee_out.getvalue()
         stderr_text = tee_err.getvalue()
 
@@ -2633,10 +2731,18 @@ def entrypoint():
         print(stdout_text, end="")
         if stderr_text.strip():
             print(stderr_text, file=sys.stderr, end="")
-        print("\nCERT BUNDLE WRITTEN:")
-        kv("bundle_dir", str(bundle_dir))
-        kv("bundle_zip", str(zip_path))
-        return
+        failures = cert_failures(pure_out)
+
+        print("\nCERTIFICATE SUMMARY:")
+        if failures:
+            kv("status", "FAIL")
+            for msg in failures:
+                print("  - " + msg)
+            raise SystemExit(1)
+        else:
+            kv("status", "PASS")
+            raise SystemExit(0)
+
 
     build_outputs(overlay=OVERLAY)
 
