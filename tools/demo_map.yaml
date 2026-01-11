@@ -8,6 +8,7 @@
 # - create __init__.py for packages
 
 demos:
+  "33": {category: "standard_model", slug: "first-principles-standard-model-sm28-closure"}
   "36": {category: "cosmo", slug: "big-bang-master-flagship"}
   "37": {category: "sm", slug: "math-sm-master-flagship"}
   "39": {category: "cosmo", slug: "bb-a2"}
