@@ -1,0 +1,206 @@
+{
+  "incoming": "incoming",
+  "python": "/home/codespace/.python/current/bin/python",
+  "timeout_seconds": 300,
+  "total_seconds": 112.221,
+  "counts": {
+    "pass": 23,
+    "fail": 1,
+    "timeout": 0,
+    "total": 24
+  },
+  "results": [
+    {
+      "file": "incoming/demo-36-bb-big-bang-master-flagship.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 9.698,
+      "stdout_file": "artifacts/smoketest/demo-36-bb-big-bang-master-flagship.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-36-bb-big-bang-master-flagship.err.txt"
+    },
+    {
+      "file": "incoming/demo-37-mathsm-master-flagship.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.233,
+      "stdout_file": "artifacts/smoketest/demo-37-mathsm-master-flagship.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-37-mathsm-master-flagship.err.txt"
+    },
+    {
+      "file": "incoming/demo-39-bb-a2.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.395,
+      "stdout_file": "artifacts/smoketest/demo-39-bb-a2.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-39-bb-a2.err.txt"
+    },
+    {
+      "file": "incoming/demo-40-universe-from-zero-master-flagship.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.328,
+      "stdout_file": "artifacts/smoketest/demo-40-universe-from-zero-master-flagship.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-40-universe-from-zero-master-flagship.err.txt"
+    },
+    {
+      "file": "incoming/demo-40-universe-from-zero.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.201,
+      "stdout_file": "artifacts/smoketest/demo-40-universe-from-zero.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-40-universe-from-zero.err.txt"
+    },
+    {
+      "file": "incoming/demo-51-qftgr-vacuum-suppression-master-first-principles-1-closure.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.06,
+      "stdout_file": "artifacts/smoketest/demo-51-qftgr-vacuum-suppression-master-first-principles-1-closure.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-51-qftgr-vacuum-suppression-master-first-principles-1-closure.err.txt"
+    },
+    {
+      "file": "incoming/demo-53-lawbook-emergence.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.554,
+      "stdout_file": "artifacts/smoketest/demo-53-lawbook-emergence.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-53-lawbook-emergence.err.txt"
+    },
+    {
+      "file": "incoming/demo-54-master-flagship-demo-firstprinciples-deterministic-singlefile.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 2.505,
+      "stdout_file": "artifacts/smoketest/demo-54-master-flagship-demo-firstprinciples-deterministic-singlefile.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-54-master-flagship-demo-firstprinciples-deterministic-singlefile.err.txt"
+    },
+    {
+      "file": "incoming/demo-55-proton-charge-radius.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.056,
+      "stdout_file": "artifacts/smoketest/demo-55-proton-charge-radius.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-55-proton-charge-radius.err.txt"
+    },
+    {
+      "file": "incoming/demo-56-deterministic-operator-calculus-vs-classical-finite-differences.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 20.36,
+      "stdout_file": "artifacts/smoketest/demo-56-deterministic-operator-calculus-vs-classical-finite-differences.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-56-deterministic-operator-calculus-vs-classical-finite-differences.err.txt"
+    },
+    {
+      "file": "incoming/demo-58-emergent-weak-field-general-relativity-from-a-discrete-poisson-substrate.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.964,
+      "stdout_file": "artifacts/smoketest/demo-58-emergent-weak-field-general-relativity-from-a-discrete-poisson-substrate.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-58-emergent-weak-field-general-relativity-from-a-discrete-poisson-substrate.err.txt"
+    },
+    {
+      "file": "incoming/demo-59-electromagnetism.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.699,
+      "stdout_file": "artifacts/smoketest/demo-59-electromagnetism.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-59-electromagnetism.err.txt"
+    },
+    {
+      "file": "incoming/demo-60-quantum-master-flagship.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.284,
+      "stdout_file": "artifacts/smoketest/demo-60-quantum-master-flagship.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-60-quantum-master-flagship.err.txt"
+    },
+    {
+      "file": "incoming/demo-63-gravitational-wave-inspiral-phasing-deterministic-amplitude-counterfactual-contr.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.136,
+      "stdout_file": "artifacts/smoketest/demo-63-gravitational-wave-inspiral-phasing-deterministic-amplitude-counterfactual-contr.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-63-gravitational-wave-inspiral-phasing-deterministic-amplitude-counterfactual-contr.err.txt"
+    },
+    {
+      "file": "incoming/demo-64-co-base-gauge-invariance-of-a-deterministic-integer-selector.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.09,
+      "stdout_file": "artifacts/smoketest/demo-64-co-base-gauge-invariance-of-a-deterministic-integer-selector.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-64-co-base-gauge-invariance-of-a-deterministic-integer-selector.err.txt"
+    },
+    {
+      "file": "incoming/demo-65-continuous-lift-paradox.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 3.042,
+      "stdout_file": "artifacts/smoketest/demo-65-continuous-lift-paradox.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-65-continuous-lift-paradox.err.txt"
+    },
+    {
+      "file": "incoming/demo-66-quantum-gravity-master-flagship-weakstrong-field-referee-ready-selfcontained.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.07,
+      "stdout_file": "artifacts/smoketest/demo-66-quantum-gravity-master-flagship-weakstrong-field-referee-ready-selfcontained.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-66-quantum-gravity-master-flagship-weakstrong-field-referee-ready-selfcontained.err.txt"
+    },
+    {
+      "file": "incoming/demo-66-quantum-gravity-master-flagship.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.785,
+      "stdout_file": "artifacts/smoketest/demo-66-quantum-gravity-master-flagship.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-66-quantum-gravity-master-flagship.err.txt"
+    },
+    {
+      "file": "incoming/demo-67-navier-stokes-master-flagship-3d-taylor-green-industrial-certificate.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 63.236,
+      "stdout_file": "artifacts/smoketest/demo-67-navier-stokes-master-flagship-3d-taylor-green-industrial-certificate.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-67-navier-stokes-master-flagship-3d-taylor-green-industrial-certificate.err.txt"
+    },
+    {
+      "file": "incoming/demo-68-general-relativity-master-flagship-doc-admissible-weak-field-gr-einstein-complet.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 1.679,
+      "stdout_file": "artifacts/smoketest/demo-68-general-relativity-master-flagship-doc-admissible-weak-field-gr-einstein-complet.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-68-general-relativity-master-flagship-doc-admissible-weak-field-gr-einstein-complet.err.txt"
+    },
+    {
+      "file": "incoming/demo-69-oatb-master-flagship-operator-admissibility-transfer-bridge.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 5.87,
+      "stdout_file": "artifacts/smoketest/demo-69-oatb-master-flagship-operator-admissibility-transfer-bridge.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-69-oatb-master-flagship-operator-admissibility-transfer-bridge.err.txt"
+    },
+    {
+      "file": "incoming/demo-70-higgs-master-flagship.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.734,
+      "stdout_file": "artifacts/smoketest/demo-70-higgs-master-flagship.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-70-higgs-master-flagship.err.txt"
+    },
+    {
+      "file": "incoming/demo-71-one-action-master-flagship.py",
+      "returncode": 0,
+      "status": "PASS",
+      "seconds": 0.218,
+      "stdout_file": "artifacts/smoketest/demo-71-one-action-master-flagship.out.txt",
+      "stderr_file": "artifacts/smoketest/demo-71-one-action-master-flagship.err.txt"
+    },
+    {
+      "file": "incoming/placeholder.py",
+      "returncode": 1,
+      "status": "FAIL",
+      "seconds": 0.015,
+      "stdout_file": "artifacts/smoketest/placeholder.out.txt",
+      "stderr_file": "artifacts/smoketest/placeholder.err.txt"
+    }
+  ]
+}

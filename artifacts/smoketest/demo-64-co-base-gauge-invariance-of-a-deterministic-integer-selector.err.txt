@@ -1,0 +1,6 @@
+/workspaces/Marithmetics/incoming/demo-64-co-base-gauge-invariance-of-a-deterministic-integer-selector.py:73: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return _dt.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+/workspaces/Marithmetics/incoming/demo-64-co-base-gauge-invariance-of-a-deterministic-integer-selector.py:552: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  run_id = _dt.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
+/workspaces/Marithmetics/incoming/demo-64-co-base-gauge-invariance-of-a-deterministic-integer-selector.py:73: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return _dt.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"

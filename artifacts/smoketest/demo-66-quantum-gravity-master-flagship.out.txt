@@ -1,0 +1,139 @@
+====================================================================================================
+DEMO-66 — QUANTUM-GRAVITY MASTER FLAGSHIP (D* + eps0 + RG + screening/ringdown + teeth)
+====================================================================================================
+UTC time : 2026-01-11T19:22:33.348903Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout + optional JSON/PNG artifacts
+
+spec_sha256: eeced8b7ad85b6d651228ecf8531823b7e89bd51991dc041b2b2a23408c78969
+
+====================================================================================================
+STAGE 1 — Deterministic triple selection (primary + counterfactuals)
+====================================================================================================
+Lane survivor pools (raw):
+  U(1): [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Lane survivor pools (after U(1) coherence v2(wU-1)=3):
+  U(1): [137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Primary-window admissible triples: [(137, 107, 103)]
+PASS  Unique admissible triple in primary window  count=1
+PASS  Primary equals (137,107,103)  selected=Triple(wU=137, s2=107, s3=103)
+Counterfactuals: [(409, 263, 239), (409, 263, 307), (409, 367, 239), (409, 367, 307)]
+PASS  Captured >=4 counterfactual triples  found=4
+
+Derived invariants/budgets:
+  q2=30  q3=17  eps=1/sqrt(q2)=0.18257419
+  K_primary=15  K_cf=5
+
+====================================================================================================
+STAGE 2 — Canonical discrete scale D* from bases (first principles)
+====================================================================================================
+bases_canon: [10, 16, 27]
+d=b-1      : [9, 15, 26]
+D* = lcm(d): 1170
+PASS  Gate G1: D* equals 1170 for canonical bases  Dstar=1170
+
+====================================================================================================
+STAGE 3 — eps0(beta,N) table from locked kappa*(beta,N) ledger (no fit)
+====================================================================================================
+FAIL  Gate G2: exp(-sqrt(D*)/3) matches locked value  computed=1.1175862368611232e-05 expected=1.11758623686e-05
+rank  beta  N     kappa*       eps0               |eps0/1e-5 - 1|
+1     8     96    0.120723   9.972011253995e-06   0.00279887
+2     16    48    0.127630   9.910930330526e-06   0.00890697
+3     8     192   0.093463   1.022061319735e-05   0.02206132
+4     16    96    0.087144   1.028002028122e-05   0.02800203
+5     16    192   0.061798   1.052541290209e-05   0.05254129
+6     8     48    0.183382   9.444002332815e-06   0.05559977
+7     4     192   0.212433   9.217715427253e-06   0.07822846
+8     4     96    0.271508   8.789455016100e-06   0.12105450
+9     4     48    0.335180   8.370303905549e-06   0.16296961
+PASS  Gate G3: best (beta,N) achieves <1% closure to 1e-5  best=(beta=8,N=96) eps0=9.972011253995e-06 err=0.00279887
+PASS  Gate G4: canonical (beta=8,N=96) also achieves <1% closure  eps0=9.972011253995e-06 err=0.00279887
+
+====================================================================================================
+STAGE 4 — Counterfactual teeth (budget-limited base set for eps0)
+====================================================================================================
+Primary bases=[10, 16, 27] D*=1170 eps0_canon=9.972011253995e-06 score=|ratio-1|=0.00279887
+CF (409,263,239) K= 5 bases=[10, 16] eps0=9.537e-02 score=9535.52 degrade=True
+CF (409,263,307) K= 5 bases=[10, 16] eps0=9.537e-02 score=9535.52 degrade=True
+CF (409,367,239) K= 5 bases=[10, 16] eps0=9.537e-02 score=9535.52 degrade=True
+CF (409,367,307) K= 5 bases=[10, 16] eps0=9.537e-02 score=9535.52 degrade=True
+PASS  Gate T0: >=3/4 counterfactuals degrade eps0 score by (1+eps)  strong=4/4 eps=0.182574
+
+====================================================================================================
+STAGE 5 — Rosetta RG fit R(D)=R_inf + a/D^2 on locked table (R2310 channel)
+====================================================================================================
+D        R2310      residual
+1170     0.895700   +5.098866e-04
+3465     1.044100   -4.490099e-03
+51480    1.054000   +3.980213e-03
+
+Fit results: R_inf=1.058063815  a=-2.215618e+05  SSE=3.626307e-05
+Derived coupling: g_eff=(R_inf-1)/12 = 4.838651230e-03
+PASS  Gate G5: R_inf > 1 (nontrivial, positive coupling)  R_inf=1.058064
+PASS  Gate G6: SSE small (locked table consistent with 1/D^2 scaling)  SSE=3.626e-05
+PASS  Gate G7: |g_eff| in sane nonzero band  g_eff=4.839e-03
+
+====================================================================================================
+STAGE 6 — Counterfactual teeth (RG prediction error grows under budget reduction)
+====================================================================================================
+Primary score: |residual@D=51480| = 3.980213e-03
+CF (409,263,239) fitDs=[1170, 3465] pred@51480=1.063111 score=9.110837e-03 degrade=True
+CF (409,263,307) fitDs=[1170, 3465] pred@51480=1.063111 score=9.110837e-03 degrade=True
+CF (409,367,239) fitDs=[1170, 3465] pred@51480=1.063111 score=9.110837e-03 degrade=True
+CF (409,367,307) fitDs=[1170, 3465] pred@51480=1.063111 score=9.110837e-03 degrade=True
+PASS  Gate T1: >=3/4 counterfactuals degrade prediction error by (1+eps)  strong=4/4 eps=0.182574
+
+====================================================================================================
+STAGE 7 — Screening law outputs alpha_eff(eps) + ringdown proxy
+====================================================================================================
+Mercury      eps=2.662564e-08  alpha_eff=9.210351363121e-11
+DoublePulsar eps=4.380603e-06  alpha_eff=3.781283024005e-04
+BH_proxy     eps=5.000000e-01  alpha_eff=4.838651230494e-03
+PASS  Gate G8: alpha_eff monotone in eps  order=Mercury<3.781e-04<4.839e-03
+PASS  Gate G9: BH_proxy saturates to g_eff (<=1e-3 rel)  alpha_BH=4.838651e-03 g_eff=4.838651e-03
+PASS  Gate G10: weak-field alpha_eff tiny and positive  alpha_M=9.210e-11
+PASS  Gate G11: intermediate system in between weak/strong regimes  alpha_DP=3.781e-04
+
+Ringdown proxy (BH): capped fractional deltas
+alpha_f   = 0.942000
+alpha_tau = 0.936940
+delta_f_frac   = min(alpha_eff*alpha_f, cap)   = 4.558009459125e-03
+delta_tau_frac = min(alpha_eff*alpha_tau, cap) = 4.533525883899e-03
+PASS  Gate G12: delta_f bounded by caps and nonzero  df=4.558e-03 cap=0.3
+PASS  Gate G13: delta_tau bounded by caps and nonzero  dtau=4.534e-03 cap=0.3
+
+Ablation CONTROL_OFF (g_eff=0):
+PASS  Gate A0: CONTROL_OFF yields zero effect (expected)
+PASS  Gate A1: control separates from primary (nontriviality)  df0=0.0 df=4.558e-03
+
+====================================================================================================
+STAGE 8 — Counterfactual teeth (observable vector miss)
+====================================================================================================
+Primary vector ||vP|| = 6.439820508565e-03
+CF (409,263,239) eps0_cf=9.537e-02 g_eff_cf=-8.692e-03 rel_dist=2.77974 miss=True
+CF (409,263,307) eps0_cf=9.537e-02 g_eff_cf=-8.692e-03 rel_dist=2.77974 miss=True
+CF (409,367,239) eps0_cf=9.537e-02 g_eff_cf=-8.692e-03 rel_dist=2.77974 miss=True
+CF (409,367,307) eps0_cf=9.537e-02 g_eff_cf=-8.692e-03 rel_dist=2.77974 miss=True
+PASS  Gate T2: >=3/4 counterfactuals miss by rel_dist>=eps  strong=4/4 eps=0.182574
+
+====================================================================================================
+DETERMINISM HASH
+====================================================================================================
+determinism_sha256: 9e8a6199a3a474bb597d3da31d9c409d334e416cef133cae7e92cdfc792b80e0
+
+====================================================================================================
+FINAL VERDICT
+====================================================================================================
+PASS  DEMO-66 VERIFIED (D* + eps0 closure + RG + screening/ringdown + teeth)
+Result: VERIFIED
+
+====================================================================================================
+ARTIFACTS (optional)
+====================================================================================================
+PASS  Wrote results JSON  path=./demo66_master_results.json
+PASS  Wrote screening plot PNG  path=./demo66_screening_plot.png

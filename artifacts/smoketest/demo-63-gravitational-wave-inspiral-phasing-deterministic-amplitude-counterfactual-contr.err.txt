@@ -1,0 +1,2 @@
+/workspaces/Marithmetics/incoming/demo-63-gravitational-wave-inspiral-phasing-deterministic-amplitude-counterfactual-contr.py:371: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"UTC time : {_dt.datetime.utcnow().isoformat()}Z")
