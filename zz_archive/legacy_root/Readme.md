@@ -29,7 +29,7 @@ omega/       → Ω-operator, commutant proof, SM-architecture
 gum/         → Grand Unified Model (GUM) and report generators
 doc/         → DOC substrate, referee audits, continuum bridges
 infinity/    → Supersets, splinters, Infinity shells & regulator
-atlas/       → Visualization framework (structural plates & maps)
+atlas_substrate_visualization/       → Visualization framework (structural plates & maps)
 utilities/   → Shared helpers, tools, and support scripts
 ```
 

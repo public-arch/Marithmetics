@@ -92,7 +92,7 @@ Each file should be uploaded into the directory listed below.
 
 ---
 
-## atlas/  — Visual Atlas (structural plates)
+## atlas_substrate_visualization/  — Visual Atlas (structural plates)
 
 (none yet)
 
