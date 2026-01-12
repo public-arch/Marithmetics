@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -5,33 +6,28 @@
 GUM Bundler v30 (Standalone, AoR-grade)
 ======================================
 
-This script builds a single, citable evidence bundle for ALL demos under:
+Builds a single evidence bundle for ALL demos under:
   demos/<domain>/<demo-folder>/demo.py
 
-It supports three modes:
-  1) RUN mode (default): runs each demo (prefers --cert if supported), captures logs, hashes, artifacts.
-  2) INGEST mode (--ingest-only): does not run; scans existing artifacts and hashes them.
-  3) LEDGER mode (--ledger PATH): ingest an existing run ledger instead of running.
+Modes:
+  - RUN (default): runs demos (prefers --cert if supported) and captures logs + hashes.
+  - INGEST (--ingest-only): does not run; scans existing artifacts + hashes.
+  - LEDGER (--ledger PATH): ingests an existing run ledger instead of running.
 
-Outputs an AoR-style capsule directory:
+Outputs:
   gum/GUM_Bundles/GUM_BUNDLE_v30_<UTC>/
+    bundle.json
+    bundle_sha256.txt
+    repo_inventory.json
+    runs.json
+    artifacts_index.json
+    values.jsonl
+    tables/*.csv + tables/*.json
+    manifest.json
 
-Inside:
-  - bundle.json
-  - bundle_sha256.txt
-  - repo_inventory.json
-  - runs.json
-  - artifacts_index.json
-  - values.jsonl                  (flattened JSON values with provenance)
-  - tables/constants_master.csv   (paper-ready)
-  - tables/demo_index.csv
-  - tables/falsification_matrix.csv
-  - tables/run_reproducibility.csv
-
-Design principles:
-  - Never guess numbers.
-  - Every extracted value includes provenance (source file + sha256 + JSON path).
-  - Hash everything (code, artifacts, logs).
+Principles:
+  - No guessing: every value has provenance.
+  - Hash everything (code, artifacts, logs, bundle).
 """
 
 from __future__ import annotations
@@ -54,8 +50,6 @@ from typing import Any, Dict, List, Optional, Tuple
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 ART_EXTS = {".json", ".png", ".pdf", ".csv", ".txt"}
-TEXT_EXTS = {".py", ".md", ".json", ".yaml", ".yml", ".txt"}
-
 UTC_STAMP = "%Y%m%dT%H%M%SZ"
 
 
@@ -114,7 +108,6 @@ def parse_demo_id(folder: str) -> str:
     m = re.match(r"^demo-([0-9]{2})(?:-|$)", folder)
     if m:
         return m.group(1)
-    # fallback: return folder name
     return folder
 
 def discover_demos(demos_root: Path) -> List[Demo]:
@@ -170,7 +163,6 @@ def extract_values_from_json_file(
     flat = flatten_json_obj(obj)
     values = []
     for k, v in flat[:max_items]:
-        # keep scalars only in the main values ledger (strings/numbers/bool/null)
         if isinstance(v, (int, float, str, bool)) or v is None:
             values.append({
                 "demo_id": demo_id,
@@ -207,7 +199,6 @@ class RunRecord:
     notes: str
 
 def supports_cert(demo_py: Path) -> bool:
-    # cheap static signal: look for "--cert" token in source
     try:
         txt = demo_py.read_text(encoding="utf-8", errors="replace")
         return "--cert" in txt
@@ -220,7 +211,6 @@ def run_demo(python_exe: str, demo: Demo, out_logs_dir: Path, timeout_s: int) ->
     stderr_path = out_logs_dir / f"{demo.domain}__{demo.folder}.err.txt"
 
     code_sha = sha256_file(demo.demo_py)
-
     mode = "cert" if supports_cert(demo.demo_py) else "run"
     cmd = [python_exe, "demo.py"] + (["--cert"] if mode == "cert" else [])
 
@@ -291,7 +281,6 @@ def ingest_external_ledger(path: Path) -> Dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 def normalize_ledger_record(row: Dict[str, Any]) -> Dict[str, Any]:
-    # We normalize to our run record schema (but keep original row in bundle for completeness)
     return {
         "demo_id": str(row.get("demo_id", "")),
         "domain": str(row.get("category", "")),
@@ -339,30 +328,27 @@ def build_repo_inventory() -> Dict[str, Any]:
         "tracked_files": recs,
     }
 
-def build_demo_index_table(demos: List[Demo], runs: Dict[str, Any]) -> List[Dict[str, Any]]:
-    out = []
-    for d in demos:
-        k = d.demo_id
-        rr = runs.get(k)
-        out.append({
-            "demo_id": d.demo_id,
-            "domain": d.domain,
-            "folder": d.folder,
-            "demo_dir": str(d.demo_dir.relative_to(REPO_ROOT)),
-            "status": rr.get("status") if rr else "NOT_IN_RUNS",
-            "mode": rr.get("mode") if rr else "",
-        })
-    return out
+def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
+    if not rows:
+        path.write_text("", encoding="utf-8")
+        return
+    cols = list(rows[0].keys())
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=cols)
+        w.writeheader()
+        for r in rows:
+            w.writerow(r)
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="GUM Bundler v30 (AoR-grade).")
     ap.add_argument("--demos-root", default="demos", help="Root demos directory (default: demos)")
     ap.add_argument("--outdir", default="gum/GUM_Bundles", help="Output root (default: gum/GUM_Bundles)")
     ap.add_argument("--ledger", default="", help="Optional path to external ledger JSON (smoketest summary.json)")
-    ap.add_argument("--ingest-only", action="store_true", help="Do not run demos; only ingest existing artifacts")
+    ap.add_argument("--ingest-only", dest="ingest_only", action="store_true",
+                    help="Do not run demos; only ingest existing artifacts")
     ap.add_argument("--timeout", type=int, default=600, help="Per-demo timeout seconds (default: 600)")
     ap.add_argument("--python", default=sys.executable, help="Python executable (default: current)")
-    ap.add_argument("--vendor-artifacts", action="store_true",
+    ap.add_argument("--vendor-artifacts", dest="vendor_artifacts", action="store_true",
                     help="Copy artifacts into bundle directory (self-contained but larger). Default is index-by-path.")
     args = ap.parse_args()
 
@@ -378,10 +364,8 @@ def main() -> int:
     logs_dir = REPO_ROOT / "artifacts" / "bundle_logs_v30"
     ensure_dir(logs_dir)
 
-    # Discover demos
     demos = discover_demos(demos_root)
 
-    # Runs: either ingest ledger, run demos, or none
     runs_norm: Dict[str, Any] = {}
     external_ledger_obj: Optional[Dict[str, Any]] = None
     ledger_sha = None
@@ -391,15 +375,13 @@ def main() -> int:
         if ledger_path.exists():
             ledger_sha = sha256_file(ledger_path)
             external_ledger_obj = ingest_external_ledger(ledger_path)
-            # Normalize by demo_id
             for row in external_ledger_obj.get("results", []):
                 nr = normalize_ledger_record(row)
                 did = str(nr.get("demo_id") or "")
                 if did:
                     runs_norm[did] = nr
 
-    if not args.ingest-only and not runs_norm:
-        # RUN mode: run all demos ourselves and build runs_norm
+    if (not args.ingest_only) and (not runs_norm):
         for d in demos:
             rr = run_demo(args.python, d, logs_dir, args.timeout)
             runs_norm[d.demo_id] = {
@@ -419,19 +401,16 @@ def main() -> int:
                 "notes": rr.notes,
             }
 
-    # Index artifacts + extract values
     artifacts_index: List[Dict[str, Any]] = []
     values_jsonl_path = bundle_dir / "values.jsonl"
     values_f = values_jsonl_path.open("w", encoding="utf-8")
 
-    # Optional vendoring directory
     vendored_dir = bundle_dir / "vendored_artifacts"
     if args.vendor_artifacts:
         ensure_dir(vendored_dir)
 
     for d in demos:
-        art_list = list_artifacts(d.demo_dir)
-        for art in art_list:
+        for art in list_artifacts(d.demo_dir):
             art_sha = sha256_file(art)
             rel_art = str(art.relative_to(REPO_ROOT))
             rec = {
@@ -444,14 +423,9 @@ def main() -> int:
                 "ext": art.suffix.lower(),
                 "role": "unknown",
             }
-
-            # Heuristic role tags (useful for papers/report)
             n = art.name.lower()
             if n.endswith(".json"):
-                if "outputs" in n or "results" in n or "report" in n or "manifest" in n:
-                    rec["role"] = "primary_results_json"
-                else:
-                    rec["role"] = "json"
+                rec["role"] = "primary_results_json" if ("outputs" in n or "results" in n or "report" in n or "manifest" in n) else "json"
             elif n.endswith(".png"):
                 rec["role"] = "figure_png"
             elif n.endswith(".pdf"):
@@ -463,30 +437,34 @@ def main() -> int:
 
             artifacts_index.append(rec)
 
-            # Vendor artifacts if requested
             if args.vendor_artifacts:
                 dest = vendored_dir / f"{d.domain}__{d.folder}__{art.name}"
                 if not dest.exists():
                     dest.write_bytes(art.read_bytes())
 
-            # Extract values from JSON artifacts (deep, paper-ready)
             if art.suffix.lower() == ".json":
                 for row in extract_values_from_json_file(d.demo_id, d.domain, art, art_sha):
                     values_f.write(json.dumps(row, sort_keys=True) + "\n")
 
     values_f.close()
 
-    # Repo inventory (all scripts)
     repo_inventory = build_repo_inventory()
 
-    # Paper tables
-    demo_index_rows = build_demo_index_table(demos, runs_norm)
+    demo_index_rows = []
+    for d in demos:
+        rr = runs_norm.get(d.demo_id)
+        demo_index_rows.append({
+            "demo_id": d.demo_id,
+            "domain": d.domain,
+            "folder": d.folder,
+            "demo_dir": str(d.demo_dir.relative_to(REPO_ROOT)),
+            "status": rr.get("status") if rr else "NOT_IN_RUNS",
+            "mode": rr.get("mode") if rr else "",
+        })
 
-    # falsification_matrix.csv (every demo)
     fals_rows = []
     for d in demos:
         rr = runs_norm.get(d.demo_id, {})
-        # choose a one-liner that works in bash; report can render both later
         one_liner = f'(cd "{d.demo_dir.relative_to(REPO_ROOT)}" && python demo.py' + (' --cert' if supports_cert(d.demo_py) else '') + ')'
         fals_rows.append({
             "demo_id": d.demo_id,
@@ -499,7 +477,6 @@ def main() -> int:
             "code_sha256": rr.get("code_sha256", sha256_file(d.demo_py)),
         })
 
-    # run_reproducibility.csv (from runs_norm)
     repro_rows = []
     for demo_id, rr in sorted(runs_norm.items(), key=lambda kv: kv[0]):
         repro_rows.append({
@@ -517,8 +494,6 @@ def main() -> int:
             "notes": rr.get("notes",""),
         })
 
-    # constants_master.csv
-    # We build this from values.jsonl but keep it lean: only scalar numeric-ish values.
     constants_rows = []
     with values_jsonl_path.open("r", encoding="utf-8") as f:
         for line in f:
@@ -539,29 +514,16 @@ def main() -> int:
                     "locator": row.get("source_locator"),
                 })
 
-    # Write tables
-    def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
-        if not rows:
-            path.write_text("", encoding="utf-8")
-            return
-        cols = list(rows[0].keys())
-        with path.open("w", newline="", encoding="utf-8") as f:
-            w = csv.DictWriter(f, fieldnames=cols)
-            w.writeheader()
-            for r in rows:
-                w.writerow(r)
-
     write_csv(bundle_dir / "tables" / "demo_index.csv", demo_index_rows)
     write_csv(bundle_dir / "tables" / "falsification_matrix.csv", fals_rows)
     write_csv(bundle_dir / "tables" / "run_reproducibility.csv", repro_rows)
     write_csv(bundle_dir / "tables" / "constants_master.csv", constants_rows)
 
-    # Save JSON companions
     write_json(bundle_dir / "repo_inventory.json", repo_inventory)
     write_json(bundle_dir / "runs.json", {
         "source_ledger": args.ledger if args.ledger else None,
         "source_ledger_sha256": ledger_sha,
-        "generated_by": "RUN" if (not args.ingest-only and not args.ledger) else ("LEDGER" if args.ledger else "INGEST_ONLY"),
+        "generated_by": "RUN" if ((not args.ingest_only) and (not args.ledger)) else ("LEDGER" if args.ledger else "INGEST_ONLY"),
         "runs": runs_norm,
     })
     write_json(bundle_dir / "artifacts_index.json", {"artifacts": artifacts_index})
@@ -570,7 +532,6 @@ def main() -> int:
     write_json(bundle_dir / "tables" / "run_reproducibility.json", repro_rows)
     write_json(bundle_dir / "tables" / "constants_master.json", constants_rows)
 
-    # Master bundle
     bundle = {
         "bundle_meta": {
             "version": "v30",
@@ -582,22 +543,15 @@ def main() -> int:
                 "executable": sys.executable,
                 "platform": platform.platform(),
             },
-            "mode": "INGEST_ONLY" if args.ingest-only else ("LEDGER" if args.ledger else "RUN"),
+            "mode": "INGEST_ONLY" if args.ingest_only else ("LEDGER" if args.ledger else "RUN"),
             "ledger_path": args.ledger or None,
             "ledger_sha256": ledger_sha,
             "vendor_artifacts": bool(args.vendor_artifacts),
         },
         "repo_inventory": repo_inventory,
         "demo_count": len(demos),
-        "runs": {
-            "count": len(runs_norm),
-            "runs_json": "runs.json",
-        },
-        "artifacts": {
-            "count": len(artifacts_index),
-            "artifacts_index_json": "artifacts_index.json",
-            "values_jsonl": "values.jsonl",
-        },
+        "runs": {"count": len(runs_norm), "runs_json": "runs.json"},
+        "artifacts": {"count": len(artifacts_index), "artifacts_index_json": "artifacts_index.json", "values_jsonl": "values.jsonl"},
         "tables": {
             "demo_index": "tables/demo_index.csv",
             "falsification_matrix": "tables/falsification_matrix.csv",
@@ -607,18 +561,15 @@ def main() -> int:
         "notes": [
             "All demos discovered under demos/*/*/demo.py are included.",
             "All JSON artifacts are flattened into values.jsonl with provenance.",
-            "If ingest-only, missing artifacts indicate the demo has not produced outputs yet in this checkout.",
+            "In INGEST_ONLY mode, missing artifacts indicate demos have not produced outputs yet in this checkout.",
         ],
     }
 
     bundle_path = bundle_dir / "bundle.json"
     write_json(bundle_path, bundle)
-
-    # Canonical bundle sha
     bundle_sha = sha256_file(bundle_path)
     write_text(bundle_dir / "bundle_sha256.txt", bundle_sha + "\n")
 
-    # Manifest: counts and missing evidence
     missing_runs = [d.folder for d in demos if d.demo_id not in runs_norm]
     missing_artifacts = [d.folder for d in demos if len(list_artifacts(d.demo_dir)) == 0]
     manifest = {
@@ -642,6 +593,6 @@ def main() -> int:
         print("  demos with zero local artifacts:", len(missing_artifacts))
     return 0
 
-
 if __name__ == "__main__":
     raise SystemExit(main())
+
