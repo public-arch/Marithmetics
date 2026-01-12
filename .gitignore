@@ -56,3 +56,15 @@ publication_spine/REFEREE_TRACK/CLAIMS.json
 
 # runtime artifacts (never commit)
 artifacts/
+
+# =========================
+# Generated outputs (never commit)
+# =========================
+artifacts/
+audits/bundles/
+gum/GUM_Report/
+*.zip
+*.pdf
+*_outputs*.json
+GUM_manifest_*.json
+GUM_manifest_SHA256_*.txt

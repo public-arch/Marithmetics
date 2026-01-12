@@ -1,0 +1,91 @@
+{
+  "D_star": 1170,
+  "counterfactuals": [
+    {
+      "s2": 263,
+      "s3": 239,
+      "wU": 409
+    },
+    {
+      "s2": 263,
+      "s3": 307,
+      "wU": 409
+    },
+    {
+      "s2": 367,
+      "s3": 239,
+      "wU": 409
+    },
+    {
+      "s2": 367,
+      "s3": 307,
+      "wU": 409
+    }
+  ],
+  "eps": 0.18257418583505536,
+  "eps0_canon": 9.972011253995174e-06,
+  "eps0_score_primary": 0.0027988746004826703,
+  "gates": {
+    "A0_control_off": true,
+    "A1_nontrivial": true,
+    "G10_weak": true,
+    "G11_intermediate": true,
+    "G12_df": true,
+    "G13_dtau": true,
+    "G1_Dstar": true,
+    "G3_best_closure": true,
+    "G4_canon_closure": true,
+    "G5_Rinf_gt_1": true,
+    "G6_SSE_small": true,
+    "G7_geff_band": true,
+    "G8_monotone": true,
+    "G9_saturates": true,
+    "T0_eps0_teeth": true,
+    "T1_rg_teeth": true,
+    "T2_vector_teeth": true
+  },
+  "primary": {
+    "s2": 107,
+    "s3": 103,
+    "wU": 137
+  },
+  "rg": {
+    "R_inf": 1.0580638147659247,
+    "SSE": 3.626306625458567e-05,
+    "a": -221561.842276808,
+    "g_eff": 0.004838651230493725,
+    "residuals": {
+      "1170": 0.0005098865923488516,
+      "3465": -0.004490099122646196,
+      "51480": 0.0039802125302979
+    }
+  },
+  "screening": {
+    "alpha": {
+      "BH_proxy": 0.004838651230493687,
+      "DoublePulsar": 0.0003781283024005324,
+      "Mercury": 9.210351363120943e-11
+    },
+    "eps0": 9.972011253995174e-06,
+    "g_eff": 0.004838651230493725,
+    "ringdown": {
+      "delta_f": 0.004558009459125053,
+      "delta_tau": 0.004533525883898755
+    }
+  },
+  "spec_sha256": "eeced8b7ad85b6d651228ecf8531823b7e89bd51991dc041b2b2a23408c78969",
+  "teeth": {
+    "eps0": {
+      "strong": 4,
+      "total": 4
+    },
+    "rg": {
+      "strong": 4,
+      "total": 4
+    },
+    "vector": {
+      "strong": 4,
+      "total": 4
+    }
+  }
+}
