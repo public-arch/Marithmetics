@@ -1,4 +1,4 @@
-cat > gum/gum_report_generator_v29.py << 'PY'
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
