@@ -2,30 +2,33 @@
 # -*- coding: utf-8 -*-
 
 """
-GUM Bundler v30.1 (Standalone, AoR-grade)
-========================================
+GUM Bundler v30 (AoR folder-per-run)
+===================================
 
-Fixes vs v30:
-  - Treat stdout/stderr logs as first-class artifacts (counted and hashed).
-  - Extract structured values from stdout into values.jsonl (paper-citable).
-  - Capture artifacts written outside demo folders during run windows.
-  - Normalize demo ids including 66A/66B.
+Each run creates a self-contained AoR folder:
+  audits/bundles/GUM_BUNDLE_v30_<UTC>/
+
+Inside:
+  - bundle.json + bundle_sha256.txt
+  - repo_inventory.json
+  - runs.json
+  - artifacts_index.json
+  - values.jsonl (flattened JSON values with provenance)
+  - tables/*.csv + tables/*.json
+  - logs/*.out.txt + logs/*.err.txt
+  - vendored_artifacts/ (optional, if --vendor-artifacts)
 
 Modes:
-  - RUN (default): runs demos and captures logs + hashes + artifacts.
-  - INGEST (--ingest-only): no run; scan existing artifacts + hash them.
-  - LEDGER (--ledger PATH): ingest an external ledger (optional).
+  - RUN (default): runs all demos (prefers --cert if supported) with cwd=demo_dir,
+                   captures stdout/stderr into AoR logs/, hashes artifacts in demo dir.
+  - INGEST (--ingest-only): does not run; scans existing artifacts and hashes them.
+  - LEDGER (--ledger PATH): ingests an existing run ledger; vendors referenced stdout/stderr into AoR logs.
 
-Outputs:
-  gum/GUM_Bundles/GUM_BUNDLE_v30_<UTC>/
-    bundle.json
-    bundle_sha256.txt
-    repo_inventory.json
-    runs.json
-    artifacts_index.json
-    values.jsonl
-    tables/*.csv + tables/*.json
-    manifest.json
+All demos are discovered under:
+  demos/<domain>/<demo-folder>/demo.py
+
+No guessing:
+  - Every extracted value has provenance: source file path + source sha256 + JSON path.
 """
 
 from __future__ import annotations
@@ -37,6 +40,7 @@ import json
 import os
 import platform
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -101,24 +105,7 @@ class Demo:
     demo_dir: Path
     demo_py: Path
 
-def norm_demo_id(s: str) -> str:
-    s = str(s).strip()
-    # normalize 66a/66b
-    m = re.match(r"^([0-9]{2})([aAbB])$", s)
-    if m:
-        return m.group(1) + m.group(2).upper()
-    return s
-
 def parse_demo_id(folder: str) -> str:
-    """
-    Supports:
-      demo-33-...
-      demo-66a-...
-      demo-66b-...
-    """
-    m = re.match(r"^demo-([0-9]{2})([aAbB])(?:-|$)", folder)
-    if m:
-        return norm_demo_id(m.group(1) + m.group(2))
     m = re.match(r"^demo-([0-9]{2})(?:-|$)", folder)
     if m:
         return m.group(1)
@@ -138,11 +125,9 @@ def discover_demos(demos_root: Path) -> List[Demo]:
 # --------------------------
 # Artifact scanning
 # --------------------------
-def list_artifacts_in_dir(d: Path) -> List[Path]:
+def list_artifacts(demo_dir: Path) -> List[Path]:
     out = []
-    if not d.exists():
-        return out
-    for p in d.iterdir():
+    for p in demo_dir.iterdir():
         if p.is_file() and p.suffix.lower() in ART_EXTS:
             out.append(p)
     return sorted(out, key=lambda x: x.name.lower())
@@ -170,7 +155,7 @@ def extract_values_from_json_file(
     domain: str,
     artifact_path: Path,
     artifact_sha: str,
-    max_items: int = 50000
+    max_items: int = 20000
 ) -> List[Dict[str, Any]]:
     try:
         obj = json.loads(artifact_path.read_text(encoding="utf-8"))
@@ -195,76 +180,6 @@ def extract_values_from_json_file(
 
 
 # --------------------------
-# Stdout parsing → values.jsonl
-# --------------------------
-KV_LINE = re.compile(r"^\s*(.{1,80}?)\s{2,}(.+?)\s*$")  # key <2+ spaces> value
-SHA_LINE = re.compile(r"^\s*(.+?)\s+sha256\s+([0-9a-f]{64})\s*$", re.IGNORECASE)
-
-def extract_values_from_stdout(
-    demo_id: str,
-    domain: str,
-    stdout_path: Path,
-    stdout_sha: str,
-    max_lines: int = 6000
-) -> List[Dict[str, Any]]:
-    txt = stdout_path.read_text(encoding="utf-8", errors="replace")
-    lines = txt.splitlines()[:max_lines]
-    out: List[Dict[str, Any]] = []
-
-    # 1) sha256 lines (high-signal)
-    for i, line in enumerate(lines):
-        m = SHA_LINE.match(line)
-        if m:
-            name = m.group(1).strip()
-            h = m.group(2).strip()
-            out.append({
-                "demo_id": demo_id,
-                "domain": domain,
-                "value_name": f"stdout.sha256.{name}",
-                "value": h,
-                "units": None,
-                "source_type": "stdout_regex",
-                "source_path": str(stdout_path.relative_to(REPO_ROOT)),
-                "source_sha256": stdout_sha,
-                "source_locator": f"SHA_LINE@L{i+1}",
-            })
-
-    # 2) aligned kv lines (common in your demos)
-    for i, line in enumerate(lines):
-        m = KV_LINE.match(line)
-        if not m:
-            continue
-        k = m.group(1).strip()
-        v = m.group(2).strip()
-        # Filter out noise lines
-        if k.startswith("—") or k.startswith("═") or k.lower() in {"run", "scan"}:
-            continue
-        # Try to coerce numerics when trivial (keep string if not)
-        vv: Any = v
-        try:
-            # take first token for numeric-ish lines like "0.123 GeV"
-            t0 = v.split()[0]
-            if re.fullmatch(r"[+-]?[0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?", t0):
-                vv = float(t0)
-        except Exception:
-            vv = v
-
-        out.append({
-            "demo_id": demo_id,
-            "domain": domain,
-            "value_name": f"stdout.kv.{k}",
-            "value": vv,
-            "units": None,
-            "source_type": "stdout_kv",
-            "source_path": str(stdout_path.relative_to(REPO_ROOT)),
-            "source_sha256": stdout_sha,
-            "source_locator": f"KV_LINE@L{i+1}",
-        })
-
-    return out
-
-
-# --------------------------
 # Running demos (optional)
 # --------------------------
 @dataclass
@@ -278,13 +193,11 @@ class RunRecord:
     returncode: Optional[int]
     seconds: float
     code_sha256: str
-    stdout_path: str
-    stderr_path: str
+    stdout_rel: str
+    stderr_rel: str
     stdout_sha256: str
     stderr_sha256: str
     notes: str
-    run_start_epoch: float
-    run_end_epoch: float
 
 def supports_cert(demo_py: Path) -> bool:
     try:
@@ -293,16 +206,16 @@ def supports_cert(demo_py: Path) -> bool:
     except Exception:
         return False
 
-def run_demo(python_exe: str, demo: Demo, out_logs_dir: Path, timeout_s: int) -> RunRecord:
+def run_demo(python_exe: str, demo: Demo, logs_dir: Path, timeout_s: int) -> RunRecord:
     demo_rel_dir = demo.demo_dir.relative_to(REPO_ROOT)
-    stdout_path = out_logs_dir / f"{demo.domain}__{demo.folder}.out.txt"
-    stderr_path = out_logs_dir / f"{demo.domain}__{demo.folder}.err.txt"
+    stdout_path = logs_dir / f"{demo.domain}__{demo.folder}.out.txt"
+    stderr_path = logs_dir / f"{demo.domain}__{demo.folder}.err.txt"
 
     code_sha = sha256_file(demo.demo_py)
     mode = "cert" if supports_cert(demo.demo_py) else "run"
     cmd = [python_exe, "demo.py"] + (["--cert"] if mode == "cert" else [])
 
-    run_start = time.time()
+    t0 = time.time()
     try:
         proc = subprocess.run(
             cmd,
@@ -312,9 +225,7 @@ def run_demo(python_exe: str, demo: Demo, out_logs_dir: Path, timeout_s: int) ->
             timeout=timeout_s,
             env=os.environ.copy(),
         )
-        run_end = time.time()
-
-        dt = run_end - run_start
+        dt = time.time() - t0
         stdout_path.write_text(proc.stdout or "", encoding="utf-8", errors="replace")
         stderr_path.write_text(proc.stderr or "", encoding="utf-8", errors="replace")
 
@@ -332,23 +243,19 @@ def run_demo(python_exe: str, demo: Demo, out_logs_dir: Path, timeout_s: int) ->
             returncode=proc.returncode,
             seconds=round(dt, 6),
             code_sha256=code_sha,
-            stdout_path=str(stdout_path.relative_to(REPO_ROOT)),
-            stderr_path=str(stderr_path.relative_to(REPO_ROOT)),
+            stdout_rel=str(stdout_path.relative_to(REPO_ROOT)),
+            stderr_rel=str(stderr_path.relative_to(REPO_ROOT)),
             stdout_sha256=stdout_sha,
             stderr_sha256=stderr_sha,
             notes="",
-            run_start_epoch=run_start,
-            run_end_epoch=run_end,
         )
 
     except subprocess.TimeoutExpired as e:
-        run_end = time.time()
-        dt = run_end - run_start
+        dt = time.time() - t0
         stdout_path.write_text((e.stdout or ""), encoding="utf-8", errors="replace")
         stderr_path.write_text((e.stderr or "") + f"\n\n[TIMEOUT after {timeout_s}s]\n", encoding="utf-8", errors="replace")
         stdout_sha = sha256_file(stdout_path)
         stderr_sha = sha256_file(stderr_path)
-
         return RunRecord(
             demo_id=demo.demo_id,
             domain=demo.domain,
@@ -359,25 +266,24 @@ def run_demo(python_exe: str, demo: Demo, out_logs_dir: Path, timeout_s: int) ->
             returncode=None,
             seconds=round(dt, 6),
             code_sha256=code_sha,
-            stdout_path=str(stdout_path.relative_to(REPO_ROOT)),
-            stderr_path=str(stderr_path.relative_to(REPO_ROOT)),
+            stdout_rel=str(stdout_path.relative_to(REPO_ROOT)),
+            stderr_rel=str(stderr_path.relative_to(REPO_ROOT)),
             stdout_sha256=stdout_sha,
             stderr_sha256=stderr_sha,
             notes=f"timeout>{timeout_s}s",
-            run_start_epoch=run_start,
-            run_end_epoch=run_end,
         )
 
 
 # --------------------------
-# External ledger ingestion (optional)
+# Ledger ingestion (optional)
 # --------------------------
 def ingest_external_ledger(path: Path) -> Dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 def normalize_ledger_record(row: Dict[str, Any]) -> Dict[str, Any]:
+    # Normalize external ledger row keys into our schema (plus keep original)
     return {
-        "demo_id": norm_demo_id(str(row.get("demo_id", ""))),
+        "demo_id": str(row.get("demo_id", "")),
         "domain": str(row.get("category", "")),
         "folder": str(row.get("folder", "")),
         "demo_path": str(row.get("demo_path", "")),
@@ -390,11 +296,12 @@ def normalize_ledger_record(row: Dict[str, Any]) -> Dict[str, Any]:
         "stderr_path": row.get("stderr_path"),
         "artifacts": row.get("artifacts") or [],
         "notes": row.get("notes") or "",
+        "_original": row,
     }
 
 
 # --------------------------
-# Bundle builder
+# Bundle I/O
 # --------------------------
 def ensure_dir(p: Path) -> None:
     p.mkdir(parents=True, exist_ok=True)
@@ -404,20 +311,6 @@ def write_json(p: Path, obj: Any) -> None:
 
 def write_text(p: Path, text: str) -> None:
     p.write_text(text, encoding="utf-8")
-
-def build_repo_inventory() -> Dict[str, Any]:
-    files = git_ls_files()
-    recs = []
-    for rel in files:
-        fp = REPO_ROOT / rel
-        if fp.exists() and fp.is_file():
-            recs.append({"path": rel, "sha256": sha256_file(fp), "size_bytes": fp.stat().st_size})
-    return {
-        "git_head": git_head(),
-        "git_is_clean": git_is_clean(),
-        "tracked_count": len(recs),
-        "tracked_files": recs,
-    }
 
 def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
     if not rows:
@@ -430,60 +323,36 @@ def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
         for r in rows:
             w.writerow(r)
 
-def classify_role(name: str) -> str:
-    n = name.lower()
-    if n.endswith(".json"):
-        return "primary_results_json" if any(x in n for x in ["outputs", "results", "report", "manifest"]) else "json"
-    if n.endswith(".png"):
-        return "figure_png"
-    if n.endswith(".pdf"):
-        return "figure_pdf"
-    if n.endswith(".csv"):
-        return "table_csv"
-    if n.endswith(".txt"):
-        return "text_txt"
-    return "unknown"
+def build_repo_inventory() -> Dict[str, Any]:
+    files = git_ls_files()
+    recs = []
+    for rel in files:
+        fp = REPO_ROOT / rel
+        if fp.exists() and fp.is_file():
+            recs.append({
+                "path": rel,
+                "sha256": sha256_file(fp),
+                "size_bytes": fp.stat().st_size,
+            })
+    return {
+        "git_head": git_head(),
+        "git_is_clean": git_is_clean(),
+        "tracked_count": len(recs),
+        "tracked_files": recs,
+    }
 
-def scan_external_artifacts_since(run_start_epoch: float) -> List[Path]:
-    """
-    Capture artifacts written outside the demo folder during the run window.
-    We scan a few controlled locations for files with mtime >= run_start_epoch - 1.
-    """
-    roots = [
-        REPO_ROOT,                              # sometimes demos write to repo root
-        REPO_ROOT / "gum" / "GUM_Report",       # report plates
-        REPO_ROOT / "artifacts",                # logs and generated outputs
-    ]
-    found: List[Path] = []
-    cutoff = run_start_epoch - 1.0
-    for r in roots:
-        if not r.exists():
-            continue
-        for p in r.rglob("*"):
-            if not p.is_file():
-                continue
-            if p.suffix.lower() not in ART_EXTS:
-                continue
-            try:
-                if p.stat().st_mtime >= cutoff:
-                    found.append(p)
-            except Exception:
-                continue
-    # de-dup
-    uniq = {}
-    for p in found:
-        uniq[str(p)] = p
-    return sorted(uniq.values(), key=lambda x: str(x).lower())
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="GUM Bundler v30.1 (AoR-grade).")
-    ap.add_argument("--demos-root", default="demos")
-    ap.add_argument("--outdir", default="gum/GUM_Bundles")
-    ap.add_argument("--ledger", default="")
-    ap.add_argument("--ingest-only", dest="ingest_only", action="store_true")
-    ap.add_argument("--timeout", type=int, default=600)
-    ap.add_argument("--python", default=sys.executable)
-    ap.add_argument("--vendor-artifacts", dest="vendor_artifacts", action="store_true")
+    ap = argparse.ArgumentParser(description="GUM Bundler v30 AoR (folder-per-run).")
+    ap.add_argument("--demos-root", default="demos", help="Root demos directory (default: demos)")
+    ap.add_argument("--outroot", default="audits/bundles", help="AoR output root (default: audits/bundles)")
+    ap.add_argument("--ledger", default="", help="Optional path to external ledger JSON (smoketest summary.json)")
+    ap.add_argument("--ingest-only", dest="ingest_only", action="store_true",
+                    help="Do not run demos; only ingest existing artifacts")
+    ap.add_argument("--timeout", type=int, default=600, help="Per-demo timeout seconds (default: 600)")
+    ap.add_argument("--python", default=sys.executable, help="Python executable (default: current)")
+    ap.add_argument("--vendor-artifacts", dest="vendor_artifacts", action="store_true",
+                    help="Copy artifacts into AoR folder (self-contained but larger). Default indexes by path.")
     args = ap.parse_args()
 
     demos_root = (REPO_ROOT / args.demos_root).resolve()
@@ -491,15 +360,21 @@ def main() -> int:
         raise SystemExit(f"Missing demos root: {demos_root}")
 
     ts = datetime.now(timezone.utc).strftime(UTC_STAMP)
-    bundle_dir = (REPO_ROOT / args.outdir / f"GUM_BUNDLE_v30_{ts}").resolve()
-    ensure_dir(bundle_dir)
-    ensure_dir(bundle_dir / "tables")
+    outroot = (REPO_ROOT / args.outroot).resolve()
+    ensure_dir(outroot)
 
-    logs_dir = REPO_ROOT / "artifacts" / "bundle_logs_v30"
-    ensure_dir(logs_dir)
+    aor_dir = outroot / f"GUM_BUNDLE_v30_{ts}"
+    ensure_dir(aor_dir)
+    ensure_dir(aor_dir / "tables")
+    ensure_dir(aor_dir / "logs")
+
+    vendored_dir = aor_dir / "vendored_artifacts"
+    if args.vendor_artifacts:
+        ensure_dir(vendored_dir)
 
     demos = discover_demos(demos_root)
 
+    # Runs: either ledger ingestion, running demos, or ingest-only
     runs_norm: Dict[str, Any] = {}
     ledger_sha = None
 
@@ -507,18 +382,31 @@ def main() -> int:
         ledger_path = (REPO_ROOT / args.ledger).resolve() if not os.path.isabs(args.ledger) else Path(args.ledger)
         if ledger_path.exists():
             ledger_sha = sha256_file(ledger_path)
-            led = ingest_external_ledger(ledger_path)
-            for row in led.get("results", []):
+            ledger_obj = ingest_external_ledger(ledger_path)
+            for row in ledger_obj.get("results", []):
                 nr = normalize_ledger_record(row)
-                did = nr.get("demo_id") or ""
+                did = str(nr.get("demo_id") or "")
                 if did:
                     runs_norm[did] = nr
 
-    # Run all demos if needed
-    run_windows: Dict[str, Tuple[float, float]] = {}
+            # Vendor referenced stdout/stderr into AoR logs/ (so the capsule is self-contained)
+            for did, rr in runs_norm.items():
+                for key in ("stdout_path", "stderr_path"):
+                    p = rr.get(key)
+                    if not p:
+                        continue
+                    src = REPO_ROOT / p
+                    if src.exists():
+                        dst = aor_dir / "logs" / Path(p).name
+                        if not dst.exists():
+                            shutil.copy2(src, dst)
+                        rr[key + "_vendored"] = str(dst.relative_to(REPO_ROOT))
+                        rr[key + "_sha256"] = sha256_file(dst)
+
     if (not args.ingest_only) and (not runs_norm):
+        # RUN mode: execute all demos and write logs directly into AoR logs/
         for d in demos:
-            rr = run_demo(args.python, d, logs_dir, args.timeout)
+            rr = run_demo(args.python, d, aor_dir / "logs", args.timeout)
             runs_norm[d.demo_id] = {
                 "demo_id": rr.demo_id,
                 "domain": rr.domain,
@@ -529,90 +417,60 @@ def main() -> int:
                 "returncode": rr.returncode,
                 "seconds": rr.seconds,
                 "code_sha256": rr.code_sha256,
-                "stdout_path": rr.stdout_path,
-                "stderr_path": rr.stderr_path,
+                "stdout_path": rr.stdout_rel,
+                "stderr_path": rr.stderr_rel,
                 "stdout_sha256": rr.stdout_sha256,
                 "stderr_sha256": rr.stderr_sha256,
                 "notes": rr.notes,
             }
-            run_windows[d.demo_id] = (rr.run_start_epoch, rr.run_end_epoch)
 
-    # Prepare vendoring
-    vendored_dir = bundle_dir / "vendored_artifacts"
-    if args.vendor_artifacts:
-        ensure_dir(vendored_dir)
-
+    # Artifact index + values extraction
     artifacts_index: List[Dict[str, Any]] = []
-    values_jsonl_path = bundle_dir / "values.jsonl"
-    vf = values_jsonl_path.open("w", encoding="utf-8")
+    values_jsonl_path = aor_dir / "values.jsonl"
+    values_f = values_jsonl_path.open("w", encoding="utf-8")
 
-    # Helper to index an artifact
-    def index_artifact(demo_id: str, domain: str, demo_dir_rel: str, p: Path, role_override: Optional[str] = None) -> None:
-        try:
-            sha = sha256_file(p)
-            rel = str(p.relative_to(REPO_ROOT))
+    for d in demos:
+        for art in list_artifacts(d.demo_dir):
+            art_sha = sha256_file(art)
+            rel_art = str(art.relative_to(REPO_ROOT))
             rec = {
-                "demo_id": demo_id,
-                "domain": domain,
-                "demo_dir": demo_dir_rel,
-                "artifact": rel,
-                "sha256": sha,
-                "size_bytes": p.stat().st_size,
-                "ext": p.suffix.lower(),
-                "role": role_override or classify_role(p.name),
+                "demo_id": d.demo_id,
+                "domain": d.domain,
+                "demo_dir": str(d.demo_dir.relative_to(REPO_ROOT)),
+                "artifact": rel_art,
+                "sha256": art_sha,
+                "size_bytes": art.stat().st_size,
+                "ext": art.suffix.lower(),
+                "role": "unknown",
             }
+
+            n = art.name.lower()
+            if n.endswith(".json"):
+                rec["role"] = "primary_results_json" if ("outputs" in n or "results" in n or "report" in n or "manifest" in n) else "json"
+            elif n.endswith(".png"):
+                rec["role"] = "figure_png"
+            elif n.endswith(".pdf"):
+                rec["role"] = "figure_pdf"
+            elif n.endswith(".csv"):
+                rec["role"] = "table_csv"
+            elif n.endswith(".txt"):
+                rec["role"] = "text_txt"
+
             artifacts_index.append(rec)
 
+            # Vendor artifacts if requested
             if args.vendor_artifacts:
-                dest = vendored_dir / f"{domain}__{demo_id}__{p.name}"
-                if not dest.exists():
-                    dest.write_bytes(p.read_bytes())
+                dst = vendored_dir / f"{d.domain}__{d.folder}__{art.name}"
+                if not dst.exists():
+                    shutil.copy2(art, dst)
+                rec["vendored_path"] = str(dst.relative_to(REPO_ROOT))
+                rec["vendored_sha256"] = sha256_file(dst)
 
-            if p.suffix.lower() == ".json":
-                for row in extract_values_from_json_file(demo_id, domain, p, sha):
-                    vf.write(json.dumps(row, sort_keys=True) + "\n")
-        except Exception:
-            return
+            if art.suffix.lower() == ".json":
+                for row in extract_values_from_json_file(d.demo_id, d.domain, art, art_sha):
+                    values_f.write(json.dumps(row, sort_keys=True) + "\n")
 
-    # Index per-demo artifacts + logs + stdout values
-    for d in demos:
-        did = d.demo_id
-        demo_dir_rel = str(d.demo_dir.relative_to(REPO_ROOT))
-
-        # 1) artifacts in demo dir
-        for art in list_artifacts_in_dir(d.demo_dir):
-            index_artifact(did, d.domain, demo_dir_rel, art)
-
-        # 2) logs as artifacts (if run record present)
-        rr = runs_norm.get(did, {})
-        sp = rr.get("stdout_path")
-        ep = rr.get("stderr_path")
-        if sp:
-            p = REPO_ROOT / sp
-            if p.exists():
-                index_artifact(did, d.domain, demo_dir_rel, p, role_override="stdout_log")
-                # extract stdout values
-                sha = sha256_file(p)
-                for row in extract_values_from_stdout(did, d.domain, p, sha):
-                    vf.write(json.dumps(row, sort_keys=True) + "\n")
-        if ep:
-            p = REPO_ROOT / ep
-            if p.exists():
-                index_artifact(did, d.domain, demo_dir_rel, p, role_override="stderr_log")
-
-        # 3) external artifacts created during run window (RUN mode only)
-        if did in run_windows:
-            run_start, _ = run_windows[did]
-            for p in scan_external_artifacts_since(run_start):
-                # avoid double counting if already under demo dir
-                try:
-                    if str(p.resolve()).startswith(str(d.demo_dir.resolve())):
-                        continue
-                except Exception:
-                    pass
-                index_artifact(did, d.domain, demo_dir_rel, p, role_override="external_artifact")
-
-    vf.close()
+    values_f.close()
 
     repo_inventory = build_repo_inventory()
 
@@ -656,8 +514,8 @@ def main() -> int:
             "code_sha256": rr.get("code_sha256",""),
             "stdout_path": rr.get("stdout_path",""),
             "stderr_path": rr.get("stderr_path",""),
-            "stdout_sha256": rr.get("stdout_sha256",""),
-            "stderr_sha256": rr.get("stderr_sha256",""),
+            "stdout_sha256": rr.get("stdout_sha256", rr.get("stdout_path_sha256","")),
+            "stderr_sha256": rr.get("stderr_sha256", rr.get("stderr_path_sha256","")),
             "notes": rr.get("notes",""),
         })
 
@@ -681,27 +539,28 @@ def main() -> int:
                     "locator": row.get("source_locator"),
                 })
 
-    write_csv(bundle_dir / "tables" / "demo_index.csv", demo_index_rows)
-    write_csv(bundle_dir / "tables" / "falsification_matrix.csv", fals_rows)
-    write_csv(bundle_dir / "tables" / "run_reproducibility.csv", repro_rows)
-    write_csv(bundle_dir / "tables" / "constants_master.csv", constants_rows)
+    write_csv(aor_dir / "tables" / "demo_index.csv", demo_index_rows)
+    write_csv(aor_dir / "tables" / "falsification_matrix.csv", fals_rows)
+    write_csv(aor_dir / "tables" / "run_reproducibility.csv", repro_rows)
+    write_csv(aor_dir / "tables" / "constants_master.csv", constants_rows)
 
-    write_json(bundle_dir / "repo_inventory.json", repo_inventory)
-    write_json(bundle_dir / "runs.json", {
+    # JSON companions
+    write_json(aor_dir / "repo_inventory.json", repo_inventory)
+    write_json(aor_dir / "runs.json", {
         "source_ledger": args.ledger if args.ledger else None,
         "source_ledger_sha256": ledger_sha,
         "generated_by": "RUN" if ((not args.ingest_only) and (not args.ledger)) else ("LEDGER" if args.ledger else "INGEST_ONLY"),
         "runs": runs_norm,
     })
-    write_json(bundle_dir / "artifacts_index.json", {"artifacts": artifacts_index})
-    write_json(bundle_dir / "tables" / "demo_index.json", demo_index_rows)
-    write_json(bundle_dir / "tables" / "falsification_matrix.json", fals_rows)
-    write_json(bundle_dir / "tables" / "run_reproducibility.json", repro_rows)
-    write_json(bundle_dir / "tables" / "constants_master.json", constants_rows)
+    write_json(aor_dir / "artifacts_index.json", {"artifacts": artifacts_index})
+    write_json(aor_dir / "tables" / "demo_index.json", demo_index_rows)
+    write_json(aor_dir / "tables" / "falsification_matrix.json", fals_rows)
+    write_json(aor_dir / "tables" / "run_reproducibility.json", repro_rows)
+    write_json(aor_dir / "tables" / "constants_master.json", constants_rows)
 
     bundle = {
         "bundle_meta": {
-            "version": "v30.1",
+            "version": "v30",
             "timestamp_utc": ts,
             "git_head": repo_inventory.get("git_head"),
             "git_is_clean": repo_inventory.get("git_is_clean"),
@@ -714,6 +573,7 @@ def main() -> int:
             "ledger_path": args.ledger or None,
             "ledger_sha256": ledger_sha,
             "vendor_artifacts": bool(args.vendor_artifacts),
+            "aor_dir": str(aor_dir.relative_to(REPO_ROOT)),
         },
         "repo_inventory": repo_inventory,
         "demo_count": len(demos),
@@ -728,38 +588,34 @@ def main() -> int:
         "notes": [
             "All demos discovered under demos/*/*/demo.py are included.",
             "All JSON artifacts are flattened into values.jsonl with provenance.",
-            "Stdout logs are treated as evidence artifacts and parsed into values.jsonl.",
-            "External artifacts created during run windows are captured under role=external_artifact.",
+            "In INGEST_ONLY mode, missing artifacts indicate demos have not produced outputs yet in this checkout.",
         ],
     }
 
-    bundle_path = bundle_dir / "bundle.json"
+    bundle_path = aor_dir / "bundle.json"
     write_json(bundle_path, bundle)
     bundle_sha = sha256_file(bundle_path)
-    write_text(bundle_dir / "bundle_sha256.txt", bundle_sha + "\n")
+    write_text(aor_dir / "bundle_sha256.txt", bundle_sha + "\n")
 
-    demos_with_zero_artifacts = []
-    for d in demos:
-        did = d.demo_id
-        if not any(a.get("demo_id") == did for a in artifacts_index):
-            demos_with_zero_artifacts.append(d.folder)
-
+    missing_runs = [d.folder for d in demos if d.demo_id not in runs_norm]
+    missing_artifacts = [d.folder for d in demos if len(list_artifacts(d.demo_dir)) == 0]
     manifest = {
-        "bundle_dir": str(bundle_dir.relative_to(REPO_ROOT)),
+        "aor_dir": str(aor_dir.relative_to(REPO_ROOT)),
         "bundle_sha256": bundle_sha,
         "demo_count": len(demos),
         "runs_count": len(runs_norm),
         "artifact_records": len(artifacts_index),
-        "demos_with_zero_indexed_artifacts": demos_with_zero_artifacts,
+        "missing_runs": missing_runs,
+        "missing_artifacts": missing_artifacts,
     }
-    write_json(bundle_dir / "manifest.json", manifest)
+    write_json(aor_dir / "manifest.json", manifest)
 
-    print("BUNDLE WRITTEN:")
-    print("  ", bundle_dir)
+    print("AOR BUNDLE WRITTEN:")
+    print("  ", aor_dir)
     print("  bundle_sha256:", bundle_sha)
     print("  demos:", len(demos), "runs:", len(runs_norm), "artifact_records:", len(artifacts_index))
-    print("  demos_with_zero_indexed_artifacts:", len(demos_with_zero_artifacts))
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
