@@ -1219,6 +1219,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-PY
 
-chmod +x gum/gum_report_generator_v29.py
