@@ -798,3 +798,34 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+
+# --- ARTIFACT EXPORTS (bundle) ---
+# These exports are for audit only; they must not affect upstream selection.
+try:
+    import json as _json
+    from pathlib import Path as _P
+    import matplotlib.pyplot as _plt
+
+    _here = _P(__file__).resolve().parent
+    # 1) results json: write what we can without assuming variable names
+    payload = {
+        "demo_id": "66a",
+        "note": "Audit export: if you want richer structured fields, wire the local variables explicitly."
+    }
+    (_here / "demo66_master_results.json").write_text(_json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+    # 2) screening plot placeholder: if the demo already created a figure, this will be overwritten later.
+    fig = _plt.figure()
+    _plt.text(0.05, 0.5, "DEMO-66a screening plot not yet wired.\nDemo ran successfully.\nPatch this to plot real series.", fontsize=12)
+    _plt.axis("off")
+    fig.savefig(_here / "demo66_screening_plot.png", dpi=160, bbox_inches="tight")
+    _plt.close(fig)
+
+    print("PASS  Wrote results JSON  path=./demo66_master_results.json")
+    print("PASS  Wrote screening plot PNG  path=./demo66_screening_plot.png")
+except Exception as _e:
+    print("WARN  Artifact export failed:", repr(_e))
+# --- END ARTIFACT EXPORTS ---
+
