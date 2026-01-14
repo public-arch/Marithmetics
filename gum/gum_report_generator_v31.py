@@ -1518,7 +1518,11 @@ def build_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> Lis
         "cosmo.theta_s",
         "camb.available",
     ]
-    vals_by_name = {v.get("name"): v for v in bundle.values_rows if isinstance(v, dict) and v.get("name")}
+    vals_by_name = {
+        (v.get("name") or v.get("value_name")): v
+        for v in bundle.values_rows
+        if isinstance(v, dict) and (v.get("name") or v.get("value_name"))
+    }
     for name in preferred_names:
         v = vals_by_name.get(name)
         if v:
@@ -2061,10 +2065,10 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
             for v in bundle.values_rows:
                 if demo_label_from_slug(v.get("demo_id") or "") == demo:
                     structured_rows.append({
-                        "name": v.get("name"),
+                        "name": (v.get("name") or v.get("value_name")),
                         "value": v.get("value"),
                         "units": v.get("units") or "",
-                        "source": v.get("source") or "",
+                        "source": (v.get("source") or v.get("source_path") or ""),
                     })
             # constants_master
             for c in bundle.constants_rows:
