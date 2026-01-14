@@ -125,12 +125,29 @@ def discover_demos(demos_root: Path) -> List[Demo]:
 # --------------------------
 # Artifact scanning
 # --------------------------
-def list_artifacts(demo_dir: Path) -> List[Path]:
+def list_artifacts(demo_dir: Path):
+    """Return artifact files for a demo. 
+    IMPORTANT: recursive over demo root + common artifact subfolders.
+    This prevents false 'missing asset' flags when demos write to _artifacts/, assets/, etc.
+    """
+    # scan demo root + common artifact dirs (recursive)
+    candidates = [demo_dir]
+    for name in ("_artifacts", "artifacts", "assets", "figures", "output", "outputs", "results", "plots", "tables", "logs"):
+        q = demo_dir / name
+        if q.exists() and q.is_dir():
+            candidates.append(q)
+
     out = []
-    for p in demo_dir.iterdir():
-        if p.is_file() and p.suffix.lower() in ART_EXTS:
-            out.append(p)
-    return sorted(out, key=lambda x: x.name.lower())
+    for root in candidates:
+        for fp in root.rglob("*"):
+            if fp.is_file() and fp.suffix.lower() in ART_EXTS:
+                out.append(fp)
+
+    # de-dup + stable ordering
+    uniq = {}
+    for fp in out:
+        uniq[str(fp.resolve())] = fp
+    return sorted(uniq.values(), key=lambda x: str(x).lower())
 
 
 # --------------------------
