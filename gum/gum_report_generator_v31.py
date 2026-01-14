@@ -1518,11 +1518,7 @@ def build_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> Lis
         "cosmo.theta_s",
         "camb.available",
     ]
-    vals_by_name = {
-        (v.get("name") or v.get("value_name")): v
-        for v in bundle.values_rows
-        if isinstance(v, dict) and (v.get("name") or v.get("value_name"))
-    }
+    vals_by_name = {v.get("name"): v for v in bundle.values_rows if isinstance(v, dict) and v.get("name")}
     for name in preferred_names:
         v = vals_by_name.get(name)
         if v:
@@ -2065,10 +2061,10 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
             for v in bundle.values_rows:
                 if demo_label_from_slug(v.get("demo_id") or "") == demo:
                     structured_rows.append({
-                        "name": (v.get("name") or v.get("value_name")),
+                        "name": v.get("name"),
                         "value": v.get("value"),
                         "units": v.get("units") or "",
-                        "source": (v.get("source") or v.get("source_path") or ""),
+                        "source": v.get("source") or "",
                     })
             # constants_master
             for c in bundle.constants_rows:
@@ -2147,34 +2143,78 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                     story.append(Image(str(img), width=6.8*inch, height=3.6*inch))
                     story.append(Paragraph("Figure: BB36 Big Bang evidence plot (bundle artifact).", styles["Small"]))
             if demo in ("DEMO-66a", "DEMO-66b"):
-                # Prefer the canonical vendored artifact names first
-                img = resolve_asset(
-                    repo_root,
-                    bundle.root,
-                    "quantum__demo-66b-quantum-gravity-master-flagship-v2__qg_screening_plot.png",
-                    "quantum__demo-66a-quantum-gravity-master-flagship-v1__qg_screening_plot.png",
-                )
-                if not (img and img.exists()):
-                    # Fallback: search the bundle artifact index for the raw demo output name
-                    img = None
-                    for a in (bundle.artifacts or []):
-                        if not isinstance(a, dict):
-                            continue
-                        ap = a.get("path") or a.get("relpath") or ""
-                        if ap.endswith("demo66_screening_plot.png"):
-                            cand = (bundle.root / ap)
-                            if cand.exists():
-                                img = cand
-                                break
+                img = resolve_asset(repo_root, bundle.root, "quantum__demo-66b-quantum-gravity-master-flagship-v2__qg_screening_plot.png", "quantum__demo-66a-quantum-gravity-master-flagship-v1__qg_screening_plot.png")
                 if img and img.exists():
                     story.append(Image(str(img), width=6.8*inch, height=3.6*inch))
                     story.append(Paragraph("Figure: Quantum-gravity screening plot (bundle artifact).", styles["Small"]))
                 else:
                     story.append(missing_box(
-                        "Quantum-gravity screening plot expected but not found in bundle artifacts. "
-                        "Fix demo-66a/66b to export demo66_screening_plot.png (or vendor it) so the report can embed it.",
-                        styles,
+                        "Quantum-gravity screening plot expected but not found in bundle vendored_artifacts/. "
+                        "If the artifact pipeline is broken, leave this placeholder and fix the artifact export.",
+                        width=6.8*inch,
+                        height=0.7*inch,
                     ))
+
+            # Stdout excerpt (sanitized)
+            excerpt = select_log_excerpt(log_text, max_lines=18)
+            if excerpt:
+                story.append(Paragraph("<b>Stdout excerpt (sanitized; clipped):</b>", styles["Small"]))
+                story.append(Preformatted(excerpt, styles["CodeBlock"]))
+            else:
+                story.append(missing_box(
+                    "Stdout log not found in bundle logs/. Expected a *.out.txt file for this demo.",
+                    width=6.8*inch,
+                    height=0.6*inch,
+                ))
+
+            story.append(PageBreak())
+
+    return story
+
+
+def build_appendices(bundle: Bundle, repo_root: Path, styles: Dict[str, ParagraphStyle]) -> List[Any]:
+    story: List[Any] = []
+    story.append(H1("5. Appendices", styles, bookmark="sec5"))
+
+    # 5.1 Bundle manifest summary
+    story.append(H2("5.1 Bundle manifest and verification", styles, bookmark="sec5_1"))
+    story.append(P(
+        "The primary deliverable for audit/citation is the bundle directory. It contains the canonical index (bundle.json), run ledger (runs.json), "
+        "artifact hashes (artifacts_index.json), demo index and falsification matrix (tables/), and logs (logs/). "
+        "If any result is questioned, the correct procedure is to rerun the one-liner and compare hashes; narrative should never be treated as evidence.",
+        styles,
+        "Body",
+    ))
+    story.append(P(f"Bundle root: {bundle.root}", styles, "Small"))
+    if (bundle.root / 'bundle.json').exists():
+        story.append(P(f"bundle.json sha256: {sha256_file(bundle.root / 'bundle.json')}", styles, "Small"))
+    if (bundle.root / 'runs.json').exists():
+        story.append(P(f"runs.json sha256: {sha256_file(bundle.root / 'runs.json')}", styles, "Small"))
+    if (bundle.root / 'artifacts_index.json').exists():
+        story.append(P(f"artifacts_index.json sha256: {sha256_file(bundle.root / 'artifacts_index.json')}", styles, "Small"))
+
+    # 5.2 CAMB expected assets
+    story.append(H2("5.2 CAMB expected assets (overlay boundary)", styles, bookmark="sec5_2"))
+    story.append(P(
+        "CAMB/Planck overlays are evaluation-only and must never feed upstream selection. "
+        "This report includes CAMB visuals only if they are produced as explicit demo artifacts. "
+        "If a CAMB overlay page is missing, that usually indicates an artifact export issue rather than a report-writer issue.",
+        styles,
+        "Body",
+    ))
+    camb_md = resolve_asset(repo_root, bundle.root, "CAMB_EXPECTED_ASSETS.md")
+    if camb_md and camb_md.exists():
+        story.append(Preformatted(ascii_sanitize(camb_md.read_text(encoding='utf-8', errors='replace'))[:2500], styles["CodeBlock"]))
+        story.append(P("Note: truncated for PDF. See CAMB_EXPECTED_ASSETS.md in the repository for full details.", styles, "Small"))
+    else:
+        story.append(missing_box(
+            "CAMB_EXPECTED_ASSETS.md not found. Expected alongside the report generator or in the bundle. "
+            "Add it to document which CAMB artifacts should be produced by the cosmology demos.",
+            width=6.8*inch,
+            height=0.9*inch,
+        ))
+
+    story.append(PageBreak())
     return story
 
 
