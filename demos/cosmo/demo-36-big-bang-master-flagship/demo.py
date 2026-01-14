@@ -885,3 +885,33 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+
+
+# Evaluation-only: generate CAMB overlay artifact (must not feed upstream selection)
+try:
+    import subprocess, sys
+    from pathlib import Path
+    _here = Path(__file__).resolve().parent
+    _script = _here / "camb_overlay.py"
+    print(f"[CAMB_OVERLAY] running: {sys.executable} {_script}")
+    subprocess.run([sys.executable, str(_script)], cwd=str(_here), check=True)
+except Exception as e:
+    print("[CAMB_OVERLAY] FAILED:", repr(e))
+    raise
+
+
+
+# Evaluation-only: generate CAMB overlay artifact (must not feed upstream selection)
+try:
+    import subprocess, sys
+    from pathlib import Path
+    _here = Path(__file__).resolve().parent
+    _script = _here / "camb_overlay.py"
+    print(f"[CAMB_OVERLAY] running: {sys.executable} {_script}")
+    subprocess.run([sys.executable, str(_script)], cwd=str(_here), check=True)
+except Exception as e:
+    print("[CAMB_OVERLAY] FAILED:", repr(e))
+    raise
+
