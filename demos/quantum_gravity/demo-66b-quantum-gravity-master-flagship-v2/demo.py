@@ -764,3 +764,19 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+# --- Canonical artifact name (for bundling/report) ---
+try:
+    from pathlib import Path as _P
+    import shutil as _sh
+    _here = _P(__file__).resolve().parent
+    _art = _here / "_artifacts"
+    _art.mkdir(exist_ok=True)
+    src = _here / "demo66_screening_plot.png"
+    if src.exists():
+        _sh.copy2(src, _art / "qg_screening_plot.png")
+except Exception:
+    pass
+# --- end canonical artifact ---
+
