@@ -96,7 +96,13 @@ def main():
     plt.title("CMB TT Power Spectrum: Planck vs GUM")
     plt.legend()
     out_png = outdir / "camb_planck_vs_gum_overlay.png"
+    out_png_canon = outdir / "camb_overlay.png"
     fig.savefig(out_png, dpi=180, bbox_inches="tight")
+    try:
+        import shutil
+        shutil.copy2(out_png, out_png_canon)
+    except Exception:
+        pass
     plt.close(fig)
 
     (outdir / "camb_overlay_note.txt").write_text(
