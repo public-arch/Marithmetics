@@ -884,6 +884,23 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    # CAMB_OVERLAY_HARNESS_V2 (evaluation-only; publishable artifacts)
+    # Must never feed upstream selection. Emits evidence artifacts only.
+    try:
+        import subprocess, sys
+        from pathlib import Path
+        _here = Path(__file__).resolve().parent
+        (_here / "_artifacts").mkdir(exist_ok=True)
+        _script = _here / "camb_overlay.py"
+        if _script.exists():
+            print(f"[CAMB_OVERLAY] running: {sys.executable} {_script}")
+            subprocess.run([sys.executable, str(_script)], cwd=str(_here), check=True)
+        else:
+            print("[CAMB_OVERLAY] camb_overlay.py not found; skipping overlay artifact generation.")
+    except Exception as e:
+        print("[CAMB_OVERLAY] FAILED:", repr(e))
+        raise
+
     raise SystemExit(main())
 
 
