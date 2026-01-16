@@ -1002,6 +1002,23 @@ def resolve_asset(repo_root: Path, bundle_dir: Path, *candidates: str) -> Option
     return None
 
 
+def image_grid_2x2(paths, styles):
+    # paths: list of Path objects (len 1..4)
+    from reportlab.platypus import Table
+    cells = []
+    row = []
+    for pth in paths[:4]:
+        row.append(Image(str(pth), width=3.3*inch, height=2.0*inch))
+        if len(row) == 2:
+            cells.append(row)
+            row = []
+    if row:
+        while len(row) < 2:
+            row.append(Paragraph('', styles['Small']))
+        cells.append(row)
+    tbl = Table(cells, colWidths=[3.4*inch, 3.4*inch])
+    return tbl
+
 def missing_box(text: str, width: float, height: float = 1.0 * inch) -> Table:
     """
     A simple boxed placeholder that fits in tables/flow.
@@ -2141,6 +2158,23 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                 img = resolve_asset(repo_root, bundle.root, "cosmo__demo-36-big-bang-master-flagship__BB36_big_bang.png", "standard_model__demo-54-master-flagship-demo__BB36_big_bang.png")
                 if img and img.exists():
                     story.append(Image(str(img), width=6.8*inch, height=3.6*inch))
+                    # DEMO-36 MULTI-PANEL (bundle artifacts)
+                    if demo == "DEMO-36":
+                        imgs = []
+                        for cand in [
+                            "cosmo__demo-36-big-bang-master-flagship__bb36_master_plot.png",
+                            "cosmo__demo-36-big-bang-master-flagship__camb_overlay.png",
+                            "cosmo__demo-36-big-bang-master-flagship__camb_planck_vs_gum_overlay.png",
+                        ]:
+                            pth = resolve_asset(repo_root, bundle.root, cand)
+                            if pth and pth.exists() and pth not in imgs:
+                                imgs.append(pth)
+                        if imgs:
+                            story.append(Spacer(1, 0.10 * inch))
+                            story.append(Paragraph("DEMO-36 evidence panel (BB36 + CAMBH overlays).", styles["Small"]))
+                            story.append(image_grid_2x2(imgs, styles))
+                            story.append(Spacer(1, 0.12 * inch))
+
                     story.append(Paragraph("Figure: BB36 Big Bang evidence plot (bundle artifact).", styles["Small"]))
             if demo in ("DEMO-66a", "DEMO-66b"):
                 img = resolve_asset(repo_root, bundle.root, "quantum__demo-66b-quantum-gravity-master-flagship-v2__qg_screening_plot.png", "quantum__demo-66a-quantum-gravity-master-flagship-v1__qg_screening_plot.png")
