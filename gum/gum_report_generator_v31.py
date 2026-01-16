@@ -1535,7 +1535,7 @@ def build_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> Lis
         "cosmo.theta_s",
         "camb.available",
     ]
-    vals_by_name = {v.get("name"): v for v in bundle.values_rows if isinstance(v, dict) and v.get("name")}
+    vals_by_name = {(v.get("name") or v.get("value_name")): v for v in bundle.values_rows if isinstance(v, dict) and (v.get("name") or v.get("value_name"))}
     for name in preferred_names:
         v = vals_by_name.get(name)
         if v:
@@ -2078,10 +2078,10 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
             for v in bundle.values_rows:
                 if demo_label_from_slug(v.get("demo_id") or "") == demo:
                     structured_rows.append({
-                        "name": v.get("name"),
+                        "name": (v.get("name") or v.get("value_name")),
                         "value": v.get("value"),
                         "units": v.get("units") or "",
-                        "source": v.get("source") or "",
+                        "source": (v.get("source") or v.get("source_path") or ""),
                     })
             # constants_master
             for c in bundle.constants_rows:
@@ -2164,8 +2164,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                         for cand in [
                             "cosmo__demo-36-big-bang-master-flagship__bb36_master_plot.png",
                             "cosmo__demo-36-big-bang-master-flagship__camb_overlay.png",
-                            "cosmo__demo-36-big-bang-master-flagship__camb_planck_vs_gum_overlay.png",
-                        ]:
+                                                    ]:
                             pth = resolve_asset(repo_root, bundle.root, cand)
                             if pth and pth.exists() and pth not in imgs:
                                 imgs.append(pth)
@@ -2177,7 +2176,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
 
                     story.append(Paragraph("Figure: BB36 Big Bang evidence plot (bundle artifact).", styles["Small"]))
             if demo in ("DEMO-66a", "DEMO-66b"):
-                img = resolve_asset(repo_root, bundle.root, "quantum__demo-66b-quantum-gravity-master-flagship-v2__qg_screening_plot.png", "quantum__demo-66a-quantum-gravity-master-flagship-v1__qg_screening_plot.png")
+                img = resolve_asset(repo_root, bundle.root, "quantum_gravity__demo-66b-quantum-gravity-master-flagship-v2__qg_screening_plot.png", "quantum_gravity__demo-66a-quantum-gravity-master-flagship-v1__qg_screening_plot.png", "quantum_gravity__demo-66b-quantum-gravity-master-flagship-v2__demo66_screening_plot.png", "quantum_gravity__demo-66a-quantum-gravity-master-flagship-v1__demo66_screening_plot.png")
                 if img and img.exists():
                     story.append(Image(str(img), width=6.8*inch, height=3.6*inch))
                     story.append(Paragraph("Figure: Quantum-gravity screening plot (bundle artifact).", styles["Small"]))
