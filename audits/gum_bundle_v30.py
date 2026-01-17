@@ -47,6 +47,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+from audits.enrich_bundle import enrich_bundle
 from typing import Any, Dict, List, Optional, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -626,6 +627,8 @@ def main() -> int:
         "missing_artifacts": missing_artifacts,
     }
     write_json(aor_dir / "manifest.json", manifest)
+
+    enrich_bundle(aor_dir)
 
     print("AOR BUNDLE WRITTEN:")
     print("  ", aor_dir)
