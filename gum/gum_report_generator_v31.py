@@ -1278,6 +1278,7 @@ def build_cover(bundle: Bundle, repo_root: Path, styles: Dict[str, ParagraphStyl
     story.append(Paragraph("Digital Root Power Tables and Cross-Base Structural Invariants", styles["CoverTitle"]))
     story.append(Paragraph("A Reproducible Computational Pipeline for Emergent Integer-Derived Mathematical Constants and Physical Parameters", styles["CoverSubtitle"]))
     story.append(Paragraph("Executive Technical Report", styles["CoverSubtitle"]))
+    story.append(Paragraph("Justin Grieshop", styles["CoverSubtitle"]))
 
     story.append(Spacer(1, 0.25 * inch))
     story.append(Paragraph('"Within everything accepted lies everything overlooked."', styles["Quote"]))
@@ -1334,7 +1335,44 @@ def build_origin_and_visuals(bundle: Bundle, repo_root: Path, styles: Dict[str, 
     ))
 
     # 0.1 DRPT geometry
-    story.append(H2("0.1 DRPT geometry and cross-base invariance", styles, bookmark="sec0_1"))
+    story.append(H2("0.1 Identity pillars and Echo tiles", styles, bookmark="sec0_2"))
+    story.append(P(
+        "Identity and Echo tiles are visual witnesses for repeatable residue structure. "
+        "They matter because they demonstrate that the kernel is not a single special-case configuration: the motifs tile and recur. "
+        "This recurrence is what makes the phrase 'tiles throughout infinity' operational: the structure is not local to one scale or one base. "
+        "Where later demos claim ALQ dressing behavior, these tiles are the discrete origin of that behavior in dimensionless form.",
+        styles,
+        "Body",
+    ))
+
+    story.append(P(
+        "For many more families and cross-base invariants, we encourage readers to explore the Visual Atlas tool. "
+        "We are still documenting the full family taxonomy, but these objects can already be identified across each base. "
+        "Code is available in this GitHub repository. For quick access to the Visual Atlas artifact, see: "
+        "https://claude.ai/public/artifacts/3aac6f21-8ad0-42ff-82df-52c14d6a42b2",
+        styles,
+        "Small",
+    ))
+
+    identity9 = resolve_asset(repo_root, bundle.root, "Identity9.png")
+    identity10 = resolve_asset(repo_root, bundle.root, "Identity10.png")
+    echo6 = resolve_asset(repo_root, bundle.root, "Echo6.png")
+    echo10 = resolve_asset(repo_root, bundle.root, "Echo10.png")
+
+    for img_path, caption in [
+        (identity9, "Figure 0.2A: Identity pillar (n=9)"),
+        (identity10, "Figure 0.2B: Identity pillar (n=10)"),
+        (echo6, "Figure 0.2C: Echo tile (n=6)"),
+        (echo10, "Figure 0.2D: Echo tile (n=10)"),
+    ]:
+        if img_path and img_path.exists():
+            story.append(Image(str(img_path), width=6.8 * inch, height=3.5 * inch))
+            story.append(Paragraph(caption, styles["Small"]))
+        else:
+            story.append(missing_box(f"Missing asset: {caption}. Expected in gum/assets/.", width=6.8 * inch, height=0.9 * inch))
+
+    # 0.3 Fejer smoothing (expanded)
+    story.append(H2("0.2 DRPT geometry and cross-base invariance", styles, bookmark="sec0_1"))
     story.append(P(
         "DRPTs are best understood as a discretized geometry of residue structure. "
         "Because they are defined on digit-root dynamics, they are dimensionless and naturally comparable across bases. "
@@ -1357,34 +1395,6 @@ def build_origin_and_visuals(bundle: Bundle, repo_root: Path, styles: Dict[str, 
             story.append(missing_box(f"Missing DRPT asset: {caption}. Expected in gum/assets/.", width=6.8 * inch, height=1.0 * inch))
 
     # 0.2 Identity / Echo motifs
-    story.append(H2("0.2 Identity pillars and Echo tiles", styles, bookmark="sec0_2"))
-    story.append(P(
-        "Identity and Echo tiles are visual witnesses for repeatable residue structure. "
-        "They matter because they demonstrate that the kernel is not a single special-case configuration: the motifs tile and recur. "
-        "This recurrence is what makes the phrase 'tiles throughout infinity' operational: the structure is not local to one scale or one base. "
-        "Where later demos claim ALQ dressing behavior, these tiles are the discrete origin of that behavior in dimensionless form.",
-        styles,
-        "Body",
-    ))
-
-    identity9 = resolve_asset(repo_root, bundle.root, "Identity9.png")
-    identity10 = resolve_asset(repo_root, bundle.root, "Identity10.png")
-    echo6 = resolve_asset(repo_root, bundle.root, "Echo6.png")
-    echo10 = resolve_asset(repo_root, bundle.root, "Echo10.png")
-
-    for img_path, caption in [
-        (identity9, "Figure 0.2A: Identity pillar (n=9)"),
-        (identity10, "Figure 0.2B: Identity pillar (n=10)"),
-        (echo6, "Figure 0.2C: Echo tile (n=6)"),
-        (echo10, "Figure 0.2D: Echo tile (n=10)"),
-    ]:
-        if img_path and img_path.exists():
-            story.append(Image(str(img_path), width=6.8 * inch, height=3.5 * inch))
-            story.append(Paragraph(caption, styles["Small"]))
-        else:
-            story.append(missing_box(f"Missing asset: {caption}. Expected in gum/assets/.", width=6.8 * inch, height=0.9 * inch))
-
-    # 0.3 Fejer smoothing (expanded)
     story.append(H2("0.3 Fejer smoothing: role, guarantees, and dimensionless structure", styles, bookmark="sec0_3"))
     story.append(P(
         "Fejer smoothing is used in this program as an analytic filter with guarantees, not as an aesthetic smoothing operation. "
