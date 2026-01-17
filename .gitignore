@@ -72,3 +72,7 @@ GUM_manifest_SHA256_*.txt
 # Allowlist: keep one master audit capsule on main
 !gum/artifacts/GUM_BUNDLE_v30_latest.zip
 !gum/artifacts/GUM_BUNDLE_v30_latest.zip.sha256
+
+# Allow publishing master archives
+!gum/master_archives/*.zip
+!gum/master_archives/*.zip.sha256
