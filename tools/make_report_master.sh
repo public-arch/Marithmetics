@@ -8,7 +8,7 @@ git checkout main >/dev/null
 git pull --rebase origin main >/dev/null || true
 
 echo "==> Run vendored bundle"
-python -u audits/gum_bundle_v30.py --timeout 600 --vendor-artifacts
+python -u -m audits.gum_bundle_v30 --timeout 600 --vendor-artifacts
 BUNDLE_DIR="$(ls -1d audits/bundles/GUM_BUNDLE_v30_* | sort | tail -n 1)"
 echo "BUNDLE_DIR=$BUNDLE_DIR"
 
