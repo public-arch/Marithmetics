@@ -70,7 +70,7 @@ Primary gates emitted by the demo (treat any regression as a hard failure):
 ```text
 PASS  Unique admissible triple in primary window  count=1
 PASS  Gate G1: D* equals 1170 for canonical bases  Dstar=1170
-FAIL  Gate G2: exp(-sqrt(D*)/3) matches locked value  computed=1.1175862368611232e-05 expected=1.11758623686e-05
+FAIL  Gate G2: exp(-sqrt(D*)/3) matches locked value  computed=1.1175862368611232e-05 expected=1.1175862368611232e-05
 PASS  Gate G3: best (beta,N) achieves <1% closure to 1e-5  best=(beta=8,N=96) eps0=9.972011253995e-06 err=0.00279887
 PASS  Gate G4: canonical (beta=8,N=96) also achieves <1% closure  eps0=9.972011253995e-06 err=0.00279887
 PASS  Gate T0: >=3/4 counterfactuals degrade eps0 score by (1+eps)  strong=4/4 eps=0.182574
@@ -99,7 +99,7 @@ Selected printed checkpoints:
 ```text
 PASS  Primary equals (137,107,103)  selected=Triple(wU=137, s2=107, s3=103)
 PASS  Gate G1: D* equals 1170 for canonical bases  Dstar=1170
-FAIL  Gate G2: exp(-sqrt(D*)/3) matches locked value  computed=1.1175862368611232e-05 expected=1.11758623686e-05
+FAIL  Gate G2: exp(-sqrt(D*)/3) matches locked value  computed=1.1175862368611232e-05 expected=1.1175862368611232e-05
 PASS  Gate G3: best (beta,N) achieves <1% closure to 1e-5  best=(beta=8,N=96) eps0=9.972011253995e-06 err=0.00279887
 PASS  Gate G4: canonical (beta=8,N=96) also achieves <1% closure  eps0=9.972011253995e-06 err=0.00279887
 PASS  Gate T0: >=3/4 counterfactuals degrade eps0 score by (1+eps)  strong=4/4 eps=0.182574
