@@ -225,12 +225,14 @@ FLAGSHIPS: set[str] = {
     "DEMO-40",
     "DEMO-54",
     "DEMO-55",
-    "DEMO-66a",
-    "DEMO-66b",
+    "DEMO-66",
     "DEMO-67",
     "DEMO-68",
     "DEMO-70",
     "DEMO-71",
+    "DEMO-73",
+    "DEMO-75",
+    "DEMO-76",
 }
 
 # Cluster IDs drive "grouped stories" in certificates
@@ -646,44 +648,83 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
             "If DEMO-60's constraints are stable under rerun, it supports the broader thesis that the kernel constrains not just classical structure but quantum structure as well."
         ),
     },
-    "DEMO-66a": {
+
+    "DEMO-66": {
         "cluster": "QNTM",
-        "title": "Quantum gravity master flagship (v1)",
-        "tests": "Quantum gravity screening and constraint tests; reproducible plot artifacts; audit hashes.",
+        "title": "Quantum gravity master flagship (v4)",
+        "tests": "Consolidated quantum-gravity certificate; deterministic gates; illegal controls; counterfactual teeth; audit outputs.",
         "highlights": [
-            "Flagship QG closure variant: demonstrates screening behavior as an evidence artifact.",
-            "Designed for audit: the screening plot and results JSON are hashed.",
-            "Connects quantum constraints to GR-like structure under a single kernel story.",
+            "Canonical QG flagship for master release.",
+            "Deterministic gates and explicit falsifiers (controls + counterfactuals).",
+            "Designed for rerun/compare/audit, not interpretation drift.",
         ],
         "narrative": (
-            "DEMO-66a is a quantum gravity flagship variant focused on screening and constraint behavior captured as concrete artifacts. "
-            "The report treats it as evidence-driven: the key deliverables are the produced plots/JSON and their hashes, not rhetorical claims. "
-            "This is important for referees because quantum gravity is a domain where ambiguity is common; artifacts and reproducibility reduce that ambiguity. "
-            "In the blended narrative, DEMO-66a is positioned as a convergence point: it tests whether quantum constraints and geometric constraints can coexist under the same kernel selection rules. "
-            "Where the bundle currently lacks auxiliary 'quantum pack' visuals, the report marks expected asset slots explicitly rather than pretending they exist. "
-            "If the screening artifacts are stable and reproducible, DEMO-66a strengthens the case that the kernel can bridge classical and quantum structure without ad hoc stitching."
-        ),
-    },
-    "DEMO-66b": {
-        "cluster": "QNTM",
-        "title": "Quantum gravity master flagship (v2)",
-        "tests": "Quantum gravity screening and closure variant; structured results JSON; reproducible plot evidence.",
-        "highlights": [
-            "Flagship QG closure (v2): includes structured results and an evidence plot in the bundle.",
-            "Provides a second implementation to guard against single-pipeline fragility.",
-            "Acts as an audit anchor for quantum-gravity claims: rerun, compare, inspect.",
-        ],
-        "narrative": (
-            "DEMO-66b is the second quantum gravity flagship variant and is narrative-important as a robustness check against single-pipeline fragility. "
-            "It ships with structured results and a screening plot in the bundle, enabling citation and third-party verification without reverse engineering. "
-            "For referees, the presence of hashed artifacts is crucial: it converts 'trust us' into a byte-level reproducibility claim. "
-            "In the blended story, DEMO-66b is one of the clearest places to see the program's intended synthesis of discrete selection, analytic filters, and geometric constraints. "
-            "Where external overlays are relevant, they are treated as downstream evaluation only; the upstream mechanism remains internal to the kernel. "
-            "If DEMO-66b reproduces deterministically across environments, it provides strong evidence that the quantum gravity layer is constrained rather than tuned."
+            "DEMO-66 is the consolidated quantum gravity flagship for this release. "
+            "It is structured as a single deterministic certificate with explicit gates and falsifiers. "
+            "This matters because quantum-gravity narratives are easy to over-interpret; the certificate makes evaluation mechanical. "
+            "The credibility claim is operational: rerun it, compare outputs, and confirm the controls fail as expected. "
+            "Artifacts and hashes are treated as first-class evidence when present. "
+            "If DEMO-66 is not reproducible byte-for-byte (within stated tolerances), it should be treated as FAIL."
         ),
     },
 
-    "DEMO-69": {
+    "DEMO-73": {
+        "cluster": "SM",
+        "title": "Flavor completion master flagship",
+        "tests": "Kernel → Yukawas → CKM/PMNS closure with explicit gates, controls, and auditable outputs.",
+        "highlights": [
+            "Release-grade deterministic certificate.",
+            "Explicit gates + falsifiers to prevent interpretation drift.",
+            "Intended to be evaluated as a certificate, not an essay.",
+        ],
+        "narrative": (
+            "DEMO-73 extends the Standard Model closure into flavor structure as a single auditable certificate. "
+            "It is designed to be deterministic and self-auditing, with explicit gates. "
+            "The demo is positioned to reduce ambiguity: outputs are paired with controls and counterfactuals. "
+            "This matters because flavor is where many pipelines silently smuggle assumptions. "
+            "Here, the goal is to make every dependency explicit and rerunnable. "
+            "If the gates or falsifiers fail, the demo fails."
+        ),
+    },
+
+    "DEMO-75": {
+        "cluster": "BRIDGE",
+        "title": "Prediction ledger master flagship",
+        "tests": "Consolidated forward predictions (neutrino, PMNS/CP proxies, dark sector, strong-field proxies) with falsifiers.",
+        "highlights": [
+            "Release-grade prediction ledger.",
+            "Organized as reproducible outputs + explicit falsifiers.",
+            "Designed to be cited as a ledger, not a claim dump.",
+        ],
+        "narrative": (
+            "DEMO-75 is the forward prediction ledger for the master release. "
+            "It consolidates predictions that fall naturally out of the kernel pipeline into one place. "
+            "The goal is referee usability: each prediction is paired with a falsifier and an experimental venue. "
+            "This demo is not meant to 'win' by rhetoric; it is meant to be checkable. "
+            "If a prediction cannot be reproduced by rerunning the demo, it does not belong in the ledger. "
+            "The report treats missing artifacts as pipeline work, not as evidence."
+        ),
+    },
+
+    "DEMO-76": {
+        "cluster": "SM",
+        "title": "Primorial–Yukawa master flagship",
+        "tests": "Primorial/Yukawa sensitivity and stability audit with deterministic gates.",
+        "highlights": [
+            "Stability and sensitivity audit for Yukawa ladder.",
+            "Deterministic gates with explicit failure modes.",
+            "Designed to expose fragility, not hide it.",
+        ],
+        "narrative": (
+            "DEMO-76 is the primorial–Yukawa stability and sensitivity flagship. "
+            "Its purpose is to test robustness: do the Yukawa results remain stable under reasonable perturbations? "
+            "This matters for credibility because fragile pipelines can look impressive while being unrepeatable. "
+            "The demo therefore emphasizes gates, sensitivity tables, and clear fail states. "
+            "If the stability gates do not hold, the correct conclusion is that the ladder is not yet release-grade. "
+            "If it holds, it strengthens the case that the Yukawa structure is constrained rather than tuned."
+        ),
+    },
+"DEMO-69": {
         "cluster": "BRIDGE",
         "title": "OATB (operator admissibility transfer bridge)",
         "tests": "Transfer rules for admissible operators; bridge between domains; stability of admissibility under mapping.",
@@ -2163,7 +2204,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
 
             # Include key visual evidence if present for certain demos
             # - BB36 plot (DEMO-36)
-            # - QG screening plot (DEMO-66a/b)
+            # - QG screening plot (DEMO-66)
             if demo in ("DEMO-36", "DEMO-54"):
                 img = resolve_asset(repo_root, bundle.root, "cosmo__demo-36-big-bang-master-flagship__BB36_big_bang.png", "standard_model__demo-54-master-flagship-demo__BB36_big_bang.png")
                 if img and img.exists():
@@ -2185,8 +2226,8 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                             story.append(Spacer(1, 0.12 * inch))
 
                     story.append(Paragraph("Figure: BB36 Big Bang evidence plot (bundle artifact).", styles["Small"]))
-            if demo in ("DEMO-66a", "DEMO-66b"):
-                img = resolve_asset(repo_root, bundle.root, "quantum_gravity__demo-66b-quantum-gravity-master-flagship-v2__qg_screening_plot.png", "quantum_gravity__demo-66a-quantum-gravity-master-flagship-v1__qg_screening_plot.png", "quantum_gravity__demo-66b-quantum-gravity-master-flagship-v2__demo66_screening_plot.png", "quantum_gravity__demo-66a-quantum-gravity-master-flagship-v1__demo66_screening_plot.png")
+            if demo == "DEMO-66":
+                img = resolve_asset(repo_root, bundle.root, "quantum_gravity__demo-66-quantum-gravity-master-flagship-v4__qg_screening_plot.png", "quantum_gravity__demo-66-quantum-gravity-master-flagship-v4__demo66_screening_plot.png", "quantum_gravity__demo-66b-quantum-gravity-master-flagship-v2__qg_screening_plot.png", "quantum_gravity__demo-66a-quantum-gravity-master-flagship-v1__qg_screening_plot.png", "quantum_gravity__demo-66b-quantum-gravity-master-flagship-v2__demo66_screening_plot.png", "quantum_gravity__demo-66a-quantum-gravity-master-flagship-v1__demo66_screening_plot.png")
                 if img and img.exists():
                     story.append(Image(str(img), width=6.8*inch, height=3.6*inch))
                     story.append(Paragraph("Figure: Quantum-gravity screening plot (bundle artifact).", styles["Small"]))
