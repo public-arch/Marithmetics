@@ -1,0 +1,135 @@
+
+====================================================================================================
+                                             RUN HEADER                                             
+====================================================================================================
+UTC time    : 2026-01-21T03:13:29.577547Z
+Python      : 3.12.1
+Platform    : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O         : stdout (optional PNG if permitted)
+Spec SHA256 : f097de5783e530a82daff84bfbffdb85c304727d637503a819dc1cba5015e7d9
+
+====================================================================================================
+                            STAGE 1 — SCFP++ SELECTION (DEMO‑33 WINDOW)                             
+====================================================================================================
+U(1) survivors : [103, 107, 137]
+SU(2) survivors: [107]
+SU(3) survivors: [103, 137]
+PASS  Unique admissible triple                                                count=1
+PASS  Primary equals (137,107,103)                                            selected=(137, 107, 103)
+PASS  Coherence: odd_part(wU−1) equals q_U(1)                                 odd_part=17  q=17
+
+====================================================================================================
+                            STAGE 2 — GAUGE RATIONALS (FROM THE TRIPLE)                             
+====================================================================================================
+PASS  α0⁻¹ matches lawbook                                                    alpha0_inv=137  ref=137
+PASS  sin²θW matches lawbook                                                  sin2W=0.2333333333  ref=0.2333333333
+PASS  αs(MZ) matches lawbook                                                  alpha_s=0.1176470588  ref=0.1176470588
+Derived invariants: v2(wU−1)=3  q3=odd_part(wU−1)=17  k_struct=q3+v2=20
+eps := 1/sqrt(q2) = 0.18257419
+
+====================================================================================================
+                                  STAGE 3 — QCD SCALE FROM αs(MZ)                                   
+====================================================================================================
+PASS  Λ_QCD (nf=5) 1‑loop                                                     Lambda_GeV=0.08587202644
+PASS  Λ_QCD (nf=5) 2‑loop                                                     Lambda_GeV=0.2214110953
+
+====================================================================================================
+                          STAGE 4 — VACUUM ENERGY SUPPRESSION (NO TUNING)                           
+====================================================================================================
+PASS  Observation overlay: ρΛ (GeV⁴)                                          rho_obs_GeV4=2.86271892e-47
+PASS  Observation overlay: Λ (1/m²)                                           Lambda_obs=1.23963105e-52
+PASS  Prediction: ρΛ (GeV⁴)                                                   rho_pred_GeV4=2.83595282e-47
+PASS  ρ_pred / ρ_obs within 1%                                                ratio=0.9906501144  abs_err=0.009349885644
+
+====================================================================================================
+                       STAGE 4B — VACUUM ABLATION (FIXED COUNTERFACTUAL SET)                        
+====================================================================================================
+counterfactuals: [(277, 263, 239), (277, 263, 307), (307, 263, 239), (311, 263, 239)]
+(277, 263, 239)  q3=69    αs=0.0289855  Λ5=1.898e-10  ratio=4.268e-55  MISS
+(277, 263, 307)  q3=69    αs=0.0289855  Λ5=1.898e-10  ratio=4.268e-55  MISS
+(307, 263, 239)  q3=153   αs=0.0130719  Λ5=2.727e-25  ratio=3.814e-144  MISS
+(311, 263, 239)  q3=155   αs=0.0129032  Λ5=1.206e-25  ratio=2.860e-146  MISS
+PASS  Counterfactuals miss vacuum target (>=3/4 miss by >10%)                 strong=4/4
+
+====================================================================================================
+                           STAGE 4C — NEUTRINO SECTOR (TEMPLATE CLOSURES)                           
+====================================================================================================
+PASS  Self-consistency: (m1,m2,m3) reproduces (Δ21,Δ31,Σ)                     err_d21=1.35525272e-20  err_d31=0  err_sum=0
+Δm^2_21 [eV^2] = 7.4997404338e-05   ratio_to_ref=0.999965   ref=7.5e-05
+Δm^2_31 [eV^2] = 0.00249999935125   ratio_to_ref=1   ref=0.0025
+Σ mν   [eV]    = 0.0599948717261   (bound 0.12)
+PASS  Δm^2_21 within factor band (evaluation-only)                            ratio=0.9999653912  band=[0.5, 2.0]
+PASS  Δm^2_31 within factor band (evaluation-only)                            ratio=0.9999997405  band=[0.5, 2.0]
+PASS  Σ mν below cosmology bound (evaluation-only)                            sumv=0.05999487173  bound=0.12
+Neutrino masses (normal ordering) [eV]:
+  m1 = 0.00123234657226
+  m2 = 0.00874734716427
+  m3 = 0.0500151779896
+
+Counterfactual ablations (neutrino sector):
+  (277, 263, 239)  q3= 69  r21=0.131  r31=15.5  Σ=23.2  MISS
+  (277, 263, 307)  q3= 69  r21=0.358  r31=9.4  Σ=10.9  MISS
+  (307, 263, 239)  q3=153  r21=0.131  r31=1.25e+03  Σ=1.65e+03  MISS
+  (311, 263, 239)  q3=155  r21=0.131  r31=1.41e+03  Σ=1.67e+03  MISS
+PASS  Counterfactuals miss neutrino sector (majority rule)                    strong_misses=4  total=4
+
+====================================================================================================
+                             STAGE 5 — MATHEMATICAL LINKAGE (δ AND C2)                              
+====================================================================================================
+PASS  Feigenbaum δ hits within 6e-6                                           delta=4.669197745  err=3.86376824e-06  nmax=8
+PASS  Baseline δ budget misses (>=5e-4)                                       delta=4.667129376  err=0.002072233574  nmax=5
+PASS  Twin prime constant C2 hits within 1e-6                                 C2=0.6601620668  err=2.50974412e-07  pmax=200000
+
+====================================================================================================
+                   STAGE 6 — FIELD CORRELATION SIGNATURE (LIFT + AUTOCORRELATION)                   
+====================================================================================================
+N=128 Rmax=16 Kc=6 k_struct=20
+signature primary: m=-0.514489  re=15.0887  rhalf=12.5811  I=11.2295  C1=0.99288
+(277, 263, 239)  Kc=2   m=-0.0654174  re=16  I=15.2  D=0.981992  PASS
+(277, 263, 307)  Kc=2   m=-0.0659172  re=16  I=15.19  D=0.980933  PASS
+(307, 263, 239)  Kc=2   m=-0.06401  re=16  I=15.22  D=0.984949  PASS
+(311, 263, 239)  Kc=2   m=-0.0674048  re=16  I=15.18  D=0.977809  PASS
+PASS  Counterfactual separation (>=3/4 have D>=eps)                           strong=4/4  eps=0.1825741858
+
+====================================================================================================
+                   STAGE 7 — EMERGENT GRAVITY (DISCRETE POISSON ⇒ INVERSE‑SQUARE)                   
+====================================================================================================
+PASS  Residual (full‑spectrum)                                                resid=1.11022302e-16
+PASS  Inverse‑square slope (full‑spectrum)                                    slope=-2.067237049  band=[4,8]
+N=32 Kc=8 center=(5,4,3)
+Derived‑Kc lawful : resid=5.378e-17  slope=-1.66721  viol=0  curv=0.0671383
+Derived‑Kc illegal: resid=6.939e-17  slope=-1.89778  viol=0  curv=0.381886
+PASS  Residual (derived‑Kc lawful)                                            resid=5.37764278e-17
+PASS  Illegal increases ringing (curv jump >= eps)                            curv=0.0671383->0.381886  eps=0.1825741858
+
+====================================================================================================
+                              STAGE 7B — GR COUNTERFACTUAL SEPARATION                               
+====================================================================================================
+(277, 263, 239)  Kc=4   slope=-0.521371  viol=1  curv=0.0776532  D=1.22347  PASS
+(277, 263, 307)  Kc=4   slope=-0.521371  viol=1  curv=0.0776532  D=1.22347  PASS
+(307, 263, 239)  Kc=2   slope=0.589279  viol=5  curv=0.048149  D=5.18766  PASS
+(311, 263, 239)  Kc=2   slope=0.589279  viol=5  curv=0.048149  D=5.18766  PASS
+PASS  Counterfactual separation (>=3/4 have D>=eps)                           strong=4/4  eps=0.1825741858
+
+====================================================================================================
+                                  STAGE 8 — OPTIONAL BIG‑BANG PNG                                   
+====================================================================================================
+Wrote visualization: BB36_big_bang.png
+
+====================================================================================================
+                                     STAGE 9 — DETERMINISM HASH                                     
+====================================================================================================
+determinism_sha256: 537bc78ee929c290821f06e8c09017b58202d54b3a2f1cbeef480619b56e36d7
+
+====================================================================================================
+                                           FINAL VERDICT                                            
+====================================================================================================
+PASS  Gauge sector laws match                                               
+PASS  Vacuum suppression (<1% + ablations)                                  
+PASS  Neutrino sector closure (Δm² + Σmν)                                   
+PASS  Math canaries (δ + C2)                                                
+PASS  Field emergence gate (determinism + ablations)                        
+PASS  GR emergence (inverse-square + illegal ringing + counterfactual separation)
+
+PASS  FLAGSHIP VERIFIED (selection + vacuum + math + field + GR + counterfactuals)
+Result: VERIFIED

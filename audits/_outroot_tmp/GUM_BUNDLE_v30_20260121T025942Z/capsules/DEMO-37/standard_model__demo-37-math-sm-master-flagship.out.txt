@@ -1,0 +1,117 @@
+================================================================================================
+DEMO-37 — MATH×SM MASTER FLAGSHIP (Gauge closure + admissible operators + teeth) — REFEREE READY
+================================================================================================
+UTC time : 2026-01-21T03:01:47.985268+00:00
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout (+ optional JSON/PNG artifacts)
+
+spec_sha256: 99fc3f517c9bc7d4ce0ea4ce8efce381233ad405250fae36706ecbaf6c200b3b
+
+================================================================================================
+STAGE 1 — Deterministic triple selection (primary window) + counterfactual capture
+================================================================================================
+Lane survivor pools (raw):
+  U(1):  [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103]
+After U(1) coherence v2(wU-1)=3:
+  U(1):  [137]
+PASS  Unique admissible triple in primary window                           count=1
+PASS  Primary equals (137,107,103)                                         selected=Triple(wU=137, s2=107, s3=103)
+PASS  Captured >=4 counterfactual triples (far window)                      found=4 window=(181,1200)
+Far counterfactuals: [(409, 263, 239), (409, 263, 307), (409, 367, 239), (409, 367, 307)]
+PASS  Captured local illegal U(1) coherence-drop controls                    found=2 candidates=[103, 107]
+Local illegal controls: [(103, 107, 103), (107, 107, 103)]
+
+================================================================================================
+STAGE 1B — Base/representation invariance (Rosetta layer sanity)
+================================================================================================
+base  2: triple = ('10001001', '1101011', '1100111')  -> decode = (137, 107, 103)
+base  3: triple = ('12002', '10222', '10211')  -> decode = (137, 107, 103)
+base  4: triple = ('2021', '1223', '1213')  -> decode = (137, 107, 103)
+base  5: triple = ('1022', '412', '403')  -> decode = (137, 107, 103)
+base  6: triple = ('345', '255', '251')  -> decode = (137, 107, 103)
+base  7: triple = ('254', '212', '205')  -> decode = (137, 107, 103)
+base  8: triple = ('211', '153', '147')  -> decode = (137, 107, 103)
+base  9: triple = ('162', '128', '124')  -> decode = (137, 107, 103)
+base 10: triple = ('137', '107', '103')  -> decode = (137, 107, 103)
+base 12: triple = ('B5', '8B', '87')  -> decode = (137, 107, 103)
+base 16: triple = ('89', '6B', '67')  -> decode = (137, 107, 103)
+PASS  Gate B1: encode/decode invariance across bases                             bases=[2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 16]
+
+================================================================================================
+STAGE 2 — Derived invariants + budgets (two-tier ladder)
+================================================================================================
+Tier-64 : N=64  K_primary=15  K_truth=31  eps=0.18257419  q2=30  q3=17  v2U=3
+Tier-128: N=128  K_primary=31  K_truth=63  eps=0.18257419  q2=30  q3=17  v2U=3
+PASS  Gate S0: structural sanity (q2>0, q3>0, v2U matches coherence)               q2=30 q3=17 v2U=3
+
+================================================================================================
+STAGE 3 — Kernel admissibility audit (real-space minima + HF energy)
+================================================================================================
+Tier-64 : kmin(fejer)=0.000000e+00  kmin(sharp)=-1.053352e-01  kmin(signed)=-3.180542e-01
+        hf_frac(>K): fejer=0.000000 sharp=0.000000 signed=1.000000
+Tier-128: kmin(fejer)=0.000000e+00  kmin(sharp)=-1.059115e-01  kmin(signed)=-3.182460e-01
+        hf_frac(>K): fejer=0.000000 sharp=0.000000 signed=1.000000
+PASS  Gate K1: Fejér kernel is nonnegative (admissible)                         kmin=0.000e+00
+PASS  Gate K2: illegal kernels have negative lobes (sharp + signed)            kmin_sharp=-1.053e-01 kmin_signed=-3.181e-01
+PASS  Gate K3: signed control injects HF beyond eps^2 floor                     hf_signed=1.000 floor=0.033
+
+================================================================================================
+STAGE 4 — Gauge-sector rationals + QCD scale (2-loop)
+================================================================================================
+alpha0_inv := wU = 137
+alpha_s(MZ):= 2/q3 = 0.117647058824  (q3=17)
+Lambda_QCD (2-loop, nf=5) = 0.204585176016 GeV
+
+================================================================================================
+STAGE 5 — QED running to MZ (lawful confinement-floor vs illegal free-quark)
+================================================================================================
+alpha_inv(MZ) lawful (confinement floor) = 128.147579708283
+alpha_inv(MZ) illegal (free-quark below Λ) = 126.544700833252
+Evaluation-only reference alpha_inv(MZ)   = 127.955000
+Tolerance (derived): tol = eps^3 * alpha_ref = 0.778709
+
+PASS  Gate A1: lawful prediction matches reference within derived tolerance       |Δ|=0.192580
+PASS  Gate A2: illegal model violates closure by an eps-derived margin             |Δ_illegal|=1.410299
+
+PASS  Plot not requested (use --plot to generate a PNG)
+
+================================================================================================
+STAGE 6 — Independent math closure suite (fast series, no tuning)
+================================================================================================
+series_terms = 6987  (deterministic from triple)
+name         approx                 ref                   rel_err
+EulerGamma         0.577287224666       0.577215664902 1.239741e-04
+Zeta2              1.644790954147       1.644934066848 8.700209e-05
+Zeta3              1.202056892919       1.202056903160 8.519249e-09
+CatalanG           0.915965591617       0.915965594177 2.794635e-09
+Ln2                0.693218736910       0.693147180560 1.032340e-04
+Pi                 3.141449551129       3.141592653590 4.555093e-05
+PASS  Gate M1: mean relative error <= eps^3                                      mean=5.996e-05 eps^3=6.086e-03
+
+================================================================================================
+STAGE 7 — Counterfactual teeth (observable-vector miss)
+================================================================================================
+Primary vector summary: alpha0_inv=137, alpha_s=0.117647, alpha_inv(MZ)=128.148
+CF (409, 263, 239)  rel_dist= 2.077895  miss=True  alpha_inv(MZ)=398.545
+CF (409, 263, 307)  rel_dist= 2.077895  miss=True  alpha_inv(MZ)=398.545
+CF (409, 367, 239)  rel_dist= 2.077895  miss=True  alpha_inv(MZ)=398.545
+CF (409, 367, 307)  rel_dist= 2.077895  miss=True  alpha_inv(MZ)=398.545
+CF (103, 107, 103)  rel_dist= 0.264402  miss=True  alpha_inv(MZ)=92.545
+CF (107, 107, 103)  rel_dist= 0.233793  miss=True  alpha_inv(MZ)=96.545
+PASS  Gate T: >=3/4 counterfactuals miss by rel_dist>=eps                           strong=6/6 eps=0.182574
+
+================================================================================================
+DETERMINISM HASH
+================================================================================================
+determinism_sha256: 4b38c8bf1744c8d04fb28836c635793ba5e4b99aae23a45c51a50d25955b6f4d
+
+================================================================================================
+FINAL VERDICT
+================================================================================================
+PASS  DEMO-37 VERIFIED (selection + base invariance + admissibility + gauge/QED/QCD + math + teeth)
+Result: VERIFIED
+
+PASS  Results JSON written                                                   path=./demo37_master_results.json

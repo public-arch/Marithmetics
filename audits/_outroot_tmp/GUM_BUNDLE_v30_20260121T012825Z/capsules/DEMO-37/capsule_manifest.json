@@ -1,0 +1,30 @@
+{
+  "demo_id": "37",
+  "label": "DEMO-37",
+  "demo_path": "demos/standard_model/demo-37-math-sm-master-flagship",
+  "code_sha256": "2278243c792ac568e606e097da916f958d26486f4c96367cef7bba5914aac20b",
+  "stdout_sha256": "b85d20f3cd86f00561f689a08b6d1f0706e88c14d40ad92f52848a3d66bba6be",
+  "stderr_sha256": "fa7469ec28d85a25f1673d080d3e681cf07623cdbb3f031dcdbe5bf731de5745",
+  "files": [
+    {
+      "path": "standard_model__demo-37-math-sm-master-flagship.out.txt",
+      "sha256": "b85d20f3cd86f00561f689a08b6d1f0706e88c14d40ad92f52848a3d66bba6be",
+      "bytes": 7734
+    },
+    {
+      "path": "demo.py",
+      "sha256": "2278243c792ac568e606e097da916f958d26486f4c96367cef7bba5914aac20b",
+      "bytes": 33382
+    },
+    {
+      "path": "standard_model__demo-37-math-sm-master-flagship.err.txt",
+      "sha256": "fa7469ec28d85a25f1673d080d3e681cf07623cdbb3f031dcdbe5bf731de5745",
+      "bytes": 369
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

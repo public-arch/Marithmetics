@@ -1,0 +1,30 @@
+{
+  "demo_id": "55",
+  "label": "DEMO-55",
+  "demo_path": "demos/standard_model/demo-55-proton-charge-radius",
+  "code_sha256": "d614263c9bf5aa4aba59c632765808ae521f5834390a1b6dc9cfb2ce712a3a49",
+  "stdout_sha256": "e52814e4149315731ed39266cf498d71f666996ed960335f403ede53d31a3a8b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "standard_model__demo-55-proton-charge-radius.out.txt",
+      "sha256": "e52814e4149315731ed39266cf498d71f666996ed960335f403ede53d31a3a8b",
+      "bytes": 4512
+    },
+    {
+      "path": "demo.py",
+      "sha256": "d614263c9bf5aa4aba59c632765808ae521f5834390a1b6dc9cfb2ce712a3a49",
+      "bytes": 15670
+    },
+    {
+      "path": "standard_model__demo-55-proton-charge-radius.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

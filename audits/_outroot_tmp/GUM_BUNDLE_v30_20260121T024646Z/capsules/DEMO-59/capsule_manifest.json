@@ -1,0 +1,30 @@
+{
+  "demo_id": "59",
+  "label": "DEMO-59",
+  "demo_path": "demos/controllers/demo-59-electromagnetism",
+  "code_sha256": "e2c60511de1f189674d6de23fa3a2e49fe5515c9a6b14738e715d1adf3cf1b1f",
+  "stdout_sha256": "10b86544f9f24e46d12a8e7fcb7813939d100fd55d0a8e73f902423c762d8b66",
+  "stderr_sha256": "d08bda10cb25f4a936eeab5960d1419880898b4d7558a46719818b03c013a318",
+  "files": [
+    {
+      "path": "controllers__demo-59-electromagnetism.out.txt",
+      "sha256": "10b86544f9f24e46d12a8e7fcb7813939d100fd55d0a8e73f902423c762d8b66",
+      "bytes": 6692
+    },
+    {
+      "path": "demo.py",
+      "sha256": "e2c60511de1f189674d6de23fa3a2e49fe5515c9a6b14738e715d1adf3cf1b1f",
+      "bytes": 37248
+    },
+    {
+      "path": "controllers__demo-59-electromagnetism.err.txt",
+      "sha256": "d08bda10cb25f4a936eeab5960d1419880898b4d7558a46719818b03c013a318",
+      "bytes": 382
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "demo_id": "53",
+  "label": "DEMO-53",
+  "demo_path": "demos/foundations/demo-53-lawbook-emergence",
+  "code_sha256": "3bb3ee1797bb7e46bbd488f7c27a631b6677a28d6b026623bd9fcb76bd04b45d",
+  "stdout_sha256": "6734da516df09d588bd58935c093ecba9d8b22fde4d3bd5b752a2410749171e6",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "foundations__demo-53-lawbook-emergence.out.txt",
+      "sha256": "6734da516df09d588bd58935c093ecba9d8b22fde4d3bd5b752a2410749171e6",
+      "bytes": 4098
+    },
+    {
+      "path": "demo.py",
+      "sha256": "3bb3ee1797bb7e46bbd488f7c27a631b6677a28d6b026623bd9fcb76bd04b45d",
+      "bytes": 16813
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "foundations__demo-53-lawbook-emergence.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "count": 49,
+  "files": [
+    {
+      "path": "demos/bridge/demo-34-omega-sm-master-flagship-v1/demo.py",
+      "sha256": "396c4588e85de170a7ea898ac1311b1f09ae7cef7024cc8f619ccb82cc00de1e",
+      "bytes": 43548
+    },
+    {
+      "path": "demos/controllers/demo-56-deterministic-operator-calculus-vs-fd/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/controllers/demo-56-deterministic-operator-calculus-vs-fd/demo.py",
+      "sha256": "833acd006473c7d3b15edab630458e0d6098299041ac0850bf0dd2e8805e90a6",
+      "bytes": 50085
+    },
+    {
+      "path": "demos/controllers/demo-59-electromagnetism/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/controllers/demo-59-electromagnetism/demo.py",
+      "sha256": "e2c60511de1f189674d6de23fa3a2e49fe5515c9a6b14738e715d1adf3cf1b1f",
+      "bytes": 37248
+    },
+    {
+      "path": "demos/controllers/demo-69-oatb-operator-admissibility-transfer-bridge/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/controllers/demo-69-oatb-operator-admissibility-transfer-bridge/demo.py",
+      "sha256": "f88eb6ef2f6c2ce1a11c4cd6664880b49a22c85486e91c5e4a1dec081383da1e",
+      "bytes": 47258
+    },
+    {
+      "path": "demos/cosmo/demo-36-big-bang-master-flagship/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/cosmo/demo-36-big-bang-master-flagship/camb_overlay.py",
+      "sha256": "ee0ffa0f5406c0310405d94fd166b886a70fcfd56f3896f278eba2e7ef668517",
+      "bytes": 4461
+    },
+    {
+      "path": "demos/cosmo/demo-36-big-bang-master-flagship/demo.py",
+      "sha256": "be1384b930644f1d3e142422a1603811e2363014c4824850de0b205d4519bc8f",
+      "bytes": 33984
+    },
+    {
+      "path": "demos/cosmo/demo-39-bb-a2/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/cosmo/demo-39-bb-a2/demo.py",
+      "sha256": "e72e7790657950b2f91ec38c3a9014394a10ed5ad0d48ede23e29a124edf1b64",
+      "bytes": 62898
+    },
+    {
+      "path": "demos/foundations/demo-53-lawbook-emergence/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/foundations/demo-53-lawbook-emergence/demo.py",
+      "sha256": "3bb3ee1797bb7e46bbd488f7c27a631b6677a28d6b026623bd9fcb76bd04b45d",
+      "bytes": 16813
+    },
+    {
+      "path": "demos/foundations/demo-71-one-action-master-flagship/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/foundations/demo-71-one-action-master-flagship/demo.py",
+      "sha256": "78bf2731adce3bdd46f7ac93c12c14f72890f7d41adbb4151b2dac9e234929d5",
+      "bytes": 32969
+    },
+    {
+      "path": "demos/foundations/demo-75-prediction-ledger-master-flagship/demo.py",
+      "sha256": "25d17946394abb9bda0d483a7a2c86749104c75a5856bfbd5c0792fcdf7a19bc",
+      "bytes": 43978
+    },
+    {
+      "path": "demos/general_relativity/demo-51-qft-gr-vacuum-suppression/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/general_relativity/demo-51-qft-gr-vacuum-suppression/demo.py",
+      "sha256": "f0912b3074c3de95e9b8e78cbc92dd5a1c576a65b31587889009bdbfd838e870",
+      "bytes": 20984
+    },
+    {
+      "path": "demos/general_relativity/demo-58-emergent-weak-field-gr/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/general_relativity/demo-58-emergent-weak-field-gr/demo.py",
+      "sha256": "4a573b4927fb8682d04293870edd17e90aa84c972f12da542e448a4eebc9b7be",
+      "bytes": 42101
+    },
+    {
+      "path": "demos/general_relativity/demo-63-gravitational-wave-inspiral-phasing/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/general_relativity/demo-63-gravitational-wave-inspiral-phasing/demo.py",
+      "sha256": "ac29eabd147832e91543a2f1b2975d222ea526e2536e9c34a63e3fb193b4c37d",
+      "bytes": 16859
+    },
+    {
+      "path": "demos/general_relativity/demo-68-general-relativity-master-flagship/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/general_relativity/demo-68-general-relativity-master-flagship/demo.py",
+      "sha256": "98e3c3a6c8865c0434d55a38347cb804432d52e62efeb5177ce4b26f1c35a424",
+      "bytes": 38727
+    },
+    {
+      "path": "demos/infinity/demo-65-continuous-lift-paradox/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/infinity/demo-65-continuous-lift-paradox/demo.py",
+      "sha256": "fbc59e24b80b3f94061e68fa213b7cc6b7b37090d1cb6b14ea0d05f2b4161d3a",
+      "bytes": 46852
+    },
+    {
+      "path": "demos/infinity/demo-67-navier-stokes-master-flagship/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/infinity/demo-67-navier-stokes-master-flagship/demo.py",
+      "sha256": "4e00a354e960da013f75906cb6ca0071accf045710fb6808a159967fa31d9028",
+      "bytes": 47914
+    },
+    {
+      "path": "demos/quantum/demo-60-quantum-master-flagship/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/quantum/demo-60-quantum-master-flagship/demo.py",
+      "sha256": "fba4ac6667a7e649d774e3aee773be53362fd17c92af83a116c2122536b660f2",
+      "bytes": 31645
+    },
+    {
+      "path": "demos/quantum_gravity/demo-66-quantum-gravity-master-flagship-v4/artifact_screening.py",
+      "sha256": "e48f775a6025023c51ea06376f93391a9c9d6f0fca5065ff3b6ef45e432724e2",
+      "bytes": 2466
+    },
+    {
+      "path": "demos/quantum_gravity/demo-66-quantum-gravity-master-flagship-v4/demo.py",
+      "sha256": "ef4cb32ac3a665506e37d1a14b2f8ae0390da6e6764137a6816eb604b3bdf5af",
+      "bytes": 48666
+    },
+    {
+      "path": "demos/sm/demo-72-yukawa/demo.py",
+      "sha256": "a3fbbc7f14770ef32eb551ff70d69e2613429935741a9228b5175af4c22f5b1b",
+      "bytes": 15824
+    },
+    {
+      "path": "demos/sm/demo-76-primorial-yukawa-master-flagship/demo.py",
+      "sha256": "8cb834c2124473a177c7a5fd8a20a59035318876f903f8ab7b44eb62a231056f",
+      "bytes": 32151
+    },
+    {
+      "path": "demos/standard_model/demo-33-first-principles-standard-model-sm28-closure/demo.py",
+      "sha256": "33413bbb5d92dc70572d72e928f9adf6e165b493a74ed01da1bb19e1361460af",
+      "bytes": 100034
+    },
+    {
+      "path": "demos/standard_model/demo-37-math-sm-master-flagship/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/standard_model/demo-37-math-sm-master-flagship/demo.py",
+      "sha256": "2278243c792ac568e606e097da916f958d26486f4c96367cef7bba5914aac20b",
+      "bytes": 33382
+    },
+    {
+      "path": "demos/standard_model/demo-54-master-flagship-demo/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/standard_model/demo-54-master-flagship-demo/demo.py",
+      "sha256": "c43a2a3b36de4d68a45882247387ca0746ecb1ebc27a486d1dd359b95820ee65",
+      "bytes": 45396
+    },
+    {
+      "path": "demos/standard_model/demo-55-proton-charge-radius/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/standard_model/demo-55-proton-charge-radius/demo.py",
+      "sha256": "d614263c9bf5aa4aba59c632765808ae521f5834390a1b6dc9cfb2ce712a3a49",
+      "bytes": 15670
+    },
+    {
+      "path": "demos/standard_model/demo-70-higgs-master-flagship/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/standard_model/demo-70-higgs-master-flagship/demo.py",
+      "sha256": "22d96168011f931ec65be9e4526037ea35ef55c2107effd54bd42b6d55b9492a",
+      "bytes": 71815
+    },
+    {
+      "path": "demos/standard_model/demo-73-flavor-completion-master-flagship/demo.py",
+      "sha256": "33514b94c635ef02f20ed4eaaf8dee9f01b6bf99dec80c9377d8d3a2920ea2a5",
+      "bytes": 27133
+    },
+    {
+      "path": "demos/substrate/demo-40-universe-from-zero/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/substrate/demo-40-universe-from-zero/demo.py",
+      "sha256": "b12dd83a0b14307ec17de80f1286391c85bdae6904536a556a4e35d9445e7eb4",
+      "bytes": 38504
+    },
+    {
+      "path": "demos/substrate/demo-64-base-gauge-invariance-integer-selector/__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "demos/substrate/demo-64-base-gauge-invariance-integer-selector/demo.py",
+      "sha256": "6c0694a41546b177acc71cc8e29d6ca3395e2c8feacedc5affe2063a4251aca5",
+      "bytes": 18093
+    }
+  ]
+}

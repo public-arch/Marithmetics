@@ -1,0 +1,30 @@
+{
+  "demo_id": "65",
+  "label": "DEMO-65",
+  "demo_path": "demos/infinity/demo-65-continuous-lift-paradox",
+  "code_sha256": "fbc59e24b80b3f94061e68fa213b7cc6b7b37090d1cb6b14ea0d05f2b4161d3a",
+  "stdout_sha256": "8be404a8836a7150d54034964b946000a9b1b32713acd1238b5e68650bac0b67",
+  "stderr_sha256": "a3eba0d313dafa5c500d29d333d096a3bd7baccce8c90289a9bda316c9fd2cc8",
+  "files": [
+    {
+      "path": "infinity__demo-65-continuous-lift-paradox.err.txt",
+      "sha256": "a3eba0d313dafa5c500d29d333d096a3bd7baccce8c90289a9bda316c9fd2cc8",
+      "bytes": 386
+    },
+    {
+      "path": "infinity__demo-65-continuous-lift-paradox.out.txt",
+      "sha256": "8be404a8836a7150d54034964b946000a9b1b32713acd1238b5e68650bac0b67",
+      "bytes": 8854
+    },
+    {
+      "path": "demo.py",
+      "sha256": "fbc59e24b80b3f94061e68fa213b7cc6b7b37090d1cb6b14ea0d05f2b4161d3a",
+      "bytes": 46852
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

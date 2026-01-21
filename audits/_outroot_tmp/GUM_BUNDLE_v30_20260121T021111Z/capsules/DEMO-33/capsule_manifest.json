@@ -1,0 +1,25 @@
+{
+  "demo_id": "33",
+  "label": "DEMO-33",
+  "demo_path": "demos/standard_model/demo-33-first-principles-standard-model-sm28-closure",
+  "code_sha256": "33413bbb5d92dc70572d72e928f9adf6e165b493a74ed01da1bb19e1361460af",
+  "stdout_sha256": "e99729564a0915a259accc26d954a8893e430a92ebd9296f2122445d003a5428",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "standard_model__demo-33-first-principles-standard-model-sm28-closure.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "standard_model__demo-33-first-principles-standard-model-sm28-closure.out.txt",
+      "sha256": "e99729564a0915a259accc26d954a8893e430a92ebd9296f2122445d003a5428",
+      "bytes": 21854
+    },
+    {
+      "path": "demo.py",
+      "sha256": "33413bbb5d92dc70572d72e928f9adf6e165b493a74ed01da1bb19e1361460af",
+      "bytes": 100034
+    }
+  ]
+}

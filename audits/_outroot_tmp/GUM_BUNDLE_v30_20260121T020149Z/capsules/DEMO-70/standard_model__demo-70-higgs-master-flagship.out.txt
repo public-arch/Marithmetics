@@ -1,0 +1,116 @@
+====================================================================================================
+          DEMO-70 — HIGGS MASTER FLAGSHIP (Integrated Prework 70A+70B+70C) — REFEREE READY          
+====================================================================================================
+UTC time : 2026-01-21T02:03:49.051053Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout only
+spec_sha256: 22d96168011f931ec65be9e4526037ea35ef55c2107effd54bd42b6d55b9492a
+
+----------------------------------------------------------------------------------------------------
+STAGE 1 — Deterministic triple selection (primary + counterfactuals)
+----------------------------------------------------------------------------------------------------
+primary triple (wU,s2,s3) = (137, 107, 103)
+counterfactual set (size=4): [(409, 211, 239), (409, 211, 307), (409, 263, 239), (409, 263, 307)]
+PASS  Gate S1: primary equals (137,107,103)
+PASS  Gate S2: captured >=4 counterfactuals                                    found=4
+
+----------------------------------------------------------------------------------------------------
+STAGE 2 — Exact rational EW locks from the triple (no fit)
+----------------------------------------------------------------------------------------------------
+q2 = 30
+v2U = 3
+q3 = 17
+Theta = 4/15 ≈ 0.266666666667
+sin^2θW = 7/30 ≈ 0.233333333333
+alpha0 = 1/137 ≈ 0.007299270073
+alpha_s = 2/17 ≈ 0.117647058824
+eps = 0.182574185835
+PASS  Gate A1: lock-gates exact (Theta=4/15, sin^2θW=7/30, alpha0=1/137, alpha_s=2/17)
+
+----------------------------------------------------------------------------------------------------
+STAGE 3 — PREWORK 70A: lawful dressed EW closure + illegal control + teeth
+----------------------------------------------------------------------------------------------------
+QCD floor (locked) = 8/33 ≈ 0.242424242424
+iters = 44
+v0_seed = 241.801271276240
+v_dressed = 246.285823777145
+alpha(MZ) = 0.007800345922  (1/alpha=128.199443)
+MW = 79.814700744
+MZ = 91.154811851
+Delta_alpha = 6.864739134845e-02
+Delta_rho   = 9.498860966469e-03
+Delta_r     = 3.743684817291e-02
+nf(MZ)=5 active_quarks=['u', 'd', 's', 'c', 'b']
+Lambda_QCD_1loop(MZ) ≈ 0.085985127
+PASS  Gate A2: plausibility (iters<=250, v∈[200,400], alpha(MZ)∈[0.0075,0.0083], MZ∈[80,100]) iters=44 v=246.286 alpha=0.007800 MZ=91.155
+
+Illegal control (sign-flipped palette) must be worse
+lawful:  v=246.285824  MZ=91.154812  dist=6.269053e-04
+illegal: v=237.997986  MZ=85.211116  dist=9.893350e-02
+PASS  Gate A3: illegal control is worse (dist_illegal > dist_lawful)
+CF (409, 211, 239): MZ=360.458831  v=1789.837  in[80,100]=False
+CF (409, 211, 307): MZ=360.458831  v=1789.837  in[80,100]=False
+CF (409, 263, 239): MZ=278.143870  v=1550.102  in[80,100]=False
+CF (409, 263, 307): MZ=278.143870  v=1550.102  in[80,100]=False
+PASS  Gate A4: counterfactual teeth (>=3/4 CF out of [80,100])                 out=4/4
+
+----------------------------------------------------------------------------------------------------
+STAGE 4 — PREWORK 70B: UV critical edge λ* (truth vs budgets + illegal + teeth)
+----------------------------------------------------------------------------------------------------
+mu_max = 1.000e+16
+truth:   steps/log=1000  lambda*=0.173397827  lambda_end=+4.986e-07
+primary: steps/log= 200  lambda*=0.173409271  err=1.144e-05
+cf:      steps/log=  67  lambda*=0.173437881  err=4.005e-05
+illegal(coarse): steps/log=   8  lambda*=0.173754501  err=3.567e-04
+illegal(signflip): steps/log=200  lambda*=0.050000000  lambda_end=+1.368e-01
+
+Residual-at-λ*_truth (primary budget):
+lawful residual |λ_end| = 2.110e-05
+signed  residual |λ_end| = 1.733e-01
+PASS  Gate B1: lambda* in sane band [0.1,0.3]                                  lambda*=0.173398
+PASS  Gate B2: primary budget reproduces truth within eps^3                    err=1.144e-05 tol=eps^3=6.086e-03
+PASS  Gate B3: illegal controls worse than primary                             err_il/err_p=31.17 res_ratio=8.21e+03
+PASS  Gate B4: counterfactual budget degrades by (1+eps)                       err_cf=4.005e-05 err_p=1.144e-05
+
+----------------------------------------------------------------------------------------------------
+STAGE 5 — PREWORK 70C: mode ladder / SU(2) lock + illegal + CF teeth
+----------------------------------------------------------------------------------------------------
+cH = sqrt(theta_den / 2^v2U) = sqrt(15/8) = 1.369306394
+
+d=16  λ0=0.062500  mH_fp=112.5922  |Δ|=12.408  it=17 
+d=15  λ0=0.066667  mH_fp=115.9006  |Δ|= 9.099  it=18 
+d=14  λ0=0.071429  mH_fp=119.6347  |Δ|= 5.365  it=18 
+d=13  λ0=0.076923  mH_fp=123.8814  |Δ|= 1.119  it=19 <-- best
+d=12  λ0=0.083333  mH_fp=128.7529  |Δ|= 3.753  it=19 
+d=11  λ0=0.090909  mH_fp=134.3976  |Δ|= 9.398  it=20 
+d=10  λ0=0.100000  mH_fp=141.0158  |Δ|=16.016  it=21 
+d= 9  λ0=0.111111  mH_fp=148.8857  |Δ|=23.886  it=21 
+d= 8  λ0=0.125000  mH_fp=158.4076  |Δ|=33.408  it=22 
+
+Best mode: d=13 with mH≈123.881359 (|Δ|=1.118641 GeV)
+
+PASS  Gate C1: best mode is d=13 (SU(2) lock)                                  best_d=13 |Δ|=1.119
+[STAGE 5b] Illegal control: no-RG m* (skips RG dressing)
+illegal-best d=15  m*=123.142912  |Δ|=1.857088 GeV
+(primary best d=13  mH_fp=123.881359  |Δ|=1.118641 GeV)
+
+PASS  Gate C2: illegal is worse than lawful best by (1+eps)                    best_il_d=15 Δ_law=1.119 Δ_il=1.857
+[STAGE 5c] Counterfactual budget teeth (K reduced by q3/q3_cf)
+K_primary=9  q3=17  q3_cf=51  => K_cf=3
+cf-best d=14  mH_fp=119.634688  |Δ|=5.365312 GeV
+(note: d=13 is ABSENT in cf ladder)
+
+PASS  Gate C3: counterfactual budget degrades by (1+eps)                       Δ_cf=5.365 Δ_law=1.119 eps=0.183
+
+----------------------------------------------------------------------------------------------------
+STAGE 6 — Determinism hash + score + optional artifacts
+----------------------------------------------------------------------------------------------------
+determinism_sha256: 14aa9a555ec0362c493f0c617263c81dd927bfcab509aec6faca8fab76fe8868
+presentation_score: 1000000 / 1,000,000
+
+----------------------------------------------------------------------------------------------------
+FINAL VERDICT
+----------------------------------------------------------------------------------------------------
+PASS  DEMO-70 VERIFIED (Higgs master flagship)
+Result: VERIFIED

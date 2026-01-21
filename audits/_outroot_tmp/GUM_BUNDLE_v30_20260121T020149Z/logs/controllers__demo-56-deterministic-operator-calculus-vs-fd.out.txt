@@ -1,0 +1,119 @@
+====================================================================================================
+DEMO-56 — Deterministic Operator Calculus vs Classical Finite Differences
+MASTER FLAGSHIP (Maximum-Impact), Referee-Ready
+====================================================================================================
+UTC time : 2026-01-21T02:01:50Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : none (stdout only)
+
+==================== STAGE 1 — Deterministic Triple Selection (Primary Window) =====================
+Lane survivor pools (raw: residue + density only):
+  U(1) : [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Lane survivor pools (refined: explicit 2-adic branch where specified):
+  U(1) : [137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Primary-window admissible triples: [(137, 107, 103)]
+PASS  Unique admissible triple in primary window                              count=1
+PASS  Primary equals (137,107,103)                                            selected=Triple(wU=137, s2=107, s3=103)
+Counterfactual triples (ablations, same rules outside the primary window): [(409, 263, 239), (409, 263, 307), (409, 367, 239), (409, 367, 307)]
+PASS  Captured >=4 counterfactual triples                                     found=4
+
+Derived invariants (from the selected triple):
+  q2 = wU - s2 = 30
+  q3 = odd_part(wU - 1) = 17
+  v2 = v2(wU - 1) = 3
+  eps = 1/sqrt(q2) = 0.1825741858
+
+spec_sha256: fd0930ccf4c4d140d07f1e2afbff6d1f0ff8f34968dda908d233ab8b108c73a5
+
+============= STAGE 2 — Kernel Admissibility Audit (Fejér vs Non-Admissible Controls) ==============
+PASS  Fejér kernel is nonnegative (within tiny numerical slack)               kmin=1.4845867057e-07
+PASS  Sharp truncation kernel has negative lobes (non-admissible control)     kmin=-0.1026225707
+PASS  Signed filter kernel has negative lobes (non-admissible control)        kmin=-0.1299921965
+
+================ E1 — Linear Advection of a Step (Ringing / Total Variation Audit) =================
+t=0.13  L2: fejer=0.0639560497 sharp=0.0576860874 signed=0.0934332169
+        overshoot_mass: fejer=0 sharp=0.0053648904 signed=0.0176566422
+        TV           : fejer=1.9866737196 sharp=5.2993519735 signed=7.7082171866
+t=0.37  L2: fejer=0.0571049942 sharp=0.0409367022 signed=0.0935972757
+        overshoot_mass: fejer=0 sharp=0.0053648904 signed=0.0176566422
+        TV           : fejer=1.9866737196 sharp=5.2993519735 signed=7.7082171866
+t=0.71  L2: fejer=0.0567554889 sharp=0.0399428423 signed=0.0936144022
+        overshoot_mass: fejer=0 sharp=0.0053210506 signed=0.0176918568
+        TV           : fejer=1.9867520804 sharp=5.2917556419 signed=7.7097018562
+PASS  E1-A: Admissible kernel keeps the solution in [0,1] (zero overshoot, all times)  max_ov=0
+PASS  E1-B: Admissible kernel reduces total variation vs sharp truncation by >= eps (all times)  eps=0.1825741858
+PASS  E1-C: Non-admissible controls show ringing (nonzero overshoot, all times)
+
+Convergence sweep (E1, Fejér):
+  K=30    L2=0.0806730691
+  K=60    L2=0.0571049942
+  K=120   L2=0.039377692
+PASS  E1-D: Fejér error is non-increasing across K/2, K, 2K (no tuning)       errors=0.0806730691,0.0571049942,0.039377692
+
+Counterfactual teeth (E1): budgets change via q3 -> K, physics fixed
+  CF (409,263,239)  q3=51   K=20   L2=0.0981630451  degrade=True
+  CF (409,263,307)  q3=51   K=20   L2=0.0981630451  degrade=True
+  CF (409,367,239)  q3=51   K=20   L2=0.0981630451  degrade=True
+  CF (409,367,307)  q3=51   K=20   L2=0.0981630451  degrade=True
+PASS  E1-T: Counterfactual budgets degrade by (1+eps) in >=3/4 cases          strong=4/4 eps=0.1825741858
+
+========================== E2 — 1D Poisson (Smooth Manufactured Solution) ==========================
+L2 error: FD_2nd=7.9380355830e-05  spectral=2.7752322819e-16  ratio=3.4961197299e-12
+PASS  E2: Spectral Poisson inverse beats 2nd-order FD decisively (smooth manufactured solution)  ratio=3.4961197299e-12  eps^6=3.7037037037e-05
+
+======================= E3 — 1D Reaction–Diffusion (Fisher–KPP Nonlinearity) =======================
+Params: N=512 K=60 D=0.01 T=0.25 dt=9.5347063310e-05 steps=2622
+L2 vs internal ref: FD=0.0312776258  Fejér=1.8214154224e-06  Sharp=0.0312775903  Signed=0.0312775903
+Bounds (Fejér): min=0.6107950512 max=0.6107950512  Non-finite controls: False
+PASS  E3-A: Admissible method is competitive vs 2nd-order FD at fixed N (no tuning)  e_fe/e_fd=5.8233813416e-05  eps=0.1825741858
+PASS  E3-B: Non-admissible controls are worse than admissible (or non-finite)  e_sh=0.0312775903 e_si=0.0312775903 e_fe=1.8214154224e-06
+PASS  E3-C: Boundedness preserved (admissible) for Fisher–KPP (0<=u<=1+small slack)  min=0.6107950512 max=0.6107950512
+
+=========================== E4 — 3D Navier–Stokes (Taylor–Green Vortex) ============================
+Tier: smoke  (smoke=N=64, industrial=N=256)
+Budgets: N=64  K_primary=15  K_truth=31  nu=0.0009803922  dt=0.025  steps=24  T=0.6
+Truth runtime (informational): 3.01932621 s
+Errors vs truth (normalized L2): fejer=0.5451459885 sharp=1.1530512571 signed=1.1530512571
+divL2: fejer=1.1224013038e-11 sharp=1.0267235950e-09 signed=8.2762613429e-10
+HF energy frac (>K_primary): fejer=1.9915956710e-22 sharp=5.0365775909e-16 signed=1.2301059546e-16
+PASS  E4-G1: Incompressibility (divergence L2 <= 1e-8) for all variants       div_fe=1.1224013038e-11 div_sh=1.0267235950e-09 div_si=8.2762613429e-10
+PASS  E4-G2: Admissible run is closer to admissible truth than non-admissible controls  e_fe=0.5451459885 e_sh=1.1530512571 e_si=1.1530512571
+PASS  E4-G3: Non-admissible controls inject high-frequency energy (>=10x admissible)  hf_fe=1.9915956710e-22 hf_sh=5.0365775909e-16 hf_si=1.2301059546e-16
+PASS  E4-T1: Counterfactual triples degrade performance by (1+eps) in >=3/4 cases  strong=4/4 eps=0.1825741858
+
+Counterfactuals (E4):
+  CF (409,263,239)  q3=51   K=5    err=0.9730648994  degrade=True
+  CF (409,263,307)  q3=51   K=5    err=0.9730648994  degrade=True
+  CF (409,367,239)  q3=51   K=5    err=0.9730648994  degrade=True
+  CF (409,367,307)  q3=51   K=5    err=0.9730648994  degrade=True
+
+================= INDUSTRIAL-SCALE READINESS LEDGER (Informational, Deterministic) =================
+Memory / work proxy per resolution (Fourier velocity, 3 components):
+Assumptions: complex64 persistent storage; FFT temporaries can be larger.
+     N     Grid pts     Kp     Mem_GB   FFT3 proxy    dt@T=10    steps
+    64       262144     15      0.035    4.719e+06   0.024570      407
+   128      2097152     30      0.281    4.404e+07   0.012270      815
+   256     16777216     60      2.250    4.027e+08   0.006135     1630
+   384     56623104     90      7.594    1.458e+09   0.004090     2445
+   512    134217728    120     18.000    3.624e+09   0.003068     3259
+
+Example industrial envelope (deterministic dt from a CFL proxy; no tuning):
+{
+  "N": 256,
+  "FFTs_per_step": 16,
+  "T": 10.0,
+  "dt": 0.006134969325153374,
+  "steps": 1630
+}
+Total work proxy ≈ 1.050e+13
+
+========================================= DETERMINISM HASH =========================================
+determinism_sha256: bbeb50a943a114c1f7d7c384010b8b31e16df5de423bbcdeee72f610bed0fa74
+
+========================================== FINAL VERDICT ===========================================
+PASS  DEMO-56 VERIFIED (executed gates pass; counterfactual controls degrade)

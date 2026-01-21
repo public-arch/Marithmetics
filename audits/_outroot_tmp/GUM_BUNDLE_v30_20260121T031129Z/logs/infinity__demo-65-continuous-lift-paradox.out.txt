@@ -1,0 +1,164 @@
+==================================================================================================
+DEMO-65 — CONTINUOUS LIFT PARADOX (Master Flagship) — REFEREE READY
+==================================================================================================
+UTC time : 2026-01-21T03:12:20.042248Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout (JSON/PNG optional)
+
+==================================================================================================
+STAGE 1 — Deterministic triple selection (primary + counterfactuals)
+==================================================================================================
+Lane survivor pools (raw, residue-only):
+  U(1) : [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Lane survivor pools (full legality predicates):
+  U(1) : [137]
+  SU(2): [107]
+  SU(3): [103]
+Primary: Triple(wU=137, s2=107, s3=103)
+Counterfactuals (deterministic): [(409, 211, 239), (409, 211, 647), (409, 419, 239), (409, 419, 647)]
+
+PASS  Unique admissible triple in primary window                             count=1
+PASS  Primary equals (137,107,103)                                           selected=Triple(wU=137, s2=107, s3=103)
+PASS  Captured >=4 counterfactual triples                                    found=4
+
+==================================================================================================
+STAGE 2 — Derived invariants and budget law (no tuning)
+==================================================================================================
+Derived invariants:
+  v2U = v2(wU-1) = 3
+  q3  = (wU-1)/2^v2U = 17
+  q2  = 2*q3 - 4 = 30
+  eps = 1/sqrt(q2) = 0.18257419
+
+Budgets (derived tiers):
+  GR tier    : N=64   K_primary=15   K_truth=31   center=(5, 4, 3)
+  Capstones  : N=256  K_primary=60  K_truth=127
+  Paradox 1D : N=512 K_primary=120 K_truth=255
+
+spec_sha256: 4f6cb1a5925494c6d3ee8da550a22643b34becbdd9d75113b4bc95ad1223432e
+
+==================================================================================================
+STAGE 3 — Operator admissibility audit (kernel minimum diagnostics)
+==================================================================================================
+Paradox 1D tier:
+  Fejér  kmin = 5.54325e-09
+  Sharp  kmin = -0.10209
+  Signed kmin = -0.20418
+Capstones tier:
+  Fejér  kmin = 1.48459e-07
+  Sharp  kmin = -0.102623
+  Signed kmin = -0.205245
+GR tier:
+  Fejér  kmin = 0
+  Sharp  kmin = -0.105335
+  Signed kmin = -0.21067
+
+PASS  Fejér kernel is nonnegative (numerical tol)                            kmin=1.48459e-07
+PASS  Sharp cutoff kernel has negative lobes (non-admissible)                kmin=-0.102623
+PASS  Signed control kernel has negative lobes (non-admissible)              kmin=-0.205245
+
+==================================================================================================
+STAGE 4 — Core paradox witness: probability lift (1D top-hat)
+==================================================================================================
+mass(mean)      : base=0.5  fejer=0.5
+min(rho_smooth) : fejer=0.00261178  sharp=-0.0822128  signed=-0.164426
+L2 distortion   : fejer=0.0560331  sharp=0.0370384  signed=0.0740767
+TV              : fejer=1.9933  sharp=5.84468  signed=9.93935
+
+PASS  Gate P1: Fejér preserves mass within 1e-12                             |Δ|=0
+PASS  Gate P2: Fejér preserves nonnegativity (min >= -1e-12)                 min=0.00261178
+PASS  Gate P3: illegal produces negative undershoot (<= -eps^2)              eps^2=0.0333333
+PASS  Gate P4: illegal increases variation (TV) by >= (1+eps)                eps=0.182574
+COUNTERFACTUAL TEETH (paradox 1D distortion must increase by (1+eps))
+CF (409,211,239) q3= 51 K= 40 dist=0.0990823 degrade=True
+CF (409,211,647) q3= 51 K= 40 dist=0.0990823 degrade=True
+CF (409,419,239) q3= 51 K= 40 dist=0.0990823 degrade=True
+CF (409,419,647) q3= 51 K= 40 dist=0.0990823 degrade=True
+PASS  Gate P.T: >=3/4 counterfactuals increase distortion by (1+eps)         strong=4/4 eps=0.182574
+
+==================================================================================================
+STAGE 5 — Capstones suite (Hilbert + Quantum2D + Noether)
+==================================================================================================
+Hilbert / DFT witness:
+  round-trip rel err : 2.63324e-16
+  FFT norm rel err   : 1.11022e-16
+  kernel min (Fejér) : 1.48459e-07
+  kernel min (sharp) : -0.102623
+  kernel min (signed): -0.205245
+  HF frac (signed)   : 0.505361
+PASS  Gate H1: FFT round-trip relative error <= 1e-12                        err=2.63324e-16
+PASS  Gate H2: signed retains material HF energy beyond K                    hf=0.505361 floor=0.0333333
+
+Quantum 2D probability witness:
+  unitary norm drift : 6.66134e-16
+  min rho (Fejér)    : 0.00432282
+  min rho (sharp)    : -0.079856
+  min rho (signed)   : -0.159712
+  Fejér distortion   : 0.0839409
+PASS  Gate Q1: unitary norm drift <= 1e-10                                   drift=6.66134e-16
+PASS  Gate Q2: Fejér density nonnegative (min >= -1e-12)                     min=0.00432282
+PASS  Gate Q3: illegal density negativity (<= -eps^2)                        eps^2=0.0333333
+COUNTERFACTUAL TEETH (Quantum2D distortion must increase by (1+eps))
+CF (409,211,239) q3= 51 K= 20 dist=0.147326 degrade=True
+CF (409,211,647) q3= 51 K= 20 dist=0.147326 degrade=True
+CF (409,419,239) q3= 51 K= 20 dist=0.147326 degrade=True
+CF (409,419,647) q3= 51 K= 20 dist=0.147326 degrade=True
+PASS  Gate Q.T: >=3/4 counterfactuals increase distortion by (1+eps)         strong=4/4 eps=0.182574
+
+Noether / energy witness:
+  legal energy drift : 4.34097e-13
+  illegal blow-up    : 3.20839e+06
+PASS  Gate N1: legal energy drift <= 1e-10                                   drift=4.34097e-13
+PASS  Gate N2: illegal blow-up >= 1e3                                        blow=3.20839e+06
+
+==================================================================================================
+STAGE 6 — GR weak-field witnesses (bending + Shapiro + redshift) + teeth
+==================================================================================================
+Light bending scaling α(b) ∝ 1/b
+  truth slope (log|α| vs log b): -1.02911
+  adm   slope (log|α| vs log b): -0.940344
+  spread |b α| (adm)           : 6.32961e-06
+  curvature |b α| (adm)        : 5.52556e-06
+  HF frac (signed)             : 0.524986
+PASS  Gate GR.B1: truth slope near -1 (|Δ|<=0.25)                            slope=-1.02911
+PASS  Gate GR.B2: admissible slope near -1 (|Δ|<=0.35)                       slope=-0.940344
+PASS  Gate GR.B3: signed illegal retains HF (>= eps^2)                       hf=0.524986 floor=0.0333333
+
+Shapiro delay scaling Δt(b) ≈ a ln b + c
+  truth R2 (Δt vs ln b): 0.999973
+  adm   R2 (Δt vs ln b): 0.999647
+  curvature(resid) adm : 2.86905e-07
+  HF frac (signed)     : 0.524986
+PASS  Gate GR.S1: truth is ln(b)-like (R2>0.98)                              R2=0.999973
+PASS  Gate GR.S2: admissible ln(b)-like (R2>0.95)                            R2=0.999647
+
+Redshift proxy Φ(r) ≈ A(1/r)+C (shell means)
+  truth R2 (Φ vs 1/r): 0.999897
+  adm   R2 (Φ vs 1/r): 0.999147
+  rel_err slope (adm vs truth): 0.0926573
+  curvature shell means (adm) : 1.00957e-05
+  HF frac (signed)            : 0.524986
+PASS  Gate GR.R1: truth affine in 1/r (R2>0.98)                              R2=0.999897
+PASS  Gate GR.R2: admissible affine in 1/r (R2>0.95)                         R2=0.999147
+PASS  Gate GR.R3: admissible slope contract (<= eps)                         rel_err=0.0926573 eps=0.182574
+
+COUNTERFACTUAL TEETH (GR): all three primary scores must degrade by (1+eps)
+CF (409,211,239) q3= 51 K= 5  B_spread=3.49932e-05  S_score=0.00999124  R_score=0.389767  degrade=True
+CF (409,211,647) q3= 51 K= 5  B_spread=3.49932e-05  S_score=0.00999124  R_score=0.389767  degrade=True
+CF (409,419,239) q3= 51 K= 5  B_spread=3.49932e-05  S_score=0.00999124  R_score=0.389767  degrade=True
+CF (409,419,647) q3= 51 K= 5  B_spread=3.49932e-05  S_score=0.00999124  R_score=0.389767  degrade=True
+PASS  Gate GR.T: >=3/4 counterfactuals degrade all three scores              strong=4/4 eps=0.182574
+
+==================================================================================================
+STAGE 7 — Determinism hash + optional artifacts
+==================================================================================================
+determinism_sha256: 46730d939cdffb5f47a04643790d39e4275cdc3cc61658cf77fc3e1cf82076fa
+
+==================================================================================================
+FINAL VERDICT
+==================================================================================================
+PASS  DEMO-65 VERIFIED (continuous lift paradox + capstones + GR witnesses + teeth)
+Result: VERIFIED
