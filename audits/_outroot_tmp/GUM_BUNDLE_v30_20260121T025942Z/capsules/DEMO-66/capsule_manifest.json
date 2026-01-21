@@ -1,0 +1,30 @@
+{
+  "demo_id": "66",
+  "label": "DEMO-66",
+  "demo_path": "demos/quantum_gravity/demo-66-quantum-gravity-master-flagship-v4",
+  "code_sha256": "e19b7bffc95a64eee20d39dd311015a74c9c36f9d3c3f5d43e7c90828bc4d530",
+  "stdout_sha256": "4d2d275a1c66834a9318b13090c07c0b58c3a3053666b3f37839750d3de8bc94",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "quantum_gravity__demo-66-quantum-gravity-master-flagship-v4.out.txt",
+      "sha256": "4d2d275a1c66834a9318b13090c07c0b58c3a3053666b3f37839750d3de8bc94",
+      "bytes": 7918
+    },
+    {
+      "path": "quantum_gravity__demo-66-quantum-gravity-master-flagship-v4.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "artifact_screening.py",
+      "sha256": "e48f775a6025023c51ea06376f93391a9c9d6f0fca5065ff3b6ef45e432724e2",
+      "bytes": 2466
+    },
+    {
+      "path": "demo.py",
+      "sha256": "e19b7bffc95a64eee20d39dd311015a74c9c36f9d3c3f5d43e7c90828bc4d530",
+      "bytes": 51054
+    }
+  ]
+}

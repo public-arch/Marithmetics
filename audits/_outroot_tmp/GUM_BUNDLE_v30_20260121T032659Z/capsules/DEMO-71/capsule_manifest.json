@@ -1,0 +1,30 @@
+{
+  "demo_id": "71",
+  "label": "DEMO-71",
+  "demo_path": "demos/foundations/demo-71-one-action-master-flagship",
+  "code_sha256": "78bf2731adce3bdd46f7ac93c12c14f72890f7d41adbb4151b2dac9e234929d5",
+  "stdout_sha256": "f274600114fb91b2a3eb44a30db183ed732332ae875f6a162ec6605297dc8845",
+  "stderr_sha256": "b53ac8327fcac23156a6eda205dc95a4866f4244317f14b28a92b0495363c309",
+  "files": [
+    {
+      "path": "foundations__demo-71-one-action-master-flagship.err.txt",
+      "sha256": "b53ac8327fcac23156a6eda205dc95a4866f4244317f14b28a92b0495363c309",
+      "bytes": 359
+    },
+    {
+      "path": "foundations__demo-71-one-action-master-flagship.out.txt",
+      "sha256": "f274600114fb91b2a3eb44a30db183ed732332ae875f6a162ec6605297dc8845",
+      "bytes": 7160
+    },
+    {
+      "path": "demo.py",
+      "sha256": "78bf2731adce3bdd46f7ac93c12c14f72890f7d41adbb4151b2dac9e234929d5",
+      "bytes": 32969
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

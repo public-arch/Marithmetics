@@ -1,0 +1,81 @@
+
+====================================================================================================
+                      DEMO 55 (FLAGSHIP) - PROTON CHARGE RADIUS FROM SUBSTRATE                      
+====================================================================================================
+
+RUN HEADER
+utc_time  : 2026-01-21T03:01:50Z
+python    : 3.12.1
+platform  : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+io        : none
+
+Reference (evaluation-only)
+  rp_ref = 0.84075 fm    sigma = 0.00064 fm
+
+====================================================================================================
+                            STAGE 1 - SUBSTRATE SELECTION (FIXED RULES)                             
+====================================================================================================
+PASS  Unique admissible triple in primary window  count=1
+PASS  Primary equals (137,107,103)  selected=(137, 107, 103)
+
+Lane survivors (primary window)
+  Lane A (U1):  [103, 107, 137]
+  Lane B (SU2): [107]
+  Lane C (SU3): [103, 137]
+Admissible triple: (137, 107, 103)
+
+Spec SHA256: 0a46a38ce93a14d9770b8b7a77aca810eb497943d0a4cafef7b7d069454ba1c1
+
+====================================================================================================
+                                      STAGE 2 - DERIVED INPUTS                                      
+====================================================================================================
+wU=137  s2=107  s3=103
+q2 = wU - s2          = 30
+q3 = odd_part(wU - 1) = 17
+v2(wU - 1)            = 3
+alpha_s(MZ) = 2/q3    = 0.117647058823529
+
+====================================================================================================
+                         STAGE 3 - LAMBDA_QCD FROM alpha_s(MZ) (NO PDG FIT)                         
+====================================================================================================
+MZ [GeV]                 = 91.0349115339085
+alpha_s(MZ)              = 0.117647058823529
+Lambda_5 (1-loop, nf=5)  = 0.0858720264356 GeV
+Lambda_5 (2-loop, nf=5)  = 0.221411095276 GeV
+PASS  Sanity: Lambda_5(2-loop) in expected ballpark  Lambda5=0.221411
+
+====================================================================================================
+                         STAGE 4 - PROTON RADIUS PREDICTION (FIXED MAPPING)                         
+====================================================================================================
+Mapping:
+  r_p = (hbar*c / Lambda_5) * sqrt(1 / (1 + alpha_s(MZ)))
+hbar*c [GeV*fm] = 0.1973269804
+
+Primary (evaluation-only):
+  r_p(1-loop Lambda_5) = 2.17361398 fm
+  r_p(2-loop Lambda_5) = 0.8430139282 fm
+  ref r_p              = 0.84075 fm
+  error                = +0.002263928179 fm
+  relative error        = +0.269275%
+  sigma units           = +3.537 sigma
+PASS  Primary proton radius within 1% (evaluation-only gate)  rel_err=+0.269275%
+
+====================================================================================================
+                                STAGE 5 - COUNTERFACTUALS (ABLATION)                                
+====================================================================================================
+PASS  Found >=4 counterfactual admissible triples  found=6
+counterfactuals (first 6): [(277, 263, 239), (307, 263, 239), (311, 263, 239), (409, 263, 239), (409, 367, 239), (409, 367, 307)]
+(277, 263, 239)  alpha_s=0.028985507  Lambda5=1.89784e-10 GeV  r_p=1.025e+09 fm  ratio=1.21914e+09  MISS
+(307, 263, 239)  alpha_s=0.013071895  Lambda5=2.72683e-25 GeV  r_p=7.18965e+23 fm  ratio=8.55147e+23  MISS
+(311, 263, 239)  alpha_s=0.012903226  Lambda5=1.20638e-25 GeV  r_p=1.62525e+24 fm  ratio=1.93309e+24  MISS
+(409, 263, 239)  alpha_s=0.039215686  Lambda5=2.76483e-07 GeV  r_p=700109 fm  ratio=832720  MISS
+(409, 367, 239)  alpha_s=0.039215686  Lambda5=2.76483e-07 GeV  r_p=700109 fm  ratio=832720  MISS
+(409, 367, 307)  alpha_s=0.039215686  Lambda5=2.76483e-07 GeV  r_p=700109 fm  ratio=832720  MISS
+PASS  All counterfactuals miss outside fixed ratio band  strong_misses=6/6  band=(0.8, 1.2)
+
+====================================================================================================
+                                           FINAL VERDICT                                            
+====================================================================================================
+PASS  DEMO 55 VERIFIED (selection + proton radius + counterfactual ablation)
+
+Result: VERIFIED

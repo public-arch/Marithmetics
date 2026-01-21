@@ -1,0 +1,25 @@
+{
+  "demo_id": "34",
+  "label": "DEMO-34",
+  "demo_path": "demos/bridge/demo-34-omega-sm-master-flagship-v1",
+  "code_sha256": "396c4588e85de170a7ea898ac1311b1f09ae7cef7024cc8f619ccb82cc00de1e",
+  "stdout_sha256": "3144af6a8a005c46075fc470a90061b250d9f0a13db5da718bb8348ae23293f3",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "bridge__demo-34-omega-sm-master-flagship-v1.out.txt",
+      "sha256": "3144af6a8a005c46075fc470a90061b250d9f0a13db5da718bb8348ae23293f3",
+      "bytes": 6739
+    },
+    {
+      "path": "demo.py",
+      "sha256": "396c4588e85de170a7ea898ac1311b1f09ae7cef7024cc8f619ccb82cc00de1e",
+      "bytes": 43548
+    },
+    {
+      "path": "bridge__demo-34-omega-sm-master-flagship-v1.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

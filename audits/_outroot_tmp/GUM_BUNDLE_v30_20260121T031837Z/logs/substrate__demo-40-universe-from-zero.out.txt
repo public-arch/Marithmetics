@@ -1,0 +1,156 @@
+================================================================================================
+DEMO-40 — Universe-from-Zero MASTER UPGRADE (v4) — deterministic
+================================================================================================
+UTC time : 2026-01-21T03:20:42Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout + optional JSON artifact
+
+spec_sha256: b12dd83a0b14307ec17de80f1286391c85bdae6904536a556a4e35d9445e7eb4
+spec_fingerprint_sha256: 60e0f957e120fbdadf507c899a86f3b97fed9fd85515b5acde07d97e784801af
+
+================================================================================================
+STAGE 1 — Selection (finite elimination dynamics; absorbing fixed point)
+================================================================================================
+Lane survivor pools (raw / residue-only):
+  U(1):  [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+After v2 coherence: U(1)->[137]  SU(3)->[103]
+PASS  Gate P: primary equals (137,107,103)                                           selected=(137,107,103)
+PASS  Gate F: absorbing fixed point (idempotent eliminators)
+
+PASS  Gate CF: captured >=4 deterministic counterfactual triples                     found=4 window=(181, 1200)
+Counterfactuals: [(409, 263, 239), (409, 263, 307), (409, 367, 239), (409, 367, 307)]
+
+================================================================================================
+STAGE 2 — Derived invariants / budgets (suite-consistent; first principles)
+================================================================================================
+primary: Triple(wU=137, s2=107, s3=103)
+q2=30  q3=17  v2U=3  eps=0.18257419
+N=64  K_primary=15  K_truth=31
+PASS  Gate A: PhiAlpha normalization (2/q3)*q3 == 2                                  PhiAlpha=2.000000000000
+
+================================================================================================
+STAGE 3 — Rosetta/DRPT check: residues reconstructed from base-b digits
+================================================================================================
+PASS  Gate R: all residue-from-digits hats match integer residues (all bases, all q)
+
+================================================================================================
+STAGE 4 — Base-gauge invariance (selector + pools) + designed FAIL
+================================================================================================
+base= 2 pools_match=True triple=(137, 107, 103)
+base= 3 pools_match=True triple=(137, 107, 103)
+base= 4 pools_match=True triple=(137, 107, 103)
+base= 5 pools_match=True triple=(137, 107, 103)
+base= 6 pools_match=True triple=(137, 107, 103)
+base= 7 pools_match=True triple=(137, 107, 103)
+base= 8 pools_match=True triple=(137, 107, 103)
+base= 9 pools_match=True triple=(137, 107, 103)
+base=10 pools_match=True triple=(137, 107, 103)
+base=12 pools_match=True triple=(137, 107, 103)
+base=16 pools_match=True triple=(137, 107, 103)
+PASS  Gate G1: triple + pools invariant across bases (encode/decode audit)
+
+Designed FAIL (digit sums for 103,107,137):
+most common order: (2, 0, 1) freq: 0.273
+PASS  Gate G2: digit-dependent path is not portable                                  freq=0.273 (<0.50 expected)
+
+================================================================================================
+STAGE 5 — Rigidity audit (no tuning; predeclared neighborhood)
+================================================================================================
+total variants tested: 5832
+zero-triple variants  : 5616
+unique-triple variants: 216
+multi-triple variants : 0
+unique==primary       : 216
+
+PASS  Gate R0: variant scan executed (count)                                         total=5832
+PASS  Gate R1: at least one variant reproduces primary triple (sanity)
+PASS  Gate R2: uniqueness is not generic                                             unique_frac=0.037
+PASS  Gate R3: primary is not ubiquitous                                             hit_frac=0.037
+PASS  Gate R4: no multi-triple variants (rigidity)                                   multi=0
+
+Example variants that still hit the primary triple (audit trail):
+U1 : LaneRule(name='U1', q=17, residues=(1, 5), tau=0.29, v2_target=3, leg2_expected=1)
+SU2: LaneRule(name='SU2', q=13, residues=(3,), tau=0.29, v2_target=1, leg2_expected=-1)
+SU3: LaneRule(name='SU3', q=17, residues=(1,), tau=0.29, v2_target=1, leg2_expected=1)
+------------------------------------------------------------
+U1 : LaneRule(name='U1', q=17, residues=(1, 5), tau=0.29, v2_target=3, leg2_expected=1)
+SU2: LaneRule(name='SU2', q=13, residues=(3,), tau=0.29, v2_target=1, leg2_expected=-1)
+SU3: LaneRule(name='SU3', q=17, residues=(1, 2), tau=0.29, v2_target=1, leg2_expected=1)
+------------------------------------------------------------
+U1 : LaneRule(name='U1', q=17, residues=(1, 5), tau=0.29, v2_target=3, leg2_expected=1)
+SU2: LaneRule(name='SU2', q=13, residues=(3,), tau=0.29, v2_target=1, leg2_expected=-1)
+SU3: LaneRule(name='SU3', q=17, residues=(1,), tau=0.3, v2_target=1, leg2_expected=1)
+------------------------------------------------------------
+U1 : LaneRule(name='U1', q=17, residues=(1, 5), tau=0.29, v2_target=3, leg2_expected=1)
+SU2: LaneRule(name='SU2', q=13, residues=(3,), tau=0.29, v2_target=1, leg2_expected=-1)
+SU3: LaneRule(name='SU3', q=17, residues=(1, 2), tau=0.3, v2_target=1, leg2_expected=1)
+------------------------------------------------------------
+U1 : LaneRule(name='U1', q=17, residues=(1, 5), tau=0.29, v2_target=3, leg2_expected=1)
+SU2: LaneRule(name='SU2', q=13, residues=(3,), tau=0.29, v2_target=1, leg2_expected=-1)
+SU3: LaneRule(name='SU3', q=17, residues=(1,), tau=0.31, v2_target=1, leg2_expected=1)
+------------------------------------------------------------
+
+================================================================================================
+STAGE 6 — Structural cosmology capsule (BB-36 monomials) + counterfactual teeth
+================================================================================================
+H0       : 70.4493959644
+Omega_b  : 0.0449818930885
+Omega_c  : 0.126211331093
+Omega_L  : 0.828806775819
+ombh2    : 0.0223250415901
+omch2    : 0.0626401652383
+A_s      : 2.0990941132e-09
+n_s      : 0.964746071155
+tau      : 0.0539794849702
+ell1     : 219.949087324
+deltaCMB : 1.00047528498e-05
+delta0   : 1.14084301156e-06
+F_CMB    : 8.76961400334
+
+PASS  S1: H0 in (50,80) km/s/Mpc                                                     H0=70.449
+PASS  S2: omega_b h^2 in (0.015,0.035)                                               ombh2=0.022325
+PASS  S3: omega_c h^2 in (0.05,0.20)                                                 omch2=0.062640
+PASS  S4: A_s in (1e-9,5e-9)                                                         A_s=2.099e-09
+PASS  S5: n_s in (0.90,1.05)                                                         n_s=0.964746
+PASS  S6: tau in (0.01,0.10)                                                         tau=0.053979
+PASS  S7: ell1 in (150,350)                                                          ell1=219.949
+PASS  S8: deltaCMB in O(1e-5) band                                                   delta=1.000e-05
+
+CF Triple(wU=409, s2=263, s3=239)  plausible=False  H0=2.88e+03  n_s=0.133  ell1=65.9
+CF Triple(wU=409, s2=263, s3=307)  plausible=False  H0=4.75e+03  n_s=0.464  ell1=296
+CF Triple(wU=409, s2=367, s3=239)  plausible=False  H0=4.02e+03  n_s=0.0681  ell1=250
+CF Triple(wU=409, s2=367, s3=307)  plausible=False  H0=6.63e+03  n_s=0.238  ell1=1.12e+03
+PASS  Gate S9: >=3/4 counterfactuals fail plausibility gates (teeth)                 fail=4/4
+
+================================================================================================
+STAGE 7 — Operator admissibility + causal capstones (legal vs illegal)
+================================================================================================
+PASS  Gate K1: Fejer kernel nonnegative (admissible)                                 kmin=0.000e+00
+PASS  Gate K2: sharp cutoff has negative lobes (illegal)                             kmin=-1.053e-01
+PASS  Gate K3: signed HF injector has negative lobes (illegal)                       kmin=-2.107e-01
+
+Hilbert/DFT      : rt_err= 2.570e-16 norm_err= 4.112e-16 uv_fejer= 0.000e+00 uv_illegal= 1.852e-02
+Quantum2D density: min_fejer= 1.982e-02 min_sharp= -8.488e-02 min_signed= -1.698e-01
+Noether/energy   : drift_legal= 2.186e-12 blow_illegal= 2.676e+86
+
+PASS  Gate C1: Hilbert/DFT round-trip + Parseval consistency                         rt_err=2.570e-16 norm_err=4.112e-16
+PASS  Gate C2: Quantum2D Fejer density nonnegative                                   min=1.982e-02
+PASS  Gate C3: illegal operators create negativity (<= -eps^2)                       eps^2=3.333e-02
+PASS  Gate C4: Noether energy conserved (legal) + Euler breaks (illegal)             drift=2.186e-12 blow=2.676e+86
+
+================================================================================================
+STAGE 8 — Recovery hashes (core + full) + optional artifacts
+================================================================================================
+core_sha256: 1436dab79ed74b8d1f248827d3adbc1e3b7901ccb8ce82797cd961fd29d97191
+full_sha256: 8a5a0d98b34bb37dad70823cf06d21221578c76b823daa17e8d11d60a406c536
+determinism_sha256: dd165665d7e3867c9b8b32d6aeb63098de9b46a9a85ec8c91a45866619671398
+
+
+================================================================================================
+FINAL VERDICT
+================================================================================================
+PASS  DEMO-40 MASTER UPGRADE VERIFIED (determinism + invariance + rigidity + teeth)
+Result: VERIFIED

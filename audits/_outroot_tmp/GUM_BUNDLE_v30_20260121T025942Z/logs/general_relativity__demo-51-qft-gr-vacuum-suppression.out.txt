@@ -1,0 +1,103 @@
+
+====================================================================================================
+RUN HEADER
+====================================================================================================
+UTC time      : 2026-01-21T03:00:36.189418Z
+Python        : 3.12.1
+Platform      : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+Script SHA256 : f0912b3074c3de95e9b8e78cbc92dd5a1c576a65b31587889009bdbfd838e870
+Mode          : full
+File I/O      : none (no files written)
+Policy        : Selection and mechanism are upstream; cosmology inputs are evaluation-only.
+
+====================================================================================================
+STAGE 1 — DISCRETE SELECTION (FIXED RULES)
+====================================================================================================
+Lane survivors:
+  Lane A: [103, 107, 137]
+  Lane B: [107]
+  Lane C: [103, 137]
+Admissible triples: [(137, 107, 103)]
+PASS  Unique admissible triple in primary window                                      count=1
+PASS  Selected triple equals (137,107,103)                                            selected=(137, 107, 103)
+
+====================================================================================================
+STAGE 2 — TRIPLE INVARIANTS (LINKS TO wU, s2, s3)
+====================================================================================================
+Selected triple: wU=137, s2=107, s3=103
+Derived: q2=wU-s2=30  q3=odd_part(wU-1)=17  v2(wU-1)=3
+alpha0_inv := wU             = 137
+sin^2(thetaW) := 7/q2        = 0.233333333333333
+alpha_s(MZ) := 2/q3          = 0.117647058823529
+k_struct := q3 + v2(wU-1)    = 20
+derived_nf := 3 + v2(s2-1) + v2(s3-1) = 5
+PASS  Lane-branch consistency: derived_nf matches nf=5 at MZ scale                    derived_nf=5
+
+====================================================================================================
+STAGE 3 — OBSERVED VACUUM ENERGY (EVALUATION)
+====================================================================================================
+H0 [km/s/Mpc]      = 70.476
+Omega_L            = 0.71192
+rho_obs [GeV^4]    = 2.86271892061652e-47
+Lambda_obs [1/m^2] = 1.23963e-52
+PASS  Sanity: rho_obs in expected GeV^4 range                                       
+
+====================================================================================================
+STAGE 4 — MECHANISM CHECKS (DERIVED LOOP GEOMETRY)
+====================================================================================================
+PASS  Canonical 4D one-loop prefactor equals 1/(16π^2)                                pref=0.00633257397764611183
+Mechanism used:
+  rho = (1/(16π^2))^2 * (1/(1+alpha_s)) * Λ5^6 / M_Pl^2
+  - Λ5 from 2-loop running inversion at nf=5 (evaluation scale MZ)
+  - 1/(1+alpha_s) is a minimal RG dressing (no free constants)
+
+====================================================================================================
+STAGE 5 — QCD SCALE EXTRACTION AND PREDICTION (<1% GATE)
+====================================================================================================
+M_Pl [GeV]             = 1.2208901e+19
+Λ5 (2-loop, nf=5)      = 0.221411095275725 GeV
+rho_pred [GeV^4]       = 2.83595269166448e-47
+ratio rho_pred/rho_obs = 0.990650067403
+|ratio-1|              = 0.0093499326
+PASS  <1% accuracy achieved                                                           |ratio-1|=0.00934993
+
+====================================================================================================
+STAGE 6 — ROBUSTNESS TESTS (VALID)
+====================================================================================================
+A) Renormalization-scale sweep (nf=5, fixed Λ5):
+   μ=45.5175 GeV   alpha_s(μ)=0.13139832   ratio=0.978609491317   |ratio-1|=0.021390509
+   μ=91.0349 GeV   alpha_s(μ)=0.11764706   ratio=0.990650067403   |ratio-1|=0.0093499326
+   μ=182.07 GeV   alpha_s(μ)=0.10656011   ratio=1.00057568013   |ratio-1|=0.00057568013
+PASS  μ-sweep stability: max |ratio-1| <= 3%                                          max_err=0.0213905
+
+B) Threshold matching audit (consistency; not an invariance claim):
+   Λ5 = 0.221411095276 GeV
+   Λ4 = 0.315393329016 GeV
+   Λ3 = 0.359031636456 GeV
+   recovered alpha_s(MZ) = 0.117647058824
+PASS  Threshold audit recovers alpha_s(MZ) (consistency)                              Δ=1.39e-17
+
+====================================================================================================
+STAGE 7 — COUNTERFACTUALS (ABLATION)
+====================================================================================================
+Alternative admissible triples: [(277, 263, 239), (277, 263, 307), (307, 263, 239), (311, 263, 239)]
+  (277, 263, 239)  alpha_s=0.0289855  Λ5=1.89784e-10  ratio=4.26755e-55  PASS
+  (277, 263, 307)  alpha_s=0.0289855  Λ5=1.89784e-10  ratio=4.26755e-55  PASS
+  (307, 263, 239)  alpha_s=0.0130719  Λ5=2.72683e-25  ratio=3.81365e-144  PASS
+  (311, 263, 239)  alpha_s=0.0129032  Λ5=1.20638e-25  ratio=2.85997e-146  PASS
+PASS  All counterfactuals fail strongly                                               4/4
+
+====================================================================================================
+STAGE 8 — SEAM CROSS-CHECK (INTERPRETIVE, NO INPUT)
+====================================================================================================
+W := q2/q3 = 1.76470588235
+k_struct   = 20
+k_eff      = 20.672189
+PASS  k_eff approximately equals k_struct (within 1)                                
+
+====================================================================================================
+FINAL VERDICT
+====================================================================================================
+PASS  Verified (accuracy + robustness + ablations) under declared mechanism         
+
+Result: VERIFIED

@@ -76,3 +76,11 @@ GUM_manifest_SHA256_*.txt
 # Allow publishing master archives
 !gum/master_archives/*.zip
 !gum/master_archives/*.zip.sha256
+
+# Generated demo bundle outputs (do not commit)
+demos/**/**/demo*_cert_bundle_*/
+demos/**/**/DEMO*_BUNDLE_*/
+
+# Generated demo bundle outputs (do not commit)
+demos/**/**/demo*_cert_bundle_*/
+demos/**/**/DEMO*_BUNDLE_*/

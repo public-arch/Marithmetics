@@ -1,0 +1,75 @@
+{
+  "demo_id": "33",
+  "label": "DEMO-33",
+  "demo_path": "demos/standard_model/demo-33-first-principles-standard-model-sm28-closure",
+  "code_sha256": "33413bbb5d92dc70572d72e928f9adf6e165b493a74ed01da1bb19e1361460af",
+  "stdout_sha256": "e99729564a0915a259accc26d954a8893e430a92ebd9296f2122445d003a5428",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "standard_model__demo-33-first-principles-standard-model-sm28-closure.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "standard_model__demo-33-first-principles-standard-model-sm28-closure.out.txt",
+      "sha256": "e99729564a0915a259accc26d954a8893e430a92ebd9296f2122445d003a5428",
+      "bytes": 21854
+    },
+    {
+      "path": "demo.py",
+      "sha256": "33413bbb5d92dc70572d72e928f9adf6e165b493a74ed01da1bb19e1361460af",
+      "bytes": 100034
+    },
+    {
+      "path": "artifacts/standard_model__demo-33-first-principles-standard-model-sm28-closure__stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "artifacts/standard_model__demo-33-first-principles-standard-model-sm28-closure__RUN_COMMAND.txt",
+      "sha256": "b0d863fc2d8e71997c21204c0d0ea914ece5bec196bea83781b2ef060dcc39fb",
+      "bytes": 22
+    },
+    {
+      "path": "artifacts/standard_model__demo-33-first-principles-standard-model-sm28-closure__bundle_zip_sha256.txt",
+      "sha256": "d508eacaf7431fe9952831a7d03871e8dca435c0c24017f0815c51fc41a55bfb",
+      "bytes": 65
+    },
+    {
+      "path": "artifacts/standard_model__demo-33-first-principles-standard-model-sm28-closure__output_sha256.json",
+      "sha256": "66ceeb4e3c99307e4504028400809aa6c2047cb0fc1b3c5476c770992b819ce6",
+      "bytes": 187
+    },
+    {
+      "path": "artifacts/standard_model__demo-33-first-principles-standard-model-sm28-closure__code_sha256.json",
+      "sha256": "50150a288d2bcd95f154291b518116975526f7a6effc9fa0ef6524bec2895327",
+      "bytes": 84
+    },
+    {
+      "path": "artifacts/standard_model__demo-33-first-principles-standard-model-sm28-closure__sm_outputs.json",
+      "sha256": "86c5f869498d9f1c0b514a855e5365bd8928869bf09ebe1ee58caa0d695a1777",
+      "bytes": 47147
+    },
+    {
+      "path": "artifacts/standard_model__demo-33-first-principles-standard-model-sm28-closure__sm_outputs_pure.json",
+      "sha256": "86c5f869498d9f1c0b514a855e5365bd8928869bf09ebe1ee58caa0d695a1777",
+      "bytes": 47147
+    },
+    {
+      "path": "artifacts/standard_model__demo-33-first-principles-standard-model-sm28-closure__stdout.txt",
+      "sha256": "b85104f9a05f0f1a07e070aef07349829c5b2abc91b3fb157672c2d442130877",
+      "bytes": 21778
+    },
+    {
+      "path": "artifacts/standard_model__demo-33-first-principles-standard-model-sm28-closure__BUNDLE_SHA256.txt",
+      "sha256": "c804ada2c83058e7cef3b6ebee5b6d17155729317fb51f12316e2f18a8ffc653",
+      "bytes": 65
+    },
+    {
+      "path": "artifacts/standard_model__demo-33-first-principles-standard-model-sm28-closure__run_metadata.json",
+      "sha256": "ad9490e754871b59e368b2df6943a5f7a132f7a38597c0b3b75b12aa148fedfb",
+      "bytes": 342
+    }
+  ]
+}

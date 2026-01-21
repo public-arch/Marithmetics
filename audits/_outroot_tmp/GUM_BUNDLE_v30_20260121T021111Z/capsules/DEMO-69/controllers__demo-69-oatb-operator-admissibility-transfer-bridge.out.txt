@@ -1,0 +1,160 @@
+==================================================================================================
+             DEMO-69 — OATB MASTER FLAGSHIP (Operator Admissibility Transfer Bridge)              
+==================================================================================================
+UTC time : 2026-01-21T02:11:33.428612Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+Mode     : QUICK
+I/O      : stdout + optional JSON/PNG artifacts
+
+spec_sha256: f88eb6ef2f6c2ce1a11c4cd6664880b49a22c85486e91c5e4a1dec081383da1e
+
+
+==================================================================================================
+STAGE 1 — Deterministic triple selection (primary + counterfactuals)
+==================================================================================================
+Lane survivor pools (raw):
+  U(1):  [103, 107, 137] 
+  SU(2): [107] 
+  SU(3): [103, 137] 
+Primary: Triple(wU=137, s2=107, s3=103)
+Counterfactuals:
+  (409, 211, 239)
+  (409, 211, 307)
+  (409, 263, 239)
+  (409, 263, 307)
+✅  Gate S1: primary equals (137,107,103)
+✅  Gate S2: captured >=4 counterfactual triples                             found=4
+
+Derived invariants:
+  q2=30  q3=17  v2U=3  eps=1/sqrt(q2)=0.18257419
+
+==================================================================================================
+STAGE 2 — UFET K(r) near-constant witness (triangle multipliers)
+==================================================================================================
+r= 8  H_min=0.111111  H_max=1.000000  K(r)=0.670782
+✅  Gate K(r) contract @r=8: H_min≈1/(r+1) and DC=1
+r=16  H_min=0.058824  H_max=1.000000  K(r)=0.667820
+✅  Gate K(r) contract @r=16: H_min≈1/(r+1) and DC=1
+r=32  H_min=0.030303  H_max=1.000000  K(r)=0.666973
+✅  Gate K(r) contract @r=32: H_min≈1/(r+1) and DC=1
+✅  Gate U1: UFET K(r) spread <= 1%                                          spread=0.570%
+✅  Gate U2: mean K(r) close to 2/3 (<=2%)                                   |K-2/3|=0.001858
+
+==================================================================================================
+STAGE 3 — Kernel admissibility audit (real-space minima + HF weight)
+==================================================================================================
+N=2048 r=16
+Fejér  kernel min : 5.176815e-10   HF_weight_frac(>r)=0.000000
+Sharp  kernel min : -3.510996e-03   HF_weight_frac(>r)=0.000000
+Signed kernel min : -9.677734e-01   HF_weight_frac(>r)=0.983887
+✅  Gate A1: Fejér kernel nonnegative (tol)                                  min=5.177e-10
+✅  Gate A2: Sharp kernel has negative lobes                                 min=-3.511e-03
+✅  Gate A3: Signed kernel has negative lobes                                min=-9.678e-01
+✅  Gate A4: Signed kernel retains large HF weight                           hf=0.984 floor=0.250
+
+==================================================================================================
+STAGE 4 — Sharp-transfer witness (Gibbs vs Fejér) + teeth
+==================================================================================================
+Distances vs truth (rel L2): Fejér=0.140531  sharp=0.091217  signed=0.239279
+Min(y): Fejér=7.361219e-03  sharp=-8.100846e-02  signed=-1.620169e-01
+Overshoot: Fejér=-0.044278  sharp=0.101205  signed=0.202410
+✅  Gate T1: Fejér distance vs truth <= eps                                  dist=0.1405 eps=0.1826
+✅  Gate T2: illegal filters exhibit Gibbs overshoot (Fejér does not)        ov_fejer=-0.044 ov_sharp=0.101 ov_signed=0.202 floor=eps^2=0.033
+✅  Gate T3: Fejér preserves nonnegativity (tol)                             min=7.361e-03
+✅  Gate T4: illegal kernels create negative density (undershoot)            floor=-eps^2=-0.033 mins=(-8.101e-02,-1.620e-01)
+
+Counterfactual budget: q3_cf=51 => r_cf=5  dist_cf=0.318089  degrade=True
+✅  Gate CF1: budget reduction degrades by (1+eps)                           distP=0.1405 distCF=0.3181 (1+eps)=1.183
+
+==================================================================================================
+STAGE 5 — Paradox pack (finite↔continuum + measure + quantum collapse)
+==================================================================================================
+✅  Gate Z1: Zeno partial sum close to 1                                     sum=0.999999999069 err=9.313e-10
+✅  Gate G1: Grandi Cesàro close to 1/2                                      cesaro=0.500000 err=0.000e+00
+
+Gibbs overshoot: Dirichlet=0.091747  Fejér=-0.011686
+Undershoot(min): Dirichlet=-0.086785  Fejér=0.001998
+✅  Gate Gi1: Dirichlet exhibits overshoot above eps^2                       ov=0.092 floor=eps^2=0.033
+✅  Gate Gi2: Fejér eliminates overshoot (<= 1e-3)                           ov=-1.169e-02
+✅  Gate Gi3: Fejér preserves nonnegativity (tol)                            min=1.998e-03
+✅  Gate Gi4: Dirichlet creates negative undershoot                          min=-0.087 floor=-eps^2=-0.033
+✅  Gate H1: Hilbert-hotel shifts preserve total mass                        mass=0.250000
+✅  Gate H2: positive partitions preserve mass                               Δ=0.000e+00
+✅  Gate H3: signed partitions generate illegal negative mass                signed_mass=-0.234848
+✅  Gate Q1: interference present (coherent differs from incoherent)         rel_L2=0.7284
+✅  Gate C2: sharp collapse injects vastly more HF than OATB                 ratio=9.28e+26
+✅  Gate QT: reducing admissible budget degrades localization by (1+eps)     r=32->16 miss=0.000963->0.002507 eps=0.183
+
+==================================================================================================
+STAGE 6 — Ω reuse across PDEs (3D heat + 4D heat + 4D vector field)
+==================================================================================================
+✅  Gate Ω3D-M: mass conserved (uncontrolled + controlled)                   Δmass_ctrl=0.000e+00
+✅  Gate Ω3D-T: tracking improves (err_un/err_ctrl >= 1.3)                   factor=1.66
+✅  Gate Ω3D-HF: HF error suppressed (hf_ratio <= 0.85)                      ratio=0.809
+✅  Gate Ω4D-M: mass conserved (uncontrolled + controlled)                   Δmass_ctrl=-2.910e-11
+✅  Gate Ω4D-T: tracking improves (>= 1.2)                                   factor=1.29
+✅  Gate Ω4D-HF: HF error suppressed (<= 0.75)                               ratio=0.715
+✅  Gate ΩV-DIV: incompressibility improved (div_ratio <= 0.7)               ratio=2.739e-19
+✅  Gate ΩV-KE: energy damped (ke_ratio <= 0.7)                              ratio=2.334e-04
+✅  Gate ΩV-HF: HF KE damped (hf_ratio <= 0.9)                               ratio=3.005e-36
+
+==================================================================================================
+STAGE 7 — Cross-base invariance + rigidity audit
+==================================================================================================
+base= 2  decoded_triple=(137, 107, 103)  pools_match=True
+base= 3  decoded_triple=(137, 107, 103)  pools_match=True
+base= 4  decoded_triple=(137, 107, 103)  pools_match=True
+base= 5  decoded_triple=(137, 107, 103)  pools_match=True
+base= 6  decoded_triple=(137, 107, 103)  pools_match=True
+base= 7  decoded_triple=(137, 107, 103)  pools_match=True
+base= 8  decoded_triple=(137, 107, 103)  pools_match=True
+base= 9  decoded_triple=(137, 107, 103)  pools_match=True
+base=10  decoded_triple=(137, 107, 103)  pools_match=True
+base=12  decoded_triple=(137, 107, 103)  pools_match=True
+base=16  decoded_triple=(137, 107, 103)  pools_match=True
+✅  Gate B1: base encode/decode round-trip holds
+✅  Gate B2: primary triple invariant across tested bases
+base= 2  digit_selector=Triple(wU=97, s2=103, s3=127)
+base= 3  digit_selector=Triple(wU=109, s2=97, s3=107)
+base= 4  digit_selector=None
+base= 5  digit_selector=Triple(wU=97, s2=101, s3=103)
+base= 6  digit_selector=None
+base= 7  digit_selector=None
+base= 8  digit_selector=None
+base= 9  digit_selector=Triple(wU=97, s2=101, s3=103)
+base=10  digit_selector=None
+base=12  digit_selector=Triple(wU=97, s2=103, s3=113)
+base=16  digit_selector=None
+✅  Gate DF: digit-dependent selector is NOT invariant (>=2 distinct outputs) distinct=5
+
+Rigidity scan:
+Variants tested      : 36288
+Variants w/ a triple : 2387 (6.58%)
+Distinct triples seen: 837
+Primary hits         : 4 (0.01%)
+✅  Gate R1: nontrivial scan (some variants yield a triple)
+✅  Gate R2: not generic (most variants yield no triple)                     any_frac=0.066
+✅  Gate R3: primary not ubiquitous (hit_frac <= 0.30)                       hit_frac=0.000
+✅  Gate R4: primary appears at least once in the scan                       primary_hits=4
+
+==================================================================================================
+STAGE 8 — Integration ledger (where OATB plugs into the full stack)
+==================================================================================================
+This flagship is intentionally domain-spanning:
+  • Transfer legality: nonnegative kernels (Fejér) vs illegal ringing/negativity (sharp/signed).
+  • Paradox resolution: Zeno/Grandi/Gibbs + measure + quantum collapse are unified by admissibility.
+  • PDE control: the same Ω operator improves heat tracking (3D/4D) and enforces incompressibility (4D).
+  • Portability: selector is base-invariant; digit-based hacks are not.
+  • Rigidity: the primary triple is rare in a neighborhood scan (not a generic artifact).
+
+==================================================================================================
+DETERMINISM HASH
+==================================================================================================
+determinism_sha256: 26ff7600c426a246efed52a0a9ad86fe62474767160ebf05dbc15ee5f30c5d4c
+
+==================================================================================================
+FINAL VERDICT
+==================================================================================================
+✅  DEMO-69 VERIFIED (OATB flagship: admissibility + transfer + paradox + Ω reuse + invariance) score=1000000/1000000  passed_weight=32.00/32.00
+Result: VERIFIED

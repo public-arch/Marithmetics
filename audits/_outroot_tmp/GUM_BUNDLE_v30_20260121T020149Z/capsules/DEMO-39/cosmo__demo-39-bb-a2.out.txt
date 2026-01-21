@@ -1,0 +1,120 @@
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ A2 Archive Master — BB-36 closure capsule                                                                    ║
+║ mode=fast  utc=2026-01-21T02:02:34Z  sha256=e72e7790657950b2f91ec38c3a9014394a10ed5ad0d48ede23e29a124edf1b64 ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+python=3.12.1  platform=Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+
+══════════ 0. Gauge lawbook derivation ══════════
+  candidates found: 1
+  BEST: q=(17,13,17)  RU=[1, 5] R2=[3] R3=[1]
+  τ-pressure: some_none_one_triple  uniq=18/27  none=9/27
+  span-grid: uniq=6/9  distinct=1
+  triple: {'wU': 137, 's2': 107, 's3': 103}
+  complexity: 1119
+  ✅ CLOSED: unique canonical lawbook under declared contracts.
+══════════ 1. Gauge selector ══════════
+  span: (97, 180)
+  taus: {'U1': 0.31, 'SU2': 0.3, 'SU3': 0.3}
+  • U(1):  q=17  residues=[1, 5]  → [103, 107, 137]
+  • SU(2): q=13  residues=[3]  → [107]
+  • SU(3): q=17  residues=[1]  → [103, 137]
+  unique triple: {'wU': 137, 's2': 107, 's3': 103}
+  derived: q2=30  v2=3  phi(q2)=8  Θ=4/15
+  ✅ CLOSED: canonical (137,107,103) and invariants (q2=30, v2=3, Θ=4/15).
+══════════ 2. Φ-mapping ══════════
+  alpha: 1/137 = 0.0072992700729927
+  alpha_s: 2/17 = 0.1176470588235294
+  sin^2: 7/30 = 0.2333333333333333
+  ✅ CLOSED: α=1/137, αs=2/17, sin^2=7/30.
+══════════ 3. Yukawa closure ══════════
+  Palette‑B E1–E5: True
+  D1 option counts: [2, 1, 3, 1, 3, 1, 3, 3, 3]
+  D1 total candidates: 486
+  D1 survivors: 81
+  D1 best: ['0', '4/3', '7/4', '8/3', '4', '11/3', '13/8', '21/8', '9/2']
+  delta_iso(best): 0.0416666666666667
+  ✅ CLOSED: D1 selects Palette‑B as unique best tuple.
+  offset grid size: 2401
+  MC draws: 2000
+  seed: 123
+  distinct offsets observed: 942
+  hits summary: {'zero': 2401, 'one': 0, 'ge2': 0}
+  canonical hits: 0
+  canonical rank: 1
+  #   du     lu    hits  delta  canonical?
+  01  8/3    13/8  0     0.000  yes       
+  02  61/24  13/8  0     0.125            
+  03  8/3    3/2   0     0.125            
+  04  8/3    7/4   0     0.125            
+  05  67/24  13/8  0     0.125            
+══════════ 4. Cosmology closure (Ω) ══════════
+  Ω_b: 0.044981893088497
+  Ω_c: 0.2429783126554844
+  Ω_Λ: 0.7118999678358255
+  Ω_r: 8.42249728384458e-05
+  Ω_tot: 0.9999443985526454
+  sector  C                   exps            val                   BB36 rank
+  Ω_b     0.3678794411714423  (0, -1, 3, -4)  0.044981893088497     15       
+  Ω_c     0.1591549430918953  (-2, -1, 2, 2)  0.2429783126554844    14       
+  Ω_L     6.2831853071795862  (0, -3, 5, -4)  0.7118999678358255    21       
+  Ω_r     0.1591549430918953  (0, -2, 1, -1)  8.42249728384458e-05  1        
+  ✅ CLOSED: BB‑36 Ω templates + near-flatness (ε<=1e-3).
+══════════ 5. H0 closure ══════════
+  d_contract: 7
+  BEST: H0=70.4493959643776719  exps=(-6, 1, 2, 7)  rank=1
+  ✅ CLOSED: BB‑36 H0 is rank‑1.
+══════════ 6. Primordial (As, ns, tau) ══════════
+  As: 2.099094113200873e-09  exps=(5, -2, -4, -5)  rank=1
+  ns: 0.9647460711549101  exps=(0, -2, 5, -4)  rank=1
+  tau: 0.0539794849701662  exps=(-3, 0, 5, -4)  rank=1
+  ✅ CLOSED: primordial trio is rank‑1.
+══════════ 7. Neutrinos ══════════
+  Δ21: 7.499740433804768e-05  exps=(0, -6, 4, 0)
+  Δ31: 0.002499999351254  exps=(4, -6, -2, 5)
+  Σmν: 0.059994871726098  exps=(-5, 4, -3, 6)
+  Δ31/Δ21: 33.3344783505486149
+  ✅ CLOSED: neutrino templates + hierarchy contract pass.
+══════════ 8. Amplitudes + ℓ1 ══════════
+  etaB: 6.115445477325657e-10  in_win=True
+  YHe: 0.247941613961382  in_win=True
+  deltaCMB: 1.000475284975453e-05  in_win=True
+  NC(deltaCMB using FCMB_d-1): in_win=False
+  ell1: 219.9490873240763733  exps=(-7, 4, 6, -2)  C=1/e
+  ✅ CLOSED: amplitude windows pass; NC breaks deltaC window.
+══════════ 9. Cross-base invariance ══════════
+  rosetta passes: {"crt_collision_exists_on_bad": true, "crt_injective_on_good": true, "designed_fail_digit_injection_trips": true, "phi_hat_float_decimal_agree": true, "phi_hat_roundtrip_parse_ok": true}
+  phi_hat roundtrip max |Δ| (b7/b10/b16): 7.77e-16 / 2.22e-16 / 0.00e+00
+  A2 constants roundtrip max |Δ| (b7/b10/b16): 4.72e-16 / 5.55e-17 / 2.00e-22
+  A2 constants roundtrip (all): PASS
+  const    value (base10)           repr b7                        repr b16                       max|Δ|  
+  alpha    0.0072992700729927       0.002334515606303135(base7)    0.01de5d6e3f8868a000(base16)   6.59e-17
+  alpha_s  0.11764705882352941      0.055232026114346405(base7)    0.1e1e1e1e1e1e1e0000(base16)   4.72e-16
+  sin2     0.233333333333333337     0.143014301430143014(base7)    0.3bbbbbbbbbbbbc0000(base16)   3.33e-16
+  H0       70.44939596437767193     130.310066662063631102(base7)  46.730b9d29f4dc000000(base16)  0.00e+00
+  Om_tot   0.999944398552645386     0.666660313165253433(base7)    0.fffc5b299a1cc80000(base16)   1.11e-16
+  As       2.09909411320087293e-09  0.000000000041024402(base7)    0.0000000903fa7774d8(base16)   2.44e-16
+  ns       0.964746071154910068     0.651623260544614532(base7)    0.f6f999388e09300000(base16)   2.22e-16
+  tau      0.053979484970166157     0.024341426631301623(base7)    0.0dd1997a9a0eb98000(base16)   1.60e-16
+  ell1     219.949087324076373307   432.643352113612240534(base7)  db.f2f76309f4c8000000(base16)  0.00e+00
+  ✅ CLOSED: base representations (b7/b10/b16) roundtrip to the same numeric values (tol=1e-15).
+══════════ A2 scoreboard ══════════
+  claim                                PASS?
+  H0_BB36_rank1                        PASS 
+  a2_constants_roundtrip_parse_ok      PASS 
+  a2_numeric_invariant_under_repr      PASS 
+  amplitudes_deltaC_in_window          PASS 
+  amplitudes_etaB_in_window            PASS 
+  cosmology_flatness_eps_1e-3          PASS 
+  cosmology_templates_match_BB36       PASS 
+  ell1_value_finite                    PASS 
+  gauge_invariants_match               PASS 
+  gauge_lawbook_unique                 PASS 
+  gauge_selector_unique                PASS 
+  neutrinos_closed                     PASS 
+  phi_mapping_expected_fractions       PASS 
+  primordial_As_rank1                  PASS 
+  primordial_ns_rank1                  PASS 
+  primordial_tau_rank1                 PASS 
+  rosetta_all_pass                     PASS 
+  yukawa_D1_best_is_palette_B          PASS 
+  yukawa_offset_sweep_canonical_found  PASS 

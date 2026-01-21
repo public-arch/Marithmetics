@@ -1,0 +1,6 @@
+/workspaces/Marithmetics/demos/sm/demo-76-primorial-yukawa-master-flagship/demo.py:3: SyntaxWarning: invalid escape sequence '\h'
+  """DEMO-76 — PRIMORIAL-YUKAWA MASTER FLAGSHIP — REFEREE READY
+/workspaces/Marithmetics/demos/sm/demo-76-primorial-yukawa-master-flagship/demo.py:261: SyntaxWarning: invalid escape sequence '\h'
+  """Compute \hat{π} from an alternating series with optional Fejér weighting.
+/workspaces/Marithmetics/demos/sm/demo-76-primorial-yukawa-master-flagship/demo.py:424: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"UTC time : {datetime.datetime.utcnow().isoformat()}Z")

@@ -1,0 +1,30 @@
+{
+  "demo_id": "60",
+  "label": "DEMO-60",
+  "demo_path": "demos/quantum/demo-60-quantum-master-flagship",
+  "code_sha256": "fba4ac6667a7e649d774e3aee773be53362fd17c92af83a116c2122536b660f2",
+  "stdout_sha256": "ef02970da6a32ada9a385c2bb7e915260ca06018f908874c8c45b8aedabc3fc1",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "quantum__demo-60-quantum-master-flagship.out.txt",
+      "sha256": "ef02970da6a32ada9a385c2bb7e915260ca06018f908874c8c45b8aedabc3fc1",
+      "bytes": 7147
+    },
+    {
+      "path": "demo.py",
+      "sha256": "fba4ac6667a7e649d774e3aee773be53362fd17c92af83a116c2122536b660f2",
+      "bytes": 31645
+    },
+    {
+      "path": "quantum__demo-60-quantum-master-flagship.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

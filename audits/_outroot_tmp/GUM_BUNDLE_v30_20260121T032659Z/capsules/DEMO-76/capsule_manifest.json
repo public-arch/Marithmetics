@@ -1,0 +1,25 @@
+{
+  "demo_id": "76",
+  "label": "DEMO-76",
+  "demo_path": "demos/sm/demo-76-primorial-yukawa-master-flagship",
+  "code_sha256": "8cb834c2124473a177c7a5fd8a20a59035318876f903f8ab7b44eb62a231056f",
+  "stdout_sha256": "1701ffc8bebda0f92ea01da608ab37ba623ac2f1ff32b0c024ef00e490cc79e5",
+  "stderr_sha256": "2a457bc6e8417388f848dafe56fb5197938a00c5dd8d5d94b284d16df88a0605",
+  "files": [
+    {
+      "path": "demo.py",
+      "sha256": "8cb834c2124473a177c7a5fd8a20a59035318876f903f8ab7b44eb62a231056f",
+      "bytes": 32151
+    },
+    {
+      "path": "sm__demo-76-primorial-yukawa-master-flagship.err.txt",
+      "sha256": "2a457bc6e8417388f848dafe56fb5197938a00c5dd8d5d94b284d16df88a0605",
+      "bytes": 767
+    },
+    {
+      "path": "sm__demo-76-primorial-yukawa-master-flagship.out.txt",
+      "sha256": "1701ffc8bebda0f92ea01da608ab37ba623ac2f1ff32b0c024ef00e490cc79e5",
+      "bytes": 10607
+    }
+  ]
+}

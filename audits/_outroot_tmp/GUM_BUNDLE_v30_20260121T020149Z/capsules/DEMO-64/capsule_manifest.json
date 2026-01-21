@@ -1,0 +1,30 @@
+{
+  "demo_id": "64",
+  "label": "DEMO-64",
+  "demo_path": "demos/substrate/demo-64-base-gauge-invariance-integer-selector",
+  "code_sha256": "6c0694a41546b177acc71cc8e29d6ca3395e2c8feacedc5affe2063a4251aca5",
+  "stdout_sha256": "146c71943c12787b98dbb4feaf53d8484572d81bd0d583ffd4435f7cb5a157ad",
+  "stderr_sha256": "32d37004e3a4e4a22878824c52cf7dc3139912100a73c1a7cbea4a11209afa9d",
+  "files": [
+    {
+      "path": "substrate__demo-64-base-gauge-invariance-integer-selector.out.txt",
+      "sha256": "146c71943c12787b98dbb4feaf53d8484572d81bd0d583ffd4435f7cb5a157ad",
+      "bytes": 4861
+    },
+    {
+      "path": "demo.py",
+      "sha256": "6c0694a41546b177acc71cc8e29d6ca3395e2c8feacedc5affe2063a4251aca5",
+      "bytes": 18093
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "substrate__demo-64-base-gauge-invariance-integer-selector.err.txt",
+      "sha256": "32d37004e3a4e4a22878824c52cf7dc3139912100a73c1a7cbea4a11209afa9d",
+      "bytes": 1114
+    }
+  ]
+}

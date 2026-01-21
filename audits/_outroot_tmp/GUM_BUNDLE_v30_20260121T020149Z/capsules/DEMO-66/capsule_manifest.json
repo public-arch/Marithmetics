@@ -1,0 +1,25 @@
+{
+  "demo_id": "66",
+  "label": "DEMO-66",
+  "demo_path": "demos/quantum_gravity/demo-66-quantum-gravity-master-flagship-v4",
+  "code_sha256": "ef4cb32ac3a665506e37d1a14b2f8ae0390da6e6764137a6816eb604b3bdf5af",
+  "stdout_sha256": "d11c01334bc8d0d3c9b31d15e62fed080a7a2b68aeff6badec783a93cfd7ee0c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "quantum_gravity__demo-66-quantum-gravity-master-flagship-v4.out.txt",
+      "sha256": "d11c01334bc8d0d3c9b31d15e62fed080a7a2b68aeff6badec783a93cfd7ee0c",
+      "bytes": 7777
+    },
+    {
+      "path": "quantum_gravity__demo-66-quantum-gravity-master-flagship-v4.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "demo.py",
+      "sha256": "ef4cb32ac3a665506e37d1a14b2f8ae0390da6e6764137a6816eb604b3bdf5af",
+      "bytes": 48666
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "demo_id": "54",
+  "label": "DEMO-54",
+  "demo_path": "demos/standard_model/demo-54-master-flagship-demo",
+  "code_sha256": "c43a2a3b36de4d68a45882247387ca0746ecb1ebc27a486d1dd359b95820ee65",
+  "stdout_sha256": "3202ffa8dc4e2bdd45a9b99f6e3ec32e6cc1ea669227394772fd9ae534e23d83",
+  "stderr_sha256": "895fd24a412edb6859f1ef50adcb189acc1efbc15057b2383c6dddae5d8ae2ac",
+  "files": [
+    {
+      "path": "standard_model__demo-54-master-flagship-demo.out.txt",
+      "sha256": "3202ffa8dc4e2bdd45a9b99f6e3ec32e6cc1ea669227394772fd9ae534e23d83",
+      "bytes": 10303
+    },
+    {
+      "path": "standard_model__demo-54-master-flagship-demo.err.txt",
+      "sha256": "895fd24a412edb6859f1ef50adcb189acc1efbc15057b2383c6dddae5d8ae2ac",
+      "bytes": 344
+    },
+    {
+      "path": "demo.py",
+      "sha256": "c43a2a3b36de4d68a45882247387ca0746ecb1ebc27a486d1dd359b95820ee65",
+      "bytes": 45396
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

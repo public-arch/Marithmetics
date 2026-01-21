@@ -1,0 +1,30 @@
+{
+  "demo_id": "51",
+  "label": "DEMO-51",
+  "demo_path": "demos/general_relativity/demo-51-qft-gr-vacuum-suppression",
+  "code_sha256": "f0912b3074c3de95e9b8e78cbc92dd5a1c576a65b31587889009bdbfd838e870",
+  "stdout_sha256": "95edc47ffa2851cee1733abc5ceef6bb83c8883cdb394e2285daa13eaac39b69",
+  "stderr_sha256": "35c80af9739e17ee611fa001036951b10126d268e2e8c09073659a1536a2a96b",
+  "files": [
+    {
+      "path": "general_relativity__demo-51-qft-gr-vacuum-suppression.out.txt",
+      "sha256": "95edc47ffa2851cee1733abc5ceef6bb83c8883cdb394e2285daa13eaac39b69",
+      "bytes": 5866
+    },
+    {
+      "path": "demo.py",
+      "sha256": "f0912b3074c3de95e9b8e78cbc92dd5a1c576a65b31587889009bdbfd838e870",
+      "bytes": 20984
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "general_relativity__demo-51-qft-gr-vacuum-suppression.err.txt",
+      "sha256": "35c80af9739e17ee611fa001036951b10126d268e2e8c09073659a1536a2a96b",
+      "bytes": 364
+    }
+  ]
+}

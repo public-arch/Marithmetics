@@ -1,0 +1,30 @@
+{
+  "demo_id": "39",
+  "label": "DEMO-39",
+  "demo_path": "demos/cosmo/demo-39-bb-a2",
+  "code_sha256": "e72e7790657950b2f91ec38c3a9014394a10ed5ad0d48ede23e29a124edf1b64",
+  "stdout_sha256": "7333274e3875cfeb080cf50d38fbd85badeb96ccee3d703121363ef343df3013",
+  "stderr_sha256": "1d387fcbd16df8bad75dbbdf152f1d6614037fa87fbdf67cfde1f2149321c33a",
+  "files": [
+    {
+      "path": "cosmo__demo-39-bb-a2.out.txt",
+      "sha256": "7333274e3875cfeb080cf50d38fbd85badeb96ccee3d703121363ef343df3013",
+      "bytes": 7347
+    },
+    {
+      "path": "demo.py",
+      "sha256": "e72e7790657950b2f91ec38c3a9014394a10ed5ad0d48ede23e29a124edf1b64",
+      "bytes": 62898
+    },
+    {
+      "path": "cosmo__demo-39-bb-a2.err.txt",
+      "sha256": "1d387fcbd16df8bad75dbbdf152f1d6614037fa87fbdf67cfde1f2149321c33a",
+      "bytes": 297
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+CAMB overlay written: /workspaces/Marithmetics/demos/cosmo/demo-36-big-bang-master-flagship/_artifacts/camb_planck_vs_gum_overlay.png
+CAMB metrics written: /workspaces/Marithmetics/demos/cosmo/demo-36-big-bang-master-flagship/_artifacts/camb_planck_vs_gum_metrics.json
+[CAMB_OVERLAY] running: /home/codespace/.python/current/bin/python /workspaces/Marithmetics/demos/cosmo/demo-36-big-bang-master-flagship/camb_overlay.py
+================================================================================================
+DEMO-36 — BIG BANG MASTER FLAGSHIP (BB-36 closure + bridges + teeth)
+================================================================================================
+UTC time : 2026-01-21T03:36:43.865281Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout + optional JSON/PNG artifacts
+Script SHA256 : be1384b930644f1d3e142422a1603811e2363014c4824850de0b205d4519bc8f
+
+spec_sha256: 23fce6179147a51ff81bafe51ab82fb7bd27df66d67cf12b35b72db3cb06aee9
+
+================================================================================================
+STAGE 1 — Selection (primary + deterministic counterfactuals)
+================================================================================================
+Lane survivor pools (raw):
+  U(1):  [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103]
+After U(1) coherence v2(wU-1)=3: [137]
+PASS  Captured >=4 counterfactual triples (deterministic)                        found=4 window=(181, 1200)
+PASS  Primary equals (137,107,103)                                               selected=Triple(wU=137, s2=107, s3=103)
+Counterfactuals: [Triple(wU=409, s2=263, s3=239), Triple(wU=409, s2=263, s3=307), Triple(wU=409, s2=367, s3=239), Triple(wU=409, s2=367, s3=307)] 
+
+================================================================================================
+STAGE 2 — Structural closure (parameters) + budgets (derived)
+================================================================================================
+PRIMARY
+primary: Triple(wU=137, s2=107, s3=103)
+q2=30 q3=17 v2U=3 eps=0.18257419
+N=64 K_primary=15 K_truth=31
+
+STRUCTURAL COSMO OUTPUTS (DEMO-36 monomials)
+H0        : 70.449395964378
+Omega_b   : 0.044981893088
+Omega_c   : 0.126211331093
+Omega_L   : 0.828806775819
+ombh2     : 0.022325041590
+omch2     : 0.062640165238
+A_s       : 2.099094113201e-09
+n_s       : 0.964746071155
+tau       : 0.053979484970
+ell1      : 219.949087324076
+deltaCMB  : 1.000475284975e-05
+delta0    : 1.140843011556e-06
+F_CMB     : 8.769614003337
+
+PASS  Gate S1: H0 in (50,80) km/s/Mpc                                            H0=70.449
+PASS  Gate S2: omega_b h^2 in (0.015,0.035)                                      ombh2=0.022325
+PASS  Gate S3: omega_c h^2 in (0.05,0.20)                                        omch2=0.062640
+PASS  Gate S4: A_s in (1e-9,5e-9)                                                A_s=2.099e-09
+PASS  Gate S5: n_s in (0.90,1.05)                                                n_s=0.964746
+PASS  Gate S6: tau in (0.01,0.10)                                                tau=0.053979
+PASS  Gate S7: ell1 in (150,350)                                                 ell1=219.949
+PASS  Gate S8: deltaCMB in O(1e-5) band                                          delta=1.000e-05
+
+================================================================================================
+STAGE 3 — Tilt bridge (admissible vs illegal controls + teeth)
+================================================================================================
+band(tilt fit) adm=(4, 11) sharp=(4, 11) signed=(4, 11)
+n_s_struct=0.964746071  tilt_target=n_s-1=-0.035253929
+
+admissible: tilt=-0.033043133  kmin_kernel=-6.133e-19  hf=0.000381  mask=0.027466
+sharp     : tilt=-0.033132841  kmin_kernel=-4.652e-03  hf=0.000000  mask=0.053963
+signed    : tilt=-0.033132841  kmin_kernel=-8.921e-01  hf=0.227137  mask=0.999996
+cutoff curvature (observed Delta^2): adm=0.091802 sharp=1.006428 signed=0.000157
+
+PASS  Gate T1: admissible kernel nonnegative (Fejer tensor)                      kmin=-6.133e-19 tol=1e-12
+PASS  Gate T2: illegal kernels have negative lobes (sharp + signed)              kmin_sharp=-4.652e-03 kmin_signed=-8.921e-01
+PASS  Gate T3: admissible tilt matches structural target (tol=eps^3)             |Δ|=0.002211 tol=0.006086
+PASS  Gate T4: sharp cutoff increases cutoff-band curvature                      curv_adm=0.091802 curv_sharp=1.006428 eps=0.182574
+PASS  Gate T5: signed illegal injects HF beyond floor                            hf_signed=0.227137 floor=0.033333
+COUNTERFACTUAL TEETH (budget K)
+Primary score: K=15 tilt=-0.033043 curv=0.091802 score=0.094013
+CF Triple(wU=409, s2=263, s3=239)  K= 5  tilt=-0.029404  curv=0.587150  score=0.593001  miss=True
+CF Triple(wU=409, s2=263, s3=307)  K= 5  tilt=-0.029404  curv=0.587150  score=0.593001  miss=True
+CF Triple(wU=409, s2=367, s3=239)  K= 5  tilt=-0.029404  curv=0.587150  score=0.593001  miss=True
+CF Triple(wU=409, s2=367, s3=307)  K= 5  tilt=-0.029404  curv=0.587150  score=0.593001  miss=True
+PASS  Gate T6: >=3/4 counterfactual budgets miss by score margin                 strong=4/4 eps=0.182574
+
+================================================================================================
+STAGE 4 — delta_CMB amplitude bridge (power-sum proxy + controls + teeth)
+================================================================================================
+deltaCMB_struct = 1.000475284975e-05  (ratio to 1e-5: 1.000475)
+Truth tier (Fejer@K_truth=31): tot=25.160688  hf=0.000172  (delta matches by construction)
+admissible (Fejer@K=15): delta=8.434139561014e-06  rel_err=0.156987  hf=0.000381
+sharp      (cut@K=15):   delta=1.201479769851e-05  rel_err=0.200909  hf=0.000000
+signed     (+/-@K=15):   delta=1.366675022496e-05  rel_err=0.366026  hf=0.227137
+
+PASS  Gate A1: deltaCMB_struct in plausible band (order 1e-5)                    delta=1.000e-05
+PASS  Gate A2: admissible proxy within eps                                       rel_err=0.156987 eps=0.182574
+PASS  Gate A3: signed illegal worsens error vs admissible                        err_adm=0.156987 err_signed=0.366026
+PASS  Gate A4: signed illegal injects HF beyond floor                            hf_signed=0.227137 floor=0.033333
+COUNTERFACTUAL TEETH (budget K)
+Primary score: K=15 rel_err=0.156987 hf=0.000381 score=0.157367
+CF Triple(wU=409, s2=263, s3=239)  K= 5  rel_err=0.409393  hf=0.003227  score=0.412619  miss=True
+CF Triple(wU=409, s2=263, s3=307)  K= 5  rel_err=0.409393  hf=0.003227  score=0.412619  miss=True
+CF Triple(wU=409, s2=367, s3=239)  K= 5  rel_err=0.409393  hf=0.003227  score=0.412619  miss=True
+CF Triple(wU=409, s2=367, s3=307)  K= 5  rel_err=0.409393  hf=0.003227  score=0.412619  miss=True
+PASS  Gate A5: >=3/4 counterfactual budgets miss by score margin                 strong=4/4 eps=0.182574
+
+================================================================================================
+STAGE 5 — Optional CAMB TT closure (first peak vs ell1_struct)
+================================================================================================
+CAMB TT computed
+ell1_struct = 219.949087
+ell1_camb   = 232.000000
+Delta_ell1  = 12.050913
+PASS  Gate C0: CAMB stage executed (informational)
+
+================================================================================================
+STAGE 6 — Artifacts (JSON + optional plot) + determinism hash
+================================================================================================
+PASS  Wrote results JSON                                                         bb36_master_results.json
+PASS  Plot (optional)                                                            wrote bb36_master_plot.png
+
+================================================================================================
+DETERMINISM HASH
+================================================================================================
+determinism_sha256: 9598c7d83958dd7d3acd4a86a4cf484e9b2247fcb56a7c41bc698114db8ded07
+
+================================================================================================
+FINAL VERDICT
+================================================================================================
+PASS  DEMO-36 VERIFIED (structural closure + 2 bridges + controls + teeth)
+Result: VERIFIED

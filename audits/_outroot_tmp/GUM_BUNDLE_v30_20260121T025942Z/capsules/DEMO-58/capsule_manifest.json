@@ -1,0 +1,30 @@
+{
+  "demo_id": "58",
+  "label": "DEMO-58",
+  "demo_path": "demos/general_relativity/demo-58-emergent-weak-field-gr",
+  "code_sha256": "4a573b4927fb8682d04293870edd17e90aa84c972f12da542e448a4eebc9b7be",
+  "stdout_sha256": "70bdde5c59e7e852e2aca245b25d77f0eee85e894f57db366c2ab3995eb35bfa",
+  "stderr_sha256": "f88b058fa935fe5c42dfe6b7c419ef5aff0af563f54f74a6a449e918601de914",
+  "files": [
+    {
+      "path": "demo.py",
+      "sha256": "4a573b4927fb8682d04293870edd17e90aa84c972f12da542e448a4eebc9b7be",
+      "bytes": 42101
+    },
+    {
+      "path": "general_relativity__demo-58-emergent-weak-field-gr.out.txt",
+      "sha256": "70bdde5c59e7e852e2aca245b25d77f0eee85e894f57db366c2ab3995eb35bfa",
+      "bytes": 8954
+    },
+    {
+      "path": "general_relativity__demo-58-emergent-weak-field-gr.err.txt",
+      "sha256": "f88b058fa935fe5c42dfe6b7c419ef5aff0af563f54f74a6a449e918601de914",
+      "bytes": 395
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

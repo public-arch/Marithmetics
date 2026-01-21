@@ -1,0 +1,93 @@
+====================================================================
+LAWBOOK EMERGENCE UPGRADE — MAKE SELECTION VISIBLE (mobile v1)
+Stdlib-only · stdout-only · no file I/O
+====================================================================
+
+======================================================================
+STAGE 0 — SCFP++ PRIME EMERGENCE (from scratch)
+======================================================================
+U(1) survivors                         [103, 107, 137]  (n=3)
+SU(2) survivors                        [107]  (n=1)
+SU(3) survivors                        [103, 137]  (n=2)
+selected triple (wU,s2,s3)             (137, 107, 103)
+derived h = s3/wU                      0.751824817518
+derived q3 (SU(3) modulus)             17
+derived alpha_s(MZ)=2/q3               0.117647058824
+✅ PASS: primes derived by finite lane-gated search (no fitting)
+
+======================================================================
+STAGE 1 — NOETHER VISIBILITY: BREAK TIME-TRANSLATION, WATCH ENERGY FAIL
+======================================================================
+dt = h/15 (derived)                    0.050122
+steps                                  599
+eps     rel_energy_drift
+0.000   -1.511102e-04
+0.010   -4.012386e-03
+0.020   -7.868054e-03
+0.050   -1.940103e-02
+0.100   -3.850751e-02
+✅ PASS: energy conservation emerges only when time-translation invariance holds (eps=0)
+
+======================================================================
+STAGE 2 — INVERSE-SQUARE SELECTION: SWEEP POWER p, LOOK FOR FLUX FIXED POINT
+======================================================================
+p    score(clean)    score(5%noise)
+0.00  2.818535e+00  2.816692e+00
+0.25  2.499471e+00  2.500606e+00
+0.50  2.174292e+00  2.172906e+00
+0.75  1.841686e+00  1.841238e+00
+1.00  1.500000e+00  1.497571e+00
+1.25  1.147236e+00  1.147526e+00
+1.50  7.811190e-01  7.838547e-01
+1.75  3.993365e-01  4.029246e-01
+2.00  0.000000e+00  3.949593e-02
+2.25  4.176664e-01  4.187454e-01
+2.50  8.525612e-01  8.563307e-01
+2.75  1.301182e+00  1.300953e+00
+3.00  1.757699e+00  1.754572e+00
+spark(clean): @%#*+=:. .-=*
+spark(noise): @%#*+=:. .-=*
+✅ PASS: Gauss flux constancy selects p=2 (inverse-square) as unique law form
+
+======================================================================
+STAGE 3 — ISOTROPIC LAPLACIAN: CONTINUUM ISOTROPY SELECTS w2=1/6
+======================================================================
+w2        aniso@k=0.3      aniso@k=1.2      note
+0.000000  1.871838e-03  2.919806e-02  
+0.125000  4.724979e-04  8.423430e-03  
+0.142857  2.724318e-04  5.418404e-03  
+0.166667  5.614453e-06  1.396797e-03  (classic 9-pt)
+0.181818  1.642156e-04  1.171366e-03  
+0.175000  8.778849e-05  1.703603e-05  (tuned high-k)
+0.175000  8.778849e-05  1.703603e-05  (tuned high-k)
+✅ PASS: small-k rotational isotropy selects w2=1/6 uniquely (no single-scale tuning)
+Note: you can tune w2 to reduce anisotropy at a single lattice-scale k,
+but that is an explicit hidden knob. The emergent law is the continuum-isotropic fixed point.
+
+======================================================================
+STAGE 4 — UNITARITY SELECTION: θ-SCHEME SWEEP (ONLY θ=1/2 PRESERVES NORM)
+======================================================================
+setup                                  N=64  dx=q3=17  dt=h/5=0.150364963504  steps=600  (all derived)
+theta   norm_drift
+ 0.0   +5.975851e-04
+ 0.1   +4.780332e-04
+ 0.2   +3.584987e-04
+ 0.3   +2.389817e-04
+ 0.4   +1.194821e-04
+ 0.5   +4.352074e-14
+ 0.6   -1.194647e-04
+ 0.7   -2.389119e-04
+ 0.8   -3.583416e-04
+ 0.9   -4.777539e-04
+ 1.0   -5.971487e-04
+spark(|drift|): @#+=: :=+#@
+✅ PASS: θ=0.5 is the unique unitary fixed point (ratio≈1.373e+10)
+
+======================================================================
+LAWBOOK EMERGENCE CERTIFICATE (v1)
+======================================================================
+Primes from SCFP++:             ✅
+Noether visibility sweep:        ✅
+Inverse-square p-selection:      ✅
+Isotropic Laplacian (small-k):   ✅
+Unitarity θ=1/2 selection:       ✅

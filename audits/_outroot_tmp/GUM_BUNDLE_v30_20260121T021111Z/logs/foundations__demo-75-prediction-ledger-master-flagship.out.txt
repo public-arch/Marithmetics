@@ -1,0 +1,198 @@
+====================================================================================================
+      DEMO-75 — PREDICTION LEDGER MASTER FLAGSHIP (Neutrinos + PMNS/CP + Dark + Strong-Field)       
+====================================================================================================
+UTC time : 2026-01-21T02:11:57.473976Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout only (JSON artifact optional)
+
+spec_sha256: 38ecc70114c01520ea373ed777790fa90c319647e945f34104124468eefb9e32
+
+====================================================================================================
+                STAGE 1 — Deterministic triple selection (primary + counterfactuals)                
+====================================================================================================
+Lane survivor pools (raw):
+  U(1):  [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Lane survivor pools (after U(1) coherence v2(wU-1)=3):
+  U(1):  [137]
+Primary: Triple(wU=137, s2=107, s3=103)
+Counterfactuals:
+  Triple(wU=409, s2=211, s3=239)
+  Triple(wU=409, s2=211, s3=307)
+  Triple(wU=409, s2=263, s3=239)
+  Triple(wU=409, s2=263, s3=307)
+  ✅  Gate S0: primary equals (137,107,103)
+  ✅  Gate S1: captured >=4 counterfactual triples (deterministic)             found=4
+
+====================================================================================================
+                    STAGE 1B — Derived invariants (first principles, no tuning)                     
+====================================================================================================
+q2 = wU - s2 = 30
+v2U = v2(wU-1) = 3
+q3 = (wU-1)/2^v2U = 17
+eps = 1/sqrt(q2) = 0.18257419
+Theta = phi(q2)/q2 = 0.266666666667
+counterfactual q3_cf = 3*q3 = 51
+Budgets: truth r=31  primary r=15  counterfactual r_cf=5
+  ✅  Gate I1: invariants match locked (q2=30,q3=17,v2U=3)                     (q2,q3,v2U)=(30,17,3)
+
+====================================================================================================
+                       STAGE 2 — OATB admissibility audit (FFT kernel minima)                       
+====================================================================================================
+N=2048 r=15
+Fejér kernel min  : +0.000000e+00
+Sharp kernel min  : -3.298912e-03
+Signed kernel min : -9.697266e-01
+Signed HF weight frac(>r): 0.984863
+  ✅  Gate A1: Fejér kernel nonnegative (tol)                                  min=0.000e+00
+  ✅  Gate A2: sharp kernel has negative lobes                                 min=-3.299e-03
+  ✅  Gate A3: signed kernel strongly negative                                 min=-9.697e-01 floor=-3.333e-02
+  ✅  Gate A4: signed retains large HF weight                                  hf=0.985 floor=0.250
+
+====================================================================================================
+            STAGE 3 — Neutrino closure (Δm²_21, Δm²_31, Σm, m1,m2,m3) + controls + teeth            
+====================================================================================================
+Truth (r_truth):
+  pi_hat=3.1421495953  terms=1024
+  d21=7.499740e-05  d31=2.499556e-03  sumv=5.999487e-02
+  m1=1.236146e-03  m2=8.747883e-03  m3=5.001084e-02
+Primary (r_primary):
+  pi_hat=3.1438147123  terms=256
+  d21=7.499740e-05  d31=2.498232e-03  sumv=5.999487e-02
+  m1=1.247492e-03  m2=8.749494e-03  m3=4.999789e-02
+
+Illegal control: SHARP π-hat (no Fejér, fewer terms)
+  pi_hat=3.0791533942  terms=16
+  d31=2.550695e-03
+
+Illegal control: SIGNFLIP π-hat (destroys alternating cancellation)
+  pi_hat=13.0467070255  terms=256
+  d31=6.019895e-04
+
+Distances vs truth (rel L2 on [d21,d31,sumv,m1,m2,m3]):
+  dist_primary = 2.205801e-04
+  dist_sharp   = 8.581920e-03
+  dist_signflip= 3.386686e-01
+
+Counterfactual teeth (counterfactual triple + reduced budget r_cf):
+  CF Triple(wU=409, s2=211, s3=239)  dist=inf  degrade=True
+  CF Triple(wU=409, s2=211, s3=307)  dist=inf  degrade=True
+  CF Triple(wU=409, s2=263, s3=239)  dist=7.072619e+00  degrade=True
+  CF Triple(wU=409, s2=263, s3=307)  dist=2.963181e+00  degrade=True
+  ✅  Gate N1: primary neutrino vector stable vs truth (<= eps)                dist=2.206e-04 eps=1.826e-01
+  ✅  Gate N2: illegal sharp breaks stability by (1+eps)                       dist_sharp=8.582e-03 distP=2.206e-04 (1+eps)=1.183
+  ✅  Gate N3: illegal signflip breaks stability by (1+eps)                    dist_sf=3.387e-01 distP=2.206e-04 (1+eps)=1.183
+  ✅  Gate NT: >=3/4 counterfactuals degrade by (1+eps)                        strong=4/4 eps=0.183
+
+====================================================================================================
+                     STAGE 4 — PMNS + CP + 0νββ observables + controls + teeth                      
+====================================================================================================
+Truth params: {'s12': 0.8159508045087112, 's23': 0.592349728049293, 's13': 0.05246908581351689, 'J': 0.011686453222551074, 'sin_delta': 0.9920926326106664}
+Truth eff   : {'m_beta': 0.007629111204728494, 'm_betabeta': 0.005734898309142822}
+Primary params: {'s12': 0.8224349388801486, 's23': 0.6001744208865502, 's13': 0.053673575221162555, 'J': 0.01191054487212851, 'sin_delta': 0.9908805221195867}
+Primary eff   : {'m_beta': 0.007702942399465384, 'm_betabeta': 0.005843317065268815}
+Primary δ (deg, principal / supplement): 82.26 / 97.74
+Illegal sharp params: {'s12': 0.6348817622448587, 's23': 0.32308061654242565, 's13': 0.0018784018950932688, 'J': -0.0002687201043091239, 'sin_delta': -0.9538670632723196}
+Illegal sharp eff   : {'m_beta': 0.005638662245283242, 'm_betabeta': 0.004271195792494791}
+Illegal signed params: {'s12': 0.6313520537845508, 's23': 0.7106957820875577, 's13': 0.7370519130444443, 'J': 0.030615679987755565, 'sin_delta': 0.3715045624495677}
+Illegal signed eff   : {'m_beta': 0.03704543392759666, 'm_betabeta': 0.027079845809628477}
+
+Distances vs truth (rel L2 on [s12,s23,s13,J,sinδ,mβ,mββ]):
+  dist_primary = 7.281874e-03
+  dist_sharp   = 1.394133e+00
+  dist_signed  = 6.714888e-01
+
+Counterfactual teeth (triple + reduced budget):
+  CF Triple(wU=409, s2=211, s3=239)  dist=inf  degrade=True
+  CF Triple(wU=409, s2=211, s3=307)  dist=inf  degrade=True
+  CF Triple(wU=409, s2=263, s3=239)  dist=3.998849e-01  degrade=True
+  CF Triple(wU=409, s2=263, s3=307)  dist=3.178336e-01  degrade=True
+  ✅  Gate M1: primary PMNS+0νββ observables stable vs truth (<= eps)          dist=7.282e-03 eps=1.826e-01
+  ✅  Gate M2: illegal sharp breaks stability by (1+eps)                       dist_sharp=1.394e+00 distP=7.282e-03 (1+eps)=1.183
+  ✅  Gate M3: signed illegal produces negative texture eigenvalue (<= -eps^2) min_eig=-3.975e+00 -eps^2=-3.333e-02
+  ✅  Gate MT: >=3/4 counterfactuals degrade by (1+eps)                        strong=4/4 eps=0.183
+  ✅  Gate U: PMNS unitarity defects are tiny (info)                           truth=6.661e-16 primary=6.661e-16
+
+====================================================================================================
+                    STAGE 5 — Dark + strong-field predictions + controls + teeth                    
+====================================================================================================
+Canonical D*: D*=1170  exp(-sqrt(D*)/3)=1.117586e-05
+eps0_hat=1.117586e-05
+RG fit: R_inf=1.058063814766  a=-2.215618e+05  SSE=3.626e-05
+g_eff=(R_inf-1)/12=0.004838651230
+alpha_sf(eps=0.5)=0.004838651230
+GR baseline: {'Q2': 0.0, 'r_plus': 2.0, 'r_ph': 3.0, 'b_ph': 5.196152422706632, 'df': 0.0, 'dtau': 0.0}
+Primary SF : {'Q2': 0.0193546049219749, 'r_plus': 1.990275413750147, 'r_ph': 2.987040951068951, 'b_ph': 5.179327270155709, 'df': 0.018232037836500355, 'dtau': 0.018135264811890484}
+  ✅  Gate SF1: primary horizon exists                                         r_plus=1.990275
+  ✅  Gate SF2: strong-field deviations are small (<= eps^2)                   score=1.823204e-02 eps^2=3.333333e-02
+
+Primary dark candidate:
+  K          15
+  D_used     1170
+  v_seed     12.57507224283109
+  alpha      0.004838651230493725
+  m_chi      180.7791454176145
+  sigma_proxy 7.163940671322246e-10
+  ✅  Gate DM1: alpha is small but nonzero                                     alpha=4.838651e-03
+  ✅  Gate DM2: sigma_proxy is tiny                                            sigma=7.163941e-10
+
+Illegal control: replace screened g_eff by Θ
+illegal alpha=Theta=0.266666666667
+illegal strong-field: {'Q2': 1.0666666666666667, 'horizon_exists': False, 'r_plus': nan, 'df': 0.05, 'dtau': 0.05}
+illegal dark: m_chi=24.351523  sigma_proxy=1.199182e-04
+  ✅  Gate I1: illegal Θ loses horizon (Q2>1)                                  Q2=1.066667
+  ✅  Gate I2: illegal Θ inflates sigma_proxy                                  sigma_illegal=1.199e-04 sigma_P=7.164e-10 (1+eps)=1.183
+
+Counterfactual teeth (alpha inflation + SF instability):
+CF1: triple=Triple(wU=409, s2=211, s3=239) q2=198 K= 2 D_used=   9 alpha=0.240000 m_chi=34.722 sigma=4.778e-05 horizon=Y score_sf=3.085e-01 tooth=Y
+CF2: triple=Triple(wU=409, s2=211, s3=307) q2=198 K= 2 D_used=   9 alpha=0.240000 m_chi=34.722 sigma=4.778e-05 horizon=Y score_sf=3.085e-01 tooth=Y
+CF3: triple=Triple(wU=409, s2=263, s3=239) q2=146 K= 3 D_used=   9 alpha=0.240000 m_chi=31.953 sigma=5.641e-05 horizon=Y score_sf=3.085e-01 tooth=Y
+CF4: triple=Triple(wU=409, s2=263, s3=307) q2=146 K= 3 D_used=   9 alpha=0.240000 m_chi=31.953 sigma=5.641e-05 horizon=Y score_sf=3.085e-01 tooth=Y
+  ✅  Gate T: >=3/4 counterfactuals show tooth                                 strong=4/4
+
+====================================================================================================
+             STAGE 6 — PREDICTION LEDGER (primary values + internal convergence deltas)             
+====================================================================================================
+NEUTRINOS (eV-scale proxies):
+  d21      = 7.499740434e-05   (Δconv=+0.000e+00)
+  d31      = 2.498232373e-03   (Δconv=-1.324e-06)
+  sum_m    = 5.999487173e-02   (Δconv=+0.000e+00)
+  m1       = 1.247491954e-03   (Δconv=+1.135e-05)
+  m2       = 8.749493729e-03   (Δconv=+1.610e-06)
+  m3       = 4.999788604e-02   (Δconv=-1.296e-05)
+
+PMNS / CP + effective masses:
+  s12        = 8.224349389e-01   (Δconv=+6.484e-03)
+  s23        = 6.001744209e-01   (Δconv=+7.825e-03)
+  s13        = 5.367357522e-02   (Δconv=+1.204e-03)
+  J          = 1.191054487e-02   (Δconv=+2.241e-04)
+  sin_delta  = 9.908805221e-01   (Δconv=-1.212e-03)
+  delta_deg  = 82.26 / 97.74 (principal/supp)
+  m_beta     = 7.702942399e-03   (Δconv=+7.383e-05)
+  m_betabeta = 5.843317065e-03   (Δconv=+1.084e-04)
+
+DARK-SECTOR (proxy units):
+  m_chi       = 180.779145
+  sigma_proxy = 7.163940671e-10
+  alpha       = 4.838651230e-03
+
+STRONG-FIELD (proxy deviations):
+  Q2    = 1.935460492e-02
+  r_plus= 1.990275414e+00
+  r_ph  = 2.987040951e+00
+  b_ph  = 5.179327270e+00
+  df    = 1.823203784e-02
+  dtau  = 1.813526481e-02
+
+====================================================================================================
+                                          DETERMINISM HASH                                          
+====================================================================================================
+determinism_sha256: 2295684bf98a99921b138b3913e51e32aa6d4ee1e3b0c5a781d081a1db1d2975
+
+====================================================================================================
+                                           FINAL VERDICT                                            
+====================================================================================================
+  ✅  DEMO-75 VERIFIED (prediction ledger: neutrinos + PMNS/CP + dark + strong-field; with controls + teeth)
+Result: VERIFIED
