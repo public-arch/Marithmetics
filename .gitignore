@@ -84,3 +84,6 @@ demos/**/**/DEMO*_BUNDLE_*/
 # Generated demo bundle outputs (do not commit)
 demos/**/**/demo*_cert_bundle_*/
 demos/**/**/DEMO*_BUNDLE_*/
+
+# Allow authority archive zips
+!GUM/authority_archive/*.zip
