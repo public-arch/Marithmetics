@@ -503,6 +503,13 @@ def main() -> int:
         artifact_counts = _count_vendored_artifacts(bundle_dir)
 
         demos_present = sorted(logs_map.keys(), key=lambda d: int(d.split("-")[1]) if "-" in d else 10**9)
+        if not demos_present:
+            printer.line("")
+            printer.line(ANSI.red + ANSI.bold + "ERROR: No demo logs were discovered in the bundle." + ANSI.reset)
+            printer.line("Expected logs under bundle/logs/*.out.txt or bundle/capsules/**.out.txt")
+            printer.line("Bundle dir: " + _safe_relpath(bundle_dir, repo_root))
+            return 3
+
 
         order: List[str] = []
         for d in cfg.get("curated_order", []):
