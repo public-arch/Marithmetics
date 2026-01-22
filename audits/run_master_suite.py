@@ -180,27 +180,29 @@ def _parse_verdict(log_text: str) -> str:
     t = log_text or ""
 
     # 1) Explicit NOT VERIFIED or any FAIL markers => NOT VERIFIED
-    if re.search(r"FINAL VERDICT:\\s*NOT VERIFIED", t):
+    if re.search(r"FINAL VERDICT:\s*NOT VERIFIED", t):
         return "NOT VERIFIED"
-    if re.search(r"\\bResult:\\s*NOT VERIFIED\\b", t):
+    if re.search(r"\bResult:\s*NOT VERIFIED\b", t):
         return "NOT VERIFIED"
-    if re.search(r"^\\s*(❌|FAIL)\\b", t, flags=re.M):
+    if re.search(r"^\s*(❌|FAIL)\b", t, flags=re.M):
         return "NOT VERIFIED"
 
     # 2) Explicit VERIFIED markers
-    if re.search(r"FINAL VERDICT:\\s*VERIFIED", t):
+    if re.search(r"FINAL VERDICT:\s*VERIFIED", t):
         return "VERIFIED"
-    if re.search(r"\\bResult:\\s*VERIFIED\\b", t):
+    if re.search(r"\bResult:\s*VERIFIED\b", t):
         return "VERIFIED"
+
+    # Certificate completion markers (capsule-style demos)
     if "✅ CLOSED" in t:
         return "VERIFIED"
     if "CERTIFICATE SUMMARY:" in t:
         return "VERIFIED"
-    if re.search(r"\\bCERTIFICATE\\b", t):
+    if re.search(r"\bCERTIFICATE\b", t):
         return "VERIFIED"
 
     # 3) Gate-only certificates: PASS/✅ present and no FAIL => VERIFIED
-    if re.search(r"^\\s*(✅|PASS)\\b", t, flags=re.M):
+    if re.search(r"^\s*(✅|PASS)\b", t, flags=re.M):
         return "VERIFIED"
 
     return "UNKNOWN"
