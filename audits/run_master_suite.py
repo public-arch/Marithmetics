@@ -169,9 +169,9 @@ def _find_latest_bundle(outroot: Path, glob_pat: str) -> Optional[Path]:
     return None
 
 def _demo_label_from_text(s: str) -> Optional[str]:
-    m = re.search(r"\bdemo-(\d+)\b", s)
+    m = re.search(r"demo-(\d+)", s)
     if not m:
-        m = re.search(r"\bDEMO-(\d+)\b", s)
+        m = re.search(r"DEMO-(\d+)", s)
     if not m:
         return None
     return f"DEMO-{int(m.group(1))}"
@@ -269,9 +269,9 @@ def _find_logs(bundle_dir: Path) -> Dict[str, Dict[str, Path]]:
 
     def ingest(p: Path) -> None:
         name = p.name
-        m = re.search(r"\bdemo-(\d+)\b", name)
+        m = re.search(r"demo-(\d+)", name)
         if not m:
-            m = re.search(r"\bDEMO-(\d+)\b", name)
+            m = re.search(r"DEMO-(\d+)", name)
         if not m:
             return
         label = f"DEMO-{int(m.group(1))}"
@@ -509,18 +509,18 @@ def main() -> int:
         logs_dir = bundle_dir / "logs"
         if logs_dir.exists():
             for fp in logs_dir.glob("*.out.txt"):
-                m = re.search(r"\bdemo-(\d+)\b", fp.name)
+                m = re.search(r"demo-(\d+)", fp.name)
                 if m: logs_map.setdefault(f"DEMO-{int(m.group(1))}", {})["out"] = fp
             for fp in logs_dir.glob("*.err.txt"):
-                m = re.search(r"\bdemo-(\d+)\b", fp.name)
+                m = re.search(r"demo-(\d+)", fp.name)
                 if m: logs_map.setdefault(f"DEMO-{int(m.group(1))}", {})["err"] = fp
         cap = bundle_dir / "capsules"
         if cap.exists():
             for fp in cap.rglob("*.out.txt"):
-                m = re.search(r"\bdemo-(\d+)\b", fp.name) or re.search(r"\bDEMO-(\d+)\b", fp.name)
+                m = re.search(r"demo-(\d+)", fp.name) or re.search(r"DEMO-(\d+)", fp.name)
                 if m: logs_map.setdefault(f"DEMO-{int(m.group(1))}", {})["out"] = fp
             for fp in cap.rglob("*.err.txt"):
-                m = re.search(r"\bdemo-(\d+)\b", fp.name) or re.search(r"\bDEMO-(\d+)\b", fp.name)
+                m = re.search(r"demo-(\d+)", fp.name) or re.search(r"DEMO-(\d+)", fp.name)
                 if m: logs_map.setdefault(f"DEMO-{int(m.group(1))}", {})["err"] = fp
         structured_counts = _count_structured_exports(bundle_dir)
         artifact_counts = _count_vendored_artifacts(bundle_dir)
