@@ -1,0 +1,90 @@
+{
+  "title": "MARI / GUM Master Suite — Authority-of-Record Runner",
+  "demos_root": "demos",
+  "zip_prefix": "MARI_MASTER_RELEASE",
+  "verbosity_default": "flagship",
+  "per_demo_timeout_sec": 900,
+  "curated_order": [
+    "DEMO-34",
+    "DEMO-64",
+    "DEMO-72",
+    "DEMO-76",
+    "DEMO-33",
+    "DEMO-73",
+    "DEMO-75",
+    "DEMO-66",
+    "DEMO-36",
+    "DEMO-54",
+    "DEMO-68",
+    "DEMO-63",
+    "DEMO-58",
+    "DEMO-59",
+    "DEMO-56",
+    "DEMO-69",
+    "DEMO-71",
+    "DEMO-60",
+    "DEMO-65",
+    "DEMO-67",
+    "DEMO-70",
+    "DEMO-55",
+    "DEMO-40",
+    "DEMO-53",
+    "DEMO-39",
+    "DEMO-51"
+  ],
+  "flagship_full": [
+    "DEMO-34",
+    "DEMO-64",
+    "DEMO-72",
+    "DEMO-76",
+    "DEMO-33",
+    "DEMO-66",
+    "DEMO-36",
+    "DEMO-73",
+    "DEMO-75",
+    "DEMO-70"
+  ],
+  "per_demo_intro": {
+    "DEMO-34": [
+      "Kernel framing: Ω→SM bridge.",
+      "This is the anchor. Once this bridge is fixed, downstream demos are constrained — not independent curve-fits."
+    ],
+    "DEMO-64": [
+      "Residue structure: DRPT cross-base examples.",
+      "Watch both rows and columns: mirroring, inversions, repeats, and tiling show up bidirectionally."
+    ],
+    "DEMO-72": [
+      "Admissibility: Yukawa coupling checks.",
+      "The goal is lawful gates, illegal controls, and counterfactual teeth — not aesthetic 'fits'."
+    ],
+    "DEMO-76": [
+      "Yukawa flagship (primorial).",
+      "A compact example of how admissibility + structure propagates into concrete predictions."
+    ],
+    "DEMO-33": [
+      "First-principles Standard Model closure (SM28).",
+      "This section is intentionally metric-heavy. It is the auditable ground truth for rewriting SM-facing papers."
+    ],
+    "DEMO-66": [
+      "Quantum gravity flagship.",
+      "Includes the screening plot artifact and a gate-complete metric readout."
+    ],
+    "DEMO-36": [
+      "Cosmology flagship: CAMB overlays + metric comparison.",
+      "Read this directly: plots, residuals, and falsifiability framing."
+    ]
+  },
+  "interludes_after": {
+    "DEMO-34": [
+      "From here on, treat the suite as a constrained cascade: the bridge sets the frame.",
+      "Next we expose the residue structure (DRPT) before moving into admissibility and the flagship blocks."
+    ],
+    "DEMO-64": [
+      "One useful mental model: this is not 'a pattern in rows'. It is two-way structure (rows and columns co-constrain).",
+      "Tiling/recurrence is the empirical symptom. Next: admissibility gates turn that structure into yes/no engineering checks."
+    ],
+    "DEMO-72": [
+      "After admissibility, the rest of the suite reads differently: each flagship becomes a stress-test, not a free parameter hunt."
+    ]
+  }
+}
