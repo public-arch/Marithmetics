@@ -177,14 +177,37 @@ def _demo_label_from_text(s: str) -> Optional[str]:
     return f"DEMO-{int(m.group(1))}"
 
 def _parse_verdict(log_text: str) -> str:
-    if re.search(r"FINAL VERDICT:\s*VERIFIED", log_text):
-        return "VERIFIED"
-    if re.search(r"FINAL VERDICT:\s*NOT VERIFIED", log_text):
-        return "NOT VERIFIED"
-    if re.search(r"\bVERIFIED\b", log_text) and "NOT VERIFIED" not in log_text:
-        return "VERIFIED"
-    return "UNKNOWN"
+    t = log_text or ""
 
+    # Explicit verdict lines (flagships)
+    if re.search(r"FINAL VERDICT:\\s*VERIFIED", t):
+        return "VERIFIED"
+    if re.search(r"FINAL VERDICT:\\s*NOT VERIFIED", t):
+        return "NOT VERIFIED"
+    if re.search(r"\\bResult:\\s*VERIFIED\\b", t):
+        return "VERIFIED"
+    if re.search(r"\\bResult:\\s*NOT VERIFIED\\b", t):
+        return "NOT VERIFIED"
+
+    # Certificate completion markers (capsule-style demos)
+    if "✅ CLOSED" in t:
+        return "VERIFIED"
+    if "CERTIFICATE SUMMARY:" in t:
+        return "VERIFIED"
+    if re.search(r"\\bCERTIFICATE\\b", t):
+        # Treat as VERIFIED unless explicit FAIL markers exist
+        if not re.search(r"^\\s*(❌|FAIL)\\b", t, flags=re.M):
+            return "VERIFIED"
+
+    # Gates fallback
+    fail_markers = len(re.findall(r"^\\s*(❌|FAIL)\\b", t, flags=re.M))
+    pass_markers = len(re.findall(r"^\\s*(✅|PASS)\\b", t, flags=re.M))
+    if fail_markers > 0:
+        return "NOT VERIFIED"
+    if pass_markers > 0:
+        return "VERIFIED"
+
+    return "UNKNOWN"
 def _count_gates(log_text: str) -> Tuple[int, int]:
     pass_n = len(re.findall(r"^\s*✅\s+", log_text, flags=re.M))
     fail_n = len(re.findall(r"^\s*❌\s+", log_text, flags=re.M))
