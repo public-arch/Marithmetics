@@ -503,6 +503,7 @@ def main() -> int:
         artifact_counts = _count_vendored_artifacts(bundle_dir)
 
         demos_present = sorted(logs_map.keys(), key=lambda d: int(d.split("-")[1]) if "-" in d else 10**9)
+        printer.line(f"[debug] demos_present={len(demos_present)}")
 
         order: List[str] = []
         for d in cfg.get("curated_order", []):
