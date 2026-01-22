@@ -161,6 +161,41 @@ def _stream_cmd(cmd: List[str], cwd: Path, printer: Printer, label: str) -> int:
         printer.line("   " + ln.rstrip("\n"))
     return p.wait()
 
+
+def _discover_demo_logs(bundle_dir: Path) -> Dict[str, Dict[str, Path]]:
+    """
+    Discover demo stdout/stderr logs in both:
+      - bundle/logs/*.out.txt / *.err.txt
+      - bundle/capsules/**.out.txt / **.err.txt
+    Returns: { "DEMO-XX": {"out": Path, "err": Path}, ... }
+    """
+    out_map: Dict[str, Dict[str, Path]] = {}
+
+    def ingest(fp: Path) -> None:
+        name = fp.name
+        m = re.search(r"\bdemo-(\d+)\b", name)
+        if not m:
+            m = re.search(r"\bDEMO-(\d+)\b", name)
+        if not m:
+            return
+        label = f"DEMO-{int(m.group(1))}"
+        kind = "out" if name.endswith(".out.txt") else "err" if name.endswith(".err.txt") else "txt"
+        out_map.setdefault(label, {})[kind] = fp
+
+    logs = bundle_dir / "logs"
+    if logs.exists():
+        for fp in logs.glob("*.txt"):
+            ingest(fp)
+
+    caps = bundle_dir / "capsules"
+    if caps.exists():
+        for fp in caps.rglob("*.out.txt"):
+            ingest(fp)
+        for fp in caps.rglob("*.err.txt"):
+            ingest(fp)
+
+    return out_map
+
 def _find_latest_bundle(outroot: Path, glob_pat: str) -> Optional[Path]:
     cands = sorted(outroot.glob(glob_pat), key=lambda p: p.stat().st_mtime, reverse=True)
     for p in cands:
@@ -498,11 +533,17 @@ def main() -> int:
         printer.hr("─")
 
         demo_meta_by_label, slug_by_label = _build_demo_index_maps(bundle_dir)
-        logs_map = _find_logs(bundle_dir)
+        logs_map = _discover_demo_logs(bundle_dir)
         structured_counts = _count_structured_exports(bundle_dir)
         artifact_counts = _count_vendored_artifacts(bundle_dir)
 
         demos_present = sorted(logs_map.keys(), key=lambda d: int(d.split("-")[1]) if "-" in d else 10**9)
+        if not demos_present:
+            printer.line(\"\n\" + ANSI.red + ANSI.bold + \"ERROR: No demo logs were discovered in the bundle.\" + ANSI.reset)
+            printer.line(\"Expected logs under bundle/logs/*.out.txt or bundle/capsules/**.out.txt\")
+            printer.line(\"Bundle dir: \" + _safe_relpath(bundle_dir, repo_root))
+            return 3
+
         printer.line(f"[debug] demos_present={len(demos_present)}")
 
         order: List[str] = []
