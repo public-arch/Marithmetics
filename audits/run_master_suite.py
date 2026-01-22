@@ -179,32 +179,28 @@ def _demo_label_from_text(s: str) -> Optional[str]:
 def _parse_verdict(log_text: str) -> str:
     t = log_text or ""
 
-    # Explicit verdict lines (flagships)
-    if re.search(r"FINAL VERDICT:\\s*VERIFIED", t):
-        return "VERIFIED"
+    # 1) Explicit NOT VERIFIED or any FAIL markers => NOT VERIFIED
     if re.search(r"FINAL VERDICT:\\s*NOT VERIFIED", t):
         return "NOT VERIFIED"
-    if re.search(r"\\bResult:\\s*VERIFIED\\b", t):
-        return "VERIFIED"
     if re.search(r"\\bResult:\\s*NOT VERIFIED\\b", t):
         return "NOT VERIFIED"
+    if re.search(r"^\\s*(❌|FAIL)\\b", t, flags=re.M):
+        return "NOT VERIFIED"
 
-    # Certificate completion markers (capsule-style demos)
+    # 2) Explicit VERIFIED markers
+    if re.search(r"FINAL VERDICT:\\s*VERIFIED", t):
+        return "VERIFIED"
+    if re.search(r"\\bResult:\\s*VERIFIED\\b", t):
+        return "VERIFIED"
     if "✅ CLOSED" in t:
         return "VERIFIED"
     if "CERTIFICATE SUMMARY:" in t:
         return "VERIFIED"
     if re.search(r"\\bCERTIFICATE\\b", t):
-        # Treat as VERIFIED unless explicit FAIL markers exist
-        if not re.search(r"^\\s*(❌|FAIL)\\b", t, flags=re.M):
-            return "VERIFIED"
+        return "VERIFIED"
 
-    # Gates fallback
-    fail_markers = len(re.findall(r"^\\s*(❌|FAIL)\\b", t, flags=re.M))
-    pass_markers = len(re.findall(r"^\\s*(✅|PASS)\\b", t, flags=re.M))
-    if fail_markers > 0:
-        return "NOT VERIFIED"
-    if pass_markers > 0:
+    # 3) Gate-only certificates: PASS/✅ present and no FAIL => VERIFIED
+    if re.search(r"^\\s*(✅|PASS)\\b", t, flags=re.M):
         return "VERIFIED"
 
     return "UNKNOWN"
