@@ -76,3 +76,11 @@ GUM_manifest_SHA256_*.txt
 # Allow publishing master archives
 !gum/master_archives/*.zip
 !gum/master_archives/*.zip.sha256
+
+# Master suite AoR outputs (do not commit)
+GUM/authority_archive/
+gum/reports/
+demos/**/_artifacts/
+demos/**/DEMO*_BUNDLE_*/
+demos/**/demo*_cert_bundle_*/
+audits/_outroot_tmp/
