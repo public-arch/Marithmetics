@@ -454,6 +454,13 @@ def main() -> int:
             return rc
 
         bundle_dir = _find_latest_bundle(aor_root, bundler_glob)
+
+        # --- DEBUG PROBE (remove after fix) ---
+        try:
+            _n_out = len(list((bundle_dir / "logs").glob("*.out.txt")))
+            printer.line(f"[debug] bundle/logs out.txt count = {_n_out}")
+        except Exception as _e:
+            printer.line(f"[debug] bundle/logs probe failed: {_e}")
         if not bundle_dir:
             printer.line(f"{ANSI.red}{ANSI.bold}Could not locate bundle directory under AoR root.{ANSI.reset}")
             return 2
