@@ -1,89 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
 
-# CAMB outputs (generated)
-gum_camb_output/
+# OS / editor
+.DS_Store
+Thumbs.db
 
-# --- Generated / local artifacts ---
-**/__pycache__/
-**/*.pyc
+# Master suite AoR outputs (do not commit)
+GUM/authority_archive/
+gum/reports/
+audits/_outroot_tmp/
 
-gum/GUM_Report/
-gum/_runs/
+# Generated demo artifacts (do not commit)
+demos/**/_artifacts/
+demos/**/DEMO*_BUNDLE_*/
+demos/**/demo*_cert_bundle_*/
 
-audits/results/
-sm_outputs*.json
+# Release zips (keep ignored generally; allow authority archive if desired)
 *.zip
-
-
-# --- Generated / local artifacts ---
-**/__pycache__/
-**/*.pyc
-
-gum/GUM_Report/
-gum/_runs/
-
-audits/results/
-sm_outputs*.json
-*.zip
-
-
-# Local backup artifacts
-gum/gum_report_generator_v28.py.bak.*
-gum/gum_report_generator_v28.py.bak.pre_*
-gum/gum_report_generator_v28.py.bak.pre_safe_fix
-
-# Generated claims tracker
-publication_spine/REFEREE_TRACK/CLAIMS.json
-
-
-# --- Generated artifacts / local outputs ---
-gum/GUM_Report/
-gum/_runs/
-gum/GUM_Report_MASTER/
-
-**/__pycache__/
-**/*.pyc
-
-sm_outputs*.json
-
-# Local backup artifacts
-gum/gum_report_generator_v28.py.bak.*
-gum/gum_report_generator_v28.py.bak.pre_*
-gum/gum_report_generator_v28.py.bak.pre_safe_fix
-
-# Generated claims tracker (if not meant to be tracked)
-publication_spine/REFEREE_TRACK/CLAIMS.json
-
-
-# runtime artifacts (never commit)
-artifacts/
-
-# =========================
-# Generated outputs (never commit)
-# =========================
-artifacts/
-audits/bundles/
-gum/GUM_Report/
-*.zip
-*.pdf
-*_outputs*.json
-GUM_manifest_*.json
-GUM_manifest_SHA256_*.txt
-
-# Allowlist: keep one master audit capsule on main
-!gum/artifacts/GUM_BUNDLE_v30_latest.zip
-!gum/artifacts/GUM_BUNDLE_v30_latest.zip.sha256
-
-# Allow publishing master archives
-!gum/master_archives/*.zip
-!gum/master_archives/*.zip.sha256
-
-# Generated demo bundle outputs (do not commit)
-demos/**/**/demo*_cert_bundle_*/
-demos/**/**/DEMO*_BUNDLE_*/
-
-# Generated demo bundle outputs (do not commit)
-demos/**/**/demo*_cert_bundle_*/
-demos/**/**/DEMO*_BUNDLE_*/
-
-# Allow authority archive zips
 !GUM/authority_archive/*.zip
