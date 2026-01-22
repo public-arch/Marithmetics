@@ -505,7 +505,23 @@ def main() -> int:
         printer.hr("─")
 
         demo_meta_by_label, slug_by_label = _build_demo_index_maps(bundle_dir)
-        logs_map = _find_logs(bundle_dir)
+        logs_map = {}
+        logs_dir = bundle_dir / "logs"
+        if logs_dir.exists():
+            for fp in logs_dir.glob("*.out.txt"):
+                m = re.search(r"\bdemo-(\d+)\b", fp.name)
+                if m: logs_map.setdefault(f"DEMO-{int(m.group(1))}", {})["out"] = fp
+            for fp in logs_dir.glob("*.err.txt"):
+                m = re.search(r"\bdemo-(\d+)\b", fp.name)
+                if m: logs_map.setdefault(f"DEMO-{int(m.group(1))}", {})["err"] = fp
+        cap = bundle_dir / "capsules"
+        if cap.exists():
+            for fp in cap.rglob("*.out.txt"):
+                m = re.search(r"\bdemo-(\d+)\b", fp.name) or re.search(r"\bDEMO-(\d+)\b", fp.name)
+                if m: logs_map.setdefault(f"DEMO-{int(m.group(1))}", {})["out"] = fp
+            for fp in cap.rglob("*.err.txt"):
+                m = re.search(r"\bdemo-(\d+)\b", fp.name) or re.search(r"\bDEMO-(\d+)\b", fp.name)
+                if m: logs_map.setdefault(f"DEMO-{int(m.group(1))}", {})["err"] = fp
         structured_counts = _count_structured_exports(bundle_dir)
         artifact_counts = _count_vendored_artifacts(bundle_dir)
 
