@@ -1,3 +1,4 @@
+from __future__ import annotations
 
 # -----------------------------
 # Units (report-side resolver)
@@ -26,7 +27,6 @@ def unit_for(name: str, units_field) -> str:
         return str(units_field).strip()
     nm = (name or "").strip()
     return UNITS_MAP.get(nm, "-")
-from __future__ import annotations
 
 CLAUDE_VISUAL_ATLAS_URL = ""
 BUNDLE_VISUAL_ATLAS_PATH = "atlas_substrate_visualization/visual_atlas_1.html"
