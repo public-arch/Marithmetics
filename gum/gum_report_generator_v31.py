@@ -1225,6 +1225,50 @@ def missing_box(text: str, width: float, height: float = 1.0 * inch) -> Table:
 # ----------------------------
 # PDF Doc template with TOC + outline
 # ----------------------------
+def build_front_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> List[Any]:
+    story: List[Any] = []
+    story.extend(build_front_exec_summary(bundle, styles))
+    story.append(H1("Executive Summary", styles, bookmark="exec_front"))
+
+    bullets = [
+        "This release presents a computational audit of the Marithmetics hypothesis: that physical law emerges as the unique eigen-structure of a Zero-Dimensional (0D) discrete substrate (residue rings and DRPTs), and that many continuum paradoxes are mid-lift artifacts.",
+        "The kernel is survivor selection, not parameter tuning. The primary triple (wU=137, s2=107, s3=103) is produced by a deterministic sieve and is unique under declared constraints; ablations cause solution-space explosion.",
+        "The bridge from discrete structure to continuum operators is formalized via Deterministic Operator Calculus (DOC), preserving ZFC-conservative reasoning while making infinity operational (vanishing residual law).",
+        "Verification is delivered as a cryptographically sealed evidence ledger: every demo run produces rerunnable stdout/stderr logs, vendored artifacts, and a bundle seal (BUNDLE_SHA256) suitable for referee reproduction and paper citation.",
+        "Representation independence is explicitly tested via base-gauge (Rosetta) roundtrip tests across multiple numeral systems, demonstrating that results are intrinsic to integer structure, not notation.",
+    ]
+
+    story.append(Paragraph("Summary bullets:", styles["Small"]))
+    for b in bullets:
+        story.append(Paragraph("• " + b, styles["Small"]))
+
+    # Evidence pointers
+    try:
+        bsha = (bundle.root / "bundle_sha256.txt").read_text(encoding="utf-8").strip()
+    except Exception:
+        bsha = ""
+    if bsha:
+        story.append(Spacer(1, 6))
+        story.append(Paragraph(f"<b>Bundle seal:</b> {bsha}", styles["Small"]))
+
+    # Visual Atlas pointers (if configured)
+    try:
+        claude = globals().get("CLAUDE_VISUAL_ATLAS_URL","")
+        localp = globals().get("BUNDLE_VISUAL_ATLAS_PATH","")
+        if localp or claude:
+            story.append(Spacer(1, 6))
+            story.append(Paragraph("<b>Visual Explorer:</b>", styles["Small"]))
+            if localp:
+                story.append(Paragraph(f"• bundle-local: {localp}", styles["Tiny"]))
+            if claude:
+                story.append(Paragraph(f"• Claude: {claude}", styles["Tiny"]))
+    except Exception:
+        pass
+
+    story.append(PageBreak())
+    return story
+
+
 
 class AuditDocTemplate(BaseDocTemplate):
     def __init__(self, filename: str, pagesize=letter, footer_line1: str = "", footer_line2: str = "", **kw):
