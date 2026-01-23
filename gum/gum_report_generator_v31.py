@@ -1227,7 +1227,6 @@ def missing_box(text: str, width: float, height: float = 1.0 * inch) -> Table:
 # ----------------------------
 def build_front_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> List[Any]:
     story: List[Any] = []
-    story.extend(build_front_exec_summary(bundle, styles))
     story.append(H1("Executive Summary", styles, bookmark="exec_front"))
 
     bullets = [
@@ -2581,6 +2580,7 @@ def build_pdf(bundle_dir: Path, out_path: Path) -> Tuple[Path, Path]:
 
     story: List[Any] = []
     story.extend(build_cover(bundle, repo_root, styles))
+    story.extend(build_front_exec_summary(bundle, styles))
     story.extend(build_toc(styles))
     story.extend(build_origin_and_visuals(bundle, repo_root, styles))
     story.extend(build_bridge_section(styles))
