@@ -399,6 +399,7 @@ def main() -> int:
     ap.add_argument("--verbosity", choices=["compact", "flagship", "full"], default=None, help="CLI verbosity (CI defaults to compact)")
     ap.add_argument("--no-zip", action="store_true", help="Do not create master zip")
     ap.add_argument("--bundle-dir", default=None, help="Use an existing bundle directory (skip bundler)")
+    ap.add_argument("--require", default="DEMO-34,DEMO-66,DEMO-73,DEMO-75,DEMO-33,DEMO-36", help="Comma-separated required demos")
     ap.add_argument("--preflight", action="store_true", help="Print planned paths and exit without running")
     args = ap.parse_args()
 
@@ -567,6 +568,16 @@ def main() -> int:
         artifact_counts = _count_vendored_artifacts(bundle_dir)
 
         demos_present = sorted(logs_map.keys(), key=lambda d: int(d.split("-")[1]) if "-" in d else 10**9)
+
+        # Enforce required demo spine (production AoR discipline)
+        req = [x.strip() for x in (args.require or "").split(",") if x.strip()]
+        missing_req = [d for d in req if d not in demos_present]
+        if missing_req:
+            printer.line("")
+            printer.line(ANSI.red + ANSI.bold + "ERROR: Required demos missing from bundle: " + ", ".join(missing_req) + ANSI.reset)
+            printer.line("Fix demo discovery / paths, then rerun in fresh mode.")
+            return 4
+
         if not demos_present:
             printer.line("")
             printer.line(ANSI.red + ANSI.bold + "ERROR: No demo logs were discovered in the bundle." + ANSI.reset)
