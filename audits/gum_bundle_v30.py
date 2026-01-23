@@ -96,6 +96,25 @@ def git_ls_files() -> List[str]:
 
 
 # --------------------------
+# -------------------------------------------------------------------
+# Units map (production): fills units for common exported values.
+# If a demo does not emit units, bundler supplies them here.
+# -------------------------------------------------------------------
+UNITS_MAP = {
+    # Cosmology (DEMO-36 / BB36)
+    "H0": "km/s/Mpc",
+    "Omega_b": "-", "Omega_c": "-", "Omega_L": "-", "Omega_r": "-", "Omega_tot": "-",
+    "ombh2": "-", "omch2": "-",
+    "A_s": "-", "n_s": "-", "tau": "-",
+    "ell1": "-", "deltaCMB": "-", "delta0": "-", "F_CMB": "-",
+
+    # Standard Model / gauge anchors (common naming)
+    "alpha_inv": "-", "alpha0_inv": "-", "alpha_s": "-",
+    "sin2thetaW": "-", "sin2_thetaW": "-", "sin^2(thetaW)": "-",
+    "Lambda_QCD": "GeV",
+}
+
+
 # Demo discovery
 # --------------------------
 @dataclass
