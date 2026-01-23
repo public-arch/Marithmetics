@@ -997,7 +997,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                 demo_path = str(rr.get("demo_path") or rr.get("path") or "")
                 # Prefer a full path for rerun commands when available.
                 folder_full = demo_path or folder
-                                slug_name = Path(folder_full).name if folder_full else str(key)
+                slug_name = Path(folder_full).name if folder_full else str(key)
                 domain = domain or _infer_domain_from_folder(folder_full)
                 slug_name = _canonical_run_slug(domain, folder_full, fallback=slug_name)
                 cmd = str(rr.get("cmd") or "")
