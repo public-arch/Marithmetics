@@ -1015,7 +1015,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                     RunRecord(
                         demo=demo,
                         slug=slug_name,
-                        domain=_domain_short(domain) if domain else _domain_short(_infer_domain_from_folder(folder_full)),
+                        domain=(domain or _infer_domain_from_folder(folder_full)),
                         folder=folder_full,
                         status=str(rr.get("status") or ""),
                         return_code=rr.get("return_code") if rr.get("return_code") is not None else rr.get("returncode"),
@@ -1051,7 +1051,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                     RunRecord(
                         demo=demo,
                         slug=slug_name,
-                        domain=_domain_short(domain) if domain else _domain_short(_infer_domain_from_folder(folder_full)),
+                        domain=(domain or _infer_domain_from_folder(folder_full)),
                         folder=folder_full,
                         status=str(rr.get("status") or ""),
                         return_code=rr.get("return_code") if rr.get("return_code") is not None else rr.get("returncode"),
@@ -1734,7 +1734,7 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
         tests = info.get("tests") or "Bundle run (no narrative metadata available)."
         table.append([
             r.demo,
-            r.domain or "n/a",
+            _domain_short(r.domain) if r.domain else "n/a",
             tests,
             r.status or "n/a",
             fmt_seconds(r.runtime_sec),
