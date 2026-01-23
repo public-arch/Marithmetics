@@ -11,6 +11,15 @@ Design goals:
 
 from __future__ import annotations
 
+
+def _domain_from_slug(slug: str) -> str:
+    # slug examples: cosmo__demo-36..., standard_model__demo-33...
+    if not slug:
+        return "n/a"
+    if "__" in slug:
+        return slug.split("__", 1)[0]
+    return "n/a"
+
 def _domain_short(s: str) -> str:
     m = {
         "standard_model": "std_model",
