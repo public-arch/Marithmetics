@@ -1297,9 +1297,6 @@ def build_front_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) 
     except Exception:
         pass
 
-    story.append(Spacer(1, 8))
-    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
-    story.append(PageBreak())
     return story
 
 
@@ -1561,7 +1558,6 @@ def build_cover(bundle: Bundle, repo_root: Path, styles: Dict[str, ParagraphStyl
     )
     story.append(Paragraph(author_note, styles["Body"]))
 
-    story.append(PageBreak())
     story.append(Spacer(1, 8))
     story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
@@ -1579,7 +1575,6 @@ def build_toc(styles: Dict[str, ParagraphStyle]) -> List[Any]:
     story.append(H1("Table of Contents", styles, bookmark="toc"))
     story.append(Spacer(1, 0.1 * inch))
     story.append(toc)
-    story.append(PageBreak())
     story.append(Spacer(1, 8))
     story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
@@ -1692,7 +1687,6 @@ def build_origin_and_visuals(bundle: Bundle, repo_root: Path, styles: Dict[str, 
             height=0.9 * inch,
         ))
 
-    story.append(PageBreak())
     story.append(Spacer(1, 8))
     story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
@@ -1753,7 +1747,6 @@ def build_bridge_section(styles: Dict[str, ParagraphStyle]) -> List[Any]:
         styles,
         "Small",
     ))
-    story.append(PageBreak())
     story.append(Spacer(1, 8))
     story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
@@ -1886,7 +1879,6 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
     story.append(table_grid(head_rows, styles, col_widths=[0.8*inch, 0.9*inch, 2.6*inch, 2.7*inch], header_rows=1))
 
 
-    story.append(PageBreak())
     story.append(Spacer(1, 8))
     story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
@@ -1936,7 +1928,6 @@ def build_falsification_section(bundle: Bundle, styles: Dict[str, ParagraphStyle
         styles,
         "Small",
     ))
-    story.append(PageBreak())
     story.append(Spacer(1, 8))
     story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
@@ -2540,9 +2531,6 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
 
     story.append(PageBreak())
 
-    story.append(Spacer(1, 8))
-    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
-    story.append(PageBreak())
     return story
 
 
@@ -2588,7 +2576,6 @@ def build_appendices(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragrap
             height=0.9*inch,
         ))
 
-    story.append(PageBreak())
     story.append(Spacer(1, 8))
     story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
