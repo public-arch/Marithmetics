@@ -921,7 +921,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                     RunRecord(
                         demo=demo,
                         slug=slug_name,
-                        domain=_domain_short(getattr(r,"domain","")),
+                        domain=_domain_short(""),
                         folder=folder_full,
                         status=str(rr.get("status") or ""),
                         return_code=rr.get("return_code") if rr.get("return_code") is not None else rr.get("returncode"),
@@ -955,7 +955,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                     RunRecord(
                         demo=demo,
                         slug=slug_name,
-                        domain=_domain_short(getattr(r,"domain","")),
+                        domain=_domain_short(""),
                         folder=folder_full,
                         status=str(rr.get("status") or ""),
                         return_code=rr.get("return_code") if rr.get("return_code") is not None else rr.get("returncode"),
