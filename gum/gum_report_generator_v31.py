@@ -929,6 +929,49 @@ def _collect_vendored_artifacts_by_slug(bundle_dir: Path) -> dict[str, list[Path
 def _run_slug(r) -> str:
     return getattr(r, "slug", "") or getattr(r, "run_slug", "") or ""
 
+
+def _infer_domain_from_folder(folder_full: str) -> str:
+    # folder like demos/standard_model/demo-33-...
+    parts = str(folder_full).replace("\\", "/").split("/")
+    if len(parts) >= 2 and parts[0] == "demos":
+        return parts[1]
+    return ""
+
+def _canonical_run_slug(domain: str, folder_full: str, fallback: str = "") -> str:
+    # Canonical slug matches bundle filenames:
+    #   logs:            domain__<demo-folder>.out.txt
+    #   vendored files:  domain__<demo-folder>__artifact.ext
+    base = Path(folder_full).name if folder_full else (fallback or "")
+    if not domain:
+        return base
+    if base.startswith(domain + "__"):
+        return base
+    if "__" in base:
+        # already has some prefix; trust it
+        return base
+    return f"{domain}__{base}"
+
+def _source_sha_prefix(source_path: str, repo_root: Path, bundle_root: Path) -> str:
+    # Return 12-char sha prefix if resolvable, else "".
+    sp = (source_path or "").strip()
+    if not sp:
+        return ""
+    # If already a hash-like token, return it.
+    if re.fullmatch(r"[0-9a-fA-F]{12,64}", sp):
+        return sp[:12]
+    # 1) Try repo path
+    fp = (repo_root / sp)
+    if fp.exists() and fp.is_file():
+        return sha256_file(fp)[:12]
+    # 2) Try vendored_artifacts by filename suffix match
+    vdir = bundle_root / "vendored_artifacts"
+    if vdir.exists():
+        base = Path(sp).name
+        for cand in vdir.iterdir():
+            if cand.is_file() and cand.name.endswith(base):
+                return sha256_file(cand)[:12]
+    return ""
+
 def load_bundle(bundle_dir: Path) -> Bundle:
     b = Bundle(root=bundle_dir)
 
@@ -954,7 +997,9 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                 demo_path = str(rr.get("demo_path") or rr.get("path") or "")
                 # Prefer a full path for rerun commands when available.
                 folder_full = demo_path or folder
-                slug_name = Path(folder).name if folder else (Path(folder_full).name if folder_full else str(key))
+                                slug_name = Path(folder_full).name if folder_full else str(key)
+                domain = domain or _infer_domain_from_folder(folder_full)
+                slug_name = _canonical_run_slug(domain, folder_full, fallback=slug_name)
                 cmd = str(rr.get("cmd") or "")
                 one_liner = str(rr.get("one_liner") or "")
                 if not cmd:
@@ -967,7 +1012,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                     RunRecord(
                         demo=demo,
                         slug=slug_name,
-                        domain=_domain_short(""),
+                        domain=_domain_short(domain) if domain else _domain_short(_infer_domain_from_folder(folder_full)),
                         folder=folder_full,
                         status=str(rr.get("status") or ""),
                         return_code=rr.get("return_code") if rr.get("return_code") is not None else rr.get("returncode"),
@@ -991,7 +1036,9 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                 folder = str(rr.get("folder") or "")
                 demo_path = str(rr.get("demo_path") or rr.get("path") or "")
                 folder_full = demo_path or folder
-                slug_name = Path(folder).name if folder else (Path(folder_full).name if folder_full else key)
+                                slug_name = Path(folder_full).name if folder_full else key
+                domain = domain or _infer_domain_from_folder(folder_full)
+                slug_name = _canonical_run_slug(domain, folder_full, fallback=slug_name)
                 cmd = str(rr.get("cmd") or "") or "python demo.py"
                 one_liner = str(rr.get("one_liner") or "")
                 if not one_liner and folder_full:
@@ -1001,7 +1048,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                     RunRecord(
                         demo=demo,
                         slug=slug_name,
-                        domain=_domain_short(""),
+                        domain=_domain_short(domain) if domain else _domain_short(_infer_domain_from_folder(folder_full)),
                         folder=folder_full,
                         status=str(rr.get("status") or ""),
                         return_code=rr.get("return_code") if rr.get("return_code") is not None else rr.get("returncode"),
@@ -1692,7 +1739,7 @@ def build_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> Lis
                 fmt_num(v.get("value")),
                 v.get("units") or "",
                 demo_label_from_slug(v.get("demo_id") or ""),
-                src,
+                ((_source_sha_prefix(src_path, repo_root, bundle.root) or '') + ' ' + src).strip(),
             ])
 
     # Add a few from constants_master if not already
@@ -1839,7 +1886,7 @@ def read_demo_log(bundle: Bundle, run: RunRecord) -> Optional[str]:
     if not logs_dir.exists():
         return None
     # Most logs are named "{domain}__{slug}.out.txt"
-    cand = logs_dir / f"{run.domain}__{run.slug}.out.txt"
+    cand = logs_dir / f"{run.slug}.out.txt"
     if cand.exists():
         return cand.read_text(encoding="utf-8", errors="replace")
     # try any log containing slug
@@ -2286,7 +2333,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                         str(row.get("name", "")),
                         str(row.get("value", "")),
                         str(row.get("units") or "-"),
-                        str(row.get("source_sha256", ""))[:12],
+                        (_source_sha_prefix(str(row.get("source") or ""), repo_root, bundle.root) or "") + " " + str(row.get("source") or ""),
                     ])
                 story.append(table_grid(const_rows, styles, col_widths=[2.0*inch, 2.0*inch, 0.8*inch, 1.2*inch], header_rows=1))
             else:
