@@ -360,6 +360,43 @@ def build_repo_inventory() -> Dict[str, Any]:
     }
 
 
+
+def write_artifacts_index_from_vendored(bundle_dir: Path, repo_root: Path) -> None:
+    """
+    Production: build artifacts_index.json from vendored_artifacts/ as the source of truth.
+    Each entry includes relpath, sha256, size, and best-effort demo label parsed from filename.
+    """
+    import json, hashlib
+
+    vdir = bundle_dir / "vendored_artifacts"
+    items = []
+    if vdir.exists():
+        for fp in sorted(vdir.iterdir()):
+            if not fp.is_file():
+                continue
+            h = hashlib.sha256()
+            with fp.open("rb") as f:
+                for chunk in iter(lambda: f.read(1024 * 1024), b""):
+                    h.update(chunk)
+            sha = h.hexdigest()
+            rel = str(fp.relative_to(bundle_dir))
+            size = fp.stat().st_size
+
+            name = fp.name
+            m = re.search(r"demo-(\d+)", name)
+            demo = f"DEMO-{int(m.group(1))}" if m else None
+
+            items.append({
+                "relpath": rel,
+                "filename": name,
+                "sha256": sha,
+                "size": size,
+                "demo": demo,
+            })
+
+    out = {"artifacts": items}
+    (bundle_dir / "artifacts_index.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="GUM Bundler v30 AoR (folder-per-run).")
     ap.add_argument("--demos-root", default="demos", help="Root demos directory (default: demos)")
