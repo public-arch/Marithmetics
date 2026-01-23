@@ -2300,7 +2300,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
             else:
                 story.append(Spacer(1, 6))
                 story.append(missing_box(
-                    "No parseable key/value metrics were detected in the bundled stdout log for this demo.",
+                    "Metrics extraction is not available for this demo's stdout format; see the bundled log excerpt and gate list for auditable evidence.",
                     0.9 * inch,
                 ))
 
