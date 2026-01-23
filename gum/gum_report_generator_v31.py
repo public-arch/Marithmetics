@@ -2313,29 +2313,35 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                     0.9 * inch,
                 ))
 
-            # Evidence artifacts list
-              # Evidence artifacts (vendored_artifacts) keyed by log slug prefix
-              arts = []
-              try:
-                  vdir = bundle.root / "vendored_artifacts"
-                  if vdir.exists() and log_path:
-                      slug = Path(log_path).name
-                      if slug.endswith(".out.txt"):
-                          slug = slug[:-len(".out.txt")]
-                      elif slug.endswith(".err.txt"):
-                          slug = slug[:-len(".err.txt")]
-                      # vendored artifacts start with: <domain>__<demo-slug>__
-                      prefix = slug + "__"
-                      for fp in sorted(vdir.iterdir()):
-                          if fp.is_file() and fp.name.startswith(prefix):
-                              arts.append(fp)
-              except Exception:
-                  arts = []
+            # Evidence artifacts list (vendored_artifacts/*) keyed by r.slug prefix
+            arts = []
+            try:
+                vdir = bundle.root / "vendored_artifacts"
+                if vdir.exists():
+                    prefix = (r.slug or "") + "__"
+                    for fp in sorted(vdir.iterdir()):
+                        if fp.is_file() and fp.name.startswith(prefix):
+                            arts.append(fp)
+            except Exception:
+                arts = []
 
+            story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
+            if arts:
                 arows = [["File", "sha256 (prefix)", "Size"]]
-                for a in arts[:12]:
-                    arows.append(_artifact_display_row(bundle.root, a))
+                for fp in arts[:12]:
+                    try:
+                        rel = str(fp.relative_to(bundle.root))
+                        sha = sha256_file(fp)[:12]
+                        size = fp.stat().st_size
+                    except Exception:
+                        rel = fp.name
+                        sha = "MISSING"
+                        size = "MISSING"
+                    arows.append([rel, sha, str(size)])
                 story.append(table_grid(arows, styles, col_widths=[4.2*inch, 1.5*inch, 1.1*inch], header_rows=1))
+            else:
+                story.append(Paragraph("None found for this demo in vendored_artifacts/.", styles["Tiny"]))
+
 
             # Include key visual evidence if present for certain demos
             # - BB36 plot (DEMO-36)
