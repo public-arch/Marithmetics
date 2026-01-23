@@ -893,6 +893,15 @@ def find_latest_bundle(repo_root: Path) -> Optional[Path]:
 
 
 
+
+def _sha256_file(path: Path) -> str:
+    import hashlib
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
 def _slug_from_log_filename(name: str) -> str:
     # e.g. standard_model__demo-33-... .out.txt -> standard_model__demo-33-...
     for suf in (".out.txt", ".err.txt"):
@@ -2305,10 +2314,24 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                 ))
 
             # Evidence artifacts list
-            log_slug = _slug_from_log_filename(Path(log_path).name) if log_path else ''
-              arts = artifacts_by_slug.get(log_slug, [])
-            if arts:
-                story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
+              # Evidence artifacts (vendored_artifacts) keyed by log slug prefix
+              arts = []
+              try:
+                  vdir = bundle.root / "vendored_artifacts"
+                  if vdir.exists() and log_path:
+                      slug = Path(log_path).name
+                      if slug.endswith(".out.txt"):
+                          slug = slug[:-len(".out.txt")]
+                      elif slug.endswith(".err.txt"):
+                          slug = slug[:-len(".err.txt")]
+                      # vendored artifacts start with: <domain>__<demo-slug>__
+                      prefix = slug + "__"
+                      for fp in sorted(vdir.iterdir()):
+                          if fp.is_file() and fp.name.startswith(prefix):
+                              arts.append(fp)
+              except Exception:
+                  arts = []
+
                 arows = [["File", "sha256 (prefix)", "Size"]]
                 for a in arts[:12]:
                     arows.append(_artifact_display_row(bundle.root, a))
