@@ -1297,9 +1297,6 @@ def build_front_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) 
     except Exception:
         pass
 
-                story.append(Spacer(1, 8))
-                story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
-                story.append(PageBreak())
     return story
 
 
@@ -1561,7 +1558,7 @@ def build_cover(bundle: Bundle, repo_root: Path, styles: Dict[str, ParagraphStyl
     )
     story.append(Paragraph(author_note, styles["Body"]))
 
-        story.append(Spacer(1, 8))
+    story.append(Spacer(1, 8))
     story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
     return story
@@ -1578,7 +1575,7 @@ def build_toc(styles: Dict[str, ParagraphStyle]) -> List[Any]:
     story.append(H1("Table of Contents", styles, bookmark="toc"))
     story.append(Spacer(1, 0.1 * inch))
     story.append(toc)
-        story.append(Spacer(1, 8))
+    story.append(Spacer(1, 8))
     story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
     return story
