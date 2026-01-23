@@ -500,7 +500,6 @@ def main() -> int:
         # --- DEBUG PROBE (remove after fix) ---
         try:
             _n_out = len(list((bundle_dir / "logs").glob("*.out.txt")))
-            printer.line(f"[debug] bundle/logs out.txt count = {_n_out}")
         except Exception as _e:
             printer.line(f"[debug] bundle/logs probe failed: {_e}")
         if not bundle_dir:
