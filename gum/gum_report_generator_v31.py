@@ -1840,7 +1840,7 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
             dash_rows.append([
                 nm,
                 fmt_num(row.get("value")),
-                row.get("units") or "",
+                unit_for(str(nm), row.get("units")),
                 demo_label_from_slug(row.get("demo_id") or ""),
                 row.get("source_path") or "",
             ])
