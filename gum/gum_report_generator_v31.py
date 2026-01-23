@@ -1798,7 +1798,7 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
         "Small",
     ))
 
-    dash_rows: List[List[str]] = [["Name", "Value", "Units", "Demo", "Source"]]
+    dash_rows: List[List[str]] = [["Name", "Value", "Demo", "Source"]]
     # Prefer values.jsonl when present; fallback to constants_master
     preferred_names = [
         # SM-ish
@@ -1855,7 +1855,7 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
             height=1.1*inch,
         ))
     else:
-        col_widths = [2.2*inch, 1.2*inch, 0.7*inch, 0.8*inch, 1.9*inch]
+        col_widths = [2.6*inch, 1.4*inch, 1.0*inch, 1.8*inch]
         story.append(table_grid(dash_rows, styles, col_widths=col_widths, header_rows=1))
 
     story.append(Spacer(1, 10))
@@ -2419,7 +2419,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                     picked.append(row)
                     if len(picked) >= 10:
                         break
-                const_rows = [["Name", "Value", "Units", "Source"]]
+                const_rows = [["Name", "Value", "Source"]]
                 for row in picked:
                     const_rows.append([
                         str(row.get("name", "")),
@@ -2427,7 +2427,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                         unit_for(str(row.get("name") or ""), row.get("units")),
                         (_source_sha_prefix(str(row.get("source") or ""), repo_root, bundle.root) or "") + " " + str(row.get("source") or ""),
                     ])
-                story.append(table_grid(const_rows, styles, col_widths=[2.0*inch, 2.0*inch, 0.8*inch, 1.2*inch], header_rows=1))
+                story.append(table_grid(const_rows, styles, col_widths=[2.6*inch, 2.2*inch, 1.8*inch], header_rows=1))
             else:
                 story.append(Paragraph(
                     "<b>Structured exports:</b> not present in this bundle for this demo. "
