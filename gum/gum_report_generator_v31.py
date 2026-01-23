@@ -1667,7 +1667,7 @@ def build_bridge_section(styles: Dict[str, ParagraphStyle]) -> List[Any]:
     return story
 
 
-def build_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> List[Any]:
+def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, ParagraphStyle]) -> List[Any]:
     story: List[Any] = []
     story.append(H1("2. Executive Summary (Coverage and Audit Posture)", styles, bookmark="sec2"))
     story.append(P(
@@ -2537,7 +2537,7 @@ def build_pdf(bundle_dir: Path, out_path: Path) -> Tuple[Path, Path]:
     story.extend(build_toc(styles))
     story.extend(build_origin_and_visuals(bundle, repo_root, styles))
     story.extend(build_bridge_section(styles))
-    story.extend(build_exec_summary(bundle, styles))
+    story.extend(build_exec_summary(bundle, repo_root, styles))
     story.extend(build_falsification_section(bundle, styles))
     story.extend(build_demo_certificates(bundle, repo_root, styles))
     story.extend(build_appendices(bundle, repo_root, styles))
