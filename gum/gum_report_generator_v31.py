@@ -925,6 +925,10 @@ def _collect_vendored_artifacts_by_slug(bundle_dir: Path) -> dict[str, list[Path
         out.setdefault(slug, []).append(fp)
     return out
 
+
+def _run_slug(r) -> str:
+    return getattr(r, "slug", "") or getattr(r, "run_slug", "") or ""
+
 def load_bundle(bundle_dir: Path) -> Bundle:
     b = Bundle(root=bundle_dir)
 
