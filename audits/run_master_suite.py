@@ -398,6 +398,7 @@ def main() -> int:
     ap.add_argument("--strict", action="store_true", help="Nonzero exit if any demo is not VERIFIED")
     ap.add_argument("--verbosity", choices=["compact", "flagship", "full"], default=None, help="CLI verbosity (CI defaults to compact)")
     ap.add_argument("--no-zip", action="store_true", help="Do not create master zip")
+    ap.add_argument("--bundle-dir", default=None, help="Use an existing bundle directory (skip bundler)")
     ap.add_argument("--preflight", action="store_true", help="Print planned paths and exit without running")
     args = ap.parse_args()
 
@@ -408,6 +409,17 @@ def main() -> int:
 
     repo = _get_repo_info(repo_root)
     cfg = _load_config(repo_root, args.config)
+
+    bundle_dir_override = None
+    if getattr(args, "bundle_dir", None):
+        bd = Path(args.bundle_dir)
+        if not bd.is_absolute():
+            bd = repo_root / bd
+        if not bd.exists():
+            print(f"ERROR: --bundle-dir not found: {bd}", file=sys.stderr)
+            return 2
+        bundle_dir_override = bd
+
 
     if args.verbosity:
         verbosity = args.verbosity
@@ -469,12 +481,21 @@ def main() -> int:
         if demos_root:
             bundler_cmd += ["--demos-root", str(demos_root)]
 
-        rc = _stream_cmd(bundler_cmd, cwd=repo_root, printer=printer, label="Build AoR bundle (gum_bundle_v30)")
+
+        rc = 0
+
+
+        if bundle_dir_override is None:
+
+
+            rc = _stream_cmd(bundler_cmd, cwd=repo_root, printer=printer, label="Build AoR bundle (gum_bundle_v30)")
         if rc != 0:
             printer.line(f"{ANSI.red}{ANSI.bold}Bundler failed (exit {rc}).{ANSI.reset}")
             return rc
-
-        bundle_dir = _find_latest_bundle(aor_root, bundler_glob)
+        if bundle_dir_override is not None:
+            bundle_dir = bundle_dir_override
+        else:
+            bundle_dir = _find_latest_bundle(aor_root, bundler_glob)
 
         # --- DEBUG PROBE (remove after fix) ---
         try:
