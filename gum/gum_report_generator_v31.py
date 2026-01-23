@@ -22,25 +22,30 @@ UNITS_MAP = {
 }
 
 def unit_for(name: str, units_field) -> str:
-    # Prefer explicit units if provided; else map known names; else "-"
+    # Prefer explicit units if provided; else map known names; else '-'
     if units_field is not None and str(units_field).strip():
         return str(units_field).strip()
-    nm = (name or "").strip()
-    return UNITS_MAP.get(nm, "-")
+    nm = (name or '').strip()
 
-CLAUDE_VISUAL_ATLAS_URL = ""
-BUNDLE_VISUAL_ATLAS_PATH = "atlas_substrate_visualization/visual_atlas_1.html"
-#!/usr/bin/env python3
-"""
-GUM Report Generator v31 (Masterpiece upgrade)
+    # Normalize common prefixes used in dashboards
+    for pref in ('cosmo.', 'predictions.', 'raw.', 'sm.', 'qg.', 'gr.'):
+        if nm.startswith(pref):
+            nm2 = nm[len(pref):]
+            # some names embed units in the key itself
+            if nm.endswith('_km_s_Mpc') or nm2.endswith('_km_s_Mpc'):
+                return 'km/s/Mpc'
+            if nm.endswith('_GeV') or nm2.endswith('_GeV'):
+                return 'GeV'
+            nm = nm2
 
-Design goals:
-- v28 aesthetic + narrative arc (DRPT origin -> filter -> kernel bridge -> falsification -> certificates)
-- bundle-driven (reads audits/bundles|audits/bundler output folders; does NOT run demos)
-- audit-grade: every demo has a reproducible one-liner and hashes; no invented numeric claims
-- referee-friendly: clear origin story, why-it-matters narratives, explicit missing-data callouts
-"""
+    # Explicit suffix hints
+    if nm.endswith('_km_s_Mpc'):
+        return 'km/s/Mpc'
+    if nm.endswith('_GeV'):
+        return 'GeV'
 
+    # Direct map
+    return UNITS_MAP.get(nm, '-')
 
 
 def _domain_from_slug(slug: str) -> str:
