@@ -1,3 +1,4 @@
+from __future__ import annotations
 
 CLAUDE_VISUAL_ATLAS_URL = ""
 BUNDLE_VISUAL_ATLAS_PATH = "atlas_substrate_visualization/visual_atlas_1.html"
@@ -12,7 +13,6 @@ Design goals:
 - referee-friendly: clear origin story, why-it-matters narratives, explicit missing-data callouts
 """
 
-from __future__ import annotations
 
 
 def _domain_from_slug(slug: str) -> str:
