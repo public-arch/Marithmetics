@@ -1,3 +1,31 @@
+
+# -----------------------------
+# Units (report-side resolver)
+# -----------------------------
+UNITS_MAP = {
+    # Cosmology / BB36
+    "H0": "km/s/Mpc",
+    "Omega_b": "-", "Omega_c": "-", "Omega_L": "-", "Omega_r": "-", "Omega_tot": "-",
+    "ombh2": "-", "omch2": "-",
+    "A_s": "-", "n_s": "-", "tau": "-",
+    "ell1": "-", "deltaCMB": "-", "delta0": "-", "F_CMB": "-",
+
+    # QCD / particle masses
+    "Lambda_QCD": "GeV",
+    "MZ": "GeV", "MW": "GeV",
+    "MZ_GeV": "GeV", "MW_GeV": "GeV",
+    "mz": "GeV", "mw": "GeV",
+
+    # Dimensionless anchors
+    "alpha_inv": "-", "alpha0_inv": "-", "alpha_s": "-", "sin2thetaW": "-", "sin2_thetaW": "-", "sin^2(thetaW)": "-",
+}
+
+def unit_for(name: str, units_field) -> str:
+    # Prefer explicit units if provided; else map known names; else "-"
+    if units_field is not None and str(units_field).strip():
+        return str(units_field).strip()
+    nm = (name or "").strip()
+    return UNITS_MAP.get(nm, "-")
 from __future__ import annotations
 
 CLAUDE_VISUAL_ATLAS_URL = ""
@@ -1783,7 +1811,7 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
             dash_rows.append([
                 name,
                 fmt_num(v.get("value")),
-                v.get("units") or "",
+                unit_for(str(v.get("name") or v.get("value_name") or ""), v.get("units")),
                 demo_label_from_slug(v.get("demo_id") or ""),
                 ((_source_sha_prefix(src_path, repo_root, bundle.root) or '') + ' ' + src).strip(),
             ])
@@ -2348,7 +2376,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                     structured_rows.append({
                         "name": (v.get("name") or v.get("value_name")),
                         "value": v.get("value"),
-                        "units": v.get("units") or "",
+                        "units": unit_for(str(v.get("name") or v.get("value_name") or ""), v.get("units")),
                         "source": (v.get("source") or v.get("source_path") or ""),
                     })
             # constants_master
@@ -2378,7 +2406,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                     const_rows.append([
                         str(row.get("name", "")),
                         str(row.get("value", "")),
-                        str(row.get("units") or "-"),
+                        unit_for(str(row.get("name") or ""), row.get("units")),
                         (_source_sha_prefix(str(row.get("source") or ""), repo_root, bundle.root) or "") + " " + str(row.get("source") or ""),
                     ])
                 story.append(table_grid(const_rows, styles, col_widths=[2.0*inch, 2.0*inch, 0.8*inch, 1.2*inch], header_rows=1))
