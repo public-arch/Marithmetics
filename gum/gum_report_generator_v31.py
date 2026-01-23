@@ -921,7 +921,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                     RunRecord(
                         demo=demo,
                         slug=slug_name,
-                        domain=_domain_short(domain),
+                        domain=_domain_short(getattr(r,"domain","")),
                         folder=folder_full,
                         status=str(rr.get("status") or ""),
                         return_code=rr.get("return_code") if rr.get("return_code") is not None else rr.get("returncode"),
@@ -955,7 +955,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                     RunRecord(
                         demo=demo,
                         slug=slug_name,
-                        domain=_domain_short(domain),
+                        domain=_domain_short(getattr(r,"domain","")),
                         folder=folder_full,
                         status=str(rr.get("status") or ""),
                         return_code=rr.get("return_code") if rr.get("return_code") is not None else rr.get("returncode"),
@@ -1695,7 +1695,7 @@ def build_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> Lis
         metrics = extract_stdout_metrics(log_text, max_items=28)
         heads = pick_headline_metrics(metrics, max_items=2)
         head_str = "; ".join([f"{k}={v}" for (k, v) in heads]) if heads else "--"
-        head_rows.append([r.demo, _domain_short(domain), title, head_str])
+        head_rows.append([r.demo, _domain_short(getattr(r,"domain","")), title, head_str])
 
     story.append(table_grid(head_rows, styles, col_widths=[0.8*inch, 0.9*inch, 2.6*inch, 2.7*inch], header_rows=1))
 
