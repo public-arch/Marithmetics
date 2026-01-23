@@ -892,6 +892,30 @@ def find_latest_bundle(repo_root: Path) -> Optional[Path]:
     return candidates[0]
 
 
+
+def _slug_from_log_filename(name: str) -> str:
+    # e.g. standard_model__demo-33-... .out.txt -> standard_model__demo-33-...
+    for suf in (".out.txt", ".err.txt"):
+        if name.endswith(suf):
+            return name[:-len(suf)]
+    return name
+
+def _collect_vendored_artifacts_by_slug(bundle_dir: Path) -> dict[str, list[Path]]:
+    vdir = bundle_dir / "vendored_artifacts"
+    out: dict[str, list[Path]] = {}
+    if not vdir.exists():
+        return out
+    for fp in sorted(vdir.iterdir()):
+        if not fp.is_file():
+            continue
+        # filenames look like: domain__slug__artifact.ext
+        parts = fp.name.split("__")
+        if len(parts) < 3:
+            continue
+        slug = "__".join(parts[:2])  # domain__demo-XX-...
+        out.setdefault(slug, []).append(fp)
+    return out
+
 def load_bundle(bundle_dir: Path) -> Bundle:
     b = Bundle(root=bundle_dir)
 
@@ -2281,7 +2305,8 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                 ))
 
             # Evidence artifacts list
-            arts = artifacts_by_demo.get(demo, [])
+            log_slug = _slug_from_log_filename(Path(log_path).name) if log_path else ''
+              arts = artifacts_by_slug.get(log_slug, [])
             if arts:
                 story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
                 arows = [["File", "sha256 (prefix)", "Size"]]
