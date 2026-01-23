@@ -1,3 +1,6 @@
+
+CLAUDE_VISUAL_ATLAS_URL = ""
+BUNDLE_VISUAL_ATLAS_PATH = "atlas_substrate_visualization/visual_atlas_1.html"
 #!/usr/bin/env python3
 """
 GUM Report Generator v31 (Masterpiece upgrade)
@@ -1528,7 +1531,7 @@ def build_origin_and_visuals(bundle: Bundle, repo_root: Path, styles: Dict[str, 
     ))
 
     story.append(P(
-        "For many more families and cross-base invariants, we encourage readers to explore the Visual Atlas tool. "
+        "For many more families and cross-base invariants, we encourage readers to explore the Visual Atlas (bundle-local: atlas_substrate_visualization/visual_atlas_1.html; Claude: ) tool. "
         "We are still documenting the full family taxonomy, but these objects can already be identified across each base. "
         "Code is available in this GitHub repository. For quick access to the Visual Atlas artifact, see: "
         "bundle-local: atlas_substrate_visualization/visual_atlas_1.html",
