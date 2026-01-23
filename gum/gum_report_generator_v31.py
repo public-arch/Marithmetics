@@ -2308,10 +2308,6 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                 story.append(table_grid(m_rows, styles, col_widths=[2.0*inch, 4.0*inch], header_rows=1))
             else:
                 story.append(Spacer(1, 6))
-                story.append(missing_box(
-                    "Metrics extraction is not available for this demo's stdout format; see the bundled log excerpt and gate list for auditable evidence.",
-                    0.9 * inch,
-                ))
 
             # Evidence artifacts list (vendored_artifacts/*) keyed by r.slug prefix
             arts = []
