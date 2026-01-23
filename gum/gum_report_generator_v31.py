@@ -1560,6 +1560,8 @@ def build_cover(bundle: Bundle, repo_root: Path, styles: Dict[str, ParagraphStyl
 
     story.append(Spacer(1, 8))
     story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
+    story.append(Spacer(1, 6))
+    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
     return story
 
