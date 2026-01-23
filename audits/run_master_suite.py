@@ -161,6 +161,22 @@ def _stream_cmd(cmd: List[str], cwd: Path, printer: Printer, label: str) -> int:
         printer.line("   " + ln.rstrip("\n"))
     return p.wait()
 
+
+def _find_latest_aor_bundle(repo_root: Path, scan_root: str, bundleglob: str) -> Path | None:
+    root = Path(scan_root)
+    if not root.is_absolute():
+        root = repo_root / root
+    if not root.exists():
+        return None
+    # Find newest AOR_* directory, then newest bundle inside it
+    aors = sorted(root.glob("AOR_*"), key=lambda p: p.stat().st_mtime, reverse=True)
+    for a in aors:
+        bundles = sorted(a.glob(bundleglob), key=lambda p: p.stat().st_mtime, reverse=True)
+        for b in bundles:
+            if (b / "logs").exists() and (b / "runs.json").exists():
+                return b
+    return None
+
 def _find_latest_bundle(outroot: Path, glob_pat: str) -> Optional[Path]:
     cands = sorted(outroot.glob(glob_pat), key=lambda p: p.stat().st_mtime, reverse=True)
     for p in cands:
@@ -425,7 +441,7 @@ def main() -> int:
     else:
         aor_root = repo_root / "GUM" / "authority_archive" / f"AOR_{run_id}"
 
-    transcript = aor_root / "runner_transcript.txt"
+    transcript = aor_root / f"runner_transcript_{run_id}.txt"
     printer = Printer(transcript_path=transcript, use_color=not args.no_color)
 
     try:
@@ -459,7 +475,36 @@ def main() -> int:
         aor_root.mkdir(parents=True, exist_ok=True)
         (aor_root / "report").mkdir(parents=True, exist_ok=True)
 
-        bundler_mod = cfg.get("bundler_module", "audits.gum_bundle_v30")
+        
+        # ------------------------------------------------------------------
+        # Bundle selection:
+        #   - If --bundle-dir provided: use it (skip bundler)
+        #   - Else if not --fresh: use latest AoR bundle under --scan-root
+        #   - Else: build a new bundle into aor_root
+        # ------------------------------------------------------------------
+        bundle_dir = None
+
+        if args.bundle_dir:
+            bd = Path(args.bundle_dir)
+            if not bd.is_absolute():
+                bd = repo_root / bd
+            if not bd.exists():
+                printer.line(ANSI.red + ANSI.bold + f"ERROR: --bundle-dir not found: {bd}" + ANSI.reset)
+                return 2
+            bundle_dir = bd
+
+        if (bundle_dir is None) and (not args.fresh):
+            bundle_dir = _find_latest_aor_bundle(repo_root, args.scan_root, cfg.get("bundler_glob", "GUM_BUNDLE_v30_*"))
+            if bundle_dir:
+                printer.line("")
+                printer.line(ANSI.cyan + ANSI.bold + "Using latest AoR bundle (reuse mode):" + ANSI.reset + " " + _safe_relpath(bundle_dir, repo_root))
+                printer.hr("─")
+
+        if bundle_dir is None:
+            # fresh mode (or no previous bundle found): build a new bundle under aor_root
+            aor_root.mkdir(parents=True, exist_ok=True)
+            (aor_root / "report").mkdir(parents=True, exist_ok=True)
+bundler_mod = cfg.get("bundler_module", "audits.gum_bundle_v30")
         bundler_glob = cfg.get("bundler_glob", "GUM_BUNDLE_v30_*")
         bundler_cmd = [sys.executable, "-m", bundler_mod, "--outroot", str(aor_root), "--vendor-artifacts", "--python", args.python or sys.executable]
         timeout_val = args.timeout or cfg.get("per_demo_timeout_sec")
@@ -469,12 +514,13 @@ def main() -> int:
         if demos_root:
             bundler_cmd += ["--demos-root", str(demos_root)]
 
-        rc = _stream_cmd(bundler_cmd, cwd=repo_root, printer=printer, label="Build AoR bundle (gum_bundle_v30)")
-        if rc != 0:
+        if bundle_dir is None:
+            rc = _stream_cmd(bundler_cmd, cwd=repo_root, printer=printer, label="Build AoR bundle (gum_bundle_v30)")
+            if rc != 0:
             printer.line(f"{ANSI.red}{ANSI.bold}Bundler failed (exit {rc}).{ANSI.reset}")
             return rc
 
-        bundle_dir = _find_latest_bundle(aor_root, bundler_glob)
+            bundle_dir = _find_latest_bundle(aor_root, bundler_glob)
 
         # --- DEBUG PROBE (remove after fix) ---
         try:
@@ -485,6 +531,11 @@ def main() -> int:
         if not bundle_dir:
             printer.line(f"{ANSI.red}{ANSI.bold}Could not locate bundle directory under AoR root.{ANSI.reset}")
             return 2
+
+        # If we reused an existing bundle, anchor outputs under its parent AoR directory
+        if bundle_dir and aor_root != bundle_dir.parent:
+            aor_root = bundle_dir.parent
+            (aor_root / "report").mkdir(parents=True, exist_ok=True)
 
         printer.line("")
         printer.line(f"{ANSI.green}{ANSI.bold}Bundle ready:{ANSI.reset} {_safe_relpath(bundle_dir, repo_root)}")
