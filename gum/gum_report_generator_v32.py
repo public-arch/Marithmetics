@@ -2164,7 +2164,8 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                         continue
                     seen.add(name)
                     picked.append(row)
-                    if len(picked) >= 10:
+                    max_pick = 80 if demo == "DEMO-33" else 10
+                  if len(picked) >= max_pick:
                         break
                 const_rows = [["Name", "Value", "Units", "Source"]]
                 for row in picked:
