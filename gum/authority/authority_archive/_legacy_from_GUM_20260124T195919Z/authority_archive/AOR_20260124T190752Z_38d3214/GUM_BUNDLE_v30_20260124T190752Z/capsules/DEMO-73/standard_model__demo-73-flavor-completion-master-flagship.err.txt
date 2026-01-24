@@ -1,0 +1,2 @@
+/workspaces/Marithmetics/demos/standard_model/demo-73-flavor-completion-master-flagship/demo.py:420: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"UTC time : {datetime.datetime.utcnow().isoformat()}Z")

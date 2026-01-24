@@ -1,4 +1,5 @@
 {
+  "aor_root": "gum/authority/authority_archive",
   "curated_order": [
     "DEMO-34",
     "DEMO-64",
