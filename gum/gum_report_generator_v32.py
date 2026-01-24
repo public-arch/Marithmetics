@@ -2210,7 +2210,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                 arows = [["File", "sha256 (prefix)", "Size"]]
                 for a in arts[:12]:
                     arows.append([a.relpath, a.sha256[:12], str(a.size or "")])
-                arows = _v32_build_evidence_rows(bundle.root, str(outp) if outp else (str(errp) if errp else None))
+                arows = _v32_build_evidence_rows(bundle.root, getattr(r, 'slug', '') or getattr(r, 'run_slug', '') or '') if outp else (str(errp) if errp else None))
 
                 story.append(table_grid(arows, styles, col_widths=[4.2*inch, 1.5*inch, 1.1*inch], header_rows=1))
 
@@ -2411,14 +2411,13 @@ def _v32_sha256_prefix(path: Path, n: int = 12) -> str:
             h.update(chunk)
     return h.hexdigest()[:n]
 
-def _v32_build_evidence_rows(bundle_root: Path, log_path: str | None) -> list[list[str]]:
+def _v32_build_evidence_rows(bundle_root: Path, slug: str | None) -> list[list[str]]:
     rows: list[list[str]] = [["File", "sha256 (prefix)", "Size"]]
-    if not log_path:
+    if not slug:
         rows.append(["-", "-", "-"])
         return rows
 
-    lp = Path(log_path)
-    slug = lp.name
+    slug = str(slug).strip()
     if slug.endswith(".out.txt"):
         slug = slug[:-len(".out.txt")]
     elif slug.endswith(".err.txt"):
