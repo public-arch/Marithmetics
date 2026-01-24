@@ -1,0 +1,30 @@
+{
+  "demo_id": "56",
+  "label": "DEMO-56",
+  "demo_path": "demos/controllers/demo-56-deterministic-operator-calculus-vs-fd",
+  "code_sha256": "833acd006473c7d3b15edab630458e0d6098299041ac0850bf0dd2e8805e90a6",
+  "stdout_sha256": "4734477980dbb6ffb4ec35a56aee3dc08f58da64583a14dcce393026cc59cc1a",
+  "stderr_sha256": "f5e77d1c0760411daab72a905be3a6857e6de36e2c294f89baae057b14b68404",
+  "files": [
+    {
+      "path": "controllers__demo-56-deterministic-operator-calculus-vs-fd.err.txt",
+      "sha256": "f5e77d1c0760411daab72a905be3a6857e6de36e2c294f89baae057b14b68404",
+      "bytes": 377
+    },
+    {
+      "path": "demo.py",
+      "sha256": "833acd006473c7d3b15edab630458e0d6098299041ac0850bf0dd2e8805e90a6",
+      "bytes": 50085
+    },
+    {
+      "path": "controllers__demo-56-deterministic-operator-calculus-vs-fd.out.txt",
+      "sha256": "4734477980dbb6ffb4ec35a56aee3dc08f58da64583a14dcce393026cc59cc1a",
+      "bytes": 7359
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "demo_id": "40",
+  "label": "DEMO-40",
+  "demo_path": "demos/substrate/demo-40-universe-from-zero",
+  "code_sha256": "b12dd83a0b14307ec17de80f1286391c85bdae6904536a556a4e35d9445e7eb4",
+  "stdout_sha256": "6a60d85c603ecd266f3a3258152fc2d704b7dc5bfb53e44a1408946f337cc796",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "substrate__demo-40-universe-from-zero.out.txt",
+      "sha256": "6a60d85c603ecd266f3a3258152fc2d704b7dc5bfb53e44a1408946f337cc796",
+      "bytes": 9753
+    },
+    {
+      "path": "demo.py",
+      "sha256": "b12dd83a0b14307ec17de80f1286391c85bdae6904536a556a4e35d9445e7eb4",
+      "bytes": 38504
+    },
+    {
+      "path": "substrate__demo-40-universe-from-zero.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "demo_id": "72",
+  "label": "DEMO-72",
+  "demo_path": "demos/sm/demo-72-yukawa",
+  "code_sha256": "a3fbbc7f14770ef32eb551ff70d69e2613429935741a9228b5175af4c22f5b1b",
+  "stdout_sha256": "844012bb5c4ab21ae8cdafeebb76d9ef02f8f5fc32bfdfe21d8ec94ae8a28abc",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "demo.py",
+      "sha256": "a3fbbc7f14770ef32eb551ff70d69e2613429935741a9228b5175af4c22f5b1b",
+      "bytes": 15824
+    },
+    {
+      "path": "sm__demo-72-yukawa.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "sm__demo-72-yukawa.out.txt",
+      "sha256": "844012bb5c4ab21ae8cdafeebb76d9ef02f8f5fc32bfdfe21d8ec94ae8a28abc",
+      "bytes": 5282
+    }
+  ]
+}

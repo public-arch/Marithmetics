@@ -1,0 +1,107 @@
+====================================================================================================
+    DEMO-71 — ONE ACTION MASTER FLAGSHIP (Classical Noether + Quantum Unitarity + Field Energy)     
+====================================================================================================
+UTC time : 2026-01-23T03:55:50.780219Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout only (JSON/PNG artifacts optional)
+
+spec_sha256: aaa5264269829c942510db18ec4ab4afc1fe1b6d733d829f3e6944b13a9e4d4e
+
+====================================================================================================
+                STAGE 1 — Deterministic triple selection (primary + counterfactuals)                
+====================================================================================================
+Lane survivor pools (raw):
+  U(1):  [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Lane survivor pools (after U(1) coherence v2(wU-1)=3):
+  U(1):  [137]
+Primary: Triple(wU=137, s2=107, s3=103)
+Counterfactuals:
+  Triple(wU=409, s2=211, s3=239)
+  Triple(wU=409, s2=211, s3=307)
+  Triple(wU=409, s2=263, s3=239)
+  Triple(wU=409, s2=263, s3=307)
+  ✅  Gate S0: primary equals (137,107,103)                                      selected=(137, 107, 103)
+  ✅  Gate S1: captured >=4 counterfactual triples (deterministic)               found=4
+====================================================================================================
+                    STAGE 1B — Derived invariants (first principles, no tuning)                     
+====================================================================================================
+q2 = wU - s2 = 30
+v2U = v2(wU-1) = 3
+q3 = (wU-1)/2^v2U = 17
+eps = 1/sqrt(q2) = 0.18257419
+counterfactual q3_cf = 3*q3 = 51
+
+  ✅  Gate I1: invariants match the locked values (q2=30,q3=17,v2U=3)            (q2,q3,v2U)=(30, 17, 3)
+
+----------------------------------------------------------------------------------------------------
+STAGE 2A — ONE ACTION (Classical): Noether + Symplectic Area Witness
+----------------------------------------------------------------------------------------------------
+Budgets: omega=1.0  dt=0.058824  periods=5  T_final=31.415927  steps=534
+Counterfactual budget: dt_cf=0.176471  steps_cf=178  (q3_cf=51)
+
+Initial conditions from the triple:
+  q0=[0.781021898 0.751824818]  (s2/wU, s3/wU)
+  p0=[0.058823529 0.033333333]  (1/q3, 1/q2)
+  L0=-0.018190926005  E0=0.589903539909
+
+One-step Jacobian determinant (phase-space area proxy):
+  det(VV)    = 1.000000000000
+  det(Euler) = 1.006932388262
+
+Max relative drifts over the run:
+  VV   : L_rel_drift_max=9.536e-14  E_rel_drift_max=8.615e-04  traj_err=4.530e-03
+  Euler: L_rel_drift_max=5.304e+00  E_rel_drift_max=5.304e+00  traj_err=1.516e+00
+  SignFlip (anti-action): blowup=True  max_state≈1.035e+06
+  ✅  Gate C1: Noether (VV) angular momentum conserved (strict)                  L_drift=9.536e-14 tol=eps^6=3.704e-05
+  ✅  Gate C2: Symplectic area (VV) det≈1 within eps^3                           |det-1|=0.000e+00 tol=eps^3=6.086e-03
+  ✅  Gate C3: Energy bounded (VV) drift <= eps^2                                E_drift=8.615e-04 eps^2=3.333e-02
+  ✅  Gate C4: Illegal Euler breaks Noether by margin                            L_drift_euler=5.304e+00 floor=eps^2=3.333e-02
+  ✅  Gate C5: Illegal Euler breaks area (|det-1| >= eps^4)                      |det_euler-1|=6.932e-03 eps^4=1.111e-03
+  ✅  Gate C6: Anti-action signflip exhibits blow-up / nonphysical growth        blowup=True max_state=1.035e+06 floor=3.0e+01
+  ✅  Gate CT: counterfactual (dt increased) degrades VV trajectory error by (1+eps) errP=4.530e-03 errCF=4.076e-02 1+eps=1.183
+
+----------------------------------------------------------------------------------------------------
+STAGE 2B — ONE ACTION (Quantum): Unitarity + Reversibility Witness (CN vs Euler vs Wick)
+----------------------------------------------------------------------------------------------------
+Budgets: N=192  k0=4 k1=5  dt=0.03333333  steps=17  T_total=0.56666667
+Counterfactual: dt_cf=0.09444444  steps_cf=6 (keep T_total fixed)
+
+Norm drift: CN=6.661e-16  Euler=1.071e+21  Wick(illegal)=9.924e-01
+Truth error (rel L2): CN=7.306e-02  Euler=1.071e+21  Wick=1.001e+00
+Time-reversal error: CN=1.490e-15  Euler=8.301e+57
+
+  ✅  Gate Q1: CN unitary (norm drift <= eps^4)                                  drift=6.661e-16 eps^4=1.111e-03
+  ✅  Gate Q2: CN reversible (forward+back error <= eps^3)                       err=1.490e-15 eps^3=6.086e-03
+  ✅  Gate Q3: CN accuracy vs exact within eps                                   err=7.306e-02 eps=1.826e-01
+  ✅  Gate Q4: Illegal Euler not unitary (norm drift >= eps^2)                   drift=1.071e+21 eps^2=3.333e-02
+  ✅  Gate Q5: Illegal Euler worse accuracy than CN by margin                    err_eu=1.071e+21 err_cn=7.306e-02 1+eps=1.183
+  ✅  Gate Q6: Wick illegal destroys Schrödinger truth (err >= eps)              err_wick=1.001e+00 eps=1.826e-01
+  ✅  Gate QT: counterfactual degrades CN error by (1+eps)                       errP=7.306e-02 errCF=4.949e-01 1+eps=1.183
+====================================================================================================
+               STAGE 2C — ONE ACTION (Field): Wave Energy Witness (Leapfrog vs Euler)               
+====================================================================================================
+Budgets: N=192  mode=6  c=1.0  dx=0.032725
+dt=0.00192744  steps=294  T_total=0.56666667
+counterfactual: dt_cf=0.00578231  steps_cf=98
+
+Energy drift: Leapfrog=2.184e-06  Euler=4.010e-02  (E0=5.654867e+01)
+Truth error  : Leapfrog=5.008e-06  Euler=1.989e-02
+
+  ✅  Gate F1: Leapfrog energy drift <= eps^3                                    drift=2.184e-06 eps^3=6.086e-03
+  ✅  Gate F2: Leapfrog accuracy vs truth within eps                             err=5.008e-06 eps=1.826e-01
+  ✅  Gate F3: Illegal Euler breaks energy (drift >= eps^2)                      drift=4.010e-02 eps^2=3.333e-02
+  ✅  Gate F4: Illegal Euler worse accuracy than Leapfrog by margin              err_eu=1.989e-02 err_lf=5.008e-06 1+eps=1.183
+  ✅  Gate FT: counterfactual degrades leapfrog error by (1+eps)                 errP=5.008e-06 errCF=4.509e-05 1+eps=1.183
+====================================================================================================
+                             STAGE 3 — Determinism hash + final verdict                             
+====================================================================================================
+determinism_sha256: ad721c918e46015e9259de1cc3344542358ac3e396d33edae81a8ca45c6a959b
+
+====================================================================================================
+                                           FINAL VERDICT                                            
+====================================================================================================
+  ✅  DEMO-71 VERIFIED (One Action triad: classical + quantum + field, with illegal controls + teeth)
+Result: VERIFIED

@@ -1,0 +1,25 @@
+{
+  "demo_id": "75",
+  "label": "DEMO-75",
+  "demo_path": "demos/foundations/demo-75-prediction-ledger-master-flagship",
+  "code_sha256": "25d17946394abb9bda0d483a7a2c86749104c75a5856bfbd5c0792fcdf7a19bc",
+  "stdout_sha256": "f1a842fbcc6c96a57e6d6f984d9eb7b35c9063dd3da39a8698daa2d8b409a38c",
+  "stderr_sha256": "b624c400c9f4ab788d13ec2687cb4fc177507ab33b7f583e1409e60dd3ecbfaf",
+  "files": [
+    {
+      "path": "foundations__demo-75-prediction-ledger-master-flagship.err.txt",
+      "sha256": "b624c400c9f4ab788d13ec2687cb4fc177507ab33b7f583e1409e60dd3ecbfaf",
+      "bytes": 366
+    },
+    {
+      "path": "demo.py",
+      "sha256": "25d17946394abb9bda0d483a7a2c86749104c75a5856bfbd5c0792fcdf7a19bc",
+      "bytes": 43978
+    },
+    {
+      "path": "foundations__demo-75-prediction-ledger-master-flagship.out.txt",
+      "sha256": "f1a842fbcc6c96a57e6d6f984d9eb7b35c9063dd3da39a8698daa2d8b409a38c",
+      "bytes": 11862
+    }
+  ]
+}

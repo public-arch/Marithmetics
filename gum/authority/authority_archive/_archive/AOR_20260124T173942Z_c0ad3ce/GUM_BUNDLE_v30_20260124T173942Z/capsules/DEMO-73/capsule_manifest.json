@@ -1,0 +1,25 @@
+{
+  "demo_id": "73",
+  "label": "DEMO-73",
+  "demo_path": "demos/standard_model/demo-73-flavor-completion-master-flagship",
+  "code_sha256": "33514b94c635ef02f20ed4eaaf8dee9f01b6bf99dec80c9377d8d3a2920ea2a5",
+  "stdout_sha256": "8bac57dd4ea3fbbdb0d740722df2fb8465790115064d643156dcc378caae25fa",
+  "stderr_sha256": "d10597a140b1c7dc9c792266032e26b0fcb12fe1cda20e7da82aae08784a8378",
+  "files": [
+    {
+      "path": "standard_model__demo-73-flavor-completion-master-flagship.err.txt",
+      "sha256": "d10597a140b1c7dc9c792266032e26b0fcb12fe1cda20e7da82aae08784a8378",
+      "bytes": 369
+    },
+    {
+      "path": "demo.py",
+      "sha256": "33514b94c635ef02f20ed4eaaf8dee9f01b6bf99dec80c9377d8d3a2920ea2a5",
+      "bytes": 27133
+    },
+    {
+      "path": "standard_model__demo-73-flavor-completion-master-flagship.out.txt",
+      "sha256": "8bac57dd4ea3fbbdb0d740722df2fb8465790115064d643156dcc378caae25fa",
+      "bytes": 7056
+    }
+  ]
+}

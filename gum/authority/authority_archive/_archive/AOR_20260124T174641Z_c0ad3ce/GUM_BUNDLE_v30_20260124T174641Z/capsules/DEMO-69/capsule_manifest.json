@@ -1,0 +1,30 @@
+{
+  "demo_id": "69",
+  "label": "DEMO-69",
+  "demo_path": "demos/controllers/demo-69-oatb-operator-admissibility-transfer-bridge",
+  "code_sha256": "f88eb6ef2f6c2ce1a11c4cd6664880b49a22c85486e91c5e4a1dec081383da1e",
+  "stdout_sha256": "a923296f6193092efe3e3ea32a9d60929846b31ec1da26f2727612b636027c6f",
+  "stderr_sha256": "d6bcb715ef78f3fbb4345e486fa1ab8f3b37a4d18a611d13f806ac86aa6bc5b1",
+  "files": [
+    {
+      "path": "controllers__demo-69-oatb-operator-admissibility-transfer-bridge.out.txt",
+      "sha256": "a923296f6193092efe3e3ea32a9d60929846b31ec1da26f2727612b636027c6f",
+      "bytes": 10201
+    },
+    {
+      "path": "demo.py",
+      "sha256": "f88eb6ef2f6c2ce1a11c4cd6664880b49a22c85486e91c5e4a1dec081383da1e",
+      "bytes": 47258
+    },
+    {
+      "path": "controllers__demo-69-oatb-operator-admissibility-transfer-bridge.err.txt",
+      "sha256": "d6bcb715ef78f3fbb4345e486fa1ab8f3b37a4d18a611d13f806ac86aa6bc5b1",
+      "bytes": 741
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

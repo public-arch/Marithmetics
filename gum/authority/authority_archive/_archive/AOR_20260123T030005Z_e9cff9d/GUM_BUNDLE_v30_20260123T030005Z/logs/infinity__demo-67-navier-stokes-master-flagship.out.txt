@@ -1,0 +1,100 @@
+
+====================================================================================================
+DEMO-67 — Navier–Stokes Master Flagship (Industrial Certificate) — REFEREE READY
+====================================================================================================
+UTC time : 2026-01-23T03:00:57.707032Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+FFT back.: scipy.fft
+I/O      : stdout only (JSON/PNG artifacts optional)
+
+
+====================================================================================================
+STAGE 1 — Deterministic triple selection (primary + counterfactual labels)
+====================================================================================================
+Lane survivor pools (raw):
+  U(1):  [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Lane survivor pools (after U(1) coherence v2(wU-1)=3):
+  U(1):  [137]
+  SU(2): [107]
+  SU(3): [103, 137]
+PASS  Primary equals (137,107,103)                                                selected=Triple(wU=137, s2=107, s3=103)
+PASS  Captured >=4 counterfactual labels (deterministic)                          found=8
+Counterfactual labels: [{'wU': 409, 's2': 263, 's3': 239}, {'wU': 409, 's2': 263, 's3': 307}, {'wU': 409, 's2': 263, 's3': 443}, {'wU': 409, 's2': 263, 's3': 647}, {'wU': 409, 's2': 367, 's3': 239}, {'wU': 409, 's2': 367, 's3': 307}, {'wU': 409, 's2': 367, 's3': 443}, {'wU': 409, 's2': 367, 's3': 647}]
+
+
+====================================================================================================
+STAGE 2 — Derived invariants and budgets (first principles, no tuning)
+====================================================================================================
+primary=Triple(wU=137, s2=107, s3=103)  q2=30 q3=17 v2U=3 eps=1/sqrt(q2)=0.18257419
+N=128  K_primary=30  K_truth=63
+nu=1/(2*q2*q3)=0.000980392156862745
+T=0.6  dt=0.012244897959183673  steps=49
+spec_sha256: b4c27fa853d4edda6bc5a1ed99b8ee283a56f89b150cd371837c52b87a550b6d
+
+
+====================================================================================================
+STAGE 2B — Industrial readiness ledger (deterministic planning artifact)
+====================================================================================================
+    N    Kp    Kt           dt    steps   FFT3_proxy   mem_rfft_c64_GB   mem_rfft_c128_GB
+------------------------------------------------------------------------------------------
+   64    15    31     0.0245098     408   1.573e+06        0.00324            0.00649
+  128    30    63    0.01226994     815   1.468e+07         0.0256             0.0511
+  256    60   127   0.006134969    1630   1.342e+08          0.203              0.406
+  384    90   187    0.00408998    2445   4.861e+08          0.683               1.37
+  512   120   247   0.003067485    3260   1.208e+09           1.62               3.23
+
+Notes:
+• numpy.fft commonly promotes to complex128/float64 internally; scipy.fft typically keeps complex64/float32.
+• For the flagship certificate, use N=256 (industrial) if hardware allows; N>=384 is HPC territory.
+
+
+====================================================================================================
+STAGE 3 — Kernel admissibility audit (1D real-space kernel minima)
+====================================================================================================
+PASS  Fejér kernel is nonnegative (numerical tol)                                 kmin=2.881e-07
+PASS  Sharp cutoff kernel has negative lobes (non-admissible)                     kmin=-0.103619
+PASS  Signed control kernel has negative lobes (non-admissible)                   kmin=-0.207238
+HF weight energy fraction (>Kp): fejer=0 sharp=0 signed=0.891685
+
+
+====================================================================================================
+STAGE 4 — 3D incompressible NS (Taylor–Green): truth + lawful + illegal controls
+====================================================================================================
+Truth runtime (informational): 12.92 s
+Run runtimes  (law/sharp/signed): 12.78 / 12.85 / 12.91 s
+errors vs truth: lawful=0.922391228639  sharp=9.6289402984  signed=9.62893966419
+divL2: lawful=1.050e-14  sharp=9.972e-10  signed=1.491e-09
+HFfrac(>Kp) state : lawful=0.000e+00  sharp=0.000e+00  signed=9.018e-09
+Energy(t=T): truth=0.00110408  law=6.6545e-06  sharp=0.124554  signed=0.124554
+Enstrophy(t=T): truth=0.00331791  law=1.99651e-05  sharp=0.38798  signed=0.387988
+
+PASS  Gate G1: incompressibility divL2 <= 1e-8 (all variants)                     div_law=1.050e-14 div_sh=9.972e-10 div_si=1.491e-09
+certificate score (lower=better): truth=0  law=7.66841  sharp=28.4338  signed=28.4338
+PASS  Gate G2: lawful closer to truth than illegal controls                       score_law=7.66841 score_illegal_min=28.4338 strong=True
+PASS  Gate G3: signed illegal injects HF weight beyond floor (kernel)             hfW_fejer=0.000e+00 hfW_signed=8.917e-01 floor=3.333e-02
+
+====================================================================================================
+STAGE 5 — Counterfactual teeth (physics fixed, budget K reduced deterministically)
+====================================================================================================
+Counterfactual budget rule: q3 -> 3*q3 = 51  =>  K_cf = round(Kp*q3/q3_cf) = 10
+CF Triple(wU=409, s2=263, s3=239) q3_cf= 51 K= 10 err=0.999993420036 score=35.8008 degrade=True
+CF Triple(wU=409, s2=263, s3=307) q3_cf= 51 K= 10 err=0.999993420036 score=35.8008 degrade=True
+CF Triple(wU=409, s2=263, s3=443) q3_cf= 51 K= 10 err=0.999993420036 score=35.8008 degrade=True
+CF Triple(wU=409, s2=263, s3=647) q3_cf= 51 K= 10 err=0.999993420036 score=35.8008 degrade=True
+PASS  Gate T1: >=3/4 counterfactuals degrade by (1+eps) on certificate score      strong=4/4 eps=0.182574 score_law=7.66841 score_cf=35.8008
+Note: counterfactual labels share the same q3_cf budget; simulation executed once and reused.
+
+
+====================================================================================================
+STAGE 7 — Determinism hash + optional artifacts
+====================================================================================================
+determinism_sha256: 53080a8dd53d5fcf9b06b2fb94394e42a8d96692ea6012e1cc3dcc54a8d6463b
+
+====================================================================================================
+FINAL VERDICT
+====================================================================================================
+PASS  DEMO-67 VERIFIED (NS3D industrial certificate: admissibility + controls + teeth)
+Result: VERIFIED

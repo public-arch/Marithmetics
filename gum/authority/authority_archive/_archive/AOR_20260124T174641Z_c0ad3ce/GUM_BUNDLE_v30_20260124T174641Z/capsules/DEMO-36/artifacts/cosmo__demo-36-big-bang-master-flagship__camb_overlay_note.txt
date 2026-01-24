@@ -1,0 +1,3 @@
+CAMB overlays are evaluation-only.
+This file compares a hardcoded Planck 2018 LCDM baseline vs BB36-derived params.
+These overlays must never feed upstream selection.

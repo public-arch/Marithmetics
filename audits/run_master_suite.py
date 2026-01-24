@@ -391,7 +391,7 @@ def main() -> int:
         description="\n".join(desc_lines),
     )
     ap.add_argument("--config", default="audits/master_suite_config.json", help="Path to config JSON")
-    ap.add_argument("--outroot", default=None, help="AoR output root (default: GUM/authority_archive/AOR_<timestamp>_<gitsha>)")
+    ap.add_argument("--outroot", default=None, help="AoR output root (default: gum/authority/authority_archive/AOR_<timestamp>_<gitsha>)")
     ap.add_argument("--timeout", type=int, default=None, help="Per-demo timeout seconds (passed to bundler)")
     ap.add_argument("--python", default=None, help="Python executable (passed to bundler; default: current python)")
     ap.add_argument("--no-color", action="store_true", help="Disable ANSI colors")
@@ -535,6 +535,17 @@ def main() -> int:
         if pdf_latest and pdf_latest.exists():
             pdf_copy = aor_root / "report" / pdf_latest.name
             shutil.copy2(pdf_latest, pdf_copy)
+            # Also maintain a stable, always-current report pointer in gum/reports/
+            try:
+                latest_dir = repo_root / "gum" / "reports"
+                latest_dir.mkdir(parents=True, exist_ok=True)
+                latest_pdf = latest_dir / "LATEST.pdf"
+                shutil.copy2(pdf_latest, latest_pdf)
+                man_src = pdf_latest.with_suffix(pdf_latest.suffix + ".manifest.json")
+                if man_src.exists():
+                    shutil.copy2(man_src, latest_dir / "LATEST.pdf.manifest.json")
+            except Exception:
+                pass
             man = pdf_latest.with_suffix(pdf_latest.suffix + ".manifest.json")
             if man.exists():
                 manifest_copy = aor_root / "report" / man.name

@@ -10,7 +10,6 @@ Thumbs.db
 
 # Master suite AoR outputs (do not commit)
 GUM/authority_archive/
-gum/reports/
 audits/_outroot_tmp/
 
 # Generated demo artifacts (do not commit)
@@ -24,3 +23,10 @@ demos/**/demo*_cert_bundle_*/
 
 # AoR run directories are local artifacts; keep only release zips
 GUM/authority_archive/AOR_*/
+# Generated reports (keep only LATEST.pdf tracked; ignore timestamped outputs)
+gum/reports/GUM_Report_v*.pdf
+gum/reports/GUM_Report_v*.pdf.manifest.json
+gum/reports/GUM_Report_v*.manifest.json
+!gum/reports/LATEST.pdf
+!gum/reports/LATEST.pdf.manifest.json
+!gum/reports/.gitkeep

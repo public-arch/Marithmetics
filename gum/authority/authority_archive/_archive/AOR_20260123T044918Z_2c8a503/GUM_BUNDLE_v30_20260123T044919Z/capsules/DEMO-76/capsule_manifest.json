@@ -1,0 +1,35 @@
+{
+  "demo_id": "76",
+  "label": "DEMO-76",
+  "demo_path": "demos/standard_model/demo-76-primorial-yukawa-master-flagship",
+  "code_sha256": "8cb834c2124473a177c7a5fd8a20a59035318876f903f8ab7b44eb62a231056f",
+  "stdout_sha256": "eb0255d71a2876d30ef2079f0eb78f4dffeefcc46364adc9b0641e6aa56e718b",
+  "stderr_sha256": "7328c4ea2c0ba6f5367bfacbaf8b6fbf62d4b7289ba7736faf2bd88e9b9de183",
+  "files": [
+    {
+      "path": "standard_model__demo-76-primorial-yukawa-master-flagship.err.txt",
+      "sha256": "7328c4ea2c0ba6f5367bfacbaf8b6fbf62d4b7289ba7736faf2bd88e9b9de183",
+      "bytes": 803
+    },
+    {
+      "path": "standard_model__demo-76-primorial-yukawa-master-flagship.out.txt",
+      "sha256": "eb0255d71a2876d30ef2079f0eb78f4dffeefcc46364adc9b0641e6aa56e718b",
+      "bytes": 10607
+    },
+    {
+      "path": "demo.py",
+      "sha256": "8cb834c2124473a177c7a5fd8a20a59035318876f903f8ab7b44eb62a231056f",
+      "bytes": 32151
+    },
+    {
+      "path": "sm__demo-76-primorial-yukawa-master-flagship.err.txt",
+      "sha256": "2a457bc6e8417388f848dafe56fb5197938a00c5dd8d5d94b284d16df88a0605",
+      "bytes": 767
+    },
+    {
+      "path": "sm__demo-76-primorial-yukawa-master-flagship.out.txt",
+      "sha256": "67fbb8fb3666aa7650fe958b6d62dee27dc484375cbffef548db9549f8e0e2b6",
+      "bytes": 10607
+    }
+  ]
+}
