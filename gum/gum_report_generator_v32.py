@@ -369,7 +369,7 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
             "DEMO-56 is an explicit audit of the analytic machinery: it compares a deterministic operator-calculus construction against more conventional finite-difference intuition. "
             "The point is not that finite differences are 'wrong'; it is that the program needs a reproducible operator pipeline that does not depend on unstable discretization choices. "
             "Fejer smoothing appears here as a principled mechanism: it stabilizes partial sums and suppresses spurious oscillations in a way that can be tested with inequalities. "
-            "This is why the demo is narrative-important even beyond its immediate outputs: it justifies why the report treats Fejer smoothing as part of the kernel rather than a cosmetic post-processing step. "
+            "A ZFC-conservative presentation of the Deterministic Operator Calculus (DOC) is available in the repository under publication_spine/. This is why the demo is narrative-important even beyond its immediate outputs: it justifies why the report treats Fejer smoothing as part of the kernel rather than a cosmetic post-processing step. "
             "For referees, the key value is that the demo exposes falsifiers like nonnegativity and contraction bounds that do not rely on external reference numbers. "
             "If those invariants fail, downstream 'nice-looking' plots should be treated as untrustworthy."
         ),
