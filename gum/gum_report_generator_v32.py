@@ -1274,10 +1274,7 @@ def table_grid(
     """
     Grid table with wrapped Paragraph cells, safe for long text.
     """
-    tdata: List[List[Any]] = []
-    for r_i, row in enumerate(data):
-
-    # v32 policy: Units are not reliable across bundle sources; if a table includes a "Units" column, drop it.
+    # v32 policy: Units are not reliable across bundle sources; drop the Units column if present.
     try:
         if data and isinstance(data[0], list) and "Units" in data[0]:
             u = data[0].index("Units")
@@ -1286,6 +1283,9 @@ def table_grid(
                 col_widths = [w for j, w in enumerate(col_widths) if j != u]
     except Exception:
         pass
+
+    tdata: List[List[Any]] = []
+    for r_i, row in enumerate(data):
         out_row: List[Any] = []
         for c_i, cell in enumerate(row):
             txt = "" if cell is None else str(cell)
@@ -1307,7 +1307,6 @@ def table_grid(
         ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
     ]))
     return tbl
-
 
 def table_kv(pairs: List[Tuple[str, str]], styles: Dict[str, ParagraphStyle], width: float) -> Table:
     data = [["Field", "Value"]]
