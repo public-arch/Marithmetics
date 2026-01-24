@@ -1675,7 +1675,7 @@ def build_falsification_section(bundle: Bundle, styles: Dict[str, ParagraphStyle
         "Small",
     ))
 
-    story.append(H2("3.2 Matrix (top entries)", styles, bookmark="sec3_2"))
+    story.append(H2("3.2 Matrix (full)", styles, bookmark="sec3_2"))
     rows = [["Demo", "What it tests", "One-liner (copy/paste)"]]
     # Prefer bundle falsification matrix ordering; fallback to runs list
     fals = bundle.falsification or []
