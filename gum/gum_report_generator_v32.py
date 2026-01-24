@@ -2228,21 +2228,11 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                     "No parseable key/value metrics were detected in the bundled stdout log for this demo.",
                     0.9 * inch,
                 ))
+            # Evidence artifacts list (v32: always include logs + vendored_artifacts for this demo)
+            story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
+            arows = _v32_build_evidence_rows(bundle.root, getattr(r, 'slug', '') or getattr(r, 'run_slug', '') or '')
+            story.append(table_grid(arows, styles, col_widths=[4.2*inch, 1.5*inch, 1.1*inch], header_rows=1))
 
-      # Evidence artifacts list
-      # Evidence artifacts list (always include logs + vendored artifacts for this demo)
-      story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
-      arows = _v32_build_evidence_rows(bundle.root, getattr(r, 'slug', '') or getattr(r, 'run_slug', '') or '')
-      story.append(table_grid(arows, styles, col_widths=[4.2*inch, 1.5*inch, 1.1*inch], header_rows=1))
-
-      # Include key visual evidence
-ifacts_by_demo.get(demo, [])
-            if arts:
-                story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
-                arows = [["File", "sha256 (prefix)", "Size"]]
-                for a in arts[:12]:
-                    arows.append([a.relpath, a.sha256[:12], str(a.size or "")])
-                story.append(table_grid(arows, styles, col_widths=[4.2*inch, 1.5*inch, 1.1*inch], header_rows=1))
 
             # Include key visual evidence if present for certain demos
             # - BB36 plot (DEMO-36)
