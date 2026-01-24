@@ -1458,8 +1458,8 @@ def build_origin_and_visuals(bundle: Bundle, repo_root: Path, styles: Dict[str, 
         "Body",
     ))
 
-    drpt_city = resolve_asset(repo_root, bundle.root, "DRPTCity137_v2.png", "DRPTCity137.png")
-    drpt_surv = resolve_asset(repo_root, bundle.root, "DRPTSurvivor137_v2.png", "DRPTSurvivor137.png")
+    drpt_city = resolve_asset(repo_root, bundle.root, "DRPTCity137_v3.png", "DRPTCity137_v2.png", "DRPTCity137.png")
+    drpt_surv = resolve_asset(repo_root, bundle.root, "DRPTSurvivor137_v3.png", "DRPTSurvivor137_v2.png", "DRPTSurvivor137.png")
     for img_path, caption in [
         (drpt_city, "Figure 0.1A: DRPT City (example motif)"),
         (drpt_surv, "Figure 0.1B: DRPT Survivor lattice (example motif)"),
