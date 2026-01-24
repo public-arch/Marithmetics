@@ -2210,7 +2210,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                 arows = [["File", "sha256 (prefix)", "Size"]]
                 for a in arts[:12]:
                     arows.append([a.relpath, a.sha256[:12], str(a.size or "")])
-                arows = _v32_build_evidence_rows(bundle.root, log_path)
+                arows = _v32_build_evidence_rows(bundle.root, str(outp) if outp else (str(errp) if errp else None))
 
                 story.append(table_grid(arows, styles, col_widths=[4.2*inch, 1.5*inch, 1.1*inch], header_rows=1))
 
