@@ -2172,7 +2172,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                         str(row.get("name", "")),
                         str(row.get("value", "")),
                         str(row.get("units", "")),
-                        str(row.get("source_sha256", ""))[:12],
+                        str((row.get("source") or row.get("source_path") or row.get("source_file") or row.get("source_sha256") or "-"))[:120],
                     ])
                 story.append(table_grid(const_rows, styles, col_widths=[2.0*inch, 2.0*inch, 0.8*inch, 1.2*inch], header_rows=1))
             else:
