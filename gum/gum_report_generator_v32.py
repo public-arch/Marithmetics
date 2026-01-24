@@ -395,7 +395,7 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
     },
     "DEMO-37": {
         "cluster": "SM",
-        "title": "Math-SM master flagship (alpha_s at MZ; confinement and freequark branches)",
+        "title": "SM dressing interface (alpha_s at MZ; confinement vs free-quark branches)",
         "tests": "alpha_s(MZ) branch structure; confinement/freequark variants; invariance of derived couplings; citation-grade outputs.",
         "highlights": [
             "Demonstrates that multiple physically meaningful branches can arise from the same kernel constraints.",
@@ -413,7 +413,7 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
     },
     "DEMO-54": {
         "cluster": "SM",
-        "title": "Master flagship demo (multi-stage closure sanity check)",
+        "title": "Integration pipeline regression sentinel (multi-stage closure)",
         "tests": "End-to-end master pipeline sanity: stage-wise acceptance, multiple manifest checks, deterministic closure.",
         "highlights": [
             "Flagship integration test: verifies that multiple subsystems cohere in one run.",
@@ -431,7 +431,7 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
     },
     "DEMO-55": {
         "cluster": "SM",
-        "title": "Proton radius master flagship",
+        "title": "Hadronic stress test (proton radius extraction)",
         "tests": "Hadronic-scale observable derived from kernel constraints; sensitivity to dressing; reproducibility of extraction.",
         "highlights": [
             "Flagship: targets a historically contentious observable (proton radius) as a stress test.",
@@ -449,7 +449,7 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
     },
     "DEMO-70": {
         "cluster": "SM",
-        "title": "Higgs master flagship (surrogate closure and stability checks)",
+        "title": "Higgs-sector surrogate + stability audit",
         "tests": "Higgs-sector surrogate closure; lambda_H and mH proxy outputs; stability under dressing rules.",
         "highlights": [
             "Flagship: stresses the scalar sector where radiative/threshold effects are subtle.",
