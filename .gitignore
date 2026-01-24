@@ -21,3 +21,6 @@ demos/**/demo*_cert_bundle_*/
 # Release zips (keep ignored generally; allow authority archive if desired)
 *.zip
 !GUM/authority_archive/*.zip
+
+# AoR run directories are local artifacts; keep only release zips
+GUM/authority_archive/AOR_*/
