@@ -1,77 +1,15 @@
+#!/usr/bin/env python3
+"""
+GUM Report Generator v31 (Masterpiece upgrade)
+
+Design goals:
+- v28 aesthetic + narrative arc (DRPT origin -> filter -> kernel bridge -> falsification -> certificates)
+- bundle-driven (reads audits/bundles|audits/bundler output folders; does NOT run demos)
+- audit-grade: every demo has a reproducible one-liner and hashes; no invented numeric claims
+- referee-friendly: clear origin story, why-it-matters narratives, explicit missing-data callouts
+"""
+
 from __future__ import annotations
-
-# -----------------------------
-# Units (report-side resolver)
-# -----------------------------
-UNITS_MAP = {
-    # Cosmology / BB36
-    "H0": "km/s/Mpc",
-    "Omega_b": "-", "Omega_c": "-", "Omega_L": "-", "Omega_r": "-", "Omega_tot": "-",
-    "ombh2": "-", "omch2": "-",
-    "A_s": "-", "n_s": "-", "tau": "-",
-    "ell1": "-", "deltaCMB": "-", "delta0": "-", "F_CMB": "-",
-
-    # QCD / particle masses
-    "Lambda_QCD": "GeV",
-    "MZ": "GeV", "MW": "GeV",
-    "MZ_GeV": "GeV", "MW_GeV": "GeV",
-    "mz": "GeV", "mw": "GeV",
-
-    # Dimensionless anchors
-    "alpha_inv": "-", "alpha0_inv": "-", "alpha_s": "-", "sin2thetaW": "-", "sin2_thetaW": "-", "sin^2(thetaW)": "-",
-}
-
-def unit_for(name: str, units_field) -> str:
-    # Prefer explicit units if provided; else map known names; else '-'
-    if units_field is not None and str(units_field).strip():
-        return str(units_field).strip()
-    nm = (name or '').strip()
-
-    # Normalize common prefixes used in dashboards
-    for pref in ('cosmo.', 'predictions.', 'raw.', 'sm.', 'qg.', 'gr.'):
-        if nm.startswith(pref):
-            nm2 = nm[len(pref):]
-            # some names embed units in the key itself
-            if nm.endswith('_km_s_Mpc') or nm2.endswith('_km_s_Mpc'):
-                return 'km/s/Mpc'
-            if nm.endswith('_GeV') or nm2.endswith('_GeV'):
-                return 'GeV'
-            nm = nm2
-
-    # Explicit suffix hints
-    if nm.endswith('_km_s_Mpc'):
-        return 'km/s/Mpc'
-    if nm.endswith('_GeV'):
-        return 'GeV'
-
-    # Direct map
-    return UNITS_MAP.get(nm, '-')
-
-
-def _domain_from_slug(slug: str) -> str:
-    # slug examples: cosmo__demo-36..., standard_model__demo-33...
-    if not slug:
-        return "n/a"
-    if "__" in slug:
-        return slug.split("__", 1)[0]
-    return "n/a"
-
-def _domain_short(s: str) -> str:
-    m = {
-        "standard_model": "std_model",
-        "general_relativity": "gr",
-        "quantum_gravity": "qg",
-        "foundations": "foundations",
-        "controllers": "controllers",
-        "infinity": "infinity",
-        "cosmo": "cosmo",
-        "sm": "sm",
-        "quantum": "quantum",
-        "bridge": "bridge",
-        "substrate": "substrate",
-    }
-    return m.get(s, s)
-
 
 import argparse
 import csv
@@ -108,19 +46,6 @@ from reportlab.platypus import (
     TableStyle,
 )
 from reportlab.platypus.tableofcontents import TableOfContents
-
-
-def _fmt_cell(v, missing_reason: str = "MISSING") -> str:
-    """Production rule: no blank cells in tables."""
-    if v is None:
-        return missing_reason
-    if isinstance(v, str):
-        vv = v.strip()
-        return vv if vv else missing_reason
-    return str(v)
-
-def _fmt_sha(v) -> str:
-    return _fmt_cell(v, "MISSING (no artifacts sha)")
 
 
 __version__ = "31.2-masterpiece"
@@ -263,7 +188,7 @@ def demo_label_from_slug(slug_or_id: str) -> str:
 
 
 def demo_sort_key(label: str) -> Tuple[int, str]:
-    # DEMO-66 sorts after DEMO-66 but before DEMO-67
+    # DEMO-66a sorts after DEMO-66 but before DEMO-67
     m = re.match(r"DEMO-(\d+)([a-z]?)", label)
     if not m:
         return (10**9, label)
@@ -296,7 +221,6 @@ def hard_wrap_command(cmd: str) -> str:
 
 FLAGSHIPS: set[str] = {
     "DEMO-33",
-    "DEMO-34",
     "DEMO-36",
     "DEMO-40",
     "DEMO-54",
@@ -469,23 +393,6 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
             "In the blended story, DEMO-33 shows how a discrete kernel constrains a seemingly continuous field theory without hand-tuned parameters."
         ),
     },
-    "DEMO-34": {
-        "cluster": "BRIDGE",
-        "title": "Ω→SM master flagship (v1)",
-        "tests": "Tier-A₁ joint-triple Ω certificate (finite band + necessity ablations); lane-local stress failure by 100k; Tier-C SM overlay (PDG only for Δ%).",
-        "highlights": [
-            "Tier-A₁ joint-triple certificate with necessity ablations.",
-            "Lane-local Tier-A stress test demonstrates lane-local locks fail by 100k.",
-            "Tier-C SM overlay keeps PDG usage strictly in Δ% reporting.",
-        ],
-        "narrative": (
-            "DEMO-34 is the Ω→SM master flagship. It is release-relevant because it combines a strict Tier-A₁ joint-triple certificate "
-            "with explicit necessity ablations and a lane-local stress test that surfaces real failure modes at scale. "
-            "It then layers a Tier-C SM overlay where PDG is used only for Δ% reporting. "
-            "This is exactly the posture needed for a high-standard report: certify what is claimed, expose what fails, and keep overlays honest."
-        ),
-    },
-
     "DEMO-37": {
         "cluster": "SM",
         "title": "Math-SM master flagship (alpha_s at MZ; confinement and freequark branches)",
@@ -928,86 +835,6 @@ def find_latest_bundle(repo_root: Path) -> Optional[Path]:
     return candidates[0]
 
 
-
-
-def _sha256_file(path: Path) -> str:
-    import hashlib
-    h = hashlib.sha256()
-    with path.open("rb") as f:
-        for chunk in iter(lambda: f.read(1024 * 1024), b""):
-            h.update(chunk)
-    return h.hexdigest()
-
-def _slug_from_log_filename(name: str) -> str:
-    # e.g. standard_model__demo-33-... .out.txt -> standard_model__demo-33-...
-    for suf in (".out.txt", ".err.txt"):
-        if name.endswith(suf):
-            return name[:-len(suf)]
-    return name
-
-def _collect_vendored_artifacts_by_slug(bundle_dir: Path) -> dict[str, list[Path]]:
-    vdir = bundle_dir / "vendored_artifacts"
-    out: dict[str, list[Path]] = {}
-    if not vdir.exists():
-        return out
-    for fp in sorted(vdir.iterdir()):
-        if not fp.is_file():
-            continue
-        # filenames look like: domain__slug__artifact.ext
-        parts = fp.name.split("__")
-        if len(parts) < 3:
-            continue
-        slug = "__".join(parts[:2])  # domain__demo-XX-...
-        out.setdefault(slug, []).append(fp)
-    return out
-
-
-def _run_slug(r) -> str:
-    return getattr(r, "slug", "") or getattr(r, "run_slug", "") or ""
-
-
-def _infer_domain_from_folder(folder_full: str) -> str:
-    # folder like demos/standard_model/demo-33-...
-    parts = str(folder_full).replace("\\", "/").split("/")
-    if len(parts) >= 2 and parts[0] == "demos":
-        return parts[1]
-    return ""
-
-def _canonical_run_slug(domain: str, folder_full: str, fallback: str = "") -> str:
-    # Canonical slug matches bundle filenames:
-    #   logs:            domain__<demo-folder>.out.txt
-    #   vendored files:  domain__<demo-folder>__artifact.ext
-    base = Path(folder_full).name if folder_full else (fallback or "")
-    if not domain:
-        return base
-    if base.startswith(domain + "__"):
-        return base
-    if "__" in base:
-        # already has some prefix; trust it
-        return base
-    return f"{domain}__{base}"
-
-def _source_sha_prefix(source_path: str, repo_root: Path, bundle_root: Path) -> str:
-    # Return 12-char sha prefix if resolvable, else "".
-    sp = (source_path or "").strip()
-    if not sp:
-        return ""
-    # If already a hash-like token, return it.
-    if re.fullmatch(r"[0-9a-fA-F]{12,64}", sp):
-        return sp[:12]
-    # 1) Try repo path
-    fp = (repo_root / sp)
-    if fp.exists() and fp.is_file():
-        return sha256_file(fp)[:12]
-    # 2) Try vendored_artifacts by filename suffix match
-    vdir = bundle_root / "vendored_artifacts"
-    if vdir.exists():
-        base = Path(sp).name
-        for cand in vdir.iterdir():
-            if cand.is_file() and cand.name.endswith(base):
-                return sha256_file(cand)[:12]
-    return ""
-
 def load_bundle(bundle_dir: Path) -> Bundle:
     b = Bundle(root=bundle_dir)
 
@@ -1033,9 +860,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                 demo_path = str(rr.get("demo_path") or rr.get("path") or "")
                 # Prefer a full path for rerun commands when available.
                 folder_full = demo_path or folder
-                slug_name = Path(folder_full).name if folder_full else str(key)
-                domain = domain or _infer_domain_from_folder(folder_full)
-                slug_name = _canonical_run_slug(domain, folder_full, fallback=slug_name)
+                slug_name = Path(folder).name if folder else (Path(folder_full).name if folder_full else str(key))
                 cmd = str(rr.get("cmd") or "")
                 one_liner = str(rr.get("one_liner") or "")
                 if not cmd:
@@ -1048,7 +873,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                     RunRecord(
                         demo=demo,
                         slug=slug_name,
-                        domain=(domain or _infer_domain_from_folder(folder_full)),
+                        domain=domain,
                         folder=folder_full,
                         status=str(rr.get("status") or ""),
                         return_code=rr.get("return_code") if rr.get("return_code") is not None else rr.get("returncode"),
@@ -1072,9 +897,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                 folder = str(rr.get("folder") or "")
                 demo_path = str(rr.get("demo_path") or rr.get("path") or "")
                 folder_full = demo_path or folder
-                slug_name = Path(folder_full).name if folder_full else key
-                domain = domain or _infer_domain_from_folder(folder_full)
-                slug_name = _canonical_run_slug(domain, folder_full, fallback=slug_name)
+                slug_name = Path(folder).name if folder else (Path(folder_full).name if folder_full else key)
                 cmd = str(rr.get("cmd") or "") or "python demo.py"
                 one_liner = str(rr.get("one_liner") or "")
                 if not one_liner and folder_full:
@@ -1084,7 +907,7 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                     RunRecord(
                         demo=demo,
                         slug=slug_name,
-                        domain=(domain or _infer_domain_from_folder(folder_full)),
+                        domain=domain,
                         folder=folder_full,
                         status=str(rr.get("status") or ""),
                         return_code=rr.get("return_code") if rr.get("return_code") is not None else rr.get("returncode"),
@@ -1258,48 +1081,6 @@ def missing_box(text: str, width: float, height: float = 1.0 * inch) -> Table:
 # ----------------------------
 # PDF Doc template with TOC + outline
 # ----------------------------
-def build_front_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> List[Any]:
-    story: List[Any] = []
-    story.append(H1("Executive Summary", styles, bookmark="exec_front"))
-
-    bullets = [
-        "This release presents a computational audit of the Marithmetics hypothesis: that physical law emerges as the unique eigen-structure of a Zero-Dimensional (0D) discrete substrate (residue rings and DRPTs), and that many continuum paradoxes are mid-lift artifacts.",
-        "The kernel is survivor selection, not parameter tuning. The primary triple (wU=137, s2=107, s3=103) is produced by a deterministic sieve and is unique under declared constraints; ablations cause solution-space explosion.",
-        "The bridge from discrete structure to continuum operators is formalized via Deterministic Operator Calculus (DOC), preserving ZFC-conservative reasoning while making infinity operational (vanishing residual law).",
-        "Verification is delivered as a cryptographically sealed evidence ledger: every demo run produces rerunnable stdout/stderr logs, vendored artifacts, and a bundle seal (BUNDLE_SHA256) suitable for referee reproduction and paper citation.",
-        "Representation independence is explicitly tested via base-gauge (Rosetta) roundtrip tests across multiple numeral systems, demonstrating that results are intrinsic to integer structure, not notation.",
-    ]
-
-    story.append(Paragraph("Summary bullets:", styles["Small"]))
-    for b in bullets:
-        story.append(Paragraph("• " + b, styles["Small"]))
-
-    # Evidence pointers
-    try:
-        bsha = (bundle.root / "bundle_sha256.txt").read_text(encoding="utf-8").strip()
-    except Exception:
-        bsha = ""
-    if bsha:
-        story.append(Spacer(1, 6))
-        story.append(Paragraph(f"<b>Bundle seal:</b> {bsha}", styles["Small"]))
-
-    # Visual Atlas pointers (if configured)
-    try:
-        claude = globals().get("CLAUDE_VISUAL_ATLAS_URL","")
-        localp = globals().get("BUNDLE_VISUAL_ATLAS_PATH","")
-        if localp or claude:
-            story.append(Spacer(1, 6))
-            story.append(Paragraph("<b>Visual Explorer:</b>", styles["Small"]))
-            if localp:
-                story.append(Paragraph(f"• bundle-local: {localp}", styles["Tiny"]))
-            if claude:
-                story.append(Paragraph(f"• Claude: {claude}", styles["Tiny"]))
-    except Exception:
-        pass
-
-    return story
-
-
 
 class AuditDocTemplate(BaseDocTemplate):
     def __init__(self, filename: str, pagesize=letter, footer_line1: str = "", footer_line2: str = "", **kw):
@@ -1558,10 +1339,6 @@ def build_cover(bundle: Bundle, repo_root: Path, styles: Dict[str, ParagraphStyl
     )
     story.append(Paragraph(author_note, styles["Body"]))
 
-    story.append(Spacer(1, 8))
-    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
-    story.append(Spacer(1, 6))
-    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
     return story
 
@@ -1577,8 +1354,6 @@ def build_toc(styles: Dict[str, ParagraphStyle]) -> List[Any]:
     story.append(H1("Table of Contents", styles, bookmark="toc"))
     story.append(Spacer(1, 0.1 * inch))
     story.append(toc)
-    story.append(Spacer(1, 8))
-    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
     return story
 
@@ -1612,10 +1387,10 @@ def build_origin_and_visuals(bundle: Bundle, repo_root: Path, styles: Dict[str, 
     ))
 
     story.append(P(
-        "For many more families and cross-base invariants, we encourage readers to explore the Visual Atlas (bundle-local: atlas_substrate_visualization/visual_atlas_1.html; Claude: ) tool. "
+        "For many more families and cross-base invariants, we encourage readers to explore the Visual Atlas tool. "
         "We are still documenting the full family taxonomy, but these objects can already be identified across each base. "
         "Code is available in this GitHub repository. For quick access to the Visual Atlas artifact, see: "
-        "bundle-local: atlas_substrate_visualization/visual_atlas_1.html",
+        "https://claude.ai/public/artifacts/3aac6f21-8ad0-42ff-82df-52c14d6a42b2",
         styles,
         "Small",
     ))
@@ -1689,8 +1464,6 @@ def build_origin_and_visuals(bundle: Bundle, repo_root: Path, styles: Dict[str, 
             height=0.9 * inch,
         ))
 
-    story.append(Spacer(1, 8))
-    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
     return story
 
@@ -1717,7 +1490,7 @@ def build_bridge_section(styles: Dict[str, ParagraphStyle]) -> List[Any]:
         ["Analytic filter", "Suppresses noise; isolates stable structure (Fejer/Cesaro)", "DEMO-56; influences later closures"],
         ["Lift / transfer rules", "Lawful maps between discrete and continuum regimes", "DEMO-65; downstream GR/NS demos"],
         ["Action principle", "Dynamics spine; symmetry constraints", "DEMO-71; downstream GR/NS demos"],
-        ["Closure layers", "Domain-specific manifests built from the kernel", "SM (33/37/54/55/70), Cosmo (36/39), QG (66), NS (67)"],
+        ["Closure layers", "Domain-specific manifests built from the kernel", "SM (33/37/54/55/70), Cosmo (36/39), QG (66a/66b), NS (67)"],
     ]
     col_widths = [1.5 * inch, 2.3 * inch, 2.8 * inch]
     story.append(table_grid(kernel_map, styles, col_widths=col_widths, header_rows=1))
@@ -1749,13 +1522,11 @@ def build_bridge_section(styles: Dict[str, ParagraphStyle]) -> List[Any]:
         styles,
         "Small",
     ))
-    story.append(Spacer(1, 8))
-    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
     return story
 
 
-def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, ParagraphStyle]) -> List[Any]:
+def build_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> List[Any]:
     story: List[Any] = []
     story.append(H1("2. Executive Summary (Coverage and Audit Posture)", styles, bookmark="sec2"))
     story.append(P(
@@ -1776,7 +1547,7 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
         tests = info.get("tests") or "Bundle run (no narrative metadata available)."
         table.append([
             r.demo,
-            _domain_short(r.domain) if r.domain else "n/a",
+            r.domain or "n/a",
             tests,
             r.status or "n/a",
             fmt_seconds(r.runtime_sec),
@@ -1798,7 +1569,7 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
         "Small",
     ))
 
-    dash_rows: List[List[str]] = [["Name", "Value", "Demo", "Source"]]
+    dash_rows: List[List[str]] = [["Name", "Value", "Units", "Demo", "Source"]]
     # Prefer values.jsonl when present; fallback to constants_master
     preferred_names = [
         # SM-ish
@@ -1825,9 +1596,9 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
             dash_rows.append([
                 name,
                 fmt_num(v.get("value")),
-                unit_for(str(v.get("name") or v.get("value_name") or ""), v.get("units")),
+                v.get("units") or "",
                 demo_label_from_slug(v.get("demo_id") or ""),
-                ((_source_sha_prefix(src_path, repo_root, bundle.root) or '') + ' ' + src).strip(),
+                src,
             ])
 
     # Add a few from constants_master if not already
@@ -1842,7 +1613,7 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
             dash_rows.append([
                 nm,
                 fmt_num(row.get("value")),
-                unit_for(str(nm), row.get("units")),
+                row.get("units") or "",
                 demo_label_from_slug(row.get("demo_id") or ""),
                 row.get("source_path") or "",
             ])
@@ -1855,7 +1626,7 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
             height=1.1*inch,
         ))
     else:
-        col_widths = [2.6*inch, 1.4*inch, 1.0*inch, 1.8*inch]
+        col_widths = [2.2*inch, 1.2*inch, 0.7*inch, 0.8*inch, 1.9*inch]
         story.append(table_grid(dash_rows, styles, col_widths=col_widths, header_rows=1))
 
     story.append(Spacer(1, 10))
@@ -1876,13 +1647,11 @@ def build_exec_summary(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragr
         metrics = extract_stdout_metrics(log_text, max_items=28)
         heads = pick_headline_metrics(metrics, max_items=2)
         head_str = "; ".join([f"{k}={v}" for (k, v) in heads]) if heads else "--"
-        head_rows.append([r.demo, _domain_short(getattr(r,"domain","")), title, head_str])
+        head_rows.append([r.demo, r.domain, title, head_str])
 
     story.append(table_grid(head_rows, styles, col_widths=[0.8*inch, 0.9*inch, 2.6*inch, 2.7*inch], header_rows=1))
 
 
-    story.append(Spacer(1, 8))
-    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
     return story
 
@@ -1914,12 +1683,12 @@ def build_falsification_section(bundle: Bundle, styles: Dict[str, ParagraphStyle
         for entry in fals[:18]:
             demo = demo_label_from_slug(entry.get("demo") or entry.get("demo_id") or "")
             info = DEMO_INFO.get(demo, {})
-            tests = info.get("tests") or "Yukawa coupling admissibility checks"
+            tests = info.get("tests") or "(context not yet annotated)"
             rows.append([demo, tests, hard_wrap_command(entry.get("one_liner") or "")])
     else:
         for r in sorted(bundle.runs, key=lambda x: demo_sort_key(x.demo))[:18]:
             info = DEMO_INFO.get(r.demo, {})
-            tests = info.get("tests") or "Yukawa coupling admissibility checks"
+            tests = info.get("tests") or "(context not yet annotated)"
             rows.append([r.demo, tests, hard_wrap_command(r.one_liner or r.cmd)])
 
     col_widths = [0.75*inch, 2.3*inch, 3.75*inch]
@@ -1930,8 +1699,6 @@ def build_falsification_section(bundle: Bundle, styles: Dict[str, ParagraphStyle
         styles,
         "Small",
     ))
-    story.append(Spacer(1, 8))
-    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
     return story
 
@@ -1978,7 +1745,7 @@ def read_demo_log(bundle: Bundle, run: RunRecord) -> Optional[str]:
     if not logs_dir.exists():
         return None
     # Most logs are named "{domain}__{slug}.out.txt"
-    cand = logs_dir / f"{run.slug}.out.txt"
+    cand = logs_dir / f"{run.domain}__{run.slug}.out.txt"
     if cand.exists():
         return cand.read_text(encoding="utf-8", errors="replace")
     # try any log containing slug
@@ -2267,36 +2034,6 @@ def select_key_metrics(metrics: List[Tuple[str, str]], max_items: int = 18) -> L
 
 
 
-
-def _artifact_display_row(bundle_root: Path, a) -> list[str]:
-    """
-    Production rule: never show blank artifact File/Size columns.
-    If relpath/size missing, try to recover from vendored_artifacts/ by sha.
-    """
-    rel = getattr(a, "relpath", "") or ""
-    sha = getattr(a, "sha256", "") or ""
-    size = getattr(a, "size", None)
-
-    # backfill size if possible
-    if (not rel) or (size is None) or (size == ""):
-        vend = bundle_root / "vendored_artifacts"
-        if vend.exists() and sha:
-            # find by sha prefix match (files are already hashed and indexed)
-            for fp in vend.iterdir():
-                if fp.is_file():
-                    # if relpath missing, use filename
-                    if not rel:
-                        rel = fp.name if sha[:6] in fp.name or True else rel
-                    # size backfill
-                    if size is None or size == "":
-                        try:
-                            size = fp.stat().st_size
-                        except Exception:
-                            pass
-                    break
-
-    return [rel or "MISSING", (sha[:12] if sha else "MISSING"), (str(size) if size is not None else "MISSING")]
-
 def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, ParagraphStyle]) -> List[Any]:
     story: List[Any] = []
     story.append(H1("4. Demo Certificates (Grouped Stories)", styles, bookmark="sec4"))
@@ -2394,7 +2131,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                     structured_rows.append({
                         "name": (v.get("name") or v.get("value_name")),
                         "value": v.get("value"),
-                        "units": unit_for(str(v.get("name") or v.get("value_name") or ""), v.get("units")),
+                        "units": v.get("units") or "",
                         "source": (v.get("source") or v.get("source_path") or ""),
                     })
             # constants_master
@@ -2419,15 +2156,15 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                     picked.append(row)
                     if len(picked) >= 10:
                         break
-                const_rows = [["Name", "Value", "Source"]]
+                const_rows = [["Name", "Value", "Units", "Source"]]
                 for row in picked:
                     const_rows.append([
                         str(row.get("name", "")),
                         str(row.get("value", "")),
-                        unit_for(str(row.get("name") or ""), row.get("units")),
-                        (_source_sha_prefix(str(row.get("source") or ""), repo_root, bundle.root) or "") + " " + str(row.get("source") or ""),
+                        str(row.get("units", "")),
+                        str(row.get("source_sha256", ""))[:12],
                     ])
-                story.append(table_grid(const_rows, styles, col_widths=[2.6*inch, 2.2*inch, 1.8*inch], header_rows=1))
+                story.append(table_grid(const_rows, styles, col_widths=[2.0*inch, 2.0*inch, 0.8*inch, 1.2*inch], header_rows=1))
             else:
                 story.append(Paragraph(
                     "<b>Structured exports:</b> not present in this bundle for this demo. "
@@ -2451,36 +2188,19 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                 story.append(table_grid(m_rows, styles, col_widths=[2.0*inch, 4.0*inch], header_rows=1))
             else:
                 story.append(Spacer(1, 6))
+                story.append(missing_box(
+                    "No parseable key/value metrics were detected in the bundled stdout log for this demo.",
+                    0.9 * inch,
+                ))
 
-            # Evidence artifacts list (vendored_artifacts/*) keyed by r.slug prefix
-            arts = []
-            try:
-                vdir = bundle.root / "vendored_artifacts"
-                if vdir.exists():
-                    prefix = (r.slug or "") + "__"
-                    for fp in sorted(vdir.iterdir()):
-                        if fp.is_file() and fp.name.startswith(prefix):
-                            arts.append(fp)
-            except Exception:
-                arts = []
-
-            story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
+            # Evidence artifacts list
+            arts = artifacts_by_demo.get(demo, [])
             if arts:
+                story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
                 arows = [["File", "sha256 (prefix)", "Size"]]
-                for fp in arts[:12]:
-                    try:
-                        rel = str(fp.relative_to(bundle.root))
-                        sha = sha256_file(fp)[:12]
-                        size = fp.stat().st_size
-                    except Exception:
-                        rel = fp.name
-                        sha = "MISSING"
-                        size = "MISSING"
-                    arows.append([rel, sha, str(size)])
+                for a in arts[:12]:
+                    arows.append([a.relpath, a.sha256[:12], str(a.size or "")])
                 story.append(table_grid(arows, styles, col_widths=[4.2*inch, 1.5*inch, 1.1*inch], header_rows=1))
-            else:
-                story.append(Paragraph("None found for this demo in vendored_artifacts/.", styles["Tiny"]))
-
 
             # Include key visual evidence if present for certain demos
             # - BB36 plot (DEMO-36)
@@ -2531,7 +2251,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                     height=0.6*inch,
                 ))
 
-    story.append(PageBreak())
+            story.append(PageBreak())
 
     return story
 
@@ -2578,8 +2298,6 @@ def build_appendices(bundle: Bundle, repo_root: Path, styles: Dict[str, Paragrap
             height=0.9*inch,
         ))
 
-    story.append(Spacer(1, 8))
-    story.append(Paragraph("<b>Publication spine:</b> DOC and other release papers are available in the repository under <code>publication_spine/</code>.", styles["Small"]))
     story.append(PageBreak())
     return story
 
@@ -2628,11 +2346,10 @@ def build_pdf(bundle_dir: Path, out_path: Path) -> Tuple[Path, Path]:
 
     story: List[Any] = []
     story.extend(build_cover(bundle, repo_root, styles))
-    story.extend(build_front_exec_summary(bundle, styles))
     story.extend(build_toc(styles))
     story.extend(build_origin_and_visuals(bundle, repo_root, styles))
     story.extend(build_bridge_section(styles))
-    story.extend(build_exec_summary(bundle, repo_root, styles))
+    story.extend(build_exec_summary(bundle, styles))
     story.extend(build_falsification_section(bundle, styles))
     story.extend(build_demo_certificates(bundle, repo_root, styles))
     story.extend(build_appendices(bundle, repo_root, styles))
