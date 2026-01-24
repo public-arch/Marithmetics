@@ -1591,6 +1591,42 @@ def build_exec_summary(bundle: Bundle, styles: Dict[str, ParagraphStyle]) -> Lis
 
     col_widths = [0.75*inch, 0.95*inch, 2.2*inch, 0.65*inch, 0.7*inch, 2.55*inch]
     story.append(H2("2.1 Bundle coverage and run status", styles, bookmark="sec2_1"))
+
+    # ------------------------------------------------------------------
+    # Flagship visual preview (bundle artifacts)
+    # ------------------------------------------------------------------
+    try:
+        vdir = bundle.root / "vendored_artifacts"
+
+        camb = vdir / "cosmo__demo-36-big-bang-master-flagship__camb_planck_vs_gum_overlay.png"
+        qg   = vdir / "quantum_gravity__demo-66-quantum-gravity-master-flagship-v4__qg_screening_plot.png"
+
+        story.append(Spacer(1, 8))
+        story.append(Paragraph("<b>Flagship visual preview (bundle-sourced):</b>", styles["Small"]))
+        story.append(Paragraph("These two figures are included here as credibility anchors. Full context and rerun commands appear in the corresponding demo certificates (DEMO-36 and DEMO-66).", styles["Tiny"]))
+        story.append(Spacer(1, 6))
+
+        # CAMB / Planck overlay preview
+        story.append(Paragraph("DEMO-36 (Cosmology): CAMB/Planck overlay evidence (bundle artifact).", styles["Tiny"]))
+        if camb.exists():
+            story.append(Image(str(camb), width=6.8*inch, height=3.6*inch))
+        else:
+            story.append(Paragraph("Missing: camb_planck_vs_gum_overlay.png not found in vendored_artifacts.", styles["Tiny"]))
+
+        story.append(Spacer(1, 8))
+
+        # QG screening preview
+        story.append(Paragraph("DEMO-66 (Quantum Gravity): screening witness plot (bundle artifact).", styles["Tiny"]))
+        if qg.exists():
+            story.append(Image(str(qg), width=6.8*inch, height=3.2*inch))
+        else:
+            story.append(Paragraph("Missing: qg_screening_plot.png not found in vendored_artifacts.", styles["Tiny"]))
+
+        story.append(Spacer(1, 12))
+    except Exception:
+        # Never fail report generation due to preview section
+        pass
+
     story.append(table_grid(table, styles, col_widths=col_widths, header_rows=1))
     story.append(Spacer(1, 0.15 * inch))
 
