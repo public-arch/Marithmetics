@@ -233,7 +233,7 @@ def _load_config(repo_root: Path, cfg_path: Optional[str]) -> Dict[str, Any]:
         "title": "MARI / GUM Master Suite — Authority-of-Record Runner",
         "bundler_module": "audits.gum_bundle_v30",
         "bundler_glob": "GUM_BUNDLE_v30_*",
-        "report_generator": "gum/gum_report_generator_v31.py",
+        "report_generator": "gum/gum_report_generator_v32.py",
         "zip_prefix": "MARI_MASTER_RELEASE",
         "verbosity_default": "flagship",
         "per_demo_timeout_sec": 900,
@@ -515,9 +515,9 @@ def main() -> int:
             printer.line(f"{ANSI.bold}Bundle sha256{ANSI.reset}  {bundle_sha}")
         printer.hr("─")
 
-        report_gen = cfg.get("report_generator", "gum/gum_report_generator_v31.py")
+        report_gen = cfg.get("report_generator", "gum/gum_report_generator_v32.py")
         report_cmd = [sys.executable, str(repo_root / report_gen), "--bundle-dir", str(bundle_dir)]
-        rc2 = _stream_cmd(report_cmd, cwd=repo_root, printer=printer, label="Generate v31 technical report (PDF)")
+        rc2 = _stream_cmd(report_cmd, cwd=repo_root, printer=printer, label="Generate technical report (PDF)")
         if rc2 != 0:
             printer.line(f"{ANSI.red}{ANSI.bold}Report generator failed (exit {rc2}).{ANSI.reset}")
             return rc2
@@ -525,7 +525,8 @@ def main() -> int:
         reports_dir = repo_root / "gum" / "reports"
         pdf_latest: Optional[Path] = None
         if reports_dir.exists():
-            pdfs = sorted(reports_dir.glob("GUM_Report_v31_*.pdf"), key=lambda p: p.stat().st_mtime, reverse=True)
+            pat = "GUM_Report_v32_*.pdf" if "v32" in str(report_gen) else "GUM_Report_v31_*.pdf"
+            pdfs = sorted(reports_dir.glob(pat), key=lambda p: p.stat().st_mtime, reverse=True)
             if pdfs:
                 pdf_latest = pdfs[0]
 
