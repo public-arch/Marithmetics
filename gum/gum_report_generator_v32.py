@@ -2210,6 +2210,8 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                 arows = [["File", "sha256 (prefix)", "Size"]]
                 for a in arts[:12]:
                     arows.append([a.relpath, a.sha256[:12], str(a.size or "")])
+                arows = _v32_build_evidence_rows(bundle.root, log_path)
+
                 story.append(table_grid(arows, styles, col_widths=[4.2*inch, 1.5*inch, 1.1*inch], header_rows=1))
 
             # Include key visual evidence if present for certain demos
@@ -2398,6 +2400,48 @@ def main(argv: Optional[List[str]] = None) -> int:
     print(f"Wrote PDF: {pdf_path}")
     print(f"Wrote manifest: {manifest_path}")
     return 0
+
+
+
+def _v32_sha256_prefix(path: Path, n: int = 12) -> str:
+    import hashlib
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()[:n]
+
+def _v32_build_evidence_rows(bundle_root: Path, log_path: str | None) -> list[list[str]]:
+    rows: list[list[str]] = [["File", "sha256 (prefix)", "Size"]]
+    if not log_path:
+        rows.append(["-", "-", "-"])
+        return rows
+
+    lp = Path(log_path)
+    slug = lp.name
+    if slug.endswith(".out.txt"):
+        slug = slug[:-len(".out.txt")]
+    elif slug.endswith(".err.txt"):
+        slug = slug[:-len(".err.txt")]
+
+    # logs
+    logs_dir = bundle_root / "logs"
+    for ext in (".out.txt", ".err.txt"):
+        fp = logs_dir / f"{slug}{ext}"
+        if fp.exists():
+            rows.append([f"logs/{fp.name}", _v32_sha256_prefix(fp), str(fp.stat().st_size)])
+
+    # vendored artifacts
+    vdir = bundle_root / "vendored_artifacts"
+    prefix = slug + "__"
+    if vdir.exists():
+        for fp in sorted(vdir.iterdir()):
+            if fp.is_file() and fp.name.startswith(prefix):
+                rows.append([f"vendored_artifacts/{fp.name}", _v32_sha256_prefix(fp), str(fp.stat().st_size)])
+
+    if len(rows) == 1:
+        rows.append(["-", "-", "-"])
+    return rows
 
 
 if __name__ == "__main__":
