@@ -1,9 +1,4 @@
 {
-  "title": "MARI / GUM Master Suite — Authority-of-Record Runner",
-  "demos_root": "demos",
-  "zip_prefix": "MARI_MASTER_RELEASE",
-  "verbosity_default": "flagship",
-  "per_demo_timeout_sec": 900,
   "curated_order": [
     "DEMO-34",
     "DEMO-64",
@@ -32,6 +27,7 @@
     "DEMO-39",
     "DEMO-51"
   ],
+  "demos_root": "demos",
   "flagship_full": [
     "DEMO-34",
     "DEMO-64",
@@ -44,36 +40,6 @@
     "DEMO-75",
     "DEMO-70"
   ],
-  "per_demo_intro": {
-    "DEMO-34": [
-      "Kernel framing: Ω→SM bridge.",
-      "This is the anchor. Once this bridge is fixed, downstream demos are constrained — not independent curve-fits."
-    ],
-    "DEMO-64": [
-      "Residue structure: DRPT cross-base examples.",
-      "Watch both rows and columns: mirroring, inversions, repeats, and tiling show up bidirectionally."
-    ],
-    "DEMO-72": [
-      "Admissibility: Yukawa coupling checks.",
-      "The goal is lawful gates, illegal controls, and counterfactual teeth — not aesthetic 'fits'."
-    ],
-    "DEMO-76": [
-      "Yukawa flagship (primorial).",
-      "A compact example of how admissibility + structure propagates into concrete predictions."
-    ],
-    "DEMO-33": [
-      "First-principles Standard Model closure (SM28).",
-      "This section is intentionally metric-heavy. It is the auditable ground truth for rewriting SM-facing papers."
-    ],
-    "DEMO-66": [
-      "Quantum gravity flagship.",
-      "Includes the screening plot artifact and a gate-complete metric readout."
-    ],
-    "DEMO-36": [
-      "Cosmology flagship: CAMB overlays + metric comparison.",
-      "Read this directly: plots, residuals, and falsifiability framing."
-    ]
-  },
   "interludes_after": {
     "DEMO-34": [
       "From here on, treat the suite as a constrained cascade: the bridge sets the frame.",
@@ -86,5 +52,40 @@
     "DEMO-72": [
       "After admissibility, the rest of the suite reads differently: each flagship becomes a stress-test, not a free parameter hunt."
     ]
-  }
+  },
+  "per_demo_intro": {
+    "DEMO-33": [
+      "First-principles Standard Model closure (SM28).",
+      "This section is intentionally metric-heavy. It is the auditable ground truth for rewriting SM-facing papers."
+    ],
+    "DEMO-34": [
+      "Kernel framing: \u03a9\u2192SM bridge.",
+      "This is the anchor. Once this bridge is fixed, downstream demos are constrained \u2014 not independent curve-fits."
+    ],
+    "DEMO-36": [
+      "Cosmology flagship: CAMB overlays + metric comparison.",
+      "Read this directly: plots, residuals, and falsifiability framing."
+    ],
+    "DEMO-64": [
+      "Residue structure: DRPT cross-base examples.",
+      "Watch both rows and columns: mirroring, inversions, repeats, and tiling show up bidirectionally."
+    ],
+    "DEMO-66": [
+      "Quantum gravity flagship.",
+      "Includes the screening plot artifact and a gate-complete metric readout."
+    ],
+    "DEMO-72": [
+      "Admissibility: Yukawa coupling checks.",
+      "The goal is lawful gates, illegal controls, and counterfactual teeth \u2014 not aesthetic 'fits'."
+    ],
+    "DEMO-76": [
+      "Yukawa flagship (primorial).",
+      "A compact example of how admissibility + structure propagates into concrete predictions."
+    ]
+  },
+  "per_demo_timeout_sec": 900,
+  "report_generator": "gum/gum_report_generator_v32.py",
+  "title": "MARI / GUM Master Suite \u2014 Authority-of-Record Runner",
+  "verbosity_default": "flagship",
+  "zip_prefix": "MARI_MASTER_RELEASE"
 }
