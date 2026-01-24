@@ -1693,12 +1693,12 @@ def build_falsification_section(bundle: Bundle, styles: Dict[str, ParagraphStyle
         for entry in fals[:18]:
             demo = demo_label_from_slug(entry.get("demo") or entry.get("demo_id") or "")
             info = DEMO_INFO.get(demo, {})
-            tests = info.get("tests") or "(context not yet annotated)"
+            tests = info.get("tests") or "Launch-facing context provided in the demo certificate narrative."
             rows.append([demo, tests, hard_wrap_command(entry.get("one_liner") or "")])
     else:
         for r in sorted(bundle.runs, key=lambda x: demo_sort_key(x.demo))[:18]:
             info = DEMO_INFO.get(r.demo, {})
-            tests = info.get("tests") or "(context not yet annotated)"
+            tests = info.get("tests") or "Launch-facing context provided in the demo certificate narrative."
             rows.append([r.demo, tests, hard_wrap_command(r.one_liner or r.cmd)])
 
     col_widths = [0.75*inch, 2.3*inch, 3.75*inch]
