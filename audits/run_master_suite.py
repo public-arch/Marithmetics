@@ -391,7 +391,7 @@ def main() -> int:
         description="\n".join(desc_lines),
     )
     ap.add_argument("--config", default="audits/master_suite_config.json", help="Path to config JSON")
-    ap.add_argument("--outroot", default=None, help="AoR output root (default: GUM/authority_archive/AOR_<timestamp>_<gitsha>)")
+    ap.add_argument("--outroot", default=None, help="AoR output root (default: gum/authority/authority_archive/AOR_<timestamp>_<gitsha>)")
     ap.add_argument("--timeout", type=int, default=None, help="Per-demo timeout seconds (passed to bundler)")
     ap.add_argument("--python", default=None, help="Python executable (passed to bundler; default: current python)")
     ap.add_argument("--no-color", action="store_true", help="Disable ANSI colors")
