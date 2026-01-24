@@ -48,7 +48,7 @@ from reportlab.platypus import (
 from reportlab.platypus.tableofcontents import TableOfContents
 
 
-__version__ = "31.2-masterpiece"
+__version__ = "32.0-launch"
 
 
 # ----------------------------
@@ -835,6 +835,26 @@ def find_latest_bundle(repo_root: Path) -> Optional[Path]:
     return candidates[0]
 
 
+
+def _infer_domain_from_folder_full(folder_full: str) -> str:
+    # folder_full typically looks like: demos/<domain>/<demo-folder>
+    parts = str(folder_full).replace("\\", "/").split("/")
+    if len(parts) >= 2 and parts[0] == "demos":
+        return parts[1]
+    return ""
+
+def _canonical_slug(domain: str, folder_full: str, fallback: str) -> str:
+    base = Path(folder_full).name if folder_full else fallback
+    if not domain:
+        return base
+    if base.startswith(domain + "__"):
+        return base
+    if "__" in base:
+        # already prefixed by something; accept it
+        return base
+    return f"{domain}__{base}"
+
+
 def load_bundle(bundle_dir: Path) -> Bundle:
     b = Bundle(root=bundle_dir)
 
@@ -861,6 +881,12 @@ def load_bundle(bundle_dir: Path) -> Bundle:
                 # Prefer a full path for rerun commands when available.
                 folder_full = demo_path or folder
                 slug_name = Path(folder).name if folder else (Path(folder_full).name if folder_full else str(key))
+                if not domain:
+                    domain = _infer_domain_from_folder_full(folder_full)
+                slug_name = _canonical_slug(domain, folder_full, fallback=slug_name)
+                if not domain:
+                    domain = _infer_domain_from_folder_full(folder_full)
+                slug_name = _canonical_slug(domain, folder_full, fallback=slug_name)
                 cmd = str(rr.get("cmd") or "")
                 one_liner = str(rr.get("one_liner") or "")
                 if not cmd:
@@ -1689,13 +1715,13 @@ def build_falsification_section(bundle: Bundle, styles: Dict[str, ParagraphStyle
     # Prefer bundle falsification matrix ordering; fallback to runs list
     fals = bundle.falsification or []
     if fals:
-        for entry in fals[:18]:
+        for entry in fals:
             demo = demo_label_from_slug(entry.get("demo") or entry.get("demo_id") or "")
             info = DEMO_INFO.get(demo, {})
             tests = info.get("tests") or "Launch-facing context provided in the demo certificate narrative."
             rows.append([demo, tests, hard_wrap_command(entry.get("one_liner") or "")])
     else:
-        for r in sorted(bundle.runs, key=lambda x: demo_sort_key(x.demo))[:18]:
+        for r in sorted(bundle.runs, key=lambda x: demo_sort_key(x.demo)):
             info = DEMO_INFO.get(r.demo, {})
             tests = info.get("tests") or "Launch-facing context provided in the demo certificate narrative."
             rows.append([r.demo, tests, hard_wrap_command(r.one_liner or r.cmd)])
@@ -1754,7 +1780,7 @@ def read_demo_log(bundle: Bundle, run: RunRecord) -> Optional[str]:
     if not logs_dir.exists():
         return None
     # Most logs are named "{domain}__{slug}.out.txt"
-    cand = logs_dir / f"{run.domain}__{run.slug}.out.txt"
+    cand = logs_dir / f"{run.slug}.out.txt"
     if cand.exists():
         return cand.read_text(encoding="utf-8", errors="replace")
     # try any log containing slug
@@ -2204,14 +2230,18 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                 ))
 
             # Evidence artifacts list
-            arts = artifacts_by_demo.get(demo, [])
+      # Evidence artifacts list (always include logs + vendored artifacts for this demo)
+      story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
+      arows = _v32_build_evidence_rows(bundle.root, getattr(r, 'slug', '') or getattr(r, 'run_slug', '') or '')
+      story.append(table_grid(arows, styles, col_widths=[4.2*inch, 1.5*inch, 1.1*inch], header_rows=1))
+
+      # Include key visual evidence
+ifacts_by_demo.get(demo, [])
             if arts:
                 story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
                 arows = [["File", "sha256 (prefix)", "Size"]]
                 for a in arts[:12]:
                     arows.append([a.relpath, a.sha256[:12], str(a.size or "")])
-                arows = _v32_build_evidence_rows(bundle.root, getattr(r, 'slug', '') or getattr(r, 'run_slug', '') or '') if outp else (str(errp) if errp else None))
-
                 story.append(table_grid(arows, styles, col_widths=[4.2*inch, 1.5*inch, 1.1*inch], header_rows=1))
 
             # Include key visual evidence if present for certain demos
@@ -2352,7 +2382,7 @@ def build_pdf(bundle_dir: Path, out_path: Path) -> Tuple[Path, Path]:
         rightMargin=0.75 * inch,
         topMargin=0.75 * inch,
         bottomMargin=0.75 * inch,
-        title="GUM Report v31 - System Audit",
+        title="GUM Report v32 - System Audit",
         author="public-arch",
     )
 
@@ -2373,9 +2403,9 @@ def build_pdf(bundle_dir: Path, out_path: Path) -> Tuple[Path, Path]:
 
 
 def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
-    ap = argparse.ArgumentParser(description="Generate GUM Report v31 (bundle-driven).")
+    ap = argparse.ArgumentParser(description="Generate GUM Report v32 (bundle-driven).")
     ap.add_argument("--bundle-dir", type=str, default="", help="Path to a bundle directory. If omitted, auto-detect latest.")
-    ap.add_argument("--out", type=str, default="", help="Output PDF path. Default: gum/reports/GUM_Report_v31_<timestamp>.pdf")
+    ap.add_argument("--out", type=str, default="", help="Output PDF path. Default: gum/reports/GUM_Report_v32_<timestamp>.pdf")
     return ap.parse_args(argv)
 
 
@@ -2393,7 +2423,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         out_path = Path(args.out)
     else:
         ts = _dt.datetime.utcnow().strftime("%Y-%m-%d_%H-%M-%SZ")
-        out_path = repo_root / "gum" / "reports" / f"GUM_Report_v31_{ts}.pdf"
+        out_path = repo_root / "gum" / "reports" / f"GUM_Report_v32_{ts}.pdf"
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     pdf_path, manifest_path = build_pdf(bundle_dir, out_path)
