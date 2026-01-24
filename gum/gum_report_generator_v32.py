@@ -2229,7 +2229,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
                     0.9 * inch,
                 ))
 
-            # Evidence artifacts list
+      # Evidence artifacts list
       # Evidence artifacts list (always include logs + vendored artifacts for this demo)
       story.append(Paragraph("<b>Evidence artifacts (bundle):</b>", styles["Small"]))
       arows = _v32_build_evidence_rows(bundle.root, getattr(r, 'slug', '') or getattr(r, 'run_slug', '') or '')
