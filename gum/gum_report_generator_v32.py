@@ -1276,6 +1276,16 @@ def table_grid(
     """
     tdata: List[List[Any]] = []
     for r_i, row in enumerate(data):
+
+    # v32 policy: Units are not reliable across bundle sources; if a table includes a "Units" column, drop it.
+    try:
+        if data and isinstance(data[0], list) and "Units" in data[0]:
+            u = data[0].index("Units")
+            data = [[c for j, c in enumerate(r) if j != u] for r in data]
+            if col_widths and u < len(col_widths):
+                col_widths = [w for j, w in enumerate(col_widths) if j != u]
+    except Exception:
+        pass
         out_row: List[Any] = []
         for c_i, cell in enumerate(row):
             txt = "" if cell is None else str(cell)
