@@ -1,0 +1,123 @@
+=======================================
+DEMO 34 — OMEGA→SM MASTER FLAGSHIP (v1)
+=======================================
+  Python: 3.12.1
+  Platform: Linux 6.8.0-1030-azure (x86_64)
+  Max band (Tier‑A₁ joint): 1000000
+
+────────── Stage 1A — UFET PDE slope (diffusion toy) ──────────
+  h: [0.03125, 0.015625, 0.0078125, 0.00390625]
+  error: [0.5843837844318345, 0.14970499885409186, 0.03765597272675875, 0.009428416695397962]
+  decay ratios: [0.930688, 0.981802, 0.995393, 0.998845]
+  slope(log e vs log h): 1.9852  → [OK]
+  energy decay gate: [OK]
+
+────────── Stage 1B — Fejér / Ω controller sanity ──────────
+  legality (0≤F≤1, F[0]=1): [OK]
+  symmetry (F[k]≈F[M-k]): [OK]
+  low-pass (low>high): [OK]
+  avg multiplier in (0,1): [OK]
+
+────────── Stage 1C — DRPT invariants (small moduli, unit automorphisms) ──────────
+  • m= 10: units= 4, hist={1: 1, 4: 2, 2: 1} → [OK]
+  • m= 12: units= 4, hist={1: 1, 2: 3} → [OK]
+  • m= 14: units= 6, hist={1: 1, 6: 2, 3: 2, 2: 1} → [OK]
+  • m= 18: units= 6, hist={1: 1, 6: 2, 3: 2, 2: 1} → [OK]
+  • m= 20: units= 8, hist={1: 1, 4: 4, 2: 3} → [OK]
+  • m= 30: units= 8, hist={1: 1, 4: 4, 2: 3} → [OK]
+  • m= 42: units=12, hist={1: 1, 6: 6, 2: 3, 3: 2} → [OK]
+  • m= 66: units=20, hist={1: 1, 10: 12, 2: 3, 5: 4} → [OK]
+
+────────── Stage 2A — Core2 window mini-cert + necessity (w∈[100,160]) ──────────
+  • alpha survivors: [137]
+  • su2   survivors: [107]
+  • pc2   survivors: [103]
+  gate necessity (explosion=True ⇒ necessary): {"C1": true, "C2": true, "C3": false, "C4": true, "C5": false, "C6": true}
+  core gates C1,C2,C4,C6 necessary: [OK]
+  derived Ω constants: {'wU': 137, 's2': 107, 's3': 103, 'q3': 17, 'q2': 30, 'r3': 3}
+
+────────── Stage 2B — Lane-local Tier‑A stress (5k success, 100k SU(2) failure) ──────────
+  • Base Core2 survivors on 80..600:
+  •   alpha: [137]  (extras=[])
+  •   su2  : [107, 347, 587]  (extras=[347, 587])
+  •   pc2  : [103, 227, 239, 439, 467]  (extras=[227, 239, 439, 467])
+  Strengthened lane-local survivors on 80..5000: {'alpha': [137], 'su2': [107], 'pc2': [103]}
+  lane-local Tier‑A₁ holds on 80..5000: [OK]
+  SU(2) strengthened survivors on 80..100000: count=22
+  SU(2) extras (first 30): [6827, 13163, 30347, 36683, 36923, 43403, 52379, 62939, 65579, 67499, 73643, 74027, 74363, 76667, 77003, 77723, 85643, 87083, 92363, 93179, 96059]
+  lane-local stress detects failure by 100k: [OK]
+  single Legendre winners (should be empty): []
+  pair Legendre winners (should be empty): []
+  negative result validated: [OK]
+
+────────── Stage 2C — Tier‑A₁ Joint‑Triple Ω Certificate (band 80..1000000) ──────────
+  target triple: (137, 107, 103)
+  constructed triple: (137, 107, 103) (matches)
+  prime sanity: [OK]
+  SU(2) sanity: [OK]
+  u1_candidates: [137]
+  pc2_candidates: [103]
+  triples_found: [(137, 107, 103)]
+  unique target: [OK]
+  • drop_u1_lock: count=290 explodes=True extras(sample)=[(617, 587, 103), (1049, 1019, 103), (3833, 3803, 103), (5417, 5387, 103), (6857, 6827, 103)]
+  • drop_q2_coupling: count=1089 explodes=True extras(sample)=[(137, 347, 103), (137, 587, 103), (137, 1019, 103), (137, 1307, 103), (137, 2027, 103)]
+  • drop_su2_sanity: count=1 explodes=False extras(sample)=[]
+  • drop_pc2_lock: count=78476 explodes=True extras(sample)=[(137, 107, 83), (137, 107, 89), (137, 107, 97), (137, 107, 101), (137, 107, 107)]
+  ablation necessity (u1,q2,pc2): [OK]
+  su2_sanity redundant under coupling: [OK]
+
+────────── Stage 3A — Toy S1 anchor from GP (KUEC vs L2 vs MAX) ──────────
+  • KUEC: a*≈2.435, near=2, spread=0.0338 → [OK]
+  • L2  : a*≈2.385, near=20, spread=0.0605 → [FAIL]
+  • MAX : a*≈2.440, near=4, spread=0.0375 → [FAIL]
+
+────────── Stage 3B — Toy S2 exponent palette from GP ──────────
+  • solutions=[(2, 6, 10)] (count=1) → [OK]
+
+────────── Stage 4A — Rational anchor block tied to Ω constants ──────────
+  • alpha_em   anchor=0.007299270  ref=0.007297353  Δ%=  0.026%
+  • alpha_s    anchor=0.117647059  ref=0.117900000  Δ%= -0.215%
+  • sin2W      anchor=0.233333333  ref=0.231220000  Δ%=  0.914%
+  anchor gate (all within 2%): [OK]
+
+────────── Stage 4B — SM snapshot (DEMO‑33 v4f overlay) ──────────
+  PDG is used only for Δ% overlay; the snapshot values are from the pipeline output.
+
+  Observable                     pred           ref           Δ%
+  alpha_em                   0.007299      0.007297     0.023%
+  sin^2(theta_W)             0.233333      0.231220     0.914%
+  alpha_s                    0.117647      0.117900    -0.215%
+  M_W / M_Z                  0.875595      0.881469    -0.666%
+  v / M_Z                    2.793039      2.793039    -0.000%
+  Gamma_Z / M_Z              0.027075      0.027363    -1.053%
+  v [GeV]                  227.206375    246.219651    -7.722%
+  M_W [GeV]                 71.227348     80.379000   -11.386%
+  m_e [GeV]                  0.000467      0.000511    -8.611%
+  m_mu [GeV]                 0.094619      0.105660   -10.450%
+  m_tau [GeV]                1.608518      1.776860    -9.474%
+  greens≤10%: 9
+  yellows≤30%: 2
+  reds>30%: 0
+  RMS(|Δ|):   6.500%
+  • Λ_QCD [GeV] (1-loop structural) = 0.086018
+  • ρ_Λ [GeV^4] (structural)       = 8.758913e-48
+  • Λ_geom [GeV^2]                  = 1.158185e-85
+  • vacuum scale gate (~1e-47):      [OK]
+  Monte Carlo sanity: RMS percentile (lower is better): 0.00%
+
+────────── FINAL SUMMARY ──────────
+  • Stage 1 (UFET/Ω/DRPT sanity):              [OK]
+  • Stage 2A (Core2 window mini-cert):          [OK]
+  • Stage 2B (lane-local stress + neg result):  [OK]
+  • Stage 2C (Tier‑A₁ joint triple to band):    [OK]
+  • Stage 3 (toy GP anchor + palette):          [OK]
+  • Stage 4 (SM snapshot overlay):              [OK]
+
+────────── MASTER CERTIFICATE ──────────
+  • Tier‑A₁ (Ω joint‑triple): unique (wU,s2,s3) under coupled lawbook
+  •   Certified on band 80..1000000: [OK]
+  •   With ablation necessity (drop_u1, drop_q2, drop_pc2 explode).
+  • Tier‑A (global axioms+GP ⇒ SM for all substrates): OPEN PROGRAM
+  • Tier‑C: within MARI/UFET/Ω/SCFP++ architecture, DEMO‑33 snapshot is SM‑like
+  •   Tier‑C status: [OK]
+  runtime_sec: 0.692008

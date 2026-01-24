@@ -1,0 +1,123 @@
+====================================================================================================
+DEMO-60 — Quantum Master Flagship v2 (Operator Admissibility + Multi-Certificate Suite)
+====================================================================================================
+UTC time : 2026-01-24T17:41:36Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout only (optional JSON write)
+
+spec_sha256: bf4ab7a879ce6e885c1e3cff30aba359b6f76adfcba43694863191fdc3cb2148 
+
+====================================================================================================
+STAGE 1 — Deterministic triple selection (primary window)
+====================================================================================================
+Lane survivor pools (raw):
+  U(1): [137]
+  SU(2): [107]
+  SU(3): [103]
+Lane survivor pools (after U(1) coherence):
+  U(1): [137]
+Primary-window admissible triples: [(137, 107, 103)]
+PASS  Unique admissible triple in primary window                                 count=1
+PASS  Primary equals (137,107,103)                                               selected=Triple(wU=137, s2=107, s3=103)
+PASS  Captured >=4 counterfactual triples                                        found=4
+Counterfactuals: [(409, 263, 239), (409, 263, 307), (409, 367, 239), (409, 367, 307)]
+
+Derived invariants/budgets (primary, N=512):
+  q2=30  q3=17  v2U=3  eps=0.18257419
+  N=512  K_primary=120  K_truth=255
+
+====================================================================================================
+STAGE 2 — Kernel admissibility audit (real-space kernel minimum)
+====================================================================================================
+PASS  Fejér kernel is nonnegative (admissible)                                   kmin=5.543246e-09
+PASS  Sharp cutoff kernel has negative lobes (non-admissible)                    kmin=-0.10209
+PASS  Signed control kernel has negative lobes (non-admissible)                  kmin=-0.0696713
+
+====================================================================================================
+E1 — Probability admissibility on a discontinuous density (top-hat)
+====================================================================================================
+mass(mean)      : base=0.5  fejer=0.5
+min(rho_smooth) : fejer=0.00261178  sharp=-0.0822128  signed=-0.0622035
+L2 distortion   : fejer=0.0396214  sharp=0.0261901  signed=0.0596951
+TV              : fejer=1.9933  sharp=5.84468  signed=5.35099
+
+PASS  Gate E1.1: Fejér preserves mass within 1e-12                               |Δ|=0
+PASS  Gate E1.2: Fejér preserves nonnegativity (min >= -1e-12)                   min=0.00261178
+PASS  Gate E1.3: illegal produces negative undershoot (<= -eps^2)                eps^2=0.0333333
+PASS  Gate E1.4: illegal increases variation (TV) by >= (1+eps)                  eps=0.182574
+CF (409,263,239) q3= 51 K= 40 dist= 0.0700618 degrade=True
+CF (409,263,307) q3= 51 K= 40 dist= 0.0700618 degrade=True
+CF (409,367,239) q3= 51 K= 40 dist= 0.0700618 degrade=True
+CF (409,367,307) q3= 51 K= 40 dist= 0.0700618 degrade=True
+PASS  Gate E1.T: >=3/4 counterfactuals increase distortion by (1+eps)            strong=4/4 eps=0.182574
+
+====================================================================================================
+E2 — Double-slit interference density (unitary evolution + coarse-grain audit)
+====================================================================================================
+Unitary norm drift: 4.440892e-14  (T=1)
+Visibility (info) : raw=0.910808
+L2 distortion     : fejer=0.183685  sharp=0.11956  signed=0.261506
+
+PASS  Gate E2.1: unitary norm drift <= 1e-10                                     drift=4.440892e-14
+PASS  Gate E2.2: signed illegal distortion >= (1+eps)×fejer                      eps=0.182574
+CF (409,263,239) q3= 51 K= 40 dist=  0.352807 degrade=True
+CF (409,263,307) q3= 51 K= 40 dist=  0.352807 degrade=True
+CF (409,367,239) q3= 51 K= 40 dist=  0.352807 degrade=True
+CF (409,367,307) q3= 51 K= 40 dist=  0.352807 degrade=True
+PASS  Gate E2.T: >=3/4 counterfactuals increase distortion by (1+eps)            strong=4/4 eps=0.182574
+
+====================================================================================================
+STAGE 3 — Cross-resolution ladder stability certificate (PREWORK 60A v2)
+====================================================================================================
+N    K    eps       E1_dist   E1_C=dist*sqrtK   E2_dist   E2_C=dist*sqrtK   vis_raw  norm_drift  tier_verified
+256  60   0.182574 0.0557737 0.432021         0.270509  2.09535          0.9502  7.11e-15   1
+512  120  0.182574 0.0396214 0.43403          0.183685  2.01217          0.9108  4.44e-14   1
+
+PASS  Gate 60A.L0_tiers_verified
+PASS  Gate 60A.L1_E1_C_stable
+PASS  Gate 60A.L2_E2_C_stable
+PASS  Gate 60A.L3_visibility_stable
+PASS  PREWORK 60A v2 VERIFIED (ladder stability with first-principles scaling)
+
+====================================================================================================
+STAGE 4 — Time-reversal / unitarity stress test (PREWORK 60B)
+====================================================================================================
+PRIMARY RESULTS
+Return error (truth)  = 5.605664e-14
+Norm drift  (truth)   = 2.908784e-14
+Return error (illegal)= 0.990176
+Norm drift  (illegal) = 0.989663
+Fejér density distortion (lawful) = 0.00665658
+
+PASS  Gate 60B.G1_truth_reversible
+PASS  Gate 60B.G2_illegal_breaks
+PASS  Gate 60B.T_counterfactual
+PASS  PREWORK 60B VERIFIED (time reversal + illegal break + counterfactual controls)
+
+====================================================================================================
+STAGE 5 — Quantum PDE dispersion benchmark (PREWORK 60C v2)
+====================================================================================================
+N=256 K=60 eps=0.182574  e_fd=0.579019  d_fe=0.270509  d_sh=0.157998  d_si=0.438361  teeth=4/4
+PASS  Tier N=256 Gate 60C.G1_fd_worse_than_fejer
+PASS  Tier N=256 Gate 60C.G2_illegal_distorts_more
+PASS  Tier N=256 Gate 60C.T_counterfactual
+
+N=512 K=120 eps=0.182574  e_fd=0.554501  d_fe=0.183685  d_sh=0.11956  d_si=0.261506  teeth=4/4
+PASS  Tier N=512 Gate 60C.G1_fd_worse_than_fejer
+PASS  Tier N=512 Gate 60C.G2_illegal_distorts_more
+PASS  Tier N=512 Gate 60C.T_counterfactual
+
+PASS  PREWORK 60C v2 VERIFIED (PDE baseline + falsifiers + counterfactual controls)
+
+====================================================================================================
+DETERMINISM HASH
+====================================================================================================
+determinism_sha256: 5ae18adb1184e4e7cdc95edddbff85dc0eb3c852ae723521239d840c24933048
+
+====================================================================================================
+FINAL VERDICT
+====================================================================================================
+PASS  DEMO-60 VERIFIED (selection + admissibility + quantum suite + ladder + time-reversal + PDE benchmark)
+Result: VERIFIED
+

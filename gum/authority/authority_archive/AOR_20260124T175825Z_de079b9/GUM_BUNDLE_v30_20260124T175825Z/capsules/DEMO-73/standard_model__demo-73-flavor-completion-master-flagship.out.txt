@@ -1,0 +1,116 @@
+====================================================================================================
+     DEMO-73 — FLAVOR COMPLETION MASTER FLAGSHIP (Kernel → Yukawas → CKM+PMNS) — REFEREE READY      
+====================================================================================================
+UTC time : 2026-01-24T18:00:24.026176Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout only (JSON artifact optional)
+
+spec_sha256: e205239955e3ccc484087881d7fd979478f3fae14fc18594bb6691349a007f90
+
+====================================================================================================
+STAGE 1 — Deterministic triple selection
+====================================================================================================
+Primary: Triple(wU=137, s2=107, s3=103)
+Counterfactuals:
+  Triple(wU=409, s2=211, s3=239)
+  Triple(wU=409, s2=211, s3=307)
+  Triple(wU=409, s2=263, s3=239)
+  Triple(wU=409, s2=263, s3=307)
+  ✅  Gate S0: primary equals (137,107,103)
+  ✅  Gate S1: captured >=4 counterfactual triples found=4
+
+====================================================================================================
+STAGE 1B — Derived invariants
+====================================================================================================
+q2=30  q3=17  v2U=3  eps=0.18257419  q3_cf=51
+Budgets: truth r=31  primary r=15  counterfactual r_cf=5
+  ✅  Gate I1: invariants match locked (q2=30,q3=17,v2U=3) (q2,q3,v2U)=(30,17,3)
+
+====================================================================================================
+STAGE 2 — OATB kernel admissibility audit
+====================================================================================================
+N=2048 r=15
+Fejér  : kmin=+0.000000e+00  HF_weight_frac(>r)=0.000000
+Sharp  : kmin=-3.298912e-03  HF_weight_frac(>r)=0.000000
+Signed : kmin=-9.697266e-01  HF_weight_frac(>r)=0.984863
+  ✅  Gate A1: Fejér kernel nonnegative (tol) min=0.000e+00
+  ✅  Gate A2: Sharp kernel has negative lobes min=-3.299e-03
+  ✅  Gate A3: Signed kernel has negative lobes min=-9.697e-01
+  ✅  Gate A4: Signed kernel retains large HF weight hf=0.985 floor=0.250
+
+====================================================================================================
+STAGE 3 — Full Yukawa derivation (lawful + controls)
+====================================================================================================
+Budgets: r_truth=31 r_primary=15 r_cf=5
+Yukawa log-distance primary vs truth: 7.128319e-02
+Yukawa log-distance cf      vs truth: 2.277565e+02
+Signed illegal min Yukawa: -7.525591e+01
+  ✅  Gate Y1: primary Yukawas stable vs truth (log-distance <= eps) dist=7.128e-02 eps=1.826e-01
+  ✅  Gate Y2: signed palette violates nonnegativity (min <= -eps^2) min=-7.526e+01  -eps^2=-3.333e-02
+  ✅  Gate T1: counterfactual budget degrades Yukawas by (1+eps) distP=7.128e-02 distCF=2.278e+02 1+eps=1.183
+
+====================================================================================================
+STAGE 4 — Quark mixing (CKM): lawful stability + illegal controls + teeth
+====================================================================================================
+CKM mixing vector = [s12, s23, s13, |J|]
+truth    [7.93383285e-02 4.38548044e-02 2.95696915e-02 7.71395344e-05]
+primary  [8.26878045e-02 4.58363931e-02 3.07530641e-02 8.53286875e-05]
+cf       [0.09782481 0.05300446 0.03610407 0.00012999]
+sharp(il) [1.22389918e-01 6.83277228e-02 9.46650098e-03 2.23890705e-05]
+signed(il) [0.30429802 0.20755881 0.70212827 0.02060414]
+dist_primary=4.265932e-02  dist_cf=2.269166e-01
+Angles (deg, from sin):
+  truth  : theta12≈4.551  theta23≈2.514  theta13≈1.694
+  primary: theta12≈4.743  theta23≈2.627  theta13≈1.762
+  ✅  Gate CKM1: primary CKM vector within eps of truth dist=4.266e-02 eps=1.826e-01
+  ✅  Gate CKM2: illegal sharp breaks CKM stability by (1+eps) dist_sh=5.605e-01 distP=4.266e-02
+  ✅  Gate CKM3: illegal signed breaks CKM stability by (1+eps) dist_si=7.636e+00 distP=4.266e-02
+  ✅  Gate CKM4: signed illegal texture has a negative eigenvalue (<= -eps^2) min_eig=-3.304e+00 -eps^2=-3.333e-02
+  ✅  Gate CKMT: counterfactual budget degrades CKM by (1+eps) distCF=2.269e-01 distP=4.266e-02 1+eps=1.183
+
+====================================================================================================
+STAGE 5 — Lepton mixing (PMNS): lawful stability + illegal controls + teeth
+====================================================================================================
+PMNS mixing vector = [s12, s23, s13, |J|]
+truth    [0.8159508  0.59234973 0.05246909 0.01168645]
+primary  [0.82243494 0.60017442 0.05367358 0.01191054]
+cf       [0.84917354 0.6322993  0.05539194 0.0120348 ]
+dist_primary=1.013718e-02  dist_cf=5.154092e-02
+Angles (deg, from sin):
+  truth  : theta12≈54.681  theta23≈36.324  theta13≈3.008
+  primary: theta12≈55.329  theta23≈36.882  theta13≈3.077
+  ✅  Gate PMNS1: primary PMNS vector within eps of truth dist=1.014e-02 eps=1.826e-01
+  ✅  Gate PMNS2: illegal sharp breaks PMNS stability by (1+eps) dist_sh=3.254e-01 distP=1.014e-02
+  ✅  Gate PMNS3: illegal signed breaks PMNS stability by (1+eps) dist_si=7.122e-01 distP=1.014e-02
+  ✅  Gate PMNS4: signed illegal texture has a negative eigenvalue (<= -eps^2) min_eig=-3.975e+00 -eps^2=-3.333e-02
+  ✅  Gate PMNST: counterfactual budget degrades PMNS by (1+eps) distCF=5.154e-02 distP=1.014e-02 1+eps=1.183
+
+====================================================================================================
+STAGE 6 — Cross-base invariance (Rosetta check)
+====================================================================================================
+base= 2 decoded_triple=(137,107,103)
+base= 3 decoded_triple=(137,107,103)
+base= 4 decoded_triple=(137,107,103)
+base= 5 decoded_triple=(137,107,103)
+base= 6 decoded_triple=(137,107,103)
+base= 7 decoded_triple=(137,107,103)
+base= 8 decoded_triple=(137,107,103)
+base= 9 decoded_triple=(137,107,103)
+base=10 decoded_triple=(137,107,103)
+base=12 decoded_triple=(137,107,103)
+base=16 decoded_triple=(137,107,103)
+  ✅  Gate B1: base encode/decode round-trip holds
+  ✅  Gate B2: CKM invariant vector identical across tested bases max_delta=0.000e+00
+  ✅  Gate B3: PMNS invariant vector identical across tested bases max_delta=0.000e+00
+
+====================================================================================================
+DETERMINISM HASH
+====================================================================================================
+determinism_sha256: 54b5253371d0a067c03e6f8113fe9b20a925147bd02c9a414fdf2fbb20cd3e22
+
+====================================================================================================
+FINAL VERDICT
+====================================================================================================
+  ✅  DEMO-73 VERIFIED (Kernel→Yukawas→CKM+PMNS with admissibility + illegal controls + teeth + base invariance)
+Result: VERIFIED

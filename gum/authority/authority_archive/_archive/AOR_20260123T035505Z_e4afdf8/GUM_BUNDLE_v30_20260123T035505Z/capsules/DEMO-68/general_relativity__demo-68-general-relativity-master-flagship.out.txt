@@ -1,0 +1,154 @@
+==================================================================================================
+            DEMO-68 — GENERAL RELATIVITY MASTER FLAGSHIP (DOC + Einstein Completion)            
+==================================================================================================
+UTC time : 2026-01-23T03:55:52.323677Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout (JSON optional)
+
+==================================================================================================
+              STAGE 1 — Deterministic triple selection (primary + counterfactuals)              
+==================================================================================================
+Lane survivor pools (raw):
+  U(1):  [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Lane survivor pools (after coherence):
+  U(1):  [137]   (v2(wU-1)=3)
+  SU(3): [103]   (p ≡ 1 mod 6)
+Primary: Triple(wU=137, s2=107, s3=103)
+Counterfactuals:
+  (409,211,239)
+  (409,211,647)
+  (409,419,239)
+  (409,419,647)
+
+Derived invariants/budgets:
+  q2=(s2-3)/4 = 26
+  eps=1/sqrt(q2) = 0.19611614
+  N=64  K_primary=15  K_truth=31  center=(5, 4, 3)
+  b_list=[4, 6, 8, 10, 12]  r_list=[4, 6, 8, 10, 12]  rline=[2, 3, 4, 5, 6, 7, 8]
+
+spec_sha256: 86d2135eeeb2764ef69f5f01dc7c69e19500ae0b01733686c605327c02b851ba
+
+==================================================================================================
+                      STAGE 2 — Kernel admissibility audit (DOC legality)                       
+==================================================================================================
+Fejér kernel min :  0
+Sharp kernel min : -0.105335
+Signed kernel min: -0.21067
+PASS  Fejér kernel nonnegative (tol)
+PASS  Sharp kernel has negative lobes
+PASS  Signed kernel has negative lobes
+
+==================================================================================================
+           STAGE 3 — Full GR witness suite (truth vs admissible vs illegal controls)            
+==================================================================================================
+
+==================================================================================================
+                          STAGE 3A — Light bending scaling α(b) ∝ 1/b                           
+==================================================================================================
+truth slope (log|α| vs log b) : -1.029108
+adm   slope (log|α| vs log b) : -0.940344
+spread |b α| (adm)            : 6.44729e-05
+curvature |b α| (adm)         : 5.62829e-05
+HF frac (signed)              : 0.524986
+PASS  Light-bending subtest gates
+
+==================================================================================================
+                      STAGE 3B — Shapiro delay scaling Δt(b) ≈ a ln b + c                       
+==================================================================================================
+truth R2 (Δt vs ln b) : 0.999973
+adm   R2 (Δt vs ln b) : 0.999647
+curvature(resid) adm  : 2.97673e-05
+HF frac (signed)      : 0.524986
+PASS  Shapiro subtest gates
+
+==================================================================================================
+                    STAGE 3C — Redshift proxy Φ(r) ≈ A(1/r)+C (shell means)                     
+==================================================================================================
+truth R2 (Φ vs 1/r): 0.999845
+adm   R2 (Φ vs 1/r): 0.999160
+rel_err slope (adm vs truth): 0.110041
+curvature shell means (adm): 0.00129129
+HF frac (signed)            : 0.524986
+PASS  Redshift subtest gates
+
+==================================================================================================
+                STAGE 3D — Perihelion precession proxy (near-field 1/r closure)                 
+==================================================================================================
+eps=1/sqrt(q2)=0.19611614   N=64 K_primary=15 K_truth=31
+rline: [2, 3, 4, 5, 6, 7, 8]
+Truth (Fejér@K_truth):
+  M_est=0.0589232   slope(log|phi| vs log r)=-1.117213   spread(r*phi)=0.00393247
+Admissible (Fejér@K_primary):
+  M_est=0.0525145   slope(log|phi| vs log r)=-0.978787   spread(r*phi)=0.00251132
+Illegal (sharp cutoff @K_primary):
+  M_est=0.0589156   slope(log|phi| vs log r)=-1.344389   spread(r*phi)=0.0159099
+Illegal (signed kernel @K_primary):
+  M_est=0.0595438   slope(log|phi| vs log r)=-1.310267   spread(r*phi)=0.0125533   HF=0.524986
+PASS  Gate P1: Fejér mass closure within eps
+PASS  Gate P2: near-field 1/r log-slope within eps (Fejér)
+PASS  Gate P3: illegal filters increase r*phi spread (ringing)
+PASS  Gate P4: signed-kernel HF injection beyond floor
+PASS  Gate P5: illegal filters worsen slope deviation
+
+==================================================================================================
+      STAGE 3E — Einstein completion witness (Fermat compatibility + legality separation)       
+==================================================================================================
+round-trip rel err (sanity): 0.000e+00 (alpha truth vs itself)
+Primary (Fejér):
+  Fermat consistency  rel_L2(alpha - d(delay)/db) = 0.138721
+  Accuracy vs truth   rel_L2(alpha_K - alpha_truth)= 0.100543
+Illegal (sharp cutoff):
+  Fermat consistency  = 0.436994
+  Accuracy vs truth   = 0.484904
+Illegal (signed kernel):
+  Fermat consistency  = 0.492571
+  Accuracy vs truth   = 0.522148
+  HF energy frac(gx)  = 0.524986
+PASS  Gate E1: Fejér Fermat-consistency within eps
+PASS  Gate E2: illegal filters break Fermat-consistency margin
+PASS  Gate E3: Fejér accuracy vs truth within eps
+PASS  Gate E4: illegal filters worsen accuracy vs truth
+PASS  Gate E5: signed-kernel HF injection beyond floor
+
+==================================================================================================
+           STAGE 4 — Counterfactual teeth (budget limits must degrade primary scores)           
+==================================================================================================
+Primary score vector (K_primary=15):
+  B_spread=6.44729e-05  C_score=0.000383001  D_score=0.111332  P_score=0.129976  E_score=0.0777333
+CF (409,211,239) q3= 51  K= 5  B_spread=0.000356438  C_score=0.0100707  D_score=0.518404  P_score=0.935748  E_score=0.368464  degrade=True
+CF (409,211,647) q3= 51  K= 5  B_spread=0.000356438  C_score=0.0100707  D_score=0.518404  P_score=0.935748  E_score=0.368464  degrade=True
+CF (409,419,239) q3= 51  K= 5  B_spread=0.000356438  C_score=0.0100707  D_score=0.518404  P_score=0.935748  E_score=0.368464  degrade=True
+CF (409,419,647) q3= 51  K= 5  B_spread=0.000356438  C_score=0.0100707  D_score=0.518404  P_score=0.935748  E_score=0.368464  degrade=True
+PASS  Teeth gate: >=3/4 counterfactuals degrade all scores by (1+eps)  strong=4/4  eps=0.196116
+
+==================================================================================================
+             STAGE 5 — Ladder invariance (canonical tiers) + designed FAIL + teeth              
+==================================================================================================
+T1: N= 64 Kp=15 Kt=31  dist=0.077733  center=(5, 4, 3)
+T2: N= 80 Kp=19 Kt=39  dist=0.076062  center=(6, 5, 4)
+T3: N= 96 Kp=23 Kt=47  dist=0.075027  center=(8, 6, 4)
+
+PASS  Gate L1: tier distortion bounded by eps          max_dist=0.077733 eps=0.196116
+PASS  Gate L2: ladder invariance (max/min <= 1+eps)    ratio=1.036077 1+eps=1.196116
+
+Designed FAIL (break canonical tier budget):
+Baseline tier T1: N=64 Kp=15 dist=0.077733
+Bad tier      T1: N=64 Kp= 7 dist=0.245918
+PASS  Gate L3: designed FAIL increases distortion by (1+eps)   dist_bad=0.245918  (1+eps)*dist0=0.092978
+T64: N= 64 Kp=15 -> Kcf= 5  distP=0.077733 distCF=0.368464  degrade=True
+T80: N= 80 Kp=19 -> Kcf= 6  distP=0.076062 distCF=0.388824  degrade=True
+T96: N= 96 Kp=23 -> Kcf= 7  distP=0.075027 distCF=0.402859  degrade=True
+PASS  Gate LT: counterfactual budgets degrade tier distortion   strong=3/3 eps=0.196116
+
+==================================================================================================
+                                        DETERMINISM HASH                                        
+==================================================================================================
+determinism_sha256: edb0feeccf3ad587a5ac702fdc819e85c69863be6f4e5bbf1aa38cee41c597f8
+
+==================================================================================================
+                                         FINAL VERDICT                                          
+==================================================================================================
+PASS  DEMO-68 VERIFIED (GR master flagship: DOC legality + 4 tests + Einstein completion + ladder + teeth)

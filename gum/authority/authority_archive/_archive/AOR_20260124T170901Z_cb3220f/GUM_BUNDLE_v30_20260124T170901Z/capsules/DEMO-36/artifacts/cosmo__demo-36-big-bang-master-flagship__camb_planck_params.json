@@ -1,0 +1,9 @@
+{
+  "H0": 67.36,
+  "ombh2": 0.02237,
+  "omch2": 0.12,
+  "tau": 0.0544,
+  "ns": 0.9649,
+  "As": 2.1005e-09,
+  "notes": "Planck 2018 LCDM baseline (evaluation-only, hardcoded). Must not feed upstream selection."
+}

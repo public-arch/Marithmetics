@@ -1,0 +1,282 @@
+[
+  {
+    "code_sha256": "396c4588e85de170a7ea898ac1311b1f09ae7cef7024cc8f619ccb82cc00de1e",
+    "demo_id": "34",
+    "domain": "bridge",
+    "folder": "demo-34-omega-sm-master-flagship-v1",
+    "one_liner": "(cd \"demos/bridge/demo-34-omega-sm-master-flagship-v1\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.764374,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "833acd006473c7d3b15edab630458e0d6098299041ac0850bf0dd2e8805e90a6",
+    "demo_id": "56",
+    "domain": "controllers",
+    "folder": "demo-56-deterministic-operator-calculus-vs-fd",
+    "one_liner": "(cd \"demos/controllers/demo-56-deterministic-operator-calculus-vs-fd\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 20.168655,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "e2c60511de1f189674d6de23fa3a2e49fe5515c9a6b14738e715d1adf3cf1b1f",
+    "demo_id": "59",
+    "domain": "controllers",
+    "folder": "demo-59-electromagnetism",
+    "one_liner": "(cd \"demos/controllers/demo-59-electromagnetism\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.708291,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "f88eb6ef2f6c2ce1a11c4cd6664880b49a22c85486e91c5e4a1dec081383da1e",
+    "demo_id": "69",
+    "domain": "controllers",
+    "folder": "demo-69-oatb-operator-admissibility-transfer-bridge",
+    "one_liner": "(cd \"demos/controllers/demo-69-oatb-operator-admissibility-transfer-bridge\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 5.699256,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "be1384b930644f1d3e142422a1603811e2363014c4824850de0b205d4519bc8f",
+    "demo_id": "36",
+    "domain": "cosmo",
+    "folder": "demo-36-big-bang-master-flagship",
+    "one_liner": "(cd \"demos/cosmo/demo-36-big-bang-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 16.898526,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "e72e7790657950b2f91ec38c3a9014394a10ed5ad0d48ede23e29a124edf1b64",
+    "demo_id": "39",
+    "domain": "cosmo",
+    "folder": "demo-39-bb-a2",
+    "one_liner": "(cd \"demos/cosmo/demo-39-bb-a2\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.344715,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "3bb3ee1797bb7e46bbd488f7c27a631b6677a28d6b026623bd9fcb76bd04b45d",
+    "demo_id": "53",
+    "domain": "foundations",
+    "folder": "demo-53-lawbook-emergence",
+    "one_liner": "(cd \"demos/foundations/demo-53-lawbook-emergence\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.596638,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "78bf2731adce3bdd46f7ac93c12c14f72890f7d41adbb4151b2dac9e234929d5",
+    "demo_id": "71",
+    "domain": "foundations",
+    "folder": "demo-71-one-action-master-flagship",
+    "one_liner": "(cd \"demos/foundations/demo-71-one-action-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.246849,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "25d17946394abb9bda0d483a7a2c86749104c75a5856bfbd5c0792fcdf7a19bc",
+    "demo_id": "75",
+    "domain": "foundations",
+    "folder": "demo-75-prediction-ledger-master-flagship",
+    "one_liner": "(cd \"demos/foundations/demo-75-prediction-ledger-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.153235,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "f0912b3074c3de95e9b8e78cbc92dd5a1c576a65b31587889009bdbfd838e870",
+    "demo_id": "51",
+    "domain": "general_relativity",
+    "folder": "demo-51-qft-gr-vacuum-suppression",
+    "one_liner": "(cd \"demos/general_relativity/demo-51-qft-gr-vacuum-suppression\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.061332,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "4a573b4927fb8682d04293870edd17e90aa84c972f12da542e448a4eebc9b7be",
+    "demo_id": "58",
+    "domain": "general_relativity",
+    "folder": "demo-58-emergent-weak-field-gr",
+    "one_liner": "(cd \"demos/general_relativity/demo-58-emergent-weak-field-gr\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.988176,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "ac29eabd147832e91543a2f1b2975d222ea526e2536e9c34a63e3fb193b4c37d",
+    "demo_id": "63",
+    "domain": "general_relativity",
+    "folder": "demo-63-gravitational-wave-inspiral-phasing",
+    "one_liner": "(cd \"demos/general_relativity/demo-63-gravitational-wave-inspiral-phasing\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.13658,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "98e3c3a6c8865c0434d55a38347cb804432d52e62efeb5177ce4b26f1c35a424",
+    "demo_id": "68",
+    "domain": "general_relativity",
+    "folder": "demo-68-general-relativity-master-flagship",
+    "one_liner": "(cd \"demos/general_relativity/demo-68-general-relativity-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 1.593234,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "fbc59e24b80b3f94061e68fa213b7cc6b7b37090d1cb6b14ea0d05f2b4161d3a",
+    "demo_id": "65",
+    "domain": "infinity",
+    "folder": "demo-65-continuous-lift-paradox",
+    "one_liner": "(cd \"demos/infinity/demo-65-continuous-lift-paradox\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 3.023314,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "4e00a354e960da013f75906cb6ca0071accf045710fb6808a159967fa31d9028",
+    "demo_id": "67",
+    "domain": "infinity",
+    "folder": "demo-67-navier-stokes-master-flagship",
+    "one_liner": "(cd \"demos/infinity/demo-67-navier-stokes-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 65.504965,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "fba4ac6667a7e649d774e3aee773be53362fd17c92af83a116c2122536b660f2",
+    "demo_id": "60",
+    "domain": "quantum",
+    "folder": "demo-60-quantum-master-flagship",
+    "one_liner": "(cd \"demos/quantum/demo-60-quantum-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.25654,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "5e431f10e79a0aa5947fb14b0922c6500871332b8d981cd7a3fb36723660742b",
+    "demo_id": "66",
+    "domain": "quantum_gravity",
+    "folder": "demo-66-quantum-gravity-master-flagship-v4",
+    "one_liner": "(cd \"demos/quantum_gravity/demo-66-quantum-gravity-master-flagship-v4\" && python demo.py --cert)",
+    "returncode": 0,
+    "seconds": 0.159093,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "a3fbbc7f14770ef32eb551ff70d69e2613429935741a9228b5175af4c22f5b1b",
+    "demo_id": "72",
+    "domain": "sm",
+    "folder": "demo-72-yukawa",
+    "one_liner": "(cd \"demos/sm/demo-72-yukawa\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.149829,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "8cb834c2124473a177c7a5fd8a20a59035318876f903f8ab7b44eb62a231056f",
+    "demo_id": "76",
+    "domain": "sm",
+    "folder": "demo-76-primorial-yukawa-master-flagship",
+    "one_liner": "(cd \"demos/sm/demo-76-primorial-yukawa-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.241785,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "33413bbb5d92dc70572d72e928f9adf6e165b493a74ed01da1bb19e1361460af",
+    "demo_id": "33",
+    "domain": "standard_model",
+    "folder": "demo-33-first-principles-standard-model-sm28-closure",
+    "one_liner": "(cd \"demos/standard_model/demo-33-first-principles-standard-model-sm28-closure\" && python demo.py --cert)",
+    "returncode": 0,
+    "seconds": 0.570061,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "2278243c792ac568e606e097da916f958d26486f4c96367cef7bba5914aac20b",
+    "demo_id": "37",
+    "domain": "standard_model",
+    "folder": "demo-37-math-sm-master-flagship",
+    "one_liner": "(cd \"demos/standard_model/demo-37-math-sm-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.236403,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "c43a2a3b36de4d68a45882247387ca0746ecb1ebc27a486d1dd359b95820ee65",
+    "demo_id": "54",
+    "domain": "standard_model",
+    "folder": "demo-54-master-flagship-demo",
+    "one_liner": "(cd \"demos/standard_model/demo-54-master-flagship-demo\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 2.453094,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "d614263c9bf5aa4aba59c632765808ae521f5834390a1b6dc9cfb2ce712a3a49",
+    "demo_id": "55",
+    "domain": "standard_model",
+    "folder": "demo-55-proton-charge-radius",
+    "one_liner": "(cd \"demos/standard_model/demo-55-proton-charge-radius\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.059042,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "22d96168011f931ec65be9e4526037ea35ef55c2107effd54bd42b6d55b9492a",
+    "demo_id": "70",
+    "domain": "standard_model",
+    "folder": "demo-70-higgs-master-flagship",
+    "one_liner": "(cd \"demos/standard_model/demo-70-higgs-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.789852,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "33514b94c635ef02f20ed4eaaf8dee9f01b6bf99dec80c9377d8d3a2920ea2a5",
+    "demo_id": "73",
+    "domain": "standard_model",
+    "folder": "demo-73-flavor-completion-master-flagship",
+    "one_liner": "(cd \"demos/standard_model/demo-73-flavor-completion-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.199023,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "8cb834c2124473a177c7a5fd8a20a59035318876f903f8ab7b44eb62a231056f",
+    "demo_id": "76",
+    "domain": "standard_model",
+    "folder": "demo-76-primorial-yukawa-master-flagship",
+    "one_liner": "(cd \"demos/standard_model/demo-76-primorial-yukawa-master-flagship\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.241785,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "b12dd83a0b14307ec17de80f1286391c85bdae6904536a556a4e35d9445e7eb4",
+    "demo_id": "40",
+    "domain": "substrate",
+    "folder": "demo-40-universe-from-zero",
+    "one_liner": "(cd \"demos/substrate/demo-40-universe-from-zero\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.267574,
+    "status": "PASS"
+  },
+  {
+    "code_sha256": "6c0694a41546b177acc71cc8e29d6ca3395e2c8feacedc5affe2063a4251aca5",
+    "demo_id": "64",
+    "domain": "substrate",
+    "folder": "demo-64-base-gauge-invariance-integer-selector",
+    "one_liner": "(cd \"demos/substrate/demo-64-base-gauge-invariance-integer-selector\" && python demo.py)",
+    "returncode": 0,
+    "seconds": 0.075289,
+    "status": "PASS"
+  }
+]

@@ -1,0 +1,193 @@
+====================================================================================================
+   DEMO-76 — PRIMORIAL-YUKAWA MASTER FLAGSHIP (Θ primorial + θ12 + ladder + sensitivity + teeth)    
+====================================================================================================
+UTC time : 2026-01-24T17:48:37.973373Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout only (JSON optional)
+
+====================================================================================================
+                              STAGE 1 — Deterministic triple selection                              
+====================================================================================================
+Lane survivor pools (raw):
+  U(1):  [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Lane survivor pools (after U(1) coherence v2(wU-1)=3):
+  U(1):  [137]
+Primary: Triple(wU=137, s2=107, s3=103)
+Counterfactuals:
+  Triple(wU=409, s2=211, s3=239)
+  Triple(wU=409, s2=211, s3=307)
+  Triple(wU=409, s2=263, s3=239)
+  Triple(wU=409, s2=263, s3=307)
+  ✅  Gate S0: primary equals (137,107,103)
+  ✅  Gate S1: captured >=4 counterfactual triples                             found=4
+
+====================================================================================================
+                                   STAGE 1B — Derived invariants                                    
+====================================================================================================
+spec_sha256: 1fb7a4be160f83a8f16cadcec771e1f52467d7ebe748b297a9bb49904af55b4e
+q2=30  q3=17  v2U=3  eps=1/sqrt(q2)=0.18257419  q3_cf=3*q3=51
+Budgets: truth r=31   primary r=15   counterfactual r_cf=5
+  ✅  Gate I1: invariants match locked (q2=30,q3=17,v2U=3)                     (q2,q3,v2U)=(30,17,3)
+
+====================================================================================================
+                 STAGE 2 — OATB kernel admissibility audit (FFT minima + HF weight)                 
+====================================================================================================
+N=2048 r=15
+Fejér kernel min  : +0.000000e+00
+Sharp kernel min  : -3.298912e-03
+Signed kernel min : -9.697266e-01
+Signed HF weight frac(>r): 0.984863
+  ✅  Gate A1: Fejér kernel nonnegative (tol)                                  min=0.000e+00
+  ✅  Gate A2: sharp kernel has negative lobes                                 min=-3.299e-03
+  ✅  Gate A3: signed kernel strongly negative                                 min=-9.697e-01 floor=-3.333e-02
+  ✅  Gate A4: signed retains large HF weight                                  hf=0.985 floor=0.250
+
+====================================================================================================
+              STAGE 3 — Primorial window (y=q3) + Θ + survivor field + Fejér smoothing              
+====================================================================================================
+y=q3=17
+primes<=y: [2, 3, 5, 7, 11, 13, 17]
+M_y (primorial) = 510510
+phi(M_y)        = 92160
+Theta = phi(M_y)/M_y = 3072/17017 = 0.180525356996
+  ✅  Gate P0: M_y matches 510510 (y=17)                                       M_y=510510
+  ✅  Gate P1: phi(M_y) matches 92160 (y=17)                                   phi=92160
+  ✅  Gate P2: phi(M_y) equals survivor count                                  count=92160
+  ✅  Gate P3: empirical mean(S) equals Theta (tol)                            mean=0.180525356996
+
+MST observables (DEMO-74 style):
+  lawful (Fejér) : eps_smooth=5.526012e-01  X0=6.250000e-02
+  sharp (illegal): eps_smooth=9.280983e-01  X0=6.666667e-02
+  signed(illegal): eps_smooth=2.856815e+00  X0=-6.666667e-02
+  ✅  Gate W1: lawful smoothing no worse than signed (eps_smooth)              lawful=5.526e-01 signed=2.857e+00
+
+====================================================================================================
+               STAGE 4 — Family angle θ12 from π-hat/12 (lawful vs illegal controls)                
+====================================================================================================
+truth   pi_hat=3.1421480992  terms=1024  => theta12=0.2618456749 rad
+primary pi_hat=3.1437908668  terms=256  => theta12=0.2619825722 rad
+illegal sharp   pi_hat=3.0791533942 terms=16 => theta12=0.2565961162 rad
+illegal signflip pi_hat=13.0543749990 terms=256 => theta12=1.0878645832 rad
+
+====================================================================================================
+             STAGE 5 — Yukawas from (ε, Θ^{log(index)}, θ12) + loop rescale (y_t=0.999)             
+====================================================================================================
+Primary Yukawas (fractions; max_den=1000000):
+  y_u    = 30440/771547
+  y_d    = 14/6367
+  y_c    = 33678/114337
+  y_s    = 1881/167887
+  y_t    = 999/1000
+  y_b    = 16063/945102
+  y_e    = 162/525397
+  y_mu   = 186/124237
+  y_tau  = 679/320613
+
+Primary Yukawas (decimals):
+  y_u    = 3.945320246159e-02
+  y_d    = 2.198837788190e-03
+  y_c    = 2.945503205472e-01
+  y_s    = 1.120396457399e-02
+  y_t    = 9.990000000000e-01
+  y_b    = 1.699604910367e-02
+  y_e    = 3.083382652001e-04
+  y_mu   = 1.497138535766e-03
+  y_tau  = 2.117818053987e-03
+
+Hierarchy ratios (primary):
+  y_t / y_b = 58.778366
+  y_c / y_s = 26.289830
+
+Distances vs truth (rel L2 on 9-vector):
+  dist_primary  = 2.195904e-05
+  dist_sharp    = 8.406441e-04
+  dist_signflip = 1.731237e-01
+
+====================================================================================================
+                    STAGE 6 — Sensitivity audit (r, y, θ12 convention, log-base)                    
+====================================================================================================
+r-scan (lawful):
+r   terms    pi_hat       theta12      dist_to_truth
+ 3     16   3.1697167   0.2641431  3.687617e-04
+ 5     36   3.1558989   0.2629916  1.838661e-04
+ 7     64   3.1500145   0.2625012  1.051683e-04
+ 9    100   3.1470958   0.2622580  6.614263e-05
+11    144   3.1454574   0.2621215  4.423801e-05
+13    196   3.1444513   0.2620376  3.078741e-05
+15    256   3.1437909   0.2619826  2.195904e-05
+17    324   3.1433347   0.2619446  1.586139e-05
+19    400   3.1430067   0.2619172  1.147728e-05
+23    576   3.1425774   0.2618814  5.738193e-06
+31   1024   3.1421481   0.2618457  0.000000e+00
+
+primorial cutoff y-scan:
+y   #primes   Theta(phi/M)        dist_to_truth
+11        5    0.207792207792  2.996006e-02
+13        6    0.191808191808  1.253300e-02
+17        7    0.180525356996  2.195904e-05
+19        8    0.171024022417  1.073237e-02
+23        9    0.163588195356  1.924156e-02
+
+angle convention: theta12 = pi_hat / k
+k   theta12(rad)   dist_to_truth
+11  0.2857991697  3.871238e-03
+12  0.2619825722  2.195904e-05
+13  0.2418300667  3.190633e-03
+
+exponent log-base sensitivity:
+base   dist_to_truth
+ e    2.195904e-05
+ 2    1.181708e-01
+ 10   2.866734e-01
+
+local sensitivity: d(log y)/d(theta12) around primary
+delta_theta = |theta12_primary - theta12_truth| = 1.368973003023e-04 rad
+  y_u    slope=+3.729318e+00  (|s|=3.729318e+00)
+  y_d    slope=+3.729318e+00  (|s|=3.729318e+00)
+  y_c    slope=-2.681455e-01  (|s|=2.681455e-01)
+  y_s    slope=-2.681455e-01  (|s|=2.681455e-01)
+  y_t    slope=+0.000000e+00  (|s|=0.000000e+00)
+  y_b    slope=+0.000000e+00  (|s|=0.000000e+00)
+  y_e    slope=+3.729318e+00  (|s|=3.729318e+00)
+  y_mu   slope=-2.681455e-01  (|s|=2.681455e-01)
+  y_tau  slope=+0.000000e+00  (|s|=0.000000e+00)
+
+====================================================================================================
+STAGE 7 — Counterfactual teeth (triple + reduced budget)
+====================================================================================================
+CF Triple(wU=409, s2=211, s3=239)  q2=198 q3= 51 r_cf= 5  dist=5.033670e-02  degrade=True
+CF Triple(wU=409, s2=211, s3=307)  q2=198 q3= 51 r_cf= 5  dist=5.033670e-02  degrade=True
+CF Triple(wU=409, s2=263, s3=239)  q2=146 q3= 51 r_cf= 5  dist=5.009393e-02  degrade=True
+CF Triple(wU=409, s2=263, s3=307)  q2=146 q3= 51 r_cf= 5  dist=5.009393e-02  degrade=True
+
+====================================================================================================
+                                               GATES                                                
+====================================================================================================
+  ✅  Gate H1: hierarchy t>c>u
+  ✅  Gate H2: hierarchy b>s>d
+  ✅  Gate H3: hierarchy tau>mu>e
+  ✅  Gate R1: top/bottom ratio in a broad hierarchical band                   ratio=58.78
+  ✅  Gate R2: charm/strange ratio in a broad hierarchical band                ratio=26.29
+  ✅  Gate Y1: primary Yukawas stable vs truth (<= eps)                        dist=2.196e-05 eps=1.826e-01
+  ✅  Gate Y2: illegal sharp angle breaks stability by (1+eps)                 dist_sharp=8.406e-04 distP=2.196e-05 (1+eps)=1.183
+  ✅  Gate Y3: illegal signflip breaks stability by (1+eps)                    dist_sf=1.731e-01 distP=2.196e-05 (1+eps)=1.183
+  ✅  Gate SR: dist(r) decreases monotonically with r over scan                d3=3.688e-04 d15=2.196e-05 d31=0.000e+00
+  ✅  Gate SY: primorial cutoff y=q3 is best in local y-scan                   best_y=17 dist_best=2.196e-05
+  ✅  Gate SD: theta12 denominator 12 is best in {11,12,13}                    best_k=12 dist_best=2.196e-05
+  ✅  Gate SL: log base e is best among {e,2,10}                               best=e dist_best=2.196e-05
+  ✅  Gate Sθ: |dlogy/dθ12| is maximized by a first-generation coupling        max_key=y_e |s|=3.729e+00
+  ✅  Gate T: counterfactual teeth (>=3/4 CFs degrade by (1+eps))              strong=4/4 eps=0.183
+
+====================================================================================================
+                                          DETERMINISM HASH                                          
+====================================================================================================
+determinism_sha256: ef16f6ccc4ea5678b0ec551f73d7adac6fc33b809bbcf7b48c689622410ad666
+
+====================================================================================================
+                                           FINAL VERDICT                                            
+====================================================================================================
+  ✅  DEMO-76 VERIFIED (primorial Θ + θ12 Yukawa ladder + sensitivity + controls + teeth)
+Result: VERIFIED

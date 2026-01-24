@@ -1,0 +1,28 @@
+{
+  "run_id": "20260124T175825Z_de079b9",
+  "generated_utc": "2026-01-24 17:58:25Z",
+  "repo": {
+    "root": "/workspaces/Marithmetics",
+    "branch": "main",
+    "head": "de079b9a74e3b8f1f286f141d1afaca436357bee",
+    "dirty": true
+  },
+  "bundle": {
+    "dir": "/workspaces/Marithmetics/GUM/authority_archive/AOR_20260124T175825Z_de079b9/GUM_BUNDLE_v30_20260124T175825Z",
+    "sha256": "901289f5c2bb26ebe88487f0e2a921f3cf1cf0a51c2e110663e70eee92a98b59"
+  },
+  "report": {
+    "pdf": "/workspaces/Marithmetics/GUM/authority_archive/AOR_20260124T175825Z_de079b9/report/GUM_Report_v32_2026-01-24_18-00-44Z.pdf",
+    "manifest": "/workspaces/Marithmetics/GUM/authority_archive/AOR_20260124T175825Z_de079b9/report/GUM_Report_v32_2026-01-24_18-00-44Z.pdf.manifest.json"
+  },
+  "counts": {
+    "demos": 27,
+    "claims": 27,
+    "failures": []
+  },
+  "paths": {
+    "summary_md": "/workspaces/Marithmetics/GUM/authority_archive/AOR_20260124T175825Z_de079b9/SUMMARY.md",
+    "claim_ledger": "/workspaces/Marithmetics/GUM/authority_archive/AOR_20260124T175825Z_de079b9/claim_ledger.jsonl",
+    "transcript": "/workspaces/Marithmetics/GUM/authority_archive/AOR_20260124T175825Z_de079b9/runner_transcript.txt"
+  }
+}

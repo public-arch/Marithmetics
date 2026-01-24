@@ -1,0 +1,113 @@
+====================================================================================================
+DEMO-72 — YUKAWA COMPLETION MASTER FLAGSHIP (Kernel → Full Yukawas → Rare Decays)
+====================================================================================================
+UTC time : 2026-01-24T17:41:36.465266Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+
+====================================================================================================
+STAGE 1 — Deterministic triple selection
+====================================================================================================
+Lane survivor pools (raw):
+  U(1):  [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103, 137]
+Lane survivor pools (after U(1) coherence v2(wU-1)=3):
+  U(1):  [137]
+Primary: Triple(wU=137, s2=107, s3=103)
+Counterfactuals:
+  Triple(wU=409, s2=211, s3=239)
+  Triple(wU=409, s2=211, s3=307)
+  Triple(wU=409, s2=263, s3=239)
+  Triple(wU=409, s2=263, s3=307)
+
+====================================================================================================
+STAGE 1B — Derived invariants
+====================================================================================================
+q2=30  q3=17  v2U=3  eps=0.18257419  q3_cf=51
+Theta=phi(q2)/q2=0.266666666667  sin^2θW=0.233333333333  alpha0=1/wU=0.007299270073
+
+====================================================================================================
+STAGE 2 — OATB kernel admissibility audit
+====================================================================================================
+Fejér kernel min=+0.000000e+00
+Sharp kernel min=-3.298912e-03
+Signed-HF kernel min=-9.697266e-01
+Signed-HF high-frequency energy fraction=0.984863
+
+====================================================================================================
+STAGE 3 — Full Yukawa derivation (lawful + controls)
+====================================================================================================
+Budgets: r_primary=15  r_truth=31  r_cf=5  y_max_target=0.875000
+
+Lawful primary Yukawas:
+  t        y= 8.750000e-01
+  b        y= 3.123761e-02
+  tau      y= 1.607532e-03
+  nu_tau   y= 2.284177e-12
+  c        y= 5.507799e-02
+  s        y= 1.952540e-03
+  mu       y= 9.964656e-05
+  nu_mu    y= 1.401722e-13
+  u        y= 3.338278e-03
+  d        y= 1.165011e-04
+  e        y= 5.824777e-06
+  nu_e     y= 7.966669e-15
+
+====================================================================================================
+STAGE 4 — Rare Higgs decay forecast vector (fermion-only proxy)
+====================================================================================================
+Truth ratios (Γ ~ Nc y^2):
+  mu/tau  =  4.319184e-03
+  e/mu    =  4.259856e-03
+  c/b     =  3.342378e+00
+  s/b     =  4.331455e-03
+  u/c     =  4.291807e-03
+
+Primary ratios:
+  mu/tau  =  3.842426e-03
+  e/mu    =  3.416913e-03
+  c/b     =  3.108857e+00
+  s/b     =  3.907009e-03
+  u/c     =  3.673574e-03
+
+Counterfactual ratios:
+  mu/tau  =  0.000000e+00
+  e/mu    =  0.000000e+00
+  c/b     =  1.687955e+00
+  s/b     =  0.000000e+00
+  u/c     =  0.000000e+00
+
+Illegal HF-boost ratios:
+  mu/tau  =  1.758113e+02
+  e/mu    =  1.563419e+02
+  c/b     =  9.725943e+03
+  s/b     =  1.787663e+02
+  u/c     =  1.680855e+02
+
+====================================================================================================
+GATES
+====================================================================================================
+  ✅  Gate S0: primary equals (137,107,103)                            selected=(137, 107, 103)
+  ✅  Gate S1: captured >=4 counterfactual triples                     found=4
+  ✅  Gate I1: invariants match locked (q2=30,q3=17,v2U=3)             (q2,q3,v2U)=(30,17,3)
+  ✅  Gate A1: Fejér kernel nonnegative (admissible)                   
+  ✅  Gate A2: Sharp kernel has negative lobes (non-admissible)        
+  ✅  Gate A3: Signed-HF kernel is strongly non-admissible             
+  ✅  Gate Y1: lawful Yukawas stable vs truth (log-distance <= eps)    dist=1.415868e-02 eps=1.825742e-01
+  ✅  Gate Y2: signflip illegal violates nonnegativity (min <= -eps^2) min=-8.750e-01 -eps^2=-3.333e-02
+  ✅  Gate T1: counterfactual budget degrades Yukawas by (1+eps)       distP=1.416e-02 distCF=6.525e+00 1+eps=1.183
+  ✅  Gate R1: rare-ratio vector stable vs truth (<= eps)              err=6.986754e-02 eps=1.825742e-01
+  ✅  Gate R2: illegal HF-boost breaks rare ratios by (1+eps)          errHF=2.911e+03 errP=6.987e-02
+  ✅  Gate T2: counterfactual breaks rare ratios by (1+eps)            errCF=4.950e-01 errP=6.987e-02
+
+====================================================================================================
+DETERMINISM HASH
+====================================================================================================
+determinism_sha256: 489c6e6181afa5d7804a92ee2807f23ee78efce1375b6b193bdb486cef9726db
+
+====================================================================================================
+FINAL VERDICT
+====================================================================================================
+  ✅  DEMO-72 VERIFIED (kernel→full Yukawas→rare-decay forecasts + controls + teeth)
+Result: VERIFIED

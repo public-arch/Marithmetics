@@ -1,0 +1,82 @@
+==================================================================================================
+DEMO-64 — Base-Gauge Invariance of the Selector (Encode/Decode Audit) — REFEREE READY
+==================================================================================================
+UTC time : 2026-01-23T04:51:28Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout + optional JSON bundle
+==================================================================================================
+==================================================================================================
+STAGE 1 — Baseline selector (integer mode, no encoding layer)
+==================================================================================================
+Lane U(1): q=17 residues=[1, 5] τ≥0.31 span=97..180
+  → Survivors (3): [103, 107, 137]
+    w=103 : Θ(w−1)=φ(w−1)/(w−1) = 0.31373
+    w=107 : Θ(w−1)=φ(w−1)/(w−1) = 0.49057
+    w=137 : Θ(w−1)=φ(w−1)/(w−1) = 0.47059
+
+Lane SU(2): q=13 residues=[3] τ≥0.3 span=97..180
+  → Survivors (1): [107]
+    w=107 : Θ(w−1)=φ(w−1)/(w−1) = 0.49057
+
+Lane SU(3): q=17 residues=[1] τ≥0.3 span=97..180
+  → Survivors (2): [103, 137]
+    w=103 : Θ(w−1)=φ(w−1)/(w−1) = 0.31373
+    w=137 : Θ(w−1)=φ(w−1)/(w−1) = 0.47059
+
+Admissible triples (after T1–T2): [(137, 107, 103)]
+PASS  Unique admissible triple (baseline)                                      count=1
+Selected triple:
+  wU=137  s2=107  s3=103
+Derived invariants:
+  q2=30  q3=17  v2U=3  eps=0.18257419
+spec_sha256: a0820d69a99473cec8e9587a3857eb2192816ef3308ad621ef19aa7063eeca23
+
+==================================================================================================
+STAGE 2 — Cross-base encode/decode audit (base-gauge invariance)
+==================================================================================================
+base=2  triple=(137, 107, 103) pools_match=True rt_fail=0
+base=3  triple=(137, 107, 103) pools_match=True rt_fail=0
+base=4  triple=(137, 107, 103) pools_match=True rt_fail=0
+base=5  triple=(137, 107, 103) pools_match=True rt_fail=0
+base=6  triple=(137, 107, 103) pools_match=True rt_fail=0
+base=7  triple=(137, 107, 103) pools_match=True rt_fail=0
+base=8  triple=(137, 107, 103) pools_match=True rt_fail=0
+base=9  triple=(137, 107, 103) pools_match=True rt_fail=0
+base=10 triple=(137, 107, 103) pools_match=True rt_fail=0
+base=12 triple=(137, 107, 103) pools_match=True rt_fail=0
+base=16 triple=(137, 107, 103) pools_match=True rt_fail=0
+PASS  Gate G0: encode/decode contract holds (no round-trip failures)           failures=0
+PASS  Gate G1: triple invariant across bases
+PASS  Gate G2: lane survivor pools invariant across bases
+
+==================================================================================================
+STAGE 3 — Negative controls (intentionally violating the encoding contract)
+==================================================================================================
+base=2  contract_failures=84   mismatch_vs_baseline=True triple=None
+base=3  contract_failures=84   mismatch_vs_baseline=True triple=None
+base=4  contract_failures=84   mismatch_vs_baseline=True triple=None
+base=5  contract_failures=84   mismatch_vs_baseline=True triple=None
+base=6  contract_failures=84   mismatch_vs_baseline=True triple=None
+base=7  contract_failures=84   mismatch_vs_baseline=True triple=None
+base=8  contract_failures=84   mismatch_vs_baseline=True triple=None
+base=9  contract_failures=84   mismatch_vs_baseline=True triple=None
+base=10 contract_failures=84   mismatch_vs_baseline=True triple=None
+base=12 contract_failures=84   mismatch_vs_baseline=True triple=None
+base=16 contract_failures=84   mismatch_vs_baseline=True triple=None
+PASS  Gate F: negative control triggers mismatch (sensitivity)                 mismatches=11/11
+
+==================================================================================================
+DETERMINISM HASH
+==================================================================================================
+determinism_sha256: 9daf73e8797ad7b279799c178a9271f99a97af35b5b5e474675e6dd1f6c46d8c
+
+==================================================================================================
+FINAL VERDICT
+==================================================================================================
+PASS  DEMO-64 VERIFIED (base-gauge invariance + falsifier sensitivity)
+Result: VERIFIED
+
+Artifacts written:
+  folder: /workspaces/Marithmetics/demos/substrate/demo-64-base-gauge-invariance-integer-selector/DEMO64_BUNDLE_20260123T045128Z
+  zip   : /workspaces/Marithmetics/demos/substrate/demo-64-base-gauge-invariance-integer-selector/DEMO64_BUNDLE_20260123T045128Z.zip  (sha256=8c9c021d255cdb56249a3588f4d7314773e993e1accfd0408484c6baf3c6280f)

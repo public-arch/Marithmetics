@@ -1,0 +1,71 @@
+==================================================================================================
+DEMO-63 — Gravitational-Wave Inspiral Phasing (Deterministic Amplitude + Counterfactual Controls)
+MASTER FLAGSHIP — REFEREE READY
+==================================================================================================
+UTC time : 2026-01-24T17:47:30.287902Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : none (stdout only)
+
+==================================================================================================
+STAGE 1 — Deterministic triple selection (primary window)
+==================================================================================================
+Lane survivor pools (raw):
+  U(1): [103, 107, 137]
+  SU(2): [107]
+  SU(3): [103]
+Lane survivor pools (after U(1) coherence):
+  U(1): [137]
+  SU(2): [107]
+  SU(3): [103]
+
+PASS  Primary equals (137,107,103)  selected=Triple(wU=137, s2=107, s3=103)
+Derived invariants/budgets: q2=30 q3=17 v2U=3 eps=1/sqrt(q2)=0.182574185835
+
+PASS  Captured >=8 counterfactual triples (deterministic)  found=12 window=(97, 1200)
+Counterfactuals:
+  (137, 107, 239), (137, 107, 307), (137, 107, 443), (137, 107, 647), (137, 107, 919), (409, 107, 103), (409, 107, 239), (409, 107, 307), (409, 107, 443), (409, 107, 647), (409, 107, 919), (409, 263, 103)
+
+spec_sha256: 6740d7951e0e22639635be3486b8ac511177e18913efbf5ad8b47e9c0751ce24
+
+==================================================================================================
+STAGE 2 — Primary amplitude and observable vector
+==================================================================================================
+Primary amplitude A: 0.106703229738
+Primary observable vector (dephase_lo_inspiral, units suppressed):
+  BNS_1.4+1.4_BAND1       54150.124646
+  BNS_1.4+1.4_BAND2       27454.3582805
+  BBH_10+10_BAND1         2031.64607703
+  BBH_10+10_BAND2         996.616685838
+  BBH_30+30_BAND1         320.733479775
+  BBH_30+30_BAND2         150.224247378
+
+PASS  Gate G1: primary vector finite and nonzero  ||vP||=60755.4
+
+==================================================================================================
+STAGE 3 — Counterfactual controls (vector teeth)
+==================================================================================================
+CF ( 137, 107, 239)  A=0.2170174127  rel_dist= 1.03384109  miss=True
+CF ( 137, 107, 307)  A=0.2625515645  rel_dist= 1.46057748  miss=True
+CF ( 137, 107, 443)  A=0.3393871113  rel_dist= 2.1806639  miss=True
+CF ( 137, 107, 647)  A=0.4286772157  rel_dist= 3.01747179  miss=True
+CF ( 137, 107, 919)  A=0.5159170464  rel_dist= 3.83506495  miss=True
+CF ( 409, 107, 103)  A=0.1071690876  rel_dist= 0.00436592133  miss=False
+CF ( 409, 107, 239)  A=0.2178474407  rel_dist= 1.04161993  miss=True
+CF ( 409, 107, 307)  A=0.263497139  rel_dist= 1.46943921  miss=True
+CF ( 409, 107, 443)  A=0.3404816445  rel_dist= 2.19092164  miss=True
+CF ( 409, 107, 647)  A=0.4298723293  rel_dist= 3.02867214  miss=True
+CF ( 409, 107, 919)  A=0.5171352282  rel_dist= 3.84648149  miss=True
+CF ( 409, 263, 103)  A=0.04656089346  rel_dist= 0.563641198  miss=True
+PASS  Gate T: >=3/4 counterfactuals miss by eps (vector L2)  strong=11/12  eps=0.182574185835
+
+==================================================================================================
+DETERMINISM HASH
+==================================================================================================
+determinism_sha256: 16bf4f19174a16c7b8c24b8b7ffb25a339f5149fe5ba42812fcc911e214db827
+
+==================================================================================================
+FINAL VERDICT
+==================================================================================================
+PASS  DEMO-63 VERIFIED (selection + first-principles observable vector + teeth)
+Result: VERIFIED

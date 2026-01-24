@@ -1,0 +1,148 @@
+{
+  "baseline": {
+    "invariants": {
+      "eps": 0.182574185835,
+      "q2": 30,
+      "q3": 17,
+      "v2U": 3
+    },
+    "pools": {
+      "SU(2)": [
+        107
+      ],
+      "SU(3)": [
+        103,
+        137
+      ],
+      "U(1)": [
+        103,
+        107,
+        137
+      ]
+    },
+    "triple": [
+      137,
+      107,
+      103
+    ]
+  },
+  "bases": [
+    {
+      "base": 2,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    },
+    {
+      "base": 3,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    },
+    {
+      "base": 4,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    },
+    {
+      "base": 5,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    },
+    {
+      "base": 6,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    },
+    {
+      "base": 7,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    },
+    {
+      "base": 8,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    },
+    {
+      "base": 9,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    },
+    {
+      "base": 10,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    },
+    {
+      "base": 12,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    },
+    {
+      "base": 16,
+      "pools_match": true,
+      "round_trip_failures": 0,
+      "triple": [
+        137,
+        107,
+        103
+      ]
+    }
+  ],
+  "negative_control": {
+    "bases_tested": 11,
+    "decoder": "wrong_base_plus_one",
+    "mismatches": 11,
+    "round_trip_failures": 924
+  },
+  "spec_sha256": "a0820d69a99473cec8e9587a3857eb2192816ef3308ad621ef19aa7063eeca23"
+}
