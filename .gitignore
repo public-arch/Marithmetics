@@ -30,3 +30,4 @@ gum/reports/GUM_Report_v*.manifest.json
 !gum/reports/LATEST.pdf
 !gum/reports/LATEST.pdf.manifest.json
 !gum/reports/.gitkeep
+!gum/authority_archive/releases/*.zip
