@@ -817,6 +817,17 @@ def main() -> int:
                 items.append(manifest_copy)
             _make_zip(zip_path, items=items, root=repo_root)
 
+            # Also copy the master zip to a stable releases folder for convenience (AoR remains canonical).
+            try:
+                rel_dir = repo_root / "gum" / "authority_archive" / "releases"
+                rel_dir.mkdir(parents=True, exist_ok=True)
+                # copy versioned zip
+                shutil.copy2(zip_path, rel_dir / zip_path.name)
+                # maintain stable pointer
+                shutil.copy2(zip_path, rel_dir / "LATEST.zip")
+            except Exception:
+                pass
+
         printer.title("AoR Outputs")
         printer.line(f"{ANSI.bold}AoR root{ANSI.reset}      {_safe_relpath(aor_root, repo_root)}")
         printer.line(f"{ANSI.bold}Bundle dir{ANSI.reset}    {_safe_relpath(bundle_dir, repo_root)}")
