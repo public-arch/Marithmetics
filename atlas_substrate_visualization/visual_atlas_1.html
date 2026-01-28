@@ -175,6 +175,72 @@
             font-weight: bold;
             color: white !important;
         }
+        .highlight-col-mirror {
+            background: #ffeb3b !important;
+            border: 3px solid #f57f17 !important;
+            font-weight: bold;
+            color: #333 !important;
+        }
+        .highlight-col-mirror-axis {
+            background: #ff5722 !important;
+            border: 3px solid #bf360c !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-col-repeat-1 {
+            background: #00bcd4 !important;
+            border: 3px solid #006064 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-col-repeat-2 {
+            background: #009688 !important;
+            border: 3px solid #004d40 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-col-repeat-3 {
+            background: #4caf50 !important;
+            border: 3px solid #1b5e20 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-col-twin-1 {
+            background: #f06292 !important;
+            border: 3px solid #880e4f !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-col-twin-2 {
+            background: #ba68c8 !important;
+            border: 3px solid #4a148c !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-col-attractor {
+            background: #7e57c2 !important;
+            border: 3px solid #311b92 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-col-complement-1 {
+            background: #ff6f00 !important;
+            border: 3px solid #e65100 !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-col-complement-2 {
+            background: #0091ea !important;
+            border: 3px solid #01579b !important;
+            font-weight: bold;
+            color: white !important;
+        }
+        .highlight-col-progression {
+            background: #26a69a !important;
+            border: 3px solid #00695c !important;
+            font-weight: bold;
+            color: white !important;
+        }
         
         .pattern-explanation {
             background: #e7f3ff;
@@ -270,31 +336,41 @@
             <div class="selector-label">Select Numerical Base:</div>
             <select id="baseSelect" onchange="changeBase()">
                 <option value="10">Base 10 (Decimal - mod 9)</option>
-                <option value="8">Base 8 (Octal - mod 7)</option>
-                <option value="12">Base 12 (Dozenal - mod 11)</option>
-                <option value="16">Base 16 (Hexadecimal - mod 15)</option>
                 <option value="6">Base 6 (Senary - mod 5)</option>
                 <option value="7">Base 7 (Septenary - mod 6)</option>
+                <option value="8">Base 8 (Octal - mod 7)</option>
                 <option value="9">Base 9 (Nonary - mod 8)</option>
                 <option value="11">Base 11 (mod 10)</option>
+                <option value="12">Base 12 (Dozenal - mod 11)</option>
                 <option value="13">Base 13 (mod 12)</option>
                 <option value="14">Base 14 (mod 13)</option>
                 <option value="15">Base 15 (mod 14)</option>
+                <option value="16">Base 16 (Hexadecimal - mod 15)</option>
             </select>
         </div>
 
         <div class="pattern-selector">
             <div class="selector-label">Select Pattern to Explore:</div>
             <select id="patternSelect" onchange="loadPattern()">
-                <option value="inverse-1">Pattern 1: Primary Multiplicative Inverse Pair</option>
-                <option value="inverse-2">Pattern 2: Secondary Multiplicative Inverse Pair</option>
-                <option value="attractors">Pattern 3: Attractor Bases</option>
-                <option value="cycles">Pattern 4: Cycle Lengths</option>
-                <option value="identity">Pattern 5: Identity Element (Value 1)</option>
-                <option value="echoes">Pattern 6: Frequent Value Patterns</option>
-                <option value="diagonals">Pattern 7: Diagonal Chains</option>
-                <option value="oscillations">Pattern 8: Oscillating Sequences</option>
-                <option value="cylinder">Pattern 9: 3D Cylindrical View</option>
+                <optgroup label="Horizontal Patterns (Bases/Rows)">
+                    <option value="inverse-1">Pattern 1: Primary Multiplicative Inverse Pair</option>
+                    <option value="inverse-2">Pattern 2: Secondary Multiplicative Inverse Pair</option>
+                    <option value="attractors">Pattern 3: Attractor Bases</option>
+                    <option value="cycles">Pattern 4: Cycle Lengths</option>
+                    <option value="identity">Pattern 5: Identity Element (Value 1)</option>
+                    <option value="echoes">Pattern 6: Frequent Value Patterns</option>
+                    <option value="diagonals">Pattern 7: Diagonal Chains</option>
+                    <option value="oscillations">Pattern 8: Oscillating Sequences</option>
+                    <option value="cylinder">Pattern 9: 3D Cylindrical View</option>
+                </optgroup>
+                <optgroup label="Vertical Patterns (Powers/Columns)">
+                    <option value="column-mirrors">Pattern 10: Divergent Mirror Columns</option>
+                    <option value="column-repeats">Pattern 11: Repeating Column Segments</option>
+                    <option value="column-twins">Pattern 12: Identical Column Pairs</option>
+                    <option value="column-attractors">Pattern 13: Column Attractor Values</option>
+                    <option value="column-complements">Pattern 14: Complementary Column Pairs</option>
+                    <option value="column-progressions">Pattern 15: Arithmetic Column Progressions</option>
+                </optgroup>
             </select>
         </div>
 
@@ -347,37 +423,20 @@
             return pairs;
         }
 
+        // FIXED: Attractor detection - more lenient
         function findAttractors() {
             const modulus = currentBase - 1;
             const attractors = [];
-            for (let base = 1; base <= modulus; base++) {
+            for (let base = 2; base <= modulus; base++) {
                 const row = gridData[base - 1];
                 if (!row) continue;
                 
-                // Check if it converges to a fixed value
-                const convergedValue = row[row.length - 1];
-                let isAttractor = true;
+                const lastValue = row[row.length - 1];
+                const secondLastValue = row[row.length - 2];
+                const thirdLastValue = row[row.length - 3];
                 
-                // Find where it stabilizes
-                let stabilizePoint = -1;
-                for (let i = 2; i < row.length; i++) {
-                    if (row[i] === convergedValue) {
-                        // Check if all subsequent values are the same
-                        let allSame = true;
-                        for (let j = i; j < row.length; j++) {
-                            if (row[j] !== convergedValue) {
-                                allSame = false;
-                                break;
-                            }
-                        }
-                        if (allSame) {
-                            stabilizePoint = i;
-                            break;
-                        }
-                    }
-                }
-                
-                if (stabilizePoint !== -1 && stabilizePoint <= 4 && base > 1) {
+                // If last 3 values are the same, it's converged
+                if (lastValue === secondLastValue && lastValue === thirdLastValue) {
                     attractors.push(base);
                 }
             }
@@ -417,7 +476,7 @@
             return 12;
         }
 
-        // FIXED: Better pattern detection that actually finds patterns
+        // FIXED: Better pattern detection - lower threshold
         function findFrequentValues() {
             const valueCounts = {};
             const valuePositions = {};
@@ -431,10 +490,18 @@
                 }
             }
             
-            // Get top 3 most frequent values (excluding 1 and the modulus)
+            // Get top 3 most frequent values (excluding 1 if it dominates everything)
             const modulus = currentBase - 1;
+            const totalCells = gridData.length * 12;
             const patterns = Object.entries(valueCounts)
-                .filter(([val, count]) => val !== '1' && parseInt(val) !== modulus && count >= 4)
+                .filter(([val, count]) => {
+                    // Exclude value 1 if it appears in more than 40% of cells (too dominant)
+                    if (val === '1' && count / totalCells > 0.4) return false;
+                    // Exclude modulus if too dominant
+                    if (parseInt(val) === modulus && count / totalCells > 0.4) return false;
+                    // Include if appears at least 3 times
+                    return count >= 3;
+                })
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 3)
                 .map(([val, count]) => ({
@@ -449,7 +516,7 @@
         function findAllDiagonals() {
             const diagonals = [];
             
-            // Down-right
+            // Down-right diagonals
             for (let startRow = 0; startRow < gridData.length; startRow++) {
                 for (let startCol = 1; startCol < 13; startCol++) {
                     const diagonal = [];
@@ -480,7 +547,7 @@
                 }
             }
             
-            // Up-right
+            // Up-right diagonals
             for (let startRow = 0; startRow < gridData.length; startRow++) {
                 for (let startCol = 1; startCol < 13; startCol++) {
                     const diagonal = [];
@@ -511,7 +578,19 @@
                 }
             }
             
-            return diagonals.sort((a, b) => b.count - a.count).slice(0, 5);
+            // Remove duplicates and sort by count
+            const uniqueDiagonals = [];
+            const seen = new Set();
+            
+            for (const diag of diagonals) {
+                const key = diag.cells.map(c => `${c.base}-${c.power}`).sort().join('|');
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    uniqueDiagonals.push(diag);
+                }
+            }
+            
+            return uniqueDiagonals.sort((a, b) => b.count - a.count).slice(0, 10);
         }
 
         function findOscillations() {
@@ -558,6 +637,395 @@
             }
             
             return patterns;
+        }
+
+        // ===== NEW VERTICAL PATTERN DETECTION FUNCTIONS =====
+
+        function findDivergentMirrors() {
+            const mirrors = [];
+            const maxBase = currentBase - 1;
+            
+            for (let col = 1; col <= 12; col++) {
+                const colData = gridData.map(row => row[col]);
+                
+                // Look for divergent mirror points
+                // Check each position as potential mirror axis
+                for (let center = 1; center < colData.length - 2; center++) {
+                    const maxRadius = Math.min(center, colData.length - center - 1);
+                    
+                    // Check single center point
+                    let matchLength = 0;
+                    for (let r = 1; r <= maxRadius; r++) {
+                        if (colData[center - r] === colData[center + r]) {
+                            matchLength = r;
+                        } else {
+                            break;
+                        }
+                    }
+                    
+                    if (matchLength >= 2) {
+                        const upSequence = [];
+                        const downSequence = [];
+                        for (let r = 0; r <= matchLength; r++) {
+                            upSequence.push(colData[center - r]);
+                            downSequence.push(colData[center + r]);
+                        }
+                        
+                        mirrors.push({
+                            power: col,
+                            type: 'single-axis',
+                            centerBase: center + 1,
+                            radius: matchLength,
+                            upSequence: upSequence.reverse(),
+                            downSequence: downSequence,
+                            data: colData
+                        });
+                    }
+                    
+                    // Check double center point (two adjacent values)
+                    if (center < colData.length - 1 && colData[center] === colData[center + 1]) {
+                        let matchLength2 = 0;
+                        const maxRadius2 = Math.min(center, colData.length - center - 2);
+                        
+                        for (let r = 1; r <= maxRadius2; r++) {
+                            if (colData[center - r] === colData[center + 1 + r]) {
+                                matchLength2 = r;
+                            } else {
+                                break;
+                            }
+                        }
+                        
+                        if (matchLength2 >= 2) {
+                            const upSequence = [];
+                            const downSequence = [];
+                            for (let r = 0; r <= matchLength2; r++) {
+                                upSequence.push(colData[center - r]);
+                                downSequence.push(colData[center + 1 + r]);
+                            }
+                            
+                            mirrors.push({
+                                power: col,
+                                type: 'double-axis',
+                                centerBase1: center + 1,
+                                centerBase2: center + 2,
+                                radius: matchLength2,
+                                upSequence: upSequence.reverse(),
+                                downSequence: downSequence,
+                                data: colData
+                            });
+                        }
+                    }
+                }
+            }
+            
+            // Return only the strongest mirrors (longest radius)
+            const bestMirrors = [];
+            const usedCols = new Set();
+            
+            mirrors.sort((a, b) => b.radius - a.radius);
+            for (const mirror of mirrors) {
+                if (!usedCols.has(mirror.power)) {
+                    bestMirrors.push(mirror);
+                    usedCols.add(mirror.power);
+                }
+            }
+            
+            return bestMirrors;
+        }
+
+        function findRepeatingColumnSegments() {
+            const repeating = [];
+            
+            for (let col = 1; col <= 12; col++) {
+                const colData = gridData.map(row => row[col]);
+                
+                // Try different segment lengths
+                for (let segLen = 2; segLen <= Math.floor(colData.length / 2); segLen++) {
+                    const segment = colData.slice(0, segLen);
+                    let repeatCount = 0;
+                    let allMatch = true;
+                    
+                    for (let i = 0; i < colData.length; i += segLen) {
+                        const currentSeg = colData.slice(i, i + segLen);
+                        if (currentSeg.length !== segLen) break;
+                        
+                        let matches = true;
+                        for (let j = 0; j < segLen; j++) {
+                            if (currentSeg[j] !== segment[j]) {
+                                matches = false;
+                                break;
+                            }
+                        }
+                        
+                        if (matches) {
+                            repeatCount++;
+                        } else {
+                            allMatch = false;
+                            break;
+                        }
+                    }
+                    
+                    if (allMatch && repeatCount >= 2) {
+                        repeating.push({
+                            power: col,
+                            segmentLength: segLen,
+                            segment: segment,
+                            repeatCount: repeatCount,
+                            data: colData
+                        });
+                        break; // Found the repeating pattern for this column
+                    }
+                }
+            }
+            
+            return repeating;
+        }
+
+        function findIdenticalColumns() {
+            const twins = [];
+            const checked = new Set();
+            
+            for (let col1 = 1; col1 <= 12; col1++) {
+                if (checked.has(col1)) continue;
+                
+                const col1Data = gridData.map(row => row[col1]);
+                const group = [col1];
+                
+                for (let col2 = col1 + 1; col2 <= 12; col2++) {
+                    if (checked.has(col2)) continue;
+                    
+                    const col2Data = gridData.map(row => row[col2]);
+                    
+                    // Check if identical
+                    let identical = true;
+                    for (let i = 0; i < col1Data.length; i++) {
+                        if (col1Data[i] !== col2Data[i]) {
+                            identical = false;
+                            break;
+                        }
+                    }
+                    
+                    if (identical) {
+                        group.push(col2);
+                        checked.add(col2);
+                    }
+                }
+                
+                if (group.length > 1) {
+                    checked.add(col1);
+                    twins.push({
+                        powers: group,
+                        data: col1Data
+                    });
+                }
+            }
+            
+            return twins;
+        }
+
+        function findColumnAttractors() {
+            const attractors = [];
+            
+            for (let col = 1; col <= 12; col++) {
+                const colData = gridData.map(row => row[col]);
+                
+                // Count value frequencies
+                const valueCounts = {};
+                colData.forEach(val => {
+                    valueCounts[val] = (valueCounts[val] || 0) + 1;
+                });
+                
+                // Find dominant value (appears in >50% of cells)
+                for (const [value, count] of Object.entries(valueCounts)) {
+                    if (count / colData.length > 0.5) {
+                        attractors.push({
+                            power: col,
+                            value: parseInt(value),
+                            count: count,
+                            percentage: (count / colData.length * 100).toFixed(1),
+                            data: colData
+                        });
+                        break;
+                    }
+                }
+            }
+            
+            return attractors;
+        }
+
+        function findComplementaryColumns() {
+            const modulus = currentBase - 1;
+            const complements = [];
+            const checked = new Set();
+            
+            // First, let's find what relationships actually exist
+            for (let col1 = 1; col1 <= 12; col1++) {
+                if (checked.has(col1)) continue;
+                
+                const col1Data = gridData.map(row => row[col1]);
+                
+                for (let col2 = col1 + 1; col2 <= 12; col2++) {
+                    if (checked.has(col2)) continue;
+                    
+                    const col2Data = gridData.map(row => row[col2]);
+                    const minLen = Math.min(col1Data.length, col2Data.length);
+                    
+                    // Type 1: Additive inverse (a + b ≡ 0 mod modulus+1)
+                    let countAdditiveZero = 0;
+                    for (let i = 0; i < minLen; i++) {
+                        if ((col1Data[i] + col2Data[i]) % (modulus + 1) === 0) {
+                            countAdditiveZero++;
+                        }
+                    }
+                    
+                    // Type 2: Sum to modulus consistently
+                    let countSumMod = 0;
+                    for (let i = 0; i < minLen; i++) {
+                        if (col1Data[i] + col2Data[i] === modulus) {
+                            countSumMod++;
+                        }
+                    }
+                    
+                    // Type 3: Multiplicative inverse (a * b ≡ 1 mod modulus)
+                    let countMultInverse = 0;
+                    for (let i = 0; i < minLen; i++) {
+                        if (col1Data[i] !== 0 && col2Data[i] !== 0) {
+                            if ((col1Data[i] * col2Data[i]) % modulus === 1) {
+                                countMultInverse++;
+                            }
+                        }
+                    }
+                    
+                    // Type 4: Difference is constant
+                    let constDiff = true;
+                    let diff = col2Data[0] - col1Data[0];
+                    for (let i = 1; i < minLen; i++) {
+                        if (col2Data[i] - col1Data[i] !== diff) {
+                            constDiff = false;
+                            break;
+                        }
+                    }
+                    
+                    // Type 5: Power relationship (col1 * col2 = another column or constant pattern)
+                    let powerRelated = false;
+                    if (col1 + col2 <= 12) {
+                        const targetCol = col1 + col2;
+                        const targetData = gridData.map(row => row[targetCol]);
+                        let matches = 0;
+                        for (let i = 0; i < minLen; i++) {
+                            if (targetData[i] === (col1Data[i] + col2Data[i]) % (modulus + 1)) {
+                                matches++;
+                            }
+                        }
+                        if (matches === minLen) powerRelated = true;
+                    }
+                    
+                    // Accept if at least 60% of rows show the pattern (lowered from 70%)
+                    const threshold = minLen * 0.6;
+                    
+                    if (countAdditiveZero >= threshold) {
+                        complements.push({
+                            power1: col1,
+                            power2: col2,
+                            data1: col1Data,
+                            data2: col2Data,
+                            type: 'additive-zero',
+                            strength: (countAdditiveZero / minLen * 100).toFixed(0) + '%'
+                        });
+                        checked.add(col1);
+                        checked.add(col2);
+                        break;
+                    } else if (countSumMod >= threshold) {
+                        complements.push({
+                            power1: col1,
+                            power2: col2,
+                            data1: col1Data,
+                            data2: col2Data,
+                            type: 'sum-to-modulus',
+                            strength: (countSumMod / minLen * 100).toFixed(0) + '%'
+                        });
+                        checked.add(col1);
+                        checked.add(col2);
+                        break;
+                    } else if (countMultInverse >= threshold) {
+                        complements.push({
+                            power1: col1,
+                            power2: col2,
+                            data1: col1Data,
+                            data2: col2Data,
+                            type: 'multiplicative-inverse',
+                            strength: (countMultInverse / minLen * 100).toFixed(0) + '%'
+                        });
+                        checked.add(col1);
+                        checked.add(col2);
+                        break;
+                    } else if (constDiff && diff !== 0) {
+                        complements.push({
+                            power1: col1,
+                            power2: col2,
+                            data1: col1Data,
+                            data2: col2Data,
+                            type: 'constant-difference',
+                            difference: diff,
+                            strength: '100%'
+                        });
+                        checked.add(col1);
+                        checked.add(col2);
+                        break;
+                    } else if (powerRelated) {
+                        complements.push({
+                            power1: col1,
+                            power2: col2,
+                            data1: col1Data,
+                            data2: col2Data,
+                            type: 'power-additive',
+                            targetPower: col1 + col2,
+                            strength: '100%'
+                        });
+                        checked.add(col1);
+                        checked.add(col2);
+                        break;
+                    }
+                }
+            }
+            
+            return complements;
+        }
+
+        function findArithmeticColumnProgressions() {
+            const progressions = [];
+            
+            for (let col = 1; col <= 12; col++) {
+                const colData = gridData.map(row => row[col]);
+                
+                // Check for arithmetic progressions of length >= 3
+                for (let start = 0; start < colData.length - 2; start++) {
+                    const diff = colData[start + 1] - colData[start];
+                    let length = 2;
+                    
+                    for (let i = start + 2; i < colData.length; i++) {
+                        if (colData[i] - colData[i - 1] === diff) {
+                            length++;
+                        } else {
+                            break;
+                        }
+                    }
+                    
+                    if (length >= 3) {
+                        progressions.push({
+                            power: col,
+                            start: start,
+                            length: length,
+                            difference: diff,
+                            sequence: colData.slice(start, start + length)
+                        });
+                        // Skip past this progression
+                        start += length - 1;
+                    }
+                }
+            }
+            
+            return progressions;
         }
 
         function createBaseTable(highlightFunction = null) {
@@ -688,14 +1156,16 @@
                 case 'identity':
                     display.innerHTML = `
                         <div class="pattern-title">Identity Element (Value 1)</div>
-                        <div class="pattern-subtitle">Positions where base^power ≡ 1 (mod ${modulus})</div>
+                        <div class="pattern-subtitle">Positions where base^power ≡ 1 (mod ${modulus}) in Base ${currentBase}</div>
                         ${createBaseTable((base, power, value) => {
                             if (value === 1) return 'highlight-identity';
                             return '';
                         })}
                         <div class="pattern-explanation">
-                            <div class="explanation-title">Base ${currentBase} Analysis</div>
+                            <div class="explanation-title">Base ${currentBase} Identity Analysis</div>
                             <p>Value 1 appears at cycle completion points in mod ${modulus}.</p>
+                            <p><strong>Note:</strong> Base 1 always produces 1 for all powers (1^n = 1).</p>
+                            <p>Other bases return to 1 based on their cycle length in the multiplicative group.</p>
                         </div>
                     `;
                     break;
@@ -812,6 +1282,218 @@
                                 <p><strong>Showing:</strong> Base ${pairForCyl[0]} (red) and ${pairForCyl[1]} (green)</p>
                                 <p>These multiplicative inverse pairs rotate in opposite directions.</p>
                             ` : '<p>Showing available bases from this system.</p>'}
+                        </div>
+                    `;
+                    break;
+
+                case 'column-mirrors':
+                    const mirrors = findDivergentMirrors();
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Divergent Mirror Columns</div>
+                        <div class="pattern-subtitle">Columns where values mirror from central axis in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            for (const mirror of mirrors) {
+                                if (mirror.power === power) {
+                                    if (mirror.type === 'single-axis') {
+                                        if (base === mirror.centerBase) return 'highlight-col-mirror-axis';
+                                        
+                                        const distFromCenter = Math.abs(base - mirror.centerBase);
+                                        if (distFromCenter > 0 && distFromCenter <= mirror.radius) {
+                                            return 'highlight-col-mirror';
+                                        }
+                                    } else if (mirror.type === 'double-axis') {
+                                        if (base === mirror.centerBase1 || base === mirror.centerBase2) {
+                                            return 'highlight-col-mirror-axis';
+                                        }
+                                        
+                                        const distFromCenter = Math.min(
+                                            Math.abs(base - mirror.centerBase1),
+                                            Math.abs(base - mirror.centerBase2)
+                                        );
+                                        if (distFromCenter > 0 && distFromCenter <= mirror.radius) {
+                                            return 'highlight-col-mirror';
+                                        }
+                                    }
+                                }
+                            }
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Divergent Mirror Analysis</div>
+                            ${mirrors.length > 0 ? `
+                                <p><strong>Divergent mirrors found:</strong> ${mirrors.length}</p>
+                                ${mirrors.slice(0, 5).map(m => {
+                                    const colNum = m.power;
+                                    if (m.type === 'single-axis') {
+                                        return `<p><strong>Column ^${colNum}:</strong> Diverges from base ${m.centerBase} (value ${m.data[m.centerBase - 1]})<br/>
+                                        ↑ Up: [${m.upSequence.join(' → ')}]<br/>
+                                        ↓ Down: [${m.downSequence.join(' → ')}]</p>`;
+                                    } else {
+                                        return `<p><strong>Column ^${colNum}:</strong> Diverges from bases ${m.centerBase1}-${m.centerBase2} (both value ${m.data[m.centerBase1 - 1]})<br/>
+                                        ↑ Up: [${m.upSequence.join(' → ')}]<br/>
+                                        ↓ Down: [${m.downSequence.join(' → ')}]</p>`;
+                                    }
+                                }).join('')}
+                                <p><strong>Red:</strong> Mirror axis | <strong>Yellow:</strong> Mirrored values diverging from axis</p>
+                            ` : '<p>No divergent mirror patterns found in this base.</p>'}
+                        </div>
+                    `;
+                    break;
+
+                case 'column-repeats':
+                    const repeats = findRepeatingColumnSegments();
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Repeating Column Segments</div>
+                        <div class="pattern-subtitle">Columns where patterns repeat vertically in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            for (let i = 0; i < Math.min(3, repeats.length); i++) {
+                                const repeat = repeats[i];
+                                if (repeat.power === power) {
+                                    const segmentIndex = Math.floor((base - 1) / repeat.segmentLength);
+                                    const colors = ['highlight-col-repeat-1', 'highlight-col-repeat-2', 'highlight-col-repeat-3'];
+                                    return colors[segmentIndex % 3];
+                                }
+                            }
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Repeating Segment Analysis</div>
+                            ${repeats.length > 0 ? `
+                                <p><strong>Repeating columns found:</strong> ${repeats.length}</p>
+                                ${repeats.slice(0, 5).map(r => {
+                                    return `<p><strong>Column ^${r.power}:</strong> Pattern [${r.segment.join(',')}] repeats ${r.repeatCount} times (segment length ${r.segmentLength})</p>`;
+                                }).join('')}
+                                <p><strong>Colors:</strong> Each segment highlighted in alternating colors</p>
+                            ` : '<p>No repeating column segments found in this base.</p>'}
+                        </div>
+                    `;
+                    break;
+
+                case 'column-twins':
+                    const twins = findIdenticalColumns();
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Identical Column Pairs</div>
+                        <div class="pattern-subtitle">Columns with identical value sequences in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            for (let i = 0; i < Math.min(2, twins.length); i++) {
+                                const twin = twins[i];
+                                if (twin.powers.includes(power)) {
+                                    return i === 0 ? 'highlight-col-twin-1' : 'highlight-col-twin-2';
+                                }
+                            }
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Identical Column Analysis</div>
+                            ${twins.length > 0 ? `
+                                <p><strong>Identical column groups found:</strong> ${twins.length}</p>
+                                ${twins.map(t => {
+                                    return `<p><strong>Group:</strong> Powers [${t.powers.map(p => '^' + p).join(', ')}] all produce [${t.data.join(',')}]</p>`;
+                                }).join('')}
+                                <p>These columns generate the same digital root sequence!</p>
+                            ` : '<p>No identical column pairs found in this base.</p>'}
+                        </div>
+                    `;
+                    break;
+
+                case 'column-attractors':
+                    const colAttractors = findColumnAttractors();
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Column Attractor Values</div>
+                        <div class="pattern-subtitle">Columns dominated by single values in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            for (const attr of colAttractors) {
+                                if (attr.power === power && value === attr.value) {
+                                    return 'highlight-col-attractor';
+                                }
+                            }
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Column Attractor Analysis</div>
+                            ${colAttractors.length > 0 ? `
+                                <p><strong>Attractor columns found:</strong> ${colAttractors.length}</p>
+                                ${colAttractors.map(a => {
+                                    return `<p><strong>Column ^${a.power}:</strong> Value ${a.value} appears ${a.count} times (${a.percentage}% of column)</p>`;
+                                }).join('')}
+                                <p>Purple cells show the dominant attractor value in each column.</p>
+                            ` : '<p>No column attractors found (no value dominates >50% of any column).</p>'}
+                        </div>
+                    `;
+                    break;
+
+                case 'column-complements':
+                    const complements = findComplementaryColumns();
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Complementary Column Pairs</div>
+                        <div class="pattern-subtitle">Columns with mathematical relationships in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            for (const comp of complements) {
+                                if (comp.power1 === power) return 'highlight-col-complement-1';
+                                if (comp.power2 === power) return 'highlight-col-complement-2';
+                            }
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Complementary Column Analysis</div>
+                            ${complements.length > 0 ? `
+                                <p><strong>Complementary pairs found:</strong> ${complements.length}</p>
+                                ${complements.map(c => {
+                                    let relationDesc = '';
+                                    switch(c.type) {
+                                        case 'additive-zero':
+                                            relationDesc = `values sum to 0 (mod ${modulus + 1})`;
+                                            break;
+                                        case 'sum-to-modulus':
+                                            relationDesc = `values sum to ${modulus}`;
+                                            break;
+                                        case 'multiplicative-inverse':
+                                            relationDesc = `products ≡ 1 (mod ${modulus})`;
+                                            break;
+                                        case 'constant-difference':
+                                            relationDesc = `constant difference of ${c.difference}`;
+                                            break;
+                                        case 'power-additive':
+                                            relationDesc = `^${c.power1} + ^${c.power2} = ^${c.targetPower} pattern`;
+                                            break;
+                                    }
+                                    return `<p><strong>^${c.power1} ⟷ ^${c.power2}:</strong> ${relationDesc} (${c.strength} match)</p>`;
+                                }).join('')}
+                                <p><strong>Orange & Blue:</strong> Paired columns with complementary mathematical relationships</p>
+                            ` : '<p>No complementary column pairs found in this base (checked: additive inverse, sum to modulus, multiplicative inverse, constant difference, and power relationships).</p>'}
+                        </div>
+                    `;
+                    break;
+
+                case 'column-progressions':
+                    const progressions = findArithmeticColumnProgressions();
+                    
+                    display.innerHTML = `
+                        <div class="pattern-title">Arithmetic Column Progressions</div>
+                        <div class="pattern-subtitle">Columns with arithmetic sequences in Base ${currentBase}</div>
+                        ${createBaseTable((base, power, value) => {
+                            for (const prog of progressions) {
+                                if (prog.power === power) {
+                                    const inProgression = base >= prog.start + 1 && base <= prog.start + prog.length;
+                                    if (inProgression) return 'highlight-col-progression';
+                                }
+                            }
+                            return '';
+                        })}
+                        <div class="pattern-explanation">
+                            <div class="explanation-title">Base ${currentBase} Arithmetic Progression Analysis</div>
+                            ${progressions.length > 0 ? `
+                                <p><strong>Arithmetic progressions found:</strong> ${progressions.length}</p>
+                                ${progressions.slice(0, 5).map(p => {
+                                    return `<p><strong>Column ^${p.power}:</strong> ${p.length}-term progression [${p.sequence.join(',')}] with difference ${p.difference > 0 ? '+' : ''}${p.difference}</p>`;
+                                }).join('')}
+                                <p>Teal cells show consecutive values forming arithmetic sequences.</p>
+                            ` : '<p>No arithmetic progressions of length ≥3 found in this base.</p>'}
                         </div>
                     `;
                     break;
