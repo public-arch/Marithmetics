@@ -31,3 +31,16 @@ gum/reports/GUM_Report_v*.manifest.json
 !gum/reports/LATEST.pdf.manifest.json
 !gum/reports/.gitkeep
 !gum/authority_archive/releases/*.zip
+
+# --- build outputs ---
+# Never track report PDFs or their manifest JSONs (they change every run)
+gum/reports/*.pdf
+gum/reports/*.pdf.manifest.json
+!gum/reports/README.md
+
+# Never allow uppercase legacy output root
+GUM/
+
+# Local Python environment and caches
+.venv/
+**/__pycache__/
