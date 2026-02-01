@@ -436,7 +436,7 @@ def main() -> int:
         if not aor_root.is_absolute():
             aor_root = repo_root / aor_root
     else:
-        aor_root = repo_root / "GUM" / "authority_archive" / f"AOR_{run_id}"
+        aor_root = repo_root / "gum" / "authority_archive" / f"AOR_{run_id}"
 
     transcript = aor_root / "runner_transcript.txt"
     printer = Printer(transcript_path=transcript, use_color=not args.no_color)
