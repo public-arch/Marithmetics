@@ -328,7 +328,8 @@ def structural_cosmo_params(t: Triple) -> Dict[str, float]:
     # Structural "monomials"
     H0 = (wU ** -6) * (s2 ** 1) * (s3 ** 2) * (q3 ** 7)
     Omega_b = (1.0 / e) * (s2 ** -1) * (s3 ** 3) * (q3 ** -4)
-    Omega_c = (1.0 / e) * (s2 ** -1) * (s3 ** 2) * (q3 ** -2)
+    q2 = wU - s2  # derived invariant (primary q2=30)
+    Omega_c = (1.0 / e) * (s2 ** -1) * (s3 ** 1) * (q3 ** 1) * (q2 ** -1)
     Omega_L = 1.0 - Omega_b - Omega_c
 
     h = H0 / 100.0
@@ -899,8 +900,8 @@ if __name__ == "__main__":
             print("[CAMB_OVERLAY] camb_overlay.py not found; skipping overlay artifact generation.")
     except Exception as e:
         print("[CAMB_OVERLAY] FAILED:", repr(e))
-        raise
-
+    # Evaluation-only: do not fail the demo if CAMB is unavailable.
+    pass
     raise SystemExit(main())
 
 
@@ -916,10 +917,8 @@ try:
     subprocess.run([sys.executable, str(_script)], cwd=str(_here), check=True)
 except Exception as e:
     print("[CAMB_OVERLAY] FAILED:", repr(e))
-    raise
-
-
-
+    # Evaluation-only: do not fail the demo if CAMB is unavailable.
+    pass
 # Evaluation-only: generate CAMB overlay artifact (must not feed upstream selection)
 try:
     import subprocess, sys
@@ -930,5 +929,5 @@ try:
     subprocess.run([sys.executable, str(_script)], cwd=str(_here), check=True)
 except Exception as e:
     print("[CAMB_OVERLAY] FAILED:", repr(e))
-    raise
-
+    # Evaluation-only: do not fail the demo if CAMB is unavailable.
+    pass

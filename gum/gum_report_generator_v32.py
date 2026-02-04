@@ -706,6 +706,25 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
         ),
     },
 
+
+    "DEMO-77": {
+        "title": "Grammar Rigidity and Selector Robustness",
+        "cluster": "KERNEL",
+        "tests": "Grammar rigidity audit and selector robustness certificate (controlled relaxations + negative controls).",
+        "narrative": (
+            "DEMO-77 is a deterministic audit of grammar rigidity and selector robustness. "
+            "It is designed to answer a hostile-referee question: if the admissibility grammar is perturbed or a constraint is relaxed, does the solution remain rigid, or does the solution space explode. "
+            "This demo does not introduce new physics targets and it does not import external reference values. "
+            "Instead, it produces an audit-grade record of what changes when rules change, under the same hashing and evidence discipline as the rest of the suite. "
+            "The key credibility contribution is negative controls: designed FAIL variants that must reject, so the program demonstrates rejection behavior rather than only success cases. "
+            "In the narrative arc, DEMO-77 strengthens the Authority posture by showing constraint necessity as an observable behavior of the grammar, not a rhetorical claim."
+        ),
+        "highlights": [
+            "Grammar rigidity audit: controlled relaxations vs baseline constraints.",
+            "Designed FAIL gallery posture (negative controls must reject).",
+            "Evidence-first: rerunnable stdout logs + hashes, no external data inputs."
+        ],
+    },
     "DEMO-76": {
         "cluster": "SM",
         "title": "Primorial–Yukawa master flagship",
