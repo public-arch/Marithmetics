@@ -1,0 +1,234 @@
+[
+  {
+    "demo_dir": "demos/bridge/demo-34-omega-sm-master-flagship",
+    "demo_id": "34",
+    "domain": "bridge",
+    "folder": "demo-34-omega-sm-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/controllers/demo-56-deterministic-operator-calculus-vs-fd",
+    "demo_id": "56",
+    "domain": "controllers",
+    "folder": "demo-56-deterministic-operator-calculus-vs-fd",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/controllers/demo-59-electromagnetism",
+    "demo_id": "59",
+    "domain": "controllers",
+    "folder": "demo-59-electromagnetism",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/controllers/demo-69-oatb-operator-admissibility-transfer-bridge",
+    "demo_id": "69",
+    "domain": "controllers",
+    "folder": "demo-69-oatb-operator-admissibility-transfer-bridge",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/cosmo/demo-36-big-bang-master-flagship",
+    "demo_id": "36",
+    "domain": "cosmo",
+    "folder": "demo-36-big-bang-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/cosmo/demo-39-bb-a2",
+    "demo_id": "39",
+    "domain": "cosmo",
+    "folder": "demo-39-bb-a2",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/foundations/demo-53-lawbook-emergence",
+    "demo_id": "53",
+    "domain": "foundations",
+    "folder": "demo-53-lawbook-emergence",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/foundations/demo-71-one-action-master-flagship",
+    "demo_id": "71",
+    "domain": "foundations",
+    "folder": "demo-71-one-action-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/foundations/demo-75-prediction-ledger-master-flagship",
+    "demo_id": "75",
+    "domain": "foundations",
+    "folder": "demo-75-prediction-ledger-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/foundations/demo-77-grammar-rigidity-master-flagship",
+    "demo_id": "77",
+    "domain": "foundations",
+    "folder": "demo-77-grammar-rigidity-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/general_relativity/demo-51-qft-gr-vacuum-suppression",
+    "demo_id": "51",
+    "domain": "general_relativity",
+    "folder": "demo-51-qft-gr-vacuum-suppression",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/general_relativity/demo-58-emergent-weak-field-gr",
+    "demo_id": "58",
+    "domain": "general_relativity",
+    "folder": "demo-58-emergent-weak-field-gr",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/general_relativity/demo-63-gravitational-wave-inspiral-phasing",
+    "demo_id": "63",
+    "domain": "general_relativity",
+    "folder": "demo-63-gravitational-wave-inspiral-phasing",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/general_relativity/demo-68-general-relativity-master-flagship",
+    "demo_id": "68",
+    "domain": "general_relativity",
+    "folder": "demo-68-general-relativity-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/infinity/demo-65-continuous-lift-paradox",
+    "demo_id": "65",
+    "domain": "infinity",
+    "folder": "demo-65-continuous-lift-paradox",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/infinity/demo-67-navier-stokes-master-flagship",
+    "demo_id": "67",
+    "domain": "infinity",
+    "folder": "demo-67-navier-stokes-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/quantum/demo-60-quantum-master-flagship",
+    "demo_id": "60",
+    "domain": "quantum",
+    "folder": "demo-60-quantum-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/quantum_gravity/demo-66-quantum-gravity-master-flagship-v4",
+    "demo_id": "66",
+    "domain": "quantum_gravity",
+    "folder": "demo-66-quantum-gravity-master-flagship-v4",
+    "mode": "cert",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/sm/demo-72-yukawa",
+    "demo_id": "72",
+    "domain": "sm",
+    "folder": "demo-72-yukawa",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/sm/demo-76-primorial-yukawa-master-flagship",
+    "demo_id": "76",
+    "domain": "sm",
+    "folder": "demo-76-primorial-yukawa-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/standard_model/demo-33-first-principles-standard-model-sm28-closure",
+    "demo_id": "33",
+    "domain": "standard_model",
+    "folder": "demo-33-first-principles-standard-model-sm28-closure",
+    "mode": "cert",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/standard_model/demo-37-math-sm-master-flagship",
+    "demo_id": "37",
+    "domain": "standard_model",
+    "folder": "demo-37-math-sm-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/standard_model/demo-54-master-flagship-demo",
+    "demo_id": "54",
+    "domain": "standard_model",
+    "folder": "demo-54-master-flagship-demo",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/standard_model/demo-55-proton-charge-radius",
+    "demo_id": "55",
+    "domain": "standard_model",
+    "folder": "demo-55-proton-charge-radius",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/standard_model/demo-70-higgs-master-flagship",
+    "demo_id": "70",
+    "domain": "standard_model",
+    "folder": "demo-70-higgs-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/standard_model/demo-73-flavor-completion-master-flagship",
+    "demo_id": "73",
+    "domain": "standard_model",
+    "folder": "demo-73-flavor-completion-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/standard_model/demo-76-primorial-yukawa-master-flagship",
+    "demo_id": "76",
+    "domain": "standard_model",
+    "folder": "demo-76-primorial-yukawa-master-flagship",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/substrate/demo-40-universe-from-zero",
+    "demo_id": "40",
+    "domain": "substrate",
+    "folder": "demo-40-universe-from-zero",
+    "mode": "run",
+    "status": "PASS"
+  },
+  {
+    "demo_dir": "demos/substrate/demo-64-base-gauge-invariance-integer-selector",
+    "demo_id": "64",
+    "domain": "substrate",
+    "folder": "demo-64-base-gauge-invariance-integer-selector",
+    "mode": "run",
+    "status": "PASS"
+  }
+]

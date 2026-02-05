@@ -1,0 +1,16 @@
+{
+  "ell_range": [
+    2,
+    2000
+  ],
+  "RMS_Delta_TT_over_TT": 0.08208179044727265,
+  "max_Delta_TT_over_TT": 0.1411616709862622,
+  "thresholds": {
+    "RMS": 0.05,
+    "max": 0.15
+  },
+  "pass": {
+    "RMS": false,
+    "max": true
+  }
+}

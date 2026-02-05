@@ -1,0 +1,30 @@
+{
+  "demo_id": "70",
+  "label": "DEMO-70",
+  "demo_path": "demos/standard_model/demo-70-higgs-master-flagship",
+  "code_sha256": "22d96168011f931ec65be9e4526037ea35ef55c2107effd54bd42b6d55b9492a",
+  "stdout_sha256": "1104db4c539c4d741c891aa8995b8c44812ca1f90383605dd066f5866b650f5d",
+  "stderr_sha256": "c89620149a3f26388d03aa3885210e8e56cfab2074abb32e29de8d94eb4477e3",
+  "files": [
+    {
+      "path": "standard_model__demo-70-higgs-master-flagship.err.txt",
+      "sha256": "c89620149a3f26388d03aa3885210e8e56cfab2074abb32e29de8d94eb4477e3",
+      "bytes": 353
+    },
+    {
+      "path": "demo.py",
+      "sha256": "22d96168011f931ec65be9e4526037ea35ef55c2107effd54bd42b6d55b9492a",
+      "bytes": 71815
+    },
+    {
+      "path": "standard_model__demo-70-higgs-master-flagship.out.txt",
+      "sha256": "1104db4c539c4d741c891aa8995b8c44812ca1f90383605dd066f5866b650f5d",
+      "bytes": 6431
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}
