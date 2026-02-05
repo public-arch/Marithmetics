@@ -9,7 +9,6 @@ venv/
 Thumbs.db
 
 # Master suite AoR outputs (do not commit)
-GUM/authority_archive/
 audits/_outroot_tmp/
 
 # Generated demo artifacts (do not commit)
@@ -22,7 +21,6 @@ demos/**/demo*_cert_bundle_*/
 !GUM/authority_archive/*.zip
 
 # AoR run directories are local artifacts; keep only release zips
-GUM/authority_archive/AOR_*/
 # Generated reports (keep only LATEST.pdf tracked; ignore timestamped outputs)
 gum/reports/GUM_Report_v*.pdf
 gum/reports/GUM_Report_v*.pdf.manifest.json
@@ -39,8 +37,21 @@ gum/reports/*.pdf.manifest.json
 !gum/reports/README.md
 
 # Never allow uppercase legacy output root
-GUM/
 
 # Local Python environment and caches
 .venv/
 **/__pycache__/
+
+# Never allow uppercase legacy output root (legacy slop)
+GUM/
+
+# Authority-of-Record (AoR) outputs
+# We KEEP the canonical AoR folders tracked for stable, citeable URLs.
+!gum/authority_archive/**
+
+# Generated reports: keep only LATEST.pdf tracked; ignore timestamped outputs
+gum/reports/GUM_Report_v*.pdf
+gum/reports/GUM_Report_v*.pdf.manifest.json
+!gum/reports/LATEST.pdf
+!gum/reports/LATEST.pdf.manifest.json
+!gum/reports/README.md
