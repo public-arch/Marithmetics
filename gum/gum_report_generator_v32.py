@@ -706,6 +706,25 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
         ),
     },
 
+    "DEMO-78": {
+        "title": "Midlift Protocol (Continuum Lift Discipline)",
+        "cluster": "foundations",
+        "tests": "Midlift protocol certificate: principled lift discipline + rigidity/controls (stdout-first, hash-sealed in AoR).",
+        "narrative": (
+            "DEMO-78 introduces the Midlift Protocol as a discipline for moving from 0D residue logic toward continuum-facing constructs without smuggling in uncontrolled assumptions. "
+            "The point is not to match external targets but to make the lift rules explicit, auditable, and reproducible under the same evidence posture as the rest of the suite. "
+            "The demo is written as a certificate: it emits a structured readout, includes negative controls, and records determinism so any change becomes visible in the bundle hash. "
+            "This matters because many frameworks fail at the bridge step, where narrative replaces mechanism. "
+            "Here the bridge is treated as an engineering object: constraints first, then derived behavior, then controls. "
+            "In the overall narrative arc, DEMO-78 sits adjacent to DOC/CLP+ posture and strengthens the claim that the program’s lift is ZFC-conservative and audit-grade."
+        ),
+        "highlights": [
+            "Certificate-style readout (stdout is canonical evidence in the AoR).",
+            "Explicit lift discipline with negative controls (designed FAILs) where applicable.",
+            "Determinism hash so changes are provable, not rhetorical."
+        ],
+    },
+
 
     "DEMO-77": {
         "title": "Grammar Rigidity and Selector Robustness",
