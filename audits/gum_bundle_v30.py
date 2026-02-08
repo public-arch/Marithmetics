@@ -302,7 +302,7 @@ def run_demo(python_exe: str, demo: Demo, logs_dir: Path, timeout_s: int) -> Run
     except subprocess.TimeoutExpired as e:
         dt = time.time() - t0
         stdout_path.write_text(_as_text(e.stdout), encoding="utf-8", errors="replace")
-        stderr_path.write_text((e.stderr or "") + f"\n\n[TIMEOUT after {timeout_s}s]\n", encoding="utf-8", errors="replace")
+        stderr_path.write_text((_as_text(e.stderr) or "") + f"\n\n[TIMEOUT after {timeout_s}s]\n", encoding="utf-8", errors="replace")
         stdout_sha = sha256_file(stdout_path)
         stderr_sha = sha256_file(stderr_path)
         return RunRecord(
