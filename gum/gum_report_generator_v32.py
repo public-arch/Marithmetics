@@ -2179,7 +2179,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
         cluster = DEMO_INFO.get(demo, {}).get("cluster") or "BRIDGE"
         cluster_to_demos.setdefault(cluster, []).append(demo)
 
-    cluster_order = ["KERNEL", "FILTER", "SM", "COSMO", "GRNS", "QNTM", "BRIDGE"]
+    cluster_order = ["KERNEL", "FILTER", "SM", "COSMO", "GRNS", "QNTM", "BRIDGE","foundations"]
     for cluster in cluster_order:
         demos = cluster_to_demos.get(cluster, [])
         if not demos:
