@@ -50,6 +50,18 @@ from pathlib import Path
 from .enrich_bundle import enrich_bundle
 from typing import Any, Dict, List, Optional, Tuple
 
+
+def _as_text(x) -> str:
+    """Normalize subprocess output to text (TimeoutExpired may carry bytes)."""
+    if x is None:
+        return ""
+    if isinstance(x, bytes):
+        try:
+            return x.decode("utf-8", errors="replace")
+        except Exception:
+            return x.decode(errors="replace")
+    return str(x)
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 ART_EXTS = {".json", ".png", ".pdf", ".csv", ".txt"}
@@ -289,7 +301,7 @@ def run_demo(python_exe: str, demo: Demo, logs_dir: Path, timeout_s: int) -> Run
 
     except subprocess.TimeoutExpired as e:
         dt = time.time() - t0
-        stdout_path.write_text((e.stdout or ""), encoding="utf-8", errors="replace")
+        stdout_path.write_text(_as_text(e.stdout), encoding="utf-8", errors="replace")
         stderr_path.write_text((e.stderr or "") + f"\n\n[TIMEOUT after {timeout_s}s]\n", encoding="utf-8", errors="replace")
         stdout_sha = sha256_file(stdout_path)
         stderr_sha = sha256_file(stderr_path)
