@@ -55,3 +55,15 @@ gum/reports/GUM_Report_v*.pdf.manifest.json
 !gum/reports/LATEST.pdf
 !gum/reports/LATEST.pdf.manifest.json
 !gum/reports/README.md
+
+# --- generated / local outputs (never commit) ---
+gum/authority_archive/AOR_*/
+gum/authority_archive/releases/
+gum/reports/*.pdf
+gum/reports/*.pdf.manifest.json
+
+# local backups / scratch
+*.bak
+*.bak_*
+*.BAD.*.py
+zz_archive/local_scratch/
