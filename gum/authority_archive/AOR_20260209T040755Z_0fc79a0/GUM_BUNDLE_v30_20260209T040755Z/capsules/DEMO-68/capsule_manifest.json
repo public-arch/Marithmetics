@@ -1,0 +1,30 @@
+{
+  "demo_id": "68",
+  "label": "DEMO-68",
+  "demo_path": "demos/general_relativity/demo-68-general-relativity-master-flagship",
+  "code_sha256": "98e3c3a6c8865c0434d55a38347cb804432d52e62efeb5177ce4b26f1c35a424",
+  "stdout_sha256": "6d8a158020667fff102de9b5901402d51735d813e88cfc6e63d66a69e7f2b18a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "general_relativity__demo-68-general-relativity-master-flagship.out.txt",
+      "sha256": "6d8a158020667fff102de9b5901402d51735d813e88cfc6e63d66a69e7f2b18a",
+      "bytes": 8831
+    },
+    {
+      "path": "demo.py",
+      "sha256": "98e3c3a6c8865c0434d55a38347cb804432d52e62efeb5177ce4b26f1c35a424",
+      "bytes": 38727
+    },
+    {
+      "path": "general_relativity__demo-68-general-relativity-master-flagship.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "demo_id": "77",
+  "label": "DEMO-77",
+  "demo_path": "demos/foundations/demo-77-grammar-rigidity-master-flagship",
+  "code_sha256": "ed4a0b02f32ec5e0dedebf7fc90f6bceb109b52862574e24cf5768783c5b7873",
+  "stdout_sha256": "f9a17792d892436994acfad33622000f4f16251ea96d5cd96bb827a26bbedbad",
+  "stderr_sha256": "d2917a5cff53a3e7b4f04e263d5d6ab7e9e6d4db83e27a2e8e540560420d1815",
+  "files": [
+    {
+      "path": "foundations__demo-77-grammar-rigidity-master-flagship.out.txt",
+      "sha256": "f9a17792d892436994acfad33622000f4f16251ea96d5cd96bb827a26bbedbad",
+      "bytes": 14624
+    },
+    {
+      "path": "demo.py",
+      "sha256": "ed4a0b02f32ec5e0dedebf7fc90f6bceb109b52862574e24cf5768783c5b7873",
+      "bytes": 59811
+    },
+    {
+      "path": "foundations__demo-77-grammar-rigidity-master-flagship.err.txt",
+      "sha256": "d2917a5cff53a3e7b4f04e263d5d6ab7e9e6d4db83e27a2e8e540560420d1815",
+      "bytes": 371
+    }
+  ]
+}

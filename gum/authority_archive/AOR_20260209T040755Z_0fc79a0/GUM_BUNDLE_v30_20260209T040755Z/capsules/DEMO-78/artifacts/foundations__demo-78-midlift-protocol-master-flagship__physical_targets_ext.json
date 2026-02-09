@@ -1,0 +1,107 @@
+[
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vcb_ckm",
+    "required": false,
+    "target": 0.04183
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vcd",
+    "required": false,
+    "target": 0.22487
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vcs",
+    "required": false,
+    "target": 0.97349
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vtb",
+    "required": false,
+    "target": 0.999118
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vtd",
+    "required": false,
+    "target": 0.00858
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vts",
+    "required": false,
+    "target": 0.04111
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vub_ckm",
+    "required": false,
+    "target": 0.003732
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vud",
+    "required": false,
+    "target": 0.97435
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vus_ckm",
+    "required": false,
+    "target": 0.22501
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "a_e",
+    "required": false,
+    "target": 0.00115965218046
+  },
+  {
+    "drift_power": 2,
+    "err_power": 2,
+    "name": "deltaCP_over_pi",
+    "required": false,
+    "target": 1.21
+  },
+  {
+    "drift_power": 2,
+    "err_power": 2,
+    "name": "rp_over_lambdaCp",
+    "required": false,
+    "target": 3.997690821438244
+  },
+  {
+    "drift_power": 2,
+    "err_power": 2,
+    "name": "sin2_th12",
+    "required": false,
+    "target": 0.307
+  },
+  {
+    "drift_power": 2,
+    "err_power": 2,
+    "name": "sin2_th13",
+    "required": false,
+    "target": 0.0216
+  },
+  {
+    "drift_power": 2,
+    "err_power": 2,
+    "name": "sin2_th23",
+    "required": false,
+    "target": 0.534
+  }
+]

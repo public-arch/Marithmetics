@@ -1,0 +1,30 @@
+{
+  "demo_id": "67",
+  "label": "DEMO-67",
+  "demo_path": "demos/infinity/demo-67-navier-stokes-master-flagship",
+  "code_sha256": "4e00a354e960da013f75906cb6ca0071accf045710fb6808a159967fa31d9028",
+  "stdout_sha256": "6e0a59f2952a050773ad9cd77a2383ce48df11b219baa32670cb223006288d17",
+  "stderr_sha256": "32e8f71a46c7d7eb2aa634cda46d75956e45cbdbed5b3446ba6b0833acc323c7",
+  "files": [
+    {
+      "path": "infinity__demo-67-navier-stokes-master-flagship.err.txt",
+      "sha256": "32e8f71a46c7d7eb2aa634cda46d75956e45cbdbed5b3446ba6b0833acc323c7",
+      "bytes": 392
+    },
+    {
+      "path": "demo.py",
+      "sha256": "4e00a354e960da013f75906cb6ca0071accf045710fb6808a159967fa31d9028",
+      "bytes": 47914
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "infinity__demo-67-navier-stokes-master-flagship.out.txt",
+      "sha256": "6e0a59f2952a050773ad9cd77a2383ce48df11b219baa32670cb223006288d17",
+      "bytes": 6659
+    }
+  ]
+}

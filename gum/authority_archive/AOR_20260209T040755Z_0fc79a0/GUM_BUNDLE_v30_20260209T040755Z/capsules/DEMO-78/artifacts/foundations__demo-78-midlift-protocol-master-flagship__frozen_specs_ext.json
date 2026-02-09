@@ -1,0 +1,17 @@
+{
+  "Vcb_ckm": "1/1*x(idx[7,None])",
+  "Vcd": "1/1*sqrt(x)(sub[6,22])",
+  "Vcs": "1/1*1-x(idx[10,None])",
+  "Vtb": "1/1*1-x(idx[23,None])",
+  "Vtd": "1/1*x(idx[14,None])",
+  "Vts": "1/1*x(idx[7,None])",
+  "Vub_ckm": "1/1*x(idx[20,None])",
+  "Vud": "1/1*1-x(idx[10,None])",
+  "Vus_ckm": "1/1*sqrt(x)(sub[6,22])",
+  "a_e": "1/1*x(idx[23,None])",
+  "deltaCP_over_pi": "1/1*x(div[16,18])",
+  "rp_over_lambdaCp": "4/1*1-x(idx[23,None])",
+  "sin2_th12": "1/1*x(div[14,9])",
+  "sin2_th13": "1/1*x(idx[11,None])",
+  "sin2_th23": "1/1*x(div[19,14])"
+}

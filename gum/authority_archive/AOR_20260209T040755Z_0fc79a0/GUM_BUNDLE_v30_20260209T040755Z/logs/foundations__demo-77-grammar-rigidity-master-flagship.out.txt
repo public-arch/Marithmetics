@@ -1,0 +1,274 @@
+==================================================================================================
+                DEMO-GRRA-MASTER — Grammar Rigidity Master Flagship — stdlib-only                 
+==================================================================================================
+UTC time : 2026-02-09T04:08:53Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+I/O      : stdout only
+spec_sha256: b567f0f277f38a35fc1f04ae6d1b78e116db4b51767602e291e831ec3e758d07
+
+==================================================================================================
+                           GRRA-00 — Baseline Lock (Selector + Φ-maps)                            
+==================================================================================================
+Lane pools (after coherence applied to U(1)):
+  U(1) : [137]
+  SU(2): [107]
+  SU(3): [103]
+Admissible triples (ordered): [(137, 107, 103)]
+PASS  Unique admissible triple in declared primary window                           count=1
+PASS  Primary equals expected (137,107,103)                                       
+
+Φ-channel outputs (declared forms):
+triple     = (137, 107, 103)
+q2,q3,v2U  = (30,17,3)
+alpha0_inv = 137
+sin2W      = 0.233333333333
+alpha_s    = 0.117647058824
+PASS  Derived invariants match expected (q2=30,q3=17,v2U=3)                       
+
+==================================================================================================
+                         GRRA-01B — Gate Classification (Multi-Scenario)                          
+==================================================================================================
+S0_baseline: window=[97,181]  baseline sizes: U1=1 SU2=1 SU3=1 T=1
+  DROP_C1_prime                -> U1=1 SU2=2 SU3=2 T=1
+  DROP_C2_residue              -> U1=1 SU2=6 SU3=7 T=3
+  DROP_C3_q_gt_sqrtw           -> U1=1 SU2=1 SU3=1 T=1
+  DROP_C4_theta_floor          -> U1=1 SU2=1 SU3=1 T=1
+  DROP_GvU1_u1_v2_coherence    -> U1=3 SU2=1 SU3=1 T=1
+S1_extended: window=[50,250]  baseline sizes: U1=2 SU2=1 SU3=2 T=1
+  DROP_C1_prime                -> U1=2 SU2=3 SU3=3 T=1
+  DROP_C2_residue              -> U1=4 SU2=11 SU3=17 T=96
+  DROP_C3_q_gt_sqrtw           -> U1=2 SU2=1 SU3=2 T=1
+  DROP_C4_theta_floor          -> U1=2 SU2=1 SU3=2 T=1
+  DROP_GvU1_u1_v2_coherence    -> U1=5 SU2=1 SU3=2 T=2
+S2_shifted: window=[150,234]  baseline sizes: U1=0 SU2=0 SU3=0 T=0
+  DROP_C1_prime                -> U1=0 SU2=1 SU3=1 T=0
+  DROP_C2_residue              -> U1=1 SU2=2 SU3=7 T=1
+  DROP_C3_q_gt_sqrtw           -> U1=0 SU2=0 SU3=0 T=0
+  DROP_C4_theta_floor          -> U1=0 SU2=0 SU3=0 T=0
+  DROP_GvU1_u1_v2_coherence    -> U1=0 SU2=0 SU3=0 T=0
+
+Classification:
+  DROP_C1_prime                  STRUCTURAL
+  DROP_C2_residue                STRUCTURAL
+  DROP_C3_q_gt_sqrtw             REDUNDANT-BASELINE
+  DROP_C4_theta_floor            REDUNDANT-BASELINE
+  DROP_GvU1_u1_v2_coherence      STRUCTURAL
+PASS  Gate classification computed                                                
+
+==================================================================================================
+                              GRRA-02 — Moduli Scan (q primes <= 50)                              
+==================================================================================================
+SUMMARY
+tested_moduli_triples (after residue-derivability filter): 504
+unique_triple_count: 3
+phi_good_count (within 5%): 3
+both_unique_and_phi_good: 3
+canonical_hit_count: 1
+
+TOP CANDIDATES (ranked by Φ error score)
+rank  qU1 qSU2 qSU3   triple(wU,s2,s3)     alpha0_inv   sin2W      alpha_s     score     flags
+   1   17   13   13   (137, 107, 131)          137  0.2333333333  0.1176470588  0.013092037  PHI_OK
+   2   17   13   17   (137, 107, 103)          137  0.2333333333  0.1176470588  0.013092037  PHI_OK,CANON
+   3   17   13   23   (137, 107, 139)          137  0.2333333333  0.1176470588  0.013092037  PHI_OK
+PASS  Moduli scan matches expected counts                                           tested=504 unique=3
+
+==================================================================================================
+                 GRRA-03B — Residue Enumeration (Ordered Triple) — Exact (|R|<=5)                 
+==================================================================================================
+CANDIDATE LISTS (no residue gate yet)
+U1 candidates  (q=17)  : [97, 101, 103, 107, 109, 113, 131, 137, 139, 149, 163, 167, 173, 179]
+SU2 candidates (q=13) : [103, 107, 131, 139, 163, 167]
+SU3 candidates (q=17) : [103, 107, 131, 139, 163, 167, 179]
+
+LANE POOL OUTCOME COUNTS (compressed)
+Distinct U1 pool outcomes  : 1024   total residue sets (|R|<=5) = 6884
+Distinct SU2 pool outcomes : 63   total residue sets (|R|<=5) = 1585
+Distinct SU3 pool outcomes : 120   total residue sets (|R|<=5) = 6884
+TOTAL residue-rule instances (product) = 75112287760
+
+RESULTS (ordered admissibility)
+none_count   = 69936087190
+unique_count = 4160987694
+multi_count  = 1015212876
+check sum    = 75112287760  (should equal TOTAL instances)
+
+canonical_unique_count (137, 107, 103) = 1454247666
+fraction_unique_over_all = 0.0553968973398
+fraction_canonical_over_all = 0.0193609821957
+fraction_canonical_among_unique = 0.349495786324
+
+TOP UNIQUE TRIPLES (by frequency)
+ 1. (137, 131, 107)  count=1604628582
+ 2. (137, 107, 103)  count=1454247666  CANON
+ 3. (137, 131, 103)  count=1102111446
+
+GRRA-04 — Degeneracy Break Audit (MinLane vs MinMDL)
+decided_count = 5176200570
+policy_disagreement_weight = 0
+P_MinLane canonical_hits = 2117324322  frac_among_decided = 0.409049899316
+P_MinMDL  canonical_hits = 2117324322  frac_among_decided = 0.409049899316
+
+TOP PICKS — P_MinLane
+ 1. (137, 107, 103)  2117324322  CANON
+ 2. (137, 131, 107)  1604628582
+ 3. (137, 131, 103)  1454247666
+TOP PICKS — P_MinMDL
+ 1. (137, 107, 103)  2117324322  CANON
+ 2. (137, 131, 107)  1604628582
+ 3. (137, 131, 103)  1454247666
+PASS  Residue enumeration + policy audit match expected                           
+
+==================================================================================================
+                              GRRA-06 — Window Scan (Shift + Width)                               
+==================================================================================================
+SUMMARY
+total_windows_tested = 78
+none_count   = 64
+unique_count = 14
+multi_count  = 0
+
+canonical_unique_windows = 14
+fraction_canonical_among_unique = 1
+
+CANONICAL WINDOWS (first 20)
+ 1. window=[50,150] W=100  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+ 2. window=[60,140] W=80  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+ 3. window=[60,160] W=100  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+ 4. window=[70,150] W=80  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+ 5. window=[70,170] W=100  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+ 6. window=[80,140] W=60  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+ 7. window=[80,160] W=80  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+ 8. window=[80,180] W=100  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+ 9. window=[90,150] W=60  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+10. window=[90,170] W=80  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+11. window=[90,190] W=100  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+12. window=[100,160] W=60  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+13. window=[100,180] W=80  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+14. window=[100,200] W=100  alpha0_inv=137  sin2W=0.233333  alpha_s=0.117647
+PASS  Window scan matches expected                                                
+
+==================================================================================================
+                               GRRA-09 — Expanded τ Stability Scan                                
+==================================================================================================
+SUMMARY
+tau_grid_size = 9261  total_cases = 9261
+none_count    = 3528
+unique_count  = 5733
+multi_count   = 0
+
+canonical_unique_count = 5733
+fraction_canonical_among_unique = 1
+distinct_other_unique = 0
+PASS  τ scan matches expected                                                     
+
+==================================================================================================
+                   GRRA-07 — Φ-Map Enumeration (Bounded Comparable Complexity)                    
+==================================================================================================
+ALPHA_S RESULTS
+candidates_total = 140
+within_5pct      = 9
+published 2/q3   = 0.117647058824  rel_err=0.00299102691924
+top hits (<=20):
+ 1. k/(q3+d)           val=0.117647058824  rel_err=0.00299102691924  ops=1  mag=2  expr=2/(q3+0)  PUBLISHED
+ 2. k/q3*(1-b^-v2)     val=0.117529411765  rel_err=0.00398803589232  ops=3  mag=10  expr=2/q3*(1-10^-v2)
+ 3. k/q3*(1-b^-v2)     val=0.117485677399  rel_err=0.00435866611414  ops=3  mag=9  expr=2/q3*(1-9^-v2)
+ 4. k/q3*(1-b^-v2)     val=0.117417279412  rel_err=0.00493831006979  ops=3  mag=8  expr=2/q3*(1-8^-v2)
+ 5. k/q3*(1-b^-v2)     val=0.117304064483  rel_err=0.00589775861919  ops=3  mag=7  expr=2/q3*(1-7^-v2)
+ 6. k/q3*(1-b^-v2)     val=0.117102396514  rel_err=0.00760680920202  ops=3  mag=6  expr=2/q3*(1-6^-v2)
+ 7. k/q3*(1-b^-v2)     val=0.116705882353  rel_err=0.0109670987039  ops=3  mag=5  expr=2/q3*(1-5^-v2)
+ 8. k/q3*(1-b^-v2)     val=0.115808823529  rel_err=0.0185692921236  ops=3  mag=4  expr=2/q3*(1-4^-v2)
+ 9. k/q3*(1-b^-v2)     val=0.113289760349  rel_err=0.0399172851815  ops=3  mag=3  expr=2/q3*(1-3^-v2)
+
+SIN2W RESULTS
+candidates_total = 60
+within_5pct      = 4
+published 7/q2   = 0.233333333333  rel_err=0.010101010101
+top hits (<=20):
+ 1. k/(q2+d)           val=0.233333333333  rel_err=0.010101010101  ops=1  mag=7  expr=7/(q2+0)  PUBLISHED
+ 2. Theta*(1-2^-v2)    val=0.233333333333  rel_err=0.010101010101  ops=2  mag=8  expr=8/q2*(1-2^-v2)  PUBLISHED
+ 3. k/(q2+d)           val=0.225806451613  rel_err=0.0224828934506  ops=2  mag=7  expr=7/(q2+1)
+ 4. k/(q2+d)           val=0.241379310345  rel_err=0.0449320794148  ops=2  mag=7  expr=7/(q2-1)
+PASS  Φ-map enumeration matches expected counts                                   
+
+==================================================================================================
+                                GRRA-13 — Negative Controls Suite                                 
+==================================================================================================
+C0_baseline        kind=unique tri=(137, 107, 103)
+NC1_lane_swap      kind=none   tri=None
+NC2_residue_mirror kind=none   tri=None
+NC3_wrong_u1_v2    kind=none   tri=None
+NC4_wrong_window   kind=none   tri=None
+PASS  C0 baseline yields canonical unique                                         
+PASS  NC1 lane swap does not yield canonical unique                               
+PASS  NC2 residue mirror does not yield canonical unique                          
+PASS  NC3 wrong U1 coherence does not yield canonical unique                      
+PASS  NC4 wrong window does not yield canonical unique                            
+
+==================================================================================================
+          GRRA-10/11/14 — Joint-Space Monte Carlo (Uniform + Near-Neighbor + OOS Gates)           
+==================================================================================================
+A_uniform — SUMMARY (Wilson 95% CI)
+N = 20000
+unique_count = 36
+P(unique) = 0.0018   CI=[0.00130052,0.00249083]
+
+P(phi_good | unique) = 0.305556   CI=[0.180043,0.468566]
+P(canonical | unique) = 0.194444   CI=[0.0975297,0.350284]
+Top observed unique triples (sanity):
+   1. (137, 107, 103)  count=7
+   2. (137, 107, 83)  count=3
+   3. (233, 191, 163)  count=3
+   4. (233, 227, 223)  count=3
+   5. (89, 83, 59)  count=2
+   6. (73, 71, 67)  count=1
+   7. (89, 71, 59)  count=1
+   8. (89, 79, 59)  count=1
+   9. (89, 83, 67)  count=1
+  10. (89, 83, 71)  count=1
+
+B_near_neighbor — SUMMARY (Wilson 95% CI)
+N = 20000
+unique_count = 101
+P(unique) = 0.00505   CI=[0.00415816,0.00613194]
+
+P(phi_good | unique) = 1   CI=[0.963358,1]
+P(canonical | unique) = 0.712871   CI=[0.618118,0.792025]
+P(coherence(H1&H2) | unique) = 0.712871   CI=[0.618118,0.792025]
+P(out_of_sample | unique) = 1   CI=[0.963358,1]
+
+P(ALL: phi_good & canonical & coherence & out_of_sample) = 0.0036   CI=[0.00285989,0.00453077]
+Top observed unique triples (sanity):
+   1. (137, 107, 103)  count=72  CANON
+   2. (137, 107, 79)  count=29
+PASS  Uniform joint-space MC observed unique cases                                
+PASS  Near-neighbor MC observed unique cases                                      
+
+==================================================================================================
+                               GRRA-08 — Master Enumeration Ledger                                
+==================================================================================================
+Moduli scan (q<=50, derived residues):
+  tested=504  unique=3  phi_good=3  canonical=1
+Residue scan (exact, |R|<=5, fixed moduli/window, ordered):
+  total=75112287760  none=69936087190  unique=4160987694  multi=1015212876  canon_unique=1454247666
+Policy equivalence (MinLane vs MinMDL):
+  decided=5176200570  disagreement_weight=0  canon_hits=2117324322
+Window scan (starts 50..300 step10, widths 60/80/100):
+  total=78  unique=14  canon_unique=14
+Expanded τ scan (21^3):
+  total=9261  unique=5733  canon_unique=5733  other_unique=0
+Φ-map enumeration (bounded):
+  alpha_s: total=140 within_5pct=9 | sin2W: total=60 within_5pct=4
+Monte Carlo (Wilson 95% CI):
+  uniform: P(unique)=0.0018 CI=(0.001300521061488744, 0.002490830695665742) | near: P(canon|unique)=0.712871 CI=(0.6181176819094275, 0.792024856930117)
+
+==================================================================================================
+                                         DETERMINISM HASH                                         
+==================================================================================================
+determinism_sha256: f4a4270b335e22f72fbe15a1b432d03b7a22810ec32306156b77a21c99f1a25a
+
+==================================================================================================
+                                          FINAL VERDICT                                           
+==================================================================================================
+PASS  DEMO-GRRA-MASTER COMPLETE                                                   
+Result: COMPLETE
