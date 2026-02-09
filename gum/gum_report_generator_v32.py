@@ -706,26 +706,42 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
         ),
     },
 
-
+    "DEMO-78": {
+        "title": "Midlift Protocol (Continuum Lift Discipline)",
+        "cluster": "foundations",
+        "tests": "Midlift protocol certificate: principled lift discipline + rigidity/controls (stdout-first, hash-sealed in AoR).",
+        "narrative": (
+            "DEMO-78 introduces the Midlift Protocol as a discipline for moving from 0D residue logic toward continuum-facing constructs without smuggling in uncontrolled assumptions. "
+            "The point is not to match external targets but to make the lift rules explicit, auditable, and reproducible under the same evidence posture as the rest of the suite. "
+            "The demo is written as a certificate: it emits a structured readout, includes negative controls, and records determinism so any change becomes visible in the bundle hash. "
+            "This matters because many frameworks fail at the bridge step, where narrative replaces mechanism. "
+            "Here the bridge is treated as an engineering object: constraints first, then derived behavior, then controls. "
+            "In the overall narrative arc, DEMO-78 sits adjacent to DOC/CLP+ posture and strengthens the claim that the program’s lift is ZFC-conservative and audit-grade."
+        ),
+        "highlights": [
+            "Certificate-style readout (stdout is canonical evidence in the AoR).",
+            "Explicit lift discipline with negative controls (designed FAILs) where applicable.",
+            "Determinism hash so changes are provable, not rhetorical."
+        ],
+    },
     "DEMO-77": {
-        "title": "Grammar Rigidity and Selector Robustness",
         "cluster": "KERNEL",
-        "tests": "Grammar rigidity audit and selector robustness certificate (controlled relaxations + negative controls).",
+        "title": "Grammar Rigidity and Selector Robustness",
+        "tests": "Grammar rigidity audit and selector robustness certificate (controlled relaxations + designed FAILs).",
+        "highlights": [
+            "Controlled relaxations vs baseline constraints (rigidity audit).",
+            "Designed FAIL posture: negative controls must reject as intended.",
+            "Evidence-first: rerunnable stdout logs + hashes; no external data inputs."
+        ],
         "narrative": (
             "DEMO-77 is a deterministic audit of grammar rigidity and selector robustness. "
-            "It is designed to answer a hostile-referee question: if the admissibility grammar is perturbed or a constraint is relaxed, does the solution remain rigid, or does the solution space explode. "
+            "It answers a hostile-referee question: if the admissibility grammar is perturbed or a constraint is relaxed, does the solution remain rigid, or does the solution space explode. "
             "This demo does not introduce new physics targets and it does not import external reference values. "
             "Instead, it produces an audit-grade record of what changes when rules change, under the same hashing and evidence discipline as the rest of the suite. "
             "The key credibility contribution is negative controls: designed FAIL variants that must reject, so the program demonstrates rejection behavior rather than only success cases. "
-            "In the narrative arc, DEMO-77 strengthens the Authority posture by showing constraint necessity as an observable behavior of the grammar, not a rhetorical claim."
+            "In the narrative arc, DEMO-77 strengthens the Authority posture by turning constraint necessity into an observable behavior of the grammar."
         ),
-        "highlights": [
-            "Grammar rigidity audit: controlled relaxations vs baseline constraints.",
-            "Designed FAIL gallery posture (negative controls must reject).",
-            "Evidence-first: rerunnable stdout logs + hashes, no external data inputs."
-        ],
-    },
-    "DEMO-76": {
+    },    "DEMO-76": {
         "cluster": "SM",
         "title": "Primorial–Yukawa master flagship",
         "tests": "Primorial/Yukawa sensitivity and stability audit with deterministic gates.",
@@ -759,6 +775,25 @@ DEMO_INFO: Dict[str, Dict[str, Any]] = {
             "For referees, DEMO-69 provides a falsifiable claim: if transfer breaks admissibility, the bridge is not real and the blended story becomes a set of coincidences. "
             "The demo is also an engineering asset: transfer rules reduce the chance that each new domain requires a bespoke toolchain. "
             "If DEMO-69 holds up under rerun and hashing, it is one of the clearest demonstrations that the program is building a single reusable kernel."
+        ),
+    },
+
+    "DEMO-34": {
+        "cluster": "BRIDGE",
+        "title": "Omega -> Standard Model bridge (kernel framing)",
+        "tests": "Kernel framing and bridge posture: establishes the deterministic survivor triple and the downstream constraint cascade.",
+        "highlights": [
+            "Defines the bridge posture: constrained cascade, not independent curve-fits.",
+            "Pins the kernel triple and invariants used downstream.",
+            "Sets up the falsification posture used throughout the suite."
+        ],
+        "narrative": (
+            "DEMO-34 is the kernel framing bridge: it establishes the deterministic survivor triple and the invariants that downstream demos reuse. "
+            "This matters because the suite must be read as a constrained cascade, not as disconnected matches. "
+            "Once the bridge is fixed, later closures are not free to choose parameters without paying a falsification cost. "
+            "The demo is therefore an audit anchor: it is the first place a reviewer should look to understand what is structural versus what is comparison-only. "
+            "It is also the correct location to test noncircularity posture, because the bridge is where hidden assumptions tend to be smuggled into pipelines. "
+            "If DEMO-34 does not reproduce deterministically, later agreements should not be treated as evidence."
         ),
     },
 
@@ -1376,7 +1411,7 @@ def build_cover(bundle: Bundle, repo_root: Path, styles: Dict[str, ParagraphStyl
     story.append(Paragraph("Justin Grieshop", styles["CoverSubtitle"]))
 
     story.append(Spacer(1, 0.25 * inch))
-    story.append(Paragraph('"Within everything accepted lies everything overlooked."', styles["Quote"]))
+    story.append(Paragraph("Within everything accepted lies everything overlooked.", styles["Quote"]))
 
     ts = _dt.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%SZ")
     bundle_name = bundle.root.name
@@ -2144,7 +2179,7 @@ def build_demo_certificates(bundle: Bundle, repo_root: Path, styles: Dict[str, P
         cluster = DEMO_INFO.get(demo, {}).get("cluster") or "BRIDGE"
         cluster_to_demos.setdefault(cluster, []).append(demo)
 
-    cluster_order = ["KERNEL", "FILTER", "SM", "COSMO", "GRNS", "QNTM", "BRIDGE"]
+    cluster_order = ["KERNEL", "FILTER", "SM", "COSMO", "GRNS", "QNTM", "BRIDGE","foundations"]
     for cluster in cluster_order:
         demos = cluster_to_demos.get(cluster, [])
         if not demos:

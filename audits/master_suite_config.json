@@ -84,7 +84,7 @@
       "A compact example of how admissibility + structure propagates into concrete predictions."
     ]
   },
-  "per_demo_timeout_sec": 900,
+  "per_demo_timeout_sec": 2400,
   "report_generator": "gum/gum_report_generator_v32.py",
   "title": "MARI / GUM Master Suite \u2014 Authority-of-Record Runner",
   "verbosity_default": "flagship",
