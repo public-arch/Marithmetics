@@ -67,3 +67,17 @@ gum/reports/*.pdf.manifest.json
 *.bak_*
 *.BAD.*.py
 zz_archive/local_scratch/
+
+# Demo outputs (AoR captures these; repo should stay clean)
+demos/**/_artifacts/
+demos/**/bb36_master_results.json
+demos/foundations/demo-78-midlift-protocol-master-flagship/demo78_v35_*.json
+demos/foundations/demo-78-midlift-protocol-master-flagship/demo78_v35_*.md
+demos/foundations/demo-78-midlift-protocol-master-flagship/frozen_specs_core.json
+demos/foundations/demo-78-midlift-protocol-master-flagship/frozen_specs_ext.json
+demos/foundations/demo-78-midlift-protocol-master-flagship/physical_targets.json
+demos/foundations/demo-78-midlift-protocol-master-flagship/physical_targets_ext.json
+
+# Local report outputs
+gum/reports/LATEST.pdf
+gum/reports/LATEST.pdf.manifest.json
