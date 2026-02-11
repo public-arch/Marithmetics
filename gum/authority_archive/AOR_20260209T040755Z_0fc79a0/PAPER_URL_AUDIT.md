@@ -1,0 +1,101 @@
+# Paper URL Audit (old AoR → new AoR)
+
+- OLD AoR: `gum/authority_archive/AOR_20260125T043902Z_52befea`
+- NEW AoR: `gum/authority_archive/AOR_20260209T040755Z_0fc79a0`
+- REF: `c318e4ba57c228108fae41cac3cc3df873944b8a`
+
+## Per-paper coverage
+
+- **Foundations Marithmetics.pdf**: **4/43**
+  - sample unresolved:
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/bundle_sha256.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-56-deterministic-operator-calculus-vs-fd.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-56-deterministic-operator-calculus-vs-fd.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-59-electromagnetism.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-59-electromagnetism.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-69-oatb-operator-admissibility-transfer-bridge.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-69-oatb-operator-admissibility-transfer-bridge.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/cosmo__demo-36-big-bang-master-flagship.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/cosmo__demo-36-big-bang-master-flagship.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/cosmo__demo-39-bb-a2.out.txt
+- **NT-1.pdf**: **0/0**
+- **NT-2.pdf**: **1/5**
+  - sample unresolved:
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/demo_index.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/MARI_MASTER_RELEASE_20260125T043902Z_52befea.zip
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/report/GUM_Report_v32_2026-01-25_04-42-51Z.pdf
+    - https://github.com/public-arch/Marithmetics/tree/release-aor-20260125T043902Z
+- **NT-3.pdf**: **4/10**
+  - sample unresolved:
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/constants_master.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/demo_index.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/falsification_matrix.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/run_reproducibility.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/MARI_MASTER_RELEASE_20260125T043902Z_52befea.zip
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/report/GUM_Report_v32_2026-01-25_04-42-51Z.pdf
+- **NT-4.pdf**: **1/3**
+  - sample unresolved:
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/MARI_MASTER_RELEASE_20260125T043902Z_52befea.zip
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/report/GUM_Report_v32_2026-01-25_04-42-51Z.pdf
+- **NT-5.pdf**: **1/9**
+  - sample unresolved:
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/infinity__demo-65-continuous-lift-paradox.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/infinity__demo-65-continuous-lift-paradox.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/substrate__demo-64-base-gauge-invariance-integer-selector.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/substrate__demo-64-base-gauge-invariance-integer-selector.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/constants_master.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/demo_index.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/MARI_MASTER_RELEASE_20260125T043902Z_52befea.zip
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/report/GUM_Report_v32_2026-01-25_04-42-51Z.pdf
+- **PH-1.pdf**: **4/17**
+  - sample unresolved:
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/bundle_sha256.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-56-deterministic-operator-calculus-vs-fd.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-59-electromagnetism.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/foundations__demo-71-one-action-master-flagship.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/foundations__demo-71-one-action-master-flagship.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/constants_master.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/constants_master.json
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/demo_index.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/falsification_matrix.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/run_reproducibility.csv
+- **PH-2.pdf**: **0/4**
+  - sample unresolved:
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/MARI_MASTER_RELEASE_20260125T043902Z_52befea.zip
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/report/GUM_Report_v32_2026-01-25_04-42-51Z.pdf
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/report/GUM_Report_v32_2026-01-25_04-42-51Z.pdf.manifest.json
+    - https://github.com/public-arch/Marithmetics/tree/release-aor-20260125T043902Z
+- **PH-3.pdf**: **0/6**
+  - sample unresolved:
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/cosmo__demo-36-big-bang-master-flagship.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/vendored_artifacts/cosmo__demo-36-big-bang-master-flagship__bb36_master_results.json
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/vendored_artifacts/cosmo__demo-36-big-bang-master-flagship__camb_overlay_note.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/vendored_artifacts/cosmo__demo-36-big-bang-master-flagship__camb_planck_params.json
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/vendored_artifacts/cosmo__demo-36-big-bang-master-flagship__camb_planck_vs_gum_metrics.json
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/vendored_artifacts/cosmo__demo-36-big-bang-master-flagship__camb_planck_vs_gum_overlay.png
+- **PH-4.pdf**: **0/0**
+- **V2 PH-4.pdf**: **2/17**
+  - sample unresolved:
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/bundle_sha256.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/bridge__demo-34-omega-sm-master-flagship-v1.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/bridge__demo-34-omega-sm-master-flagship-v1.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-56-deterministic-operator-calculus-vs-fd.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-56-deterministic-operator-calculus-vs-fd.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-59-electromagnetism.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-59-electromagnetism.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-69-oatb-operator-admissibility-transfer-bridge.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-69-oatb-operator-admissibility-transfer-bridge.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/demo_index.csv
+- **V3 NT0 paper.pdf**: **0/9**
+  - sample unresolved:
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/bridge__demo-34-omega-sm-master-flagship-v1.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/controllers__demo-69-oatb-operator-admissibility-transfer-bridge.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/substrate__demo-64-base-gauge-invariance-integer-selector.err.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/logs/substrate__demo-64-base-gauge-invariance-integer-selector.out.txt
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/constants_master.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/demo_index.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/falsification_matrix.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/GUM_BUNDLE_v30_20260125T043902Z/tables/run_reproducibility.csv
+    - https://github.com/public-arch/Marithmetics/blob/release-aor-20260125T043902Z/gum/authority_archive/AOR_20260125T043902Z_52befea/report/GUM_Report_v32_2026-01-25_04-42-51Z.pdf
+
+## Total unresolved old URLs: 44
