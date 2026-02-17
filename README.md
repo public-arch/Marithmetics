@@ -1,5 +1,5 @@
-# Marithmetics (GUM)
-**A deterministic, audit-grade system audit for integer-to-physics emergence**
+# Marithmetics
+**A deterministic, audit-grade pipeline for integer-to-physics emergence**
 
 **Narrative is not evidence. Execution is.**  
 
