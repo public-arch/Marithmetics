@@ -2,7 +2,8 @@
 **A deterministic, audit-grade system audit for integer-to-physics emergence**
 
 **Narrative is not evidence. Execution is.**  
-This repository is an **Authority-of-Record (AoR)** pipeline: it runs a deterministic demo suite, captures logs and artifacts, seals them into a cryptographic bundle, and generates the launch report from that bundle.
+
+This repository produces **Authority-of-Record (AoR)** bundles: it runs a deterministic demo suite, captures logs and artifacts, seals them into a cryptographic bundle, and generates the launch report from that bundle.
 
 ---
 
@@ -44,6 +45,9 @@ These are the “fast anchors” a referee can use to orient. Each row points to
 After `run_master_suite` completes, your AoR is written under:
 
 - `gum/authority_archive/`
+
+Only the canonical release AoR is kept in the release surface. Historical runs are archived under `zz_archive/`.
+
 
 Each AoR folder contains:
 - `GUM_BUNDLE_v30_.../` (tables, logs, vendored artifacts, hashes)
@@ -115,8 +119,8 @@ This makes citations stable even as the repository evolves, because the AoR is t
 - `audits/` — AoR bundler + full suite runner
 - `gum/` — report generator (v32), report assets, AoR archive, reports folder
 - `atlas_substrate_visualization/` — interactive DRPT explorer
-- `publication_spine/` — *(coming next)* paper spine and formal releases  
-  - Placeholder: DOC reference will live here until the rewrite papers are finalized.
+- `publication_spine/` — canonical paper spine (governance, number-theory track, physics track)  
+  - DOC is intentionally duplicated for navigation while preserving the canonical DOC anchor path.
 
 ---
 
