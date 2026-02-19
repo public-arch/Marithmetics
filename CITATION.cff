@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software or the AoR evidence capsule, please cite it as below."
+title: "Marithmetics: Structural Derivation of Gauge Couplings, Cosmological Parameters, and Continuum Law from a Finite Residue-Ring Substrate"
+type: software
+authors:
+  - family-names: "Grieshop"
+    given-names: "Justin"
+repository-code: "https://github.com/public-arch/Marithmetics"
+url: "https://github.com/public-arch/Marithmetics"
+keywords:
+  - "Marithmetics"
+  - "reproducibility"
+  - "auditability"
+  - "deterministic pipeline"
+  - "residue rings"
+  - "modular arithmetic"
+  - "Fejér kernel"
+  - "operator calculus"
+  - "cosmology"
+  - "gauge couplings"
+version: "aor-20260209T040755Z"
+date-released: "2026-02-09"
