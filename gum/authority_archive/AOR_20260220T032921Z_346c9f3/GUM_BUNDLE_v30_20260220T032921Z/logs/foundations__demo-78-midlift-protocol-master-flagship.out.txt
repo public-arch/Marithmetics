@@ -1,0 +1,190 @@
+
+================================================================================================
+DEMO-78 FLAGSHIP v3.5 — SELF-CONTAINED EXT PACK (Targets + Gauge + GR Hook)
+================================================================================================
+PRIMARY: (137, 107, 103)
+CF_TRIPLES: [(409, 263, 239), (409, 263, 307), (409, 367, 239), (409, 367, 307)]
+q2=30 q3=17 eps=0.182574185835 eps^2=0.0333333333333 eps^4=0.00111111111111
+PROVENANCE: {'S4B_hash': '398d215e5bd376bab11a14de9ea29593ca9134c79b361521c5fce638951757c1', 'S5B_hash': '6b0e6deeb13a7f7528e90298ebe7dfacb916d27123c6d2281779c60083c32a7d', 'S6F_hash': '18b67424487e522019d0412b323d97a5601bd155a20d39a818f4c24cf76adc52'}
+PRIMARY_M0_exact_rational_sha256: 6a4da453973916dad73b35a8a01d43dad68e823dec82d625fabb37f123b4a36c
+
+================================================================================================
+STAGE 2 — COMPRESSION EQUIVALENCE
+================================================================================================
+{'nC': 9, 'Bc': 3, 'Bs': 3, 'rel_frob': 6.689715597682836e-17}
+GATE C0: True
+
+================================================================================================
+STAGE 3 — TIGHTROPE (LEGAL FEJÉR, Φ-coordinates)
+================================================================================================
+dev=0.142428023678 obj=0.780110413892
+GATE N0: True
+
+================================================================================================
+STAGE 4 — MULTI-ILLEGAL SUITE
+================================================================================================
+[SIGNED] break=True  dev=0.0649357980444  min_eig=-2.35882915762
+[NEG_DIAG] break=True  dev=0.169050078936  min_eig=-1.88486818326
+[CHECKER] break=False  dev=0.14242803662  min_eig=0.117017351324
+GATE I0: True
+
+================================================================================================
+STAGE 5 — Φ-MAP (PRIMARY, LEGAL)
+================================================================================================
+alpha_em mid=0.00734658140367 err=4.73113306765e-05 drift=0.00669906402633 ok=True
+sin2W    mid=0.233404849677 err=7.15163437417e-05 drift=0.00316528257025 ok=True
+alpha_s  mid=0.118452130175 err=0.000805071351699 drift=0.00790685419135 ok=True
+GATE M0Φ: True
+
+================================================================================================
+STAGE 6 — Φ-MAP (PRIMARY, ILLEGAL SIGNED) WORSE
+================================================================================================
+alpha_em mid=0.0431281143744 err=0.0358288443014 drift=0.00735521620762 domain_fail=False
+sin2W    mid=0.227179190616 err=0.00615414271695 drift=0.00570595382678 domain_fail=False
+alpha_s  mid=0.335607778277 err=0.217960719453 drift=0.076245461565 domain_fail=False
+GATE M1Φ: True
+
+================================================================================================
+STAGE 7 — COUNTERFACTUAL TEETH (Φ)
+================================================================================================
+CF (409, 263, 239) miss=True nF=864
+CF (409, 263, 307) miss=True nF=864
+CF (409, 367, 239) miss=True nF=48
+CF (409, 367, 307) miss=True nF=48
+TEETH Φ: 4/4  GATE T0Φ: True
+
+================================================================================================
+STAGE 8 — CORE PHYSICAL MAP (self-contained)
+================================================================================================
+core_ledger_source=builtin core_ledger_sha256=5148dbe5a8678c9954769aceff2f6584463408cc00a80ace206620c4c17de058 core_len=6 KPHYS=24
+core_mined_specs_found=6/6  frozen_specs_sha256=d373033f9a0cfd0f3aa338ca3fc67e27b680806d5a127041f73d950e8a762e5a
+
+PRIMARY_CORE
+------------------------------------------------------------------------------------------------
+name               req       target          mid  err/eBud  dr/dBud  OK
+------------------------------------------------------------------------------------------------
+Vcb                  Y       0.0422    0.0419045     0.266    0.696   Y
+Vub                  Y      0.00394   0.00413973      0.18    0.118   Y
+Vus                  Y       0.2243     0.225158     0.772    0.926   Y
+dm21_over_dm31       Y         0.03    0.0299839    0.0145    0.681   Y
+me_over_mp           Y  0.000544617   0.00153582     0.892   0.0339   Y
+mmu_over_mp          Y      0.11261     0.112125     0.437    0.147   Y
+------------------------------------------------------------------------------------------------
+compliance (required): 6/6
+compliance (all): 6/6
+
+ILLEGAL_SIGNED_CORE
+------------------------------------------------------------------------------------------------
+name               req       target          mid  err/eBud  dr/dBud  OK
+------------------------------------------------------------------------------------------------
+Vcb                  Y       0.0422    0.0467431      4.09    0.873   N
+Vub                  Y      0.00394    -0.061484      58.9      1.1   N
+Vus                  Y       0.2243     0.398907       157     2.31   N
+dm21_over_dm31       Y         0.03     0.125772      86.2    0.756   N
+me_over_mp           Y  0.000544617    -0.161967       146   0.0852   N
+mmu_over_mp          Y      0.11261     0.248132       122     2.21   N
+------------------------------------------------------------------------------------------------
+compliance (required): 0/6
+compliance (all): 0/6
+CORE TEETH: 4/4
+GATES core: {'P0_core_required_all_pass': True, 'P1_core_illegal_worse': True, 'P2_core_teeth': True}
+
+================================================================================================
+STAGE 9 — EXT PHYSICAL MAP (self-contained additions)
+================================================================================================
+ext_ledger_source=builtin ext_ledger_sha256=af8ee18a918d7a2a971057c3b19caa25fd6d89d88748bad8730e1e39aff1d3b6 ext_len=15 KPHYS=24
+rp_over_lambdaCp_target=3.99769082144  (dimensionless)
+ext_mined_specs_found=15/15  frozen_specs_sha256=a90f77e577a641426d4f4ea30c01de6a84c9f4143d41d2ff5a9d6dea757e8922
+
+PRIMARY_EXT
+------------------------------------------------------------------------------------------------
+name               req       target          mid  err/eBud  dr/dBud  OK
+------------------------------------------------------------------------------------------------
+Vcb_ckm              N      0.04183    0.0419045     0.067    0.696   Y
+Vcd                  N      0.22487     0.225158     0.259    0.926   Y
+Vcs                  N      0.97349     0.973256     0.211    0.895   Y
+Vtb                  N     0.999118     0.998464     0.588   0.0339   Y
+Vtd                  N      0.00858    0.0088434     0.237     0.24   Y
+Vts                  N      0.04111    0.0419045     0.715    0.696   Y
+Vub_ckm              N     0.003732   0.00413973     0.367    0.118   Y
+Vud                  N      0.97435     0.973256     0.985    0.895   Y
+Vus_ckm              N      0.22501     0.225158     0.133    0.926   Y
+a_e                  N   0.00115965   0.00153582     0.339   0.0339   Y
+deltaCP_over_pi      N         1.21      1.22589     0.477     0.32   Y
+rp_over_lambdaCp     N      3.99769      3.99386     0.115    0.136   Y
+sin2_th12            N        0.307     0.305593    0.0422    0.106   Y
+sin2_th13            N       0.0216    0.0183661     0.097    0.616   Y
+sin2_th23            N        0.534     0.511061     0.688    0.789   Y
+------------------------------------------------------------------------------------------------
+compliance (all): 15/15
+
+ILLEGAL_SIGNED_EXT
+------------------------------------------------------------------------------------------------
+name               req       target          mid  err/eBud  dr/dBud  OK
+------------------------------------------------------------------------------------------------
+Vcb_ckm              N      0.04183    0.0467431      4.42    0.873   N
+Vcd                  N      0.22487     0.398907       157     2.31   N
+Vcs                  N      0.97349     0.981204      6.94   0.0131   N
+Vtb                  N     0.999118      1.16197       147   0.0852   N
+Vtd                  N      0.00858  -0.00310233      10.5   0.0998   N
+Vts                  N      0.04111    0.0467431      5.07    0.873   N
+Vub_ckm              N     0.003732    -0.061484      58.7      1.1   N
+Vud                  N      0.97435     0.981204      6.17   0.0131   N
+Vus_ckm              N      0.22501     0.398907       157     2.31   N
+a_e                  N   0.00115965    -0.161967       147   0.0852   N
+deltaCP_over_pi      N         1.21     0.554954      19.7     5.19   N
+rp_over_lambdaCp     N      3.99769      4.64787      19.5    0.341   N
+sin2_th12            N        0.307    -0.127021        13     4.79   N
+sin2_th13            N       0.0216    0.0124399     0.275    0.155   Y
+sin2_th23            N        0.534      20.3847       596      771   N
+------------------------------------------------------------------------------------------------
+compliance (all): 1/15
+EXT TEETH: 4/4
+GATES ext (required-only): {'X0_ext_required_all_pass': False, 'X1_ext_illegal_worse': False, 'X2_ext_teeth': False}
+NOTE: ext gates are required-only. Set required:true in physical_targets_ext.json for promotion.
+
+================================================================================================
+STAGE 10 — GAUGE EMBEDDING + 1-LOOP UNIFICATION (report-only)
+================================================================================================
+gauge_report_sha256: 6d0dce1b1b76a87b5aa6dc7fc4797e47dec6b96cda147c2d49c808c237559403
+alpha1,alpha2,alpha3: 0.0159723190713 0.0314757016139 0.118452130175
+mu12_GeV: 34675898028800.0 mu23_GeV: 3.68263728486e+18
+ln_mismatch: 11.5730948427 alphaU_inv_at_mu12: 45.2090197101
+
+================================================================================================
+STAGE 11 — GR / GR-FACADE HOOK (report-only, auto-scan)
+================================================================================================
+no GR-related artifacts found in working directory (ok).
+
+================================================================================================
+FINAL VERDICT (core + ext + audit anchors)
+================================================================================================
+GATES v2: {'C0_compression': True, 'N0_numeric_stability': True, 'I0_illegal_suite': True, 'M0_phi_budget': True, 'M1_phi_illegal_worse': True, 'T0_phi_teeth': True, 'phi_teeth_count': 4}
+VERDICT v2: VERIFIED
+GATES core: {'P0_core_required_all_pass': True, 'P1_core_illegal_worse': True, 'P2_core_teeth': True, 'core_required': '6/6', 'core_all': '6/6', 'illegal_core_required': '0/6', 'illegal_core_all': '0/6', 'core_ledger_sha256': '5148dbe5a8678c9954769aceff2f6584463408cc00a80ace206620c4c17de058', 'core_ledger_source': 'builtin', 'core_frozen_specs_sha256': 'd373033f9a0cfd0f3aa338ca3fc67e27b680806d5a127041f73d950e8a762e5a'}
+VERDICT core: VERIFIED
+GATES ext (required-only): {'X0_ext_required_all_pass': False, 'X1_ext_illegal_worse': False, 'X2_ext_teeth': False, 'ext_required': '0/0', 'ext_all': '15/15', 'illegal_ext_required': '0/0', 'illegal_ext_all': '1/15', 'ext_ledger_sha256': 'af8ee18a918d7a2a971057c3b19caa25fd6d89d88748bad8730e1e39aff1d3b6', 'ext_ledger_source': 'builtin', 'ext_frozen_specs_sha256': 'a90f77e577a641426d4f4ea30c01de6a84c9f4143d41d2ff5a9d6dea757e8922'}
+VERDICT ext (required-only): NOT VERIFIED / NOT PROMOTED
+
+================================================================================================
+CERTIFICATE (copy/paste)
+================================================================================================
+DEMO-78 v3.5 — PUBLIC CERTIFICATE
+PRIMARY: (137, 107, 103)
+CF_TRIPLES: [(409, 263, 239), (409, 263, 307), (409, 367, 239), (409, 367, 307)]
+eps=0.18257418583505536  eps^2=0.033333333333333326  eps^4=0.001111111111111111
+M0_exact_rational_sha256: 6a4da453973916dad73b35a8a01d43dad68e823dec82d625fabb37f123b4a36c
+core_ledger_sha256: 5148dbe5a8678c9954769aceff2f6584463408cc00a80ace206620c4c17de058  (source=builtin)
+core_frozen_specs_sha256: d373033f9a0cfd0f3aa338ca3fc67e27b680806d5a127041f73d950e8a762e5a
+ext_ledger_sha256: af8ee18a918d7a2a971057c3b19caa25fd6d89d88748bad8730e1e39aff1d3b6  (source=builtin)
+ext_frozen_specs_sha256: a90f77e577a641426d4f4ea30c01de6a84c9f4143d41d2ff5a9d6dea757e8922
+gauge_report_sha256: 6d0dce1b1b76a87b5aa6dc7fc4797e47dec6b96cda147c2d49c808c237559403
+GATES_v2: {'C0_compression': True, 'N0_numeric_stability': True, 'I0_illegal_suite': True, 'M0_phi_budget': True, 'M1_phi_illegal_worse': True, 'T0_phi_teeth': True, 'phi_teeth_count': 4}
+GATES_core: {'P0_core_required_all_pass': True, 'P1_core_illegal_worse': True, 'P2_core_teeth': True, 'core_required': '6/6', 'core_all': '6/6', 'illegal_core_required': '0/6', 'illegal_core_all': '0/6', 'core_ledger_sha256': '5148dbe5a8678c9954769aceff2f6584463408cc00a80ace206620c4c17de058', 'core_ledger_source': 'builtin', 'core_frozen_specs_sha256': 'd373033f9a0cfd0f3aa338ca3fc67e27b680806d5a127041f73d950e8a762e5a'}
+GATES_ext(required-only): {'X0_ext_required_all_pass': False, 'X1_ext_illegal_worse': False, 'X2_ext_teeth': False, 'ext_required': '0/0', 'ext_all': '15/15', 'illegal_ext_required': '0/0', 'illegal_ext_all': '1/15', 'ext_ledger_sha256': 'af8ee18a918d7a2a971057c3b19caa25fd6d89d88748bad8730e1e39aff1d3b6', 'ext_ledger_source': 'builtin', 'ext_frozen_specs_sha256': 'a90f77e577a641426d4f4ea30c01de6a84c9f4143d41d2ff5a9d6dea757e8922'}
+VERDICT_v2: True
+VERDICT_core: True
+VERDICT_ext(required-only): False
+sha256: 0063f89f6dcca60de67a1e7ecf06e55c6f192413c8f7326d549fcfcfe3d8b356
+artifacts: demo78_v35_0063f89f6dcc.json demo78_v35_0063f89f6dcc.md
+notes: frozen_specs_core.json and frozen_specs_ext.json written for audit; edit physical_targets_ext.json to promote required targets.

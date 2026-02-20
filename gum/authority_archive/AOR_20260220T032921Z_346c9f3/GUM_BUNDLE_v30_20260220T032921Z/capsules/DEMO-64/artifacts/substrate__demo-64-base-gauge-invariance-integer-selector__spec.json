@@ -1,0 +1,58 @@
+{
+  "bases": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    16
+  ],
+  "demo": "DEMO-64",
+  "encoding_alphabet": "0123456789abcdefghijklmnopqrstuvwxyz",
+  "encoding_contract": "decode_base_b(encode_base_b(w)) == w",
+  "lanes": [
+    {
+      "name": "U(1)",
+      "q": 17,
+      "residues": [
+        1,
+        5
+      ],
+      "span": [
+        97,
+        180
+      ],
+      "tau_min": 0.31
+    },
+    {
+      "name": "SU(2)",
+      "q": 13,
+      "residues": [
+        3
+      ],
+      "span": [
+        97,
+        180
+      ],
+      "tau_min": 0.3
+    },
+    {
+      "name": "SU(3)",
+      "q": 17,
+      "residues": [
+        1
+      ],
+      "span": [
+        97,
+        180
+      ],
+      "tau_min": 0.3
+    }
+  ],
+  "title": "Base-Gauge Invariance of the Selector (Encode/Decode Audit)"
+}

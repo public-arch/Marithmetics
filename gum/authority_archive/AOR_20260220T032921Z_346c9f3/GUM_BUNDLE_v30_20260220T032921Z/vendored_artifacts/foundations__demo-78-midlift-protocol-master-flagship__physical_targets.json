@@ -1,0 +1,44 @@
+[
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vcb",
+    "required": true,
+    "target": 0.0422
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vub",
+    "required": true,
+    "target": 0.00394
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "Vus",
+    "required": true,
+    "target": 0.2243
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "dm21_over_dm31",
+    "required": true,
+    "target": 0.03
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "me_over_mp",
+    "required": true,
+    "target": 0.000544617
+  },
+  {
+    "drift_power": 2,
+    "err_power": 4,
+    "name": "mmu_over_mp",
+    "required": true,
+    "target": 0.11261
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "aor_dir": "gum/authority_archive/AOR_20260220T032921Z_346c9f3/GUM_BUNDLE_v30_20260220T032921Z",
+  "artifact_records": 40,
+  "bundle_sha256": "79ed0a4c9937422359277a80d6aed8bdc3fb1a304d139ac6e641f987e71d5c03",
+  "demo_count": 29,
+  "missing_artifacts": [
+    "demo-34-omega-sm-master-flagship",
+    "demo-56-deterministic-operator-calculus-vs-fd",
+    "demo-59-electromagnetism",
+    "demo-69-oatb-operator-admissibility-transfer-bridge",
+    "demo-39-bb-a2",
+    "demo-53-lawbook-emergence",
+    "demo-71-one-action-master-flagship",
+    "demo-75-prediction-ledger-master-flagship",
+    "demo-77-grammar-rigidity-master-flagship",
+    "demo-51-qft-gr-vacuum-suppression",
+    "demo-58-emergent-weak-field-gr",
+    "demo-63-gravitational-wave-inspiral-phasing",
+    "demo-68-general-relativity-master-flagship",
+    "demo-65-continuous-lift-paradox",
+    "demo-67-navier-stokes-master-flagship",
+    "demo-60-quantum-master-flagship",
+    "demo-55-proton-charge-radius",
+    "demo-70-higgs-master-flagship",
+    "demo-73-flavor-completion-master-flagship",
+    "demo-76-primorial-yukawa-master-flagship",
+    "demo-40-universe-from-zero"
+  ],
+  "missing_runs": [],
+  "runs_count": 29
+}

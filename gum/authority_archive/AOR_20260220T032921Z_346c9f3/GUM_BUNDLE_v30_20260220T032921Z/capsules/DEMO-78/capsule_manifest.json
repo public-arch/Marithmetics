@@ -1,0 +1,55 @@
+{
+  "demo_id": "78",
+  "label": "DEMO-78",
+  "demo_path": "demos/foundations/demo-78-midlift-protocol-master-flagship",
+  "code_sha256": "088394beaee28255ee9e5ee4cc7908f7d72065175c479b6627e88bbc6799d9e5",
+  "stdout_sha256": "e3e3a9bacbbb62534f88aafabe4401620141b85c05f97ada61c2437961774650",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "foundations__demo-78-midlift-protocol-master-flagship.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "foundations__demo-78-midlift-protocol-master-flagship.out.txt",
+      "sha256": "e3e3a9bacbbb62534f88aafabe4401620141b85c05f97ada61c2437961774650",
+      "bytes": 13967
+    },
+    {
+      "path": "demo.py",
+      "sha256": "088394beaee28255ee9e5ee4cc7908f7d72065175c479b6627e88bbc6799d9e5",
+      "bytes": 46533
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "artifacts/foundations__demo-78-midlift-protocol-master-flagship__physical_targets.json",
+      "sha256": "a07fddada439f4f39bf59ba387b0121f1a42f0470e38dc16e743513e7b3c8730",
+      "bytes": 711
+    },
+    {
+      "path": "artifacts/foundations__demo-78-midlift-protocol-master-flagship__frozen_specs_ext.json",
+      "sha256": "6335b73408316c667f9db47276a2f38dbdb13d5bbd86305b3c82434d9c8e83d9",
+      "bytes": 542
+    },
+    {
+      "path": "artifacts/foundations__demo-78-midlift-protocol-master-flagship__frozen_specs_core.json",
+      "sha256": "07a462fd4c7f15ac60c7dcf8cc12f5e694b38449683c1285e2e5f233ebcc6892",
+      "bytes": 216
+    },
+    {
+      "path": "artifacts/foundations__demo-78-midlift-protocol-master-flagship__demo78_v35_0063f89f6dcc.json",
+      "sha256": "856b90001fef3e47835f32552dce3cb09287a9f8d1b434a80587a7ea1971dbd4",
+      "bytes": 32873
+    },
+    {
+      "path": "artifacts/foundations__demo-78-midlift-protocol-master-flagship__physical_targets_ext.json",
+      "sha256": "439c153b3307c013e5fbae76ea33e09c63705d57379d4a0d3b6ef88a32bb34e1",
+      "bytes": 1795
+    }
+  ]
+}

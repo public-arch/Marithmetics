@@ -1,0 +1,70 @@
+{
+  "demo_id": "11",
+  "label": "DEMO-11",
+  "demo_path": "demos/controllers/demo-11-step-tests-do-not-certify-admissibility",
+  "code_sha256": "95eb59745ae5dcbf02142a3309a0e91910f9b3e213dcfd7ac871d36c71fc4100",
+  "stdout_sha256": "49d06af0fd9f3a5f9321fadec5cc24e61745ea2a4b7706a4a9bba72bfb676dd4",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "files": [
+    {
+      "path": "controllers__demo-11-step-tests-do-not-certify-admissibility.out.txt",
+      "sha256": "49d06af0fd9f3a5f9321fadec5cc24e61745ea2a4b7706a4a9bba72bfb676dd4",
+      "bytes": 4966
+    },
+    {
+      "path": "demo.py",
+      "sha256": "95eb59745ae5dcbf02142a3309a0e91910f9b3e213dcfd7ac871d36c71fc4100",
+      "bytes": 33532
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "controllers__demo-11-step-tests-do-not-certify-admissibility.err.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "artifacts/controllers__demo-11-step-tests-do-not-certify-admissibility__Fig1_HERO.png",
+      "sha256": "054209f7773d5588f9110580ea946a5b52f34ad6a936f9fa0b3c0a622962a38b",
+      "bytes": 840980
+    },
+    {
+      "path": "artifacts/controllers__demo-11-step-tests-do-not-certify-admissibility__MANIFEST.json",
+      "sha256": "6b154d48f1c518125d849bcc40898080da2b1b8148d754f6e1297e1e4aad62cb",
+      "bytes": 1002
+    },
+    {
+      "path": "artifacts/controllers__demo-11-step-tests-do-not-certify-admissibility__Fig1_HERO.pdf",
+      "sha256": "b2c3ed84cff4a8d4ca6a5f912bb13144471ee39a00d3c4f5af756eeac7c8f3ae",
+      "bytes": 49575
+    },
+    {
+      "path": "artifacts/controllers__demo-11-step-tests-do-not-certify-admissibility__Fig2_KernelTriptych.png",
+      "sha256": "975ede930eb84dbb7ac52923bfd8efd79a0545774651ac7af32bbe2b3b57e96d",
+      "bytes": 578531
+    },
+    {
+      "path": "artifacts/controllers__demo-11-step-tests-do-not-certify-admissibility__Fig3_ObservedVsGuaranteed.pdf",
+      "sha256": "9b41574a19d105732041a735c44557fd9d9e509379362f462d6ecfbbede7d9d6",
+      "bytes": 56472
+    },
+    {
+      "path": "artifacts/controllers__demo-11-step-tests-do-not-certify-admissibility__Fig3_ObservedVsGuaranteed.png",
+      "sha256": "0f3324f402685ca8342e70cc5965b01e0a0a69f77468f3b396b274a98c6b7a84",
+      "bytes": 565762
+    },
+    {
+      "path": "artifacts/controllers__demo-11-step-tests-do-not-certify-admissibility__Fig2_KernelTriptych.pdf",
+      "sha256": "7264df434884fa8c67c47886127303559ab728ed2fead561339647824b2fa190",
+      "bytes": 27364
+    },
+    {
+      "path": "artifacts/controllers__demo-11-step-tests-do-not-certify-admissibility__demo_data.json",
+      "sha256": "4766ea480597de80bb4752b1497d0321cee1d379cab75bedb17e0c01cf02e14a",
+      "bytes": 195712
+    }
+  ]
+}

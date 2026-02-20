@@ -1,0 +1,55 @@
+{
+  "demo_id": "64",
+  "label": "DEMO-64",
+  "demo_path": "demos/substrate/demo-64-base-gauge-invariance-integer-selector",
+  "code_sha256": "6c0694a41546b177acc71cc8e29d6ca3395e2c8feacedc5affe2063a4251aca5",
+  "stdout_sha256": "23e1fa7e7237bc9a09feaa4b7711715bfbf5bf4f02432708345272d63b7a0737",
+  "stderr_sha256": "32d37004e3a4e4a22878824c52cf7dc3139912100a73c1a7cbea4a11209afa9d",
+  "files": [
+    {
+      "path": "substrate__demo-64-base-gauge-invariance-integer-selector.out.txt",
+      "sha256": "23e1fa7e7237bc9a09feaa4b7711715bfbf5bf4f02432708345272d63b7a0737",
+      "bytes": 4861
+    },
+    {
+      "path": "demo.py",
+      "sha256": "6c0694a41546b177acc71cc8e29d6ca3395e2c8feacedc5affe2063a4251aca5",
+      "bytes": 18093
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    },
+    {
+      "path": "substrate__demo-64-base-gauge-invariance-integer-selector.err.txt",
+      "sha256": "32d37004e3a4e4a22878824c52cf7dc3139912100a73c1a7cbea4a11209afa9d",
+      "bytes": 1114
+    },
+    {
+      "path": "artifacts/substrate__demo-64-base-gauge-invariance-integer-selector__code_sha256.json",
+      "sha256": "0cc909ccb6d37d0ab373c3238cffa8a73318616e50a4b742ad2512f65c23155e",
+      "bytes": 82
+    },
+    {
+      "path": "artifacts/substrate__demo-64-base-gauge-invariance-integer-selector__run_metadata.json",
+      "sha256": "fcf79d29833003689070a39d5dddd824d460fe4089bfa8f9eddd4e01e11092ba",
+      "bytes": 198
+    },
+    {
+      "path": "artifacts/substrate__demo-64-base-gauge-invariance-integer-selector__artifact_sha256.json",
+      "sha256": "1cf5062149df3d6dc1a7f55bd53857340a1781d85f6ac058d23fcba111f8a73c",
+      "bytes": 275
+    },
+    {
+      "path": "artifacts/substrate__demo-64-base-gauge-invariance-integer-selector__spec.json",
+      "sha256": "557722663d48e0cf8798216bf38f707090f3cd81184e2da45a2c5b1b205b3ee2",
+      "bytes": 828
+    },
+    {
+      "path": "artifacts/substrate__demo-64-base-gauge-invariance-integer-selector__deterministic_record.json",
+      "sha256": "56dc4a57f5de2282d43fa22a49d286bfaa4d1449a5ba5d53c6332721405cb33c",
+      "bytes": 2285
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "demo_id": "63",
+  "label": "DEMO-63",
+  "demo_path": "demos/general_relativity/demo-63-gravitational-wave-inspiral-phasing",
+  "code_sha256": "ac29eabd147832e91543a2f1b2975d222ea526e2536e9c34a63e3fb193b4c37d",
+  "stdout_sha256": "8260d4993df32a34784d112191a81dcccc1303d7e7452f5ddc2c05fd3b8f5d2b",
+  "stderr_sha256": "d28d2cdfc44fd8aa9c1f8033ea98b5007dd8eb6976a2763e0873089fb2acf675",
+  "files": [
+    {
+      "path": "general_relativity__demo-63-gravitational-wave-inspiral-phasing.out.txt",
+      "sha256": "8260d4993df32a34784d112191a81dcccc1303d7e7452f5ddc2c05fd3b8f5d2b",
+      "bytes": 3890
+    },
+    {
+      "path": "general_relativity__demo-63-gravitational-wave-inspiral-phasing.err.txt",
+      "sha256": "d28d2cdfc44fd8aa9c1f8033ea98b5007dd8eb6976a2763e0873089fb2acf675",
+      "bytes": 370
+    },
+    {
+      "path": "demo.py",
+      "sha256": "ac29eabd147832e91543a2f1b2975d222ea526e2536e9c34a63e3fb193b4c37d",
+      "bytes": 16859
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "459cae00ed76c5ac9a11b2e437a8b063b44d99392f42021f685b2e91f0f70c62",
+      "bytes": 16
+    }
+  ]
+}

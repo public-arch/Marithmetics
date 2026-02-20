@@ -1,0 +1,70 @@
+====================================================================================================
+FLAGSHIP DEMO — Step Tests Do Not Certify Admissibility
+====================================================================================================
+UTC time : 2026-02-20T03:29:23Z
+Python   : 3.12.1
+Platform : Linux-6.8.0-1030-azure-x86_64-with-glibc2.39
+Deps     : numpy=2.4.2, matplotlib=3.10.8
+Output   : /workspaces/Marithmetics/demos/controllers/demo-11-step-tests-do-not-certify-admissibility/demo_out
+
+SPEC
+----------------------------------------------------------------------------------------------------
+spec_sha256: 04c0fac520fef120bb7f9b46156046a7962be1be471ed16dba30060d790f15df
+
+====================================================================================================
+STAGE 1 — Sweep K and compute: step overshoot + worst-case LB + kernel negativity
+====================================================================================================
+ fejer:  min(kmin)=-2.776e-17  max(step_out)=0.000e+00  LB@Nyquist−1=-0.000000
+ sharp:  min(kmin)=-1.592e-01  max(step_out)=1.366e-01  LB@Nyquist−1=0.499512
+signed:  min(kmin)=-9.971e-01  max(step_out)=2.732e-01  LB@Nyquist−1=0.999023
+
+====================================================================================================
+STAGE 2 — Key points and constructive witnesses
+====================================================================================================
+Primary kernel snapshots (for mechanism figure):
+   fejer: K= 511  step_out= 0.000e+00  worst_LB=-0.000000  kmin= 0.000000  neg_sum= 0.000000  neg_count=0
+   sharp: K= 511  step_out= 6.831e-02  worst_LB= 1.233003  kmin=-0.106103  neg_sum=-1.233003  neg_count=1023
+  signed: K= 511  step_out= 1.366e-01  worst_LB= 2.466982  kmin=-0.212205  neg_sum=-2.466982  neg_count=1024
+
+Illusion point (Nyquist−1): step looks perfect but worst-case LB remains > 0
+   sharp: K=1023  step_out= 4.441e-16  worst_LB= 0.499512  kmin=-0.000488  neg_sum=-0.499512  neg_count=1023
+  signed: K=1023  step_out= 4.441e-16  worst_LB= 0.999023  kmin=-0.000977  neg_sum=-0.999023  neg_count=1023
+
+====================================================================================================
+GATES (certificates)
+====================================================================================================
+PASS  Gate A: sum(kernel)=1 at K_primary (all operators)
+PASS  Gate B: Fejér kernel nonnegative for all K (LB≈0)
+PASS  Gate C: Sharp cutoff always has negativity (LB>0)
+PASS  Gate D: Signed cutoff always has negativity (LB>0)
+PASS  Gate E: Nyquist−1 illusion (step_out≈0 but LB still large)
+PASS  Gate F: witness outputs equal signed kernel mass partitions (tight)
+
+PASS  ALL GATES
+
+====================================================================================================
+STAGE 4 — Render paper-ready figures (PNG + PDF)
+====================================================================================================
+
+====================================================================================================
+STAGE 5 — Emit JSON + manifest hashes
+====================================================================================================
+determinism_sha256: 4de18812b2e06fe42a1acfa4c0e4b0c485b15738216185fc85dfb4cdf9dc362e
+Saved artifacts (sha256):
+  REPORT.md                                 350775b5cc31364f…
+  data/demo_data.json                       4766ea480597de80…
+  figures/Fig1_HERO.pdf                     b2c3ed84cff4a8d4…
+  figures/Fig1_HERO.png                     054209f7773d5588…
+  figures/Fig2_KernelTriptych.pdf           7264df434884fa8c…
+  figures/Fig2_KernelTriptych.png           975ede930eb84dbb…
+  figures/Fig3_ObservedVsGuaranteed.pdf     9b41574a19d10573…
+  figures/Fig3_ObservedVsGuaranteed.png     0f3324f402685ca8…
+
+====================================================================================================
+FINAL VERDICT
+====================================================================================================
+PASS  Flagship demo verified (self-generated figures + reproducible hashes)
+
+BEGIN_JSON
+{"artifacts":{"figures/Fig1_HERO.png":"054209f7773d5588f9110580ea946a5b52f34ad6a936f9fa0b3c0a622962a38b","figures/Fig2_KernelTriptych.png":"975ede930eb84dbb7ac52923bfd8efd79a0545774651ac7af32bbe2b3b57e96d","figures/Fig3_ObservedVsGuaranteed.png":"0f3324f402685ca8342e70cc5965b01e0a0a69f77468f3b396b274a98c6b7a84"},"determinism_sha256":"4de18812b2e06fe42a1acfa4c0e4b0c485b15738216185fc85dfb4cdf9dc362e","gates_pass":true,"key_illusion":{"K":1023,"sharp":{"kmin":-0.00048828125,"step_out":4.440892098500626e-16,"worst_lb":0.49951171875},"signed":{"kmin":-0.0009765625,"step_out":4.440892098500626e-16,"worst_lb":0.9990234375}},"paper_title":"Step Tests Do Not Certify Admissibility","spec_sha256":"04c0fac520fef120bb7f9b46156046a7962be1be471ed16dba30060d790f15df"}
+END_JSON
