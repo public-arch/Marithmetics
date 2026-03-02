@@ -8,8 +8,8 @@ import { CATEGORY_COLORS } from '../utils/categories';
 const FEATURED_DEMO_IDS = ['demo-34', 'demo-36', 'demo-37', 'demo-70'];
 
 /* ── Mobile breakpoint helper ── */
-const MOBILE = '@media (max-width: 768px)';
 const mobileCSS = `
+@media (max-width: 768px) {
   .hero-section { padding: 80px 20px 60px !important; }
   .hero-triangle { display: none !important; }
   .hero-eyebrow { font-size: 10px !important; letter-spacing: 0.15em !important; margin-bottom: 16px !important; }
@@ -25,6 +25,7 @@ const mobileCSS = `
   .body-section { margin: 60px 0 !important; }
   .philosophy-banner { padding: 40px 24px !important; }
   .philosophy-title { font-size: 28px !important; margin-bottom: 32px !important; }
+}
 `;
 
 export default function HomePage() {
