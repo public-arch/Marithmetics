@@ -7,14 +7,35 @@ import { CATEGORY_COLORS } from '../utils/categories';
 
 const FEATURED_DEMO_IDS = ['demo-34', 'demo-36', 'demo-37', 'demo-70'];
 
+/* ── Mobile breakpoint helper ── */
+const MOBILE = '@media (max-width: 768px)';
+const mobileCSS = `
+  .hero-section { padding: 80px 20px 60px !important; }
+  .hero-triangle { display: none !important; }
+  .hero-eyebrow { font-size: 10px !important; letter-spacing: 0.15em !important; margin-bottom: 16px !important; }
+  .hero-title { font-size: 48px !important; letter-spacing: -1px !important; }
+  .hero-subtitle { font-size: 17px !important; margin-bottom: 36px !important; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr) !important; padding: 28px 0 !important; margin-bottom: 32px !important; gap: 24px 0; }
+  .hero-stat-num { font-size: 36px !important; }
+  .hero-stat-label { font-size: 9px !important; }
+  .hero-stat-divider-1, .hero-stat-divider-3 { border-right: none !important; }
+  .hero-buttons { flex-direction: column !important; gap: 12px !important; }
+  .hero-buttons button { width: 100% !important; padding: 16px 24px !important; font-size: 15px !important; }
+  .body-content { padding: 0 20px !important; }
+  .body-section { margin: 60px 0 !important; }
+  .philosophy-banner { padding: 40px 24px !important; }
+  .philosophy-title { font-size: 28px !important; margin-bottom: 32px !important; }
+`;
+
 export default function HomePage() {
   const featured = demos.filter(d => FEATURED_DEMO_IDS.includes(d.id));
 
   return (
     <div style={{ flex: 1 }}>
+      <style>{mobileCSS}</style>
 
       {/* ════════ HERO ════════ */}
-      <section style={{
+      <section className="hero-section" style={{
         background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
         position: 'relative',
         overflow: 'hidden',
@@ -27,8 +48,8 @@ export default function HomePage() {
                        radial-gradient(ellipse 60% 80% at 85% 20%, rgba(15,52,96,0.35) 0%, transparent 60%)`
         }} />
 
-        {/* Triangle SVG — behind content */}
-        <svg viewBox="0 0 400 360" style={{
+        {/* Triangle SVG — behind content, hidden on mobile */}
+        <svg className="hero-triangle" viewBox="0 0 400 360" style={{
           position: 'absolute', right: '4%', top: '50%', transform: 'translateY(-50%)',
           width: 560, height: 500, opacity: 0.25, pointerEvents: 'none',
           filter: 'drop-shadow(0 0 80px rgba(228,187,124,0.18))'
@@ -66,7 +87,7 @@ export default function HomePage() {
 
         <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           {/* Eyebrow */}
-          <div style={{
+          <div className="hero-eyebrow" style={{
             fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--gold)',
             letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: 28, fontWeight: 500
           }}>
@@ -74,7 +95,7 @@ export default function HomePage() {
           </div>
 
           {/* Title */}
-          <h1 style={{
+          <h1 className="hero-title" style={{
             fontFamily: 'var(--font-serif)', fontSize: 'clamp(56px, 9vw, 96px)',
             fontWeight: 300, color: 'var(--text)', margin: '0 0 24px',
             letterSpacing: '-2px', lineHeight: 1.05
@@ -83,7 +104,7 @@ export default function HomePage() {
           </h1>
 
           {/* Subtitle */}
-          <p style={{
+          <p className="hero-subtitle" style={{
             fontFamily: 'var(--font-body)', fontSize: 'clamp(19px, 2.4vw, 26px)',
             color: 'var(--text-muted)', margin: '0 0 64px', maxWidth: 680,
             lineHeight: 1.75, fontWeight: 300
@@ -92,7 +113,7 @@ export default function HomePage() {
           </p>
 
           {/* Stats */}
-          <div style={{
+          <div className="hero-stats" style={{
             display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
             borderTop: '1px solid rgba(228,187,124,0.2)',
             borderBottom: '1px solid rgba(228,187,124,0.2)',
@@ -104,16 +125,16 @@ export default function HomePage() {
               ['16', 'Papers'],
               ['3', 'Attack Vectors']
             ].map(([num, label], i) => (
-              <div key={i} style={{
+              <div key={i} className={`hero-stat-divider-${i}`} style={{
                 textAlign: 'center',
                 borderRight: i < 3 ? '1px solid rgba(228,187,124,0.2)' : 'none',
                 padding: '0 16px'
               }}>
-                <div style={{
+                <div className="hero-stat-num" style={{
                   fontFamily: 'var(--font-serif)', fontSize: 52, fontWeight: 300,
                   color: 'var(--gold)', marginBottom: 10, letterSpacing: '1px', lineHeight: 1
                 }}>{num}</div>
-                <div style={{
+                <div className="hero-stat-label" style={{
                   fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)',
                   letterSpacing: '0.12em', textTransform: 'uppercase'
                 }}>{label}</div>
@@ -122,7 +143,7 @@ export default function HomePage() {
           </div>
 
           {/* CTA Buttons */}
-          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+          <div className="hero-buttons" style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
             <Link to="/demos" style={{ textDecoration: 'none' }}>
               <button style={{
                 fontFamily: 'var(--font-serif)', fontSize: 17, padding: '18px 48px',
@@ -150,10 +171,10 @@ export default function HomePage() {
       </section>
 
       {/* ════════ BODY CONTENT ════════ */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 48px' }}>
+      <div className="body-content" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 48px' }}>
 
         {/* ── Falsification Cards ── */}
-        <section style={{ margin: '100px 0' }}>
+        <section className="body-section" style={{ margin: '100px 0' }}>
           <div style={{ height: 2, background: 'linear-gradient(90deg, transparent, var(--gold), transparent)', marginBottom: 64 }} />
 
           <SectionTitle
@@ -191,7 +212,7 @@ export default function HomePage() {
         </section>
 
         {/* ── Featured Flagships ── */}
-        <section style={{ margin: '100px 0' }}>
+        <section className="body-section" style={{ margin: '100px 0' }}>
           <SectionTitle
             title="Featured Flagships"
             subtitle="Master-grade demos spanning foundations, standard model, cosmology, and beyond"
@@ -226,11 +247,11 @@ export default function HomePage() {
         </section>
 
         {/* ── Philosophy banner ── */}
-        <section style={{
+        <section className="philosophy-banner body-section" style={{
           background: 'linear-gradient(135deg, rgba(26,26,46,0.5) 0%, rgba(22,33,62,0.5) 50%, rgba(15,52,96,0.5) 100%)',
           borderLeft: '4px solid var(--gold)', padding: '72px 64px', margin: '100px 0'
         }}>
-          <h2 style={{
+          <h2 className="philosophy-title" style={{
             fontFamily: 'var(--font-serif)', fontSize: 'clamp(38px, 5vw, 60px)',
             fontWeight: 300, color: 'var(--gold)', margin: '0 0 56px',
             lineHeight: 1.15, fontStyle: 'italic', letterSpacing: '-0.5px'
@@ -253,7 +274,7 @@ export default function HomePage() {
         </section>
 
         {/* ── Final CTA ── */}
-        <section style={{ textAlign: 'center', margin: '100px 0 80px' }}>
+        <section className="body-section" style={{ textAlign: 'center', margin: '100px 0 80px' }}>
           <div style={{ height: 2, background: 'linear-gradient(90deg, transparent, var(--gold), transparent)', marginBottom: 64 }} />
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(34px, 5vw, 52px)', fontWeight: 300, color: 'var(--text)', margin: '0 0 20px', letterSpacing: '-0.5px' }}>
             Ready to explore?
