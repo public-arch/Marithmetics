@@ -3,6 +3,7 @@ import Card from '../components/Card';
 import Badge from '../components/Badge';
 import SectionTitle from '../components/SectionTitle';
 import MathBlock from '../components/MathBlock';
+import AudioPlayer from '../components/AudioPlayer';
 import demos from '../data/demos.json';
 import { getCategoryLabel } from '../utils/categories';
 
@@ -123,6 +124,15 @@ export default function DemoDetail() {
         }}>
           {demo.description}
         </p>
+      </div>
+
+      {/* Audio Overview Section */}
+      <div style={{ marginBottom: 48 }}>
+        <AudioPlayer
+          src={`/audio/demo-${demo.id.split('-')[1]}.wav`}
+          title="Audio Overview"
+          demoId={demo.id}
+        />
       </div>
 
       {/* Falsification Gates Section */}
