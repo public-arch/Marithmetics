@@ -1,0 +1,114 @@
+[
+  {
+    "id": "deterministic-operator-calculus",
+    "title": "Deterministic Operator Calculus",
+    "discipline": "governance",
+    "filename": "Deterministic Operator Calculus.pdf",
+    "path": "00 - Governance/Deterministic Operator Calculus.pdf"
+  },
+  {
+    "id": "gov-omega",
+    "title": "GOV Omega",
+    "discipline": "governance",
+    "filename": "GOV Omega.pdf",
+    "path": "00 - Governance/GOV Omega.pdf"
+  },
+  {
+    "id": "ph-0-audit-standard",
+    "title": "PH-0 - Audit-Standard",
+    "discipline": "governance",
+    "filename": "PH-0 - Audit-Standard.pdf",
+    "path": "00 - Governance/PH-0 - Audit-Standard.pdf"
+  },
+  {
+    "id": "deterministic-operator-calculus-1",
+    "title": "Deterministic Operator Calculus",
+    "discipline": "number_theory",
+    "filename": "Deterministic Operator Calculus.pdf",
+    "path": "01 - Number Theory/Deterministic Operator Calculus.pdf"
+  },
+  {
+    "id": "foundations-mari-foundations-authority-compendium",
+    "title": "FOUNDATIONS - MARI Foundations \u2014 Authority Compendium",
+    "discipline": "number_theory",
+    "filename": "FOUNDATIONS - MARI Foundations \u2014 Authority Compendium.pdf",
+    "path": "01 - Number Theory/FOUNDATIONS - MARI Foundations \u2014 Authority Compendium.pdf"
+  },
+  {
+    "id": "nt-0-cross-base-substrate-entry",
+    "title": "NT-0 - Cross-Base-Substrate-Entry",
+    "discipline": "number_theory",
+    "filename": "NT-0 - Cross-Base-Substrate-Entry.pdf",
+    "path": "01 - Number Theory/NT-0 - Cross-Base-Substrate-Entry.pdf"
+  },
+  {
+    "id": "nt-1-authority-on-drpts",
+    "title": "NT-1 - Authority on DRPTS",
+    "discipline": "number_theory",
+    "filename": "NT-1 - Authority on DRPTS.pdf",
+    "path": "01 - Number Theory/NT-1 - Authority on DRPTS.pdf"
+  },
+  {
+    "id": "nt-2-symmetry-constrained-fixed-point-scfp-selection",
+    "title": "NT-2 - Symmetry-Constrained Fixed-Point (SCFP) Selection",
+    "discipline": "number_theory",
+    "filename": "NT-2 - Symmetry-Constrained Fixed-Point (SCFP) Selection.pdf",
+    "path": "01 - Number Theory/NT-2 - Symmetry-Constrained Fixed-Point (SCFP) Selection.pdf"
+  },
+  {
+    "id": "nt-3-scfp-fixed-point-selection-engine-referee-ready-version",
+    "title": "NT-3 - SCFP++ Fixed-Point Selection Engine \u2014 Referee-Ready Version",
+    "discipline": "number_theory",
+    "filename": "NT-3 - SCFP++ Fixed-Point Selection Engine \u2014 Referee-Ready Version.pdf",
+    "path": "01 - Number Theory/NT-3 - SCFP++ Fixed-Point Selection Engine \u2014 Referee-Ready Version.pdf"
+  },
+  {
+    "id": "nt-4-complete-mari-number-taxonomy",
+    "title": "NT-4 - Complete MARI Number Taxonomy",
+    "discipline": "number_theory",
+    "filename": "NT-4 - Complete MARI Number Taxonomy.pdf",
+    "path": "01 - Number Theory/NT-4 - Complete MARI Number Taxonomy.pdf"
+  },
+  {
+    "id": "nt-5-definitive-authority-universal-invariant-template",
+    "title": "NT-5 - \u03a6 Definitive Authority \u2014 Universal Invariant Template",
+    "discipline": "number_theory",
+    "filename": "NT-5 - \u03a6 Definitive Authority \u2014 Universal Invariant Template.pdf",
+    "path": "01 - Number Theory/NT-5 - \u03a6 Definitive Authority \u2014 Universal Invariant Template.pdf"
+  },
+  {
+    "id": "ph-1-mari-electromagnetic-field-theory",
+    "title": "PH-1 - MARI Electromagnetic Field Theory",
+    "discipline": "physics",
+    "filename": "PH-1 - MARI Electromagnetic Field Theory.pdf",
+    "path": "02 - Physics/PH-1 - MARI Electromagnetic Field Theory.pdf"
+  },
+  {
+    "id": "ph-2-mari-cross-base-physical-constants-definitive-authority-reproducible-in-any-base",
+    "title": "PH-2 - MARI \u2014 Cross-Base Physical Constants - Definitive Authority (Reproducible in Any Base)",
+    "discipline": "physics",
+    "filename": "PH-2 - MARI \u2014 Cross-Base Physical Constants - Definitive Authority (Reproducible in Any Base).pdf",
+    "path": "02 - Physics/PH-2 - MARI \u2014 Cross-Base Physical Constants - Definitive Authority (Reproducible in Any Base).pdf"
+  },
+  {
+    "id": "ph-3-mari-theoretical-predictions-authority-document",
+    "title": "PH-3 - MARI Theoretical Predictions - Authority Document",
+    "discipline": "physics",
+    "filename": "PH-3 - MARI Theoretical Predictions - Authority Document.pdf",
+    "path": "02 - Physics/PH-3 - MARI Theoretical Predictions - Authority Document.pdf"
+  },
+  {
+    "id": "ph-4-mari-phase-1-4-classical-bridge-validation",
+    "title": "PH-4 - MARI Phase 1-4 Classical Bridge Validation",
+    "discipline": "physics",
+    "filename": "PH-4 - MARI Phase 1-4 Classical Bridge Validation.pdf",
+    "path": "02 - Physics/PH-4 - MARI Phase 1-4 Classical Bridge Validation.pdf"
+  },
+  {
+    "id": "gum-report-v32-2026-02-09-04-27-46z",
+    "title": "GUM_Report_v32_2026-02-09_04-27-46Z",
+    "discipline": "authority",
+    "filename": "GUM_Report_v32_2026-02-09_04-27-46Z.pdf",
+    "path": "03 - Authority Record/GUM_Report_v32_2026-02-09_04-27-46Z.pdf"
+  }
+]
