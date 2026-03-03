@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function AudioPlayer({ src, title = 'Audio Overview', demoId }) {
   const audioRef = useRef(null);
@@ -9,8 +9,7 @@ export default function AudioPlayer({ src, title = 'Audio Overview', demoId }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [activeSrc, setActiveSrc] = useState(null);
-  const triedFormats = useRef(new Set());
+  const [activeSrc, setActiveSrc] = useState(src || null);
 
   const formatTime = (time) => {
     if (!time || isNaN(time)) return '0:00';
@@ -54,31 +53,15 @@ export default function AudioPlayer({ src, title = 'Audio Overview', demoId }) {
     }
   };
 
-  // Try multiple audio formats: m4a first, then wav, then mp3
-  const getAudioFormats = useCallback(() => {
-    if (!src) return [];
-    const base = src.replace(/\.[^.]+$/, '');
-    return [`${base}.m4a`, `${base}.wav`, `${base}.mp3`];
+  useEffect(() => {
+    setActiveSrc(src || null);
+    setHasError(false);
+    setIsLoaded(false);
   }, [src]);
 
-  useEffect(() => {
-    const formats = getAudioFormats();
-    if (formats.length > 0 && !activeSrc) {
-      triedFormats.current.clear();
-      setActiveSrc(formats[0]);
-    }
-  }, [src, getAudioFormats, activeSrc]);
-
   const handleError = () => {
-    const formats = getAudioFormats();
-    triedFormats.current.add(activeSrc);
-    const next = formats.find(f => !triedFormats.current.has(f));
-    if (next) {
-      setActiveSrc(next);
-    } else {
-      setHasError(true);
-      setIsLoaded(false);
-    }
+    setHasError(true);
+    setIsLoaded(false);
   };
 
   const handleProgressClick = (e) => {
@@ -268,7 +251,7 @@ export default function AudioPlayer({ src, title = 'Audio Overview', demoId }) {
         </div>
       )}
 
-      {/* Hidden audio element — tries m4a, wav, mp3 */}
+      {/* Hidden audio element */}
       {activeSrc && (
         <audio
           ref={audioRef}
