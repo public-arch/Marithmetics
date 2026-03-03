@@ -11,7 +11,7 @@ const FEATURED_DEMO_IDS = ['demo-34', 'demo-36', 'demo-37', 'demo-70'];
 const mobileCSS = `
 @media (max-width: 768px) {
   .hero-section { padding: 80px 20px 60px !important; }
-  .hero-triangle { display: none !important; }
+  .hero-dimensionless { display: none !important; }
   .hero-eyebrow { font-size: 10px !important; letter-spacing: 0.15em !important; margin-bottom: 16px !important; }
   .hero-title { font-size: 48px !important; letter-spacing: -1px !important; }
   .hero-subtitle { font-size: 17px !important; margin-bottom: 36px !important; }
@@ -49,42 +49,29 @@ export default function HomePage() {
                        radial-gradient(ellipse 60% 80% at 85% 20%, rgba(15,52,96,0.35) 0%, transparent 60%)`
         }} />
 
-        {/* Triangle SVG — behind content, hidden on mobile */}
-        <svg className="hero-triangle" viewBox="0 0 400 360" style={{
-          position: 'absolute', right: '4%', top: '50%', transform: 'translateY(-50%)',
-          width: 560, height: 500, opacity: 0.25, pointerEvents: 'none',
-          filter: 'drop-shadow(0 0 80px rgba(228,187,124,0.18))'
+        {/* Dimensionless callout — right side, hidden on mobile */}
+        <div className="hero-dimensionless" style={{
+          position: 'absolute', right: '5%', top: '50%', transform: 'translateY(-50%)',
+          pointerEvents: 'none', textAlign: 'right', opacity: 0.9
         }}>
-          <defs>
-            <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="rgba(228,187,124,0.3)" />
-              <stop offset="100%" stopColor="rgba(228,187,124,0)" />
-            </radialGradient>
-            <radialGradient id="glowPulse" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="rgba(228,187,124,0.45)" />
-              <stop offset="60%" stopColor="rgba(228,187,124,0.12)" />
-              <stop offset="100%" stopColor="rgba(228,187,124,0)" />
-            </radialGradient>
-            <linearGradient id="triFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="rgba(228,187,124,0.08)" />
-              <stop offset="100%" stopColor="rgba(228,187,124,0.02)" />
-            </linearGradient>
-          </defs>
-          <circle cx="200" cy="180" r="180" fill="url(#glow)" />
-          {/* Breathing pulse layer */}
-          <circle cx="200" cy="180" r="200" fill="url(#glowPulse)" opacity="0">
-            <animate attributeName="opacity" values="0;0.6;0" dur="7s" repeatCount="indefinite" calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1" />
-          </circle>
-          <polygon points="200,30 350,280 50,280" fill="url(#triFill)" stroke="#e4bb7c" strokeWidth="2.5" />
-          <text x="200" y="18" textAnchor="middle" fill="#e4bb7c" fontSize="22" fontWeight="bold" fontFamily="'JetBrains Mono', monospace">137</text>
-          <text x="358" y="298" textAnchor="start" fill="#e4bb7c" fontSize="22" fontWeight="bold" fontFamily="'JetBrains Mono', monospace">107</text>
-          <text x="42" y="298" textAnchor="end" fill="#e4bb7c" fontSize="22" fontWeight="bold" fontFamily="'JetBrains Mono', monospace">103</text>
-          <circle cx="200" cy="180" r="5" fill="#e4bb7c" />
-          <circle cx="200" cy="180" r="9" fill="none" stroke="#e4bb7c" strokeWidth="1.5" opacity="0.5" />
-          <line x1="200" y1="30" x2="200" y2="180" stroke="#e4bb7c" strokeWidth="1.5" strokeDasharray="5" opacity="0.6" />
-          <line x1="350" y1="280" x2="200" y2="180" stroke="#e4bb7c" strokeWidth="1.5" strokeDasharray="5" opacity="0.6" />
-          <line x1="50" y1="280" x2="200" y2="180" stroke="#e4bb7c" strokeWidth="1.5" strokeDasharray="5" opacity="0.6" />
-        </svg>
+          <div style={{
+            fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--gold)',
+            textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: 16, opacity: 0.7
+          }}>Dimensionless</div>
+          <div style={{
+            fontFamily: 'var(--font-serif)', fontSize: 'clamp(72px, 8vw, 120px)',
+            fontWeight: 200, color: 'var(--gold)', lineHeight: 1, letterSpacing: '-2px',
+            opacity: 0.2, textShadow: '0 0 60px rgba(228,187,124,0.15)'
+          }}>
+            α⁻¹
+          </div>
+          <div style={{
+            fontFamily: 'var(--font-mono)', fontSize: 28, color: 'var(--gold)',
+            opacity: 0.35, marginTop: 8, fontWeight: 300, letterSpacing: '1px'
+          }}>
+            = 137
+          </div>
+        </div>
 
         <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           {/* Eyebrow */}
@@ -92,7 +79,7 @@ export default function HomePage() {
             fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--gold)',
             letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: 28, fontWeight: 500
           }}>
-            Deterministic Integer-to-Physics Emergence
+            Dimensionless · Deterministic · Falsifiable
           </div>
 
           {/* Title */}
@@ -110,7 +97,7 @@ export default function HomePage() {
             color: 'var(--text-muted)', margin: '0 0 64px', maxWidth: 680,
             lineHeight: 1.75, fontWeight: 300
           }}>
-            Deriving the fine-structure constant, particle mass ratios, and Standard Model structure from pure integer geometry — zero free parameters, zero curve-fitting, fully falsifiable.
+            Every prediction is a dimensionless ratio — no units, no scale choices, no human conventions. The fine-structure constant, particle mass ratios, and Standard Model structure emerge from pure integer arithmetic. Zero free parameters.
           </p>
 
           {/* Stats */}
@@ -122,7 +109,7 @@ export default function HomePage() {
           }}>
             {[
               ['0', 'Free Parameters'],
-              ['29', 'Deterministic Demos'],
+              ['28', 'Deterministic Demos'],
               ['16', 'Papers'],
               ['3', 'Attack Vectors']
             ].map(([num, label], i) => (
@@ -292,7 +279,7 @@ export default function HomePage() {
             }}
             onMouseEnter={e => { e.target.style.boxShadow = '0 8px 32px rgba(228,187,124,0.35)'; e.target.style.transform = 'translateY(-2px)'; }}
             onMouseLeave={e => { e.target.style.boxShadow = 'none'; e.target.style.transform = 'translateY(0)'; }}
-            >View all 29 demos</button>
+            >View all 28 demos</button>
           </Link>
         </section>
       </div>
