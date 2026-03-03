@@ -310,7 +310,7 @@ export default function DemoDetail() {
       {/* Audio Overview Section */}
       <div style={{ marginBottom: 56 }}>
         <AudioPlayer
-          src={`https://github.com/public-arch/Marithmetics/releases/download/audio-v1/demo-${demo.id.split('-')[1]}.m4a`}
+          src={`/audio/demo-${demo.id.split('-')[1]}.m4a`}
           title="Audio Overview"
           demoId={demo.id}
         />
