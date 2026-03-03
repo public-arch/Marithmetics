@@ -76,7 +76,7 @@ export default function SiteHeader() {
           target="_blank"
           rel="noopener noreferrer"
           style={{
-            display: 'flex', alignItems: 'center', padding: '18px 24px',
+            display: 'flex', alignItems: 'center', padding: '18px 12px',
             color: 'var(--text-muted)', transition: 'color 0.2s', flexShrink: 0
           }}
           onMouseEnter={e => e.currentTarget.style.color = 'var(--gold)'}
