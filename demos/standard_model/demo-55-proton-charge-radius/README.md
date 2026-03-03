@@ -1,69 +1,42 @@
 # DEMO-55 — Proton Charge Radius (from substrate selection)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** A deterministic first-principles audit selects the unique SCFP triple (wU, s2, s3) = (137, 107, 103), derives αₛ(MZ) = 2/q₃, computes Λ₅ via 2-loop MS-bar scheme, and maps to proton rms charge radius r_p = 0.8430 fm via fixed dressing r_p = (ℏc/Λ₅) × √(1/(1+αₛ)), achieving <1% agreement with experimental r_p = 0.84075 fm with no tuning.
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-55-proton-charge-radius-from-substrate-selection.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+A zero-knob, zero-tuning, first-principles audit:
+- Deterministic SCFP triple selection in primary prime window (97..180) → unique (wU, s2, s3) = (137, 107, 103).
+- Derive αₛ(MZ) = 2/q₃ = 2/17 from the selected triple.
+- QCD scale Λ₅ via fixed 2-loop MS-bar scheme (nf = 5, μ = MZ = 91.03 GeV): Λ₅(2-loop) ≈ 0.2214 GeV.
+- Proton rms charge radius mapping: r_p = (ℏc/Λ₅) × √(1/(1+αₛ(MZ))) = 0.8430 fm.
+- Evaluation-only comparison with CODATA 2022 reference r_p = 0.84075 fm; relative error +0.27%.
+- Counterfactual admissible triples (alternative windows) all fail radius gate (ratio > 1.2 or < 0.8).
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-55' | head -n 1)"
-```
+## Falsification contract
 
-**Teeth (what to check):** the reference run prints, among other lines:
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Primary triple must equal (137, 107, 103).
+5. Primary proton radius must be within 1% of reference (rel_err ≤ 0.01).
+6. All counterfactual triples must miss radius band [0.8, 1.2] × r_p_ref (strong_misses ≥ 6/6).
 
-```text
-r_p(2-loop Lambda_5) = 0.8430139282 fm
-```
+## Controls
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+- **Illegal operators:** None tested (this is a QCD scale audit, not a field-solver demo).
+- **Counterfactuals:** Alternative triples from extended window (277, 263, 239), (307, 263, 239), (311, 263, 239), etc.; all must miss radius band [0.8×r_p_ref, 1.2×r_p_ref].
+- **Ablations:** 1-loop Λ₅ as comparison (expected to overestimate r_p by factor ~2.58).
 
-## Premise
+## Dependencies
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+Python 3.9+ with standard library only (no third-party packages).
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
-
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
-
-
-## Scope (what this demo claims)
-
-> DEMO 55 - Proton Charge Radius from Substrate Selection
-
-> Purpose
-> -------
-> A zero-knob, zero-tuning, first-principles audit that:
->   1) selects the unique SCFP triple in the primary prime window (97..180),
->   2) derives alpha_s(MZ) from the selected triple,
->   3) computes the QCD scale Lambda_5 in a fixed 2-loop MS-bar scheme (nf=5, mu=MZ),
->   4) maps Lambda_5 to the proton rms charge radius via a fixed dressing factor,
->   5) falsifies via counterfactual admissible triples under a reduced gate set.
-
-> Notes
-> -----
-> - No file I/O is required.
-> - Any external reference values are evaluation-only and do not affect selection.
-> - This script is designed to run on minimal Python installs (math/json/hashlib/time/platform).
-
-## Run instructions
-
-- Dependencies: Stdlib-only (no third-party packages).
-
-- Install (recommended):
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-55-proton-charge-radius-from-substrate-selection.py
+python demo.py
 ```
 
 ## Pass/Fail contract (gates)

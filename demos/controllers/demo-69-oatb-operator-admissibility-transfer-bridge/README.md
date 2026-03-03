@@ -1,73 +1,73 @@
 # DEMO-69 — OATB Master Flagship (Operator Admissibility Transfer Bridge)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** Deterministic selection of triple (wU, s2, s3) = (137, 107, 103) yields budgets; Fejér triangle multipliers are nonnegative, DC-preserving, exhibit UFET K(r) witness (~2/3 across budgets); sharp-transfer vs lawful-transfer on discontinuity shows lawful matches truth within eps while illegal creates Gibbs overshoot and negative density; same admissible operator resolves paradox pack (finite↔continuum, measure, quantum collapse); Ω reuse across PDEs (3D/4D heat, 4D Helmholtz NS); counterfactual triples degrade all observables by fixed eps margin.
 
-## Falsify (run this)
+---
+
+## What this demo computes
+
+First-principles deterministic audit:
+- Deterministic selection: unique triple (137, 107, 103) via lane rules; counterfactual triples from extended window.
+- Budget derivation: eps = 1/√q2; N, K from triple invariants.
+
+Stage 1 (OATB kernel contract):
+- Fejér triangle multipliers nonnegative (min ≥ tol).
+- DC preservation: H_min ≈ 1/(r+1) and DC = 1 at radii r = 8, 16, 32.
+- UFET K(r) witness: spread ≤ 1%, mean K(r) ≈ 2/3 (±2%).
+- Sharp/signed kernels have negative lobes (illegal).
+- Signed retains large HF weight (hf ≥ 0.25).
+
+Stage 2 (Sharp-transfer vs lawful-transfer on discontinuity):
+- Fejér distance vs truth ≤ eps.
+- Illegal filters exhibit Gibbs overshoot (Fejér does not).
+- Fejér preserves nonnegativity (min ≥ tol); illegal creates negative undershoot (≤ -eps²).
+- Counterfactual budget reduction degrades by (1+eps).
+
+Stage 3 (Paradox pack resolution):
+- Zeno partial sum (geometric series) ≈ 1 (err ≤ 1e-9).
+- Grandi Cesàro (harmonic oscillation) ≈ 1/2 (exact).
+- Same admissible operator class handles all three paradoxes.
+
+Stage 4 (Ω reuse across PDEs):
+- 3D heat controller: mass preserved, HF error suppressed, better tracking than baseline.
+- 4D heat controller: same admissibility + mass preservation.
+- 4D NS-like vector field: Helmholtz projection + Ω admissibility → incompressibility maintained.
+
+Stage 5 (Cross-base invariance + non-ubiquity):
+- Rosetta-style: selector invariant across bases (base-7, base-10, base-16).
+- Rigidity scan confirms non-ubiquity (uniqueness not generic).
+
+## Falsification contract
+
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Primary triple must equal (137, 107, 103).
+5. Fejér kernel nonnegative (min ≥ tol).
+6. UFET spread ≤ 1%, mean K(r) ≈ 2/3.
+7. Fejér distance to truth ≤ eps.
+8. Illegal overshoot ≥ eps² (Fejér does not overshoot).
+9. Illegal creates negative density; Fejér does not.
+10. Counterfactual budget reduction degrades by (1+eps).
+11. Paradox sums resolve within specified bounds.
+12. Heat/NS controllers preserve mass and maintain expected properties.
+13. Cross-base invariance confirmed; non-ubiquity via rigidity.
+
+## Controls
+
+- **Illegal operators:** Sharp spectral cutoff (negative kernel lobes), signed HF complement (stronger lobes); tested across kernel contract, discontinuity transfer, and all PDE suites.
+- **Counterfactuals:** Alternative triples with same selection rules, different budgets; must degrade distance/errors by (1+eps) across all stages.
+- **Ablations:** Rigidity scan (fixed rules, extended window) confirms non-ubiquity.
+
+## Dependencies
+
+Python 3.10+ with NumPy. Matplotlib optional (only for PNG output).
+
+## Run
 
 ```bash
-python incoming/demo-69-oatb-master-flagship-operator-admissibility-transfer-bridge.py
-```
-
-If you renamed files, locate by demo number:
-
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-69' | head -n 1)"
-```
-
-**Teeth (what to check):** the reference run prints, among other lines:
-
-```text
-Result: VERIFIED
-```
-
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
-
-## Premise
-
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
-
-- **Deterministic.** No randomness; no network; no hidden configuration.
-
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
-
-
-## Scope (what this demo claims)
-
-> DEMO-69 — OATB MASTER FLAGSHIP (Operator Admissibility Transfer Bridge)
-
-> What this flagship does (first principles, deterministic; no tuning):
->   1) Selects the unique primary triple (137,107,103) via lane rules, plus deterministic counterfactuals.
->   2) Proves the OATB kernel contract: Fejér triangle multipliers are nonnegative, DC-preserving,
->      and exhibit the UFET near-constant K(r) witness (~2/3) across budgets.
->   3) Demonstrates sharp-transfer vs lawful-transfer on a discontinuity:
->        - lawful (Fejér) matches truth within eps and preserves nonnegativity
->        - illegal (sharp/signed) creates Gibbs overshoot and negative density
->        - counterfactual budget reduction degrades accuracy ("teeth")
->   4) Resolves a paradox pack (finite↔continuum + measure + quantum collapse) with the *same* admissible
->      operator class; illegal operators are forced to violate legality.
->   5) Shows Ω reuse across PDEs:
->        - 3D heat controller (mass preserved + HF error suppressed + better tracking)
->        - 4D heat controller (same)
->        - 4D NS-like vector-field controller (Helmholtz projection + Ω admissibility → incompressibility)
->   6) Proves cross-base invariance of the selector (Rosetta-style) and non-ubiquity via rigidity scan.
-
-> Outputs:
->   - Full gate transcript (PASS/FAIL)
-
-## Run instructions
-
-- Dependencies: Python 3.10+ plus `matplotlib`, `numpy`.
-
-- Install (recommended):
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-69-oatb-master-flagship-operator-admissibility-transfer-bridge.py
+python demo.py
+python demo.py --full  # Larger PDE controller steps (slower)
 ```
 
 ## Pass/Fail contract (gates)

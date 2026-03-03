@@ -1,73 +1,50 @@
 # DEMO-58 — Emergent Weak-Field General Relativity (Poisson / Shapiro / redshift)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** Deterministic selection of triple (wU, s2, s3) = (137, 107, 103) yields budgets (eps, N, K_primary, K_truth); exact FFT-based discrete Poisson solver on 3D periodic lattice shows weak-field observables (Newtonian slope |g(r)| ~ 1/r², light-bending α(b) ~ 1/b, Shapiro delay D(b) ~ ln(b), redshift Φ(r) ~ 1/r) are recovered by admissible Fejér operator but corrupted by illegal controls, with counterfactual triples degrading by fixed eps margin.
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-58-emergent-weak-field-general-relativity-poisson-shapiro-redshift.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+Pipeline (all deterministic):
+- Deterministic selection: unique prime triple (wU, s2, s3) = (137, 107, 103) via fixed congruence, totient-density, and 2-adic rules.
+- Budget derivation: eps = 1/√q2 ≈ 0.1826; N (grid size), K_primary (primary cutoff), K_truth (truth cutoff) from triple invariants.
+- Discrete Poisson solver: solve ΔΦ = ρ on 3D periodic lattice using exact FFT eigenvalues of discrete Laplacian.
+- Operator comparison on Φ̂ (Fourier domain):
+  - Admissible: Fejér triangle weights → nonnegative real-space kernel.
+  - Illegal: sharp spectral cutoff (negative kernel lobes), signed HF injection (stronger lobes).
+- Weak-field observables extracted from Φ:
+  - Newtonian limit: |g(r)| ~ 1/r² slope recovery (truth slope ≈ -2.01, admissible ≈ -1.94).
+  - Light bending: α(b) ~ 1/b affine fit (truth R² > 0.98, admissible R² > 0.95).
+  - Shapiro delay: D(b) ~ ln(b) affine fit (truth R² > 0.99, admissible R² > 0.99).
+  - Redshift: Φ(r) ~ 1/r shell-mean fits (truth R² > 0.99, admissible R² > 0.99).
+- Counterfactual teeth: alternative triples (same rules, larger window) must degrade slopes and fits by (1+eps) margin.
+- Illegal controls must inject HF or increase ringing curvature beyond admissible.
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-58' | head -n 1)"
-```
+## Falsification contract
 
-**Teeth (what to check):** the reference run prints, among other lines:
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Admissible slopes/fits must be near-truth within eps tolerance.
+5. Illegal controls must have stronger ringing curvature than admissible.
+6. Counterfactual triples must degrade by (1+eps) in all observables.
+7. Residual contract: filtered Poisson residuals (truth vs admissible) must match.
 
-```text
-PASS  DEMO-58 VERIFIED (weak-field suite: scaling + operator falsifiers + teeth)
-```
+## Controls
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+- **Illegal operators:** Sharp spectral cutoff (Gate N2, N3, N4), signed HF injection (Gate N3, N4) with negative kernel lobes; tested across all observable suites (Newtonian/N, light-bending/B, Shapiro/S, redshift/R).
+- **Counterfactuals:** Alternative triples from extended window; must degrade all slopes/fits by (1+eps).
+- **Ablations:** Truth-tier (higher K_truth) provides reference without external data.
 
-## Premise
+## Dependencies
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+Python 3.10+ with NumPy.
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
-
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
-
-
-## Scope (what this demo claims)
-
-> DEMO-58 — Emergent Weak-Field General Relativity from a Discrete Poisson Substrate
-> Master Flagship Demo (Referee-Ready)
-
-> Summary
-> -------
-> This is a deterministic, first-principles computational audit. It does not fit parameters and does
-> not tune thresholds.
-
-> Pipeline (all deterministic):
->   1) Select a unique prime triple (wU, s2, s3) in a fixed primary window via fixed congruence,
->      totient-density, and 2-adic rules (no external input).
->   2) Derive budgets (eps, N, K_primary, K_truth) deterministically from the selected triple.
->   3) Solve the discrete Poisson equation ΔΦ = ρ on a 3D periodic lattice using exact eigenvalues of
->      the discrete Laplacian (FFT diagonalization).
->   4) Apply three operator classes to Φ̂ (Fourier domain):
->        - Admissible: Fejér smoothing (nonnegative convolution kernel)
->        - Non-admissible control: sharp cutoff (kernel with negative lobes)
->        - Non-admissible control: signed HF injection (kernel with stronger negative lobes)
->   5) Extract weak-field observables from the same Φ:
->        - Newtonian limit: |g(r)| ~ 1/r^2
-
-## Run instructions
-
-- Dependencies: Python 3.10+ plus `numpy`.
-
-- Install (recommended):
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-58-emergent-weak-field-general-relativity-poisson-shapiro-redshift.py
+python demo.py
 ```
 
 ## Pass/Fail contract (gates)

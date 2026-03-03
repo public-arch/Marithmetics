@@ -1,9 +1,49 @@
 # Marithmetics
-**A deterministic, audit-grade pipeline for integer-to-physics emergence**
 
-**Narrative is not evidence. Execution is.**  
+**A deterministic pipeline that derives physical constants from integer structure alone.**
 
-This repository produces **Authority-of-Record (AoR)** bundles: it runs a deterministic demo suite, captures logs and artifacts, seals them into a cryptographic bundle, and generates the launch report from that bundle.
+This repository contains 28 self-auditing computational demos. Each one starts from the same integer triple — **(137, 107, 103)** — selected by number-theoretic admissibility gates with zero free parameters, and derives dimensionless physical observables: coupling constants, mass ratios, cosmological parameters, mixing matrices. No fitting. No tuning. No PDG data upstream.
+
+These are extraordinary claims. The entire architecture of this project exists to make them falsifiable.
+
+---
+
+## What this repository claims
+
+A single deterministic selector, operating on prime structure within the window [97, 180], produces a unique admissible triple. From that triple, through explicit algebraic channels with no adjustable parameters:
+
+| Domain | What is derived | Demo |
+|---|---|---|
+| **Electroweak** | α⁻¹ = 137 (exact), sin²θ_W = 7/30, α_s(M_Z) = 2/17 | DEMO-33, DEMO-34 |
+| **Standard Model** | 9 fermion masses, CKM/PMNS matrices, Γ_Z, v, M_Z, M_W | DEMO-33, DEMO-73 |
+| **QCD** | Λ_QCD (2-loop + 4-loop MS̄), proton charge radius | DEMO-37, DEMO-55 |
+| **Cosmology** | H₀, Ω_b, Ω_c, A_s, n_s, τ, ℓ₁ | DEMO-36 |
+| **General relativity** | Weak-field GR tests (bending, Shapiro, redshift, perihelion), vacuum energy | DEMO-68, DEMO-51 |
+| **Quantum gravity** | Discrete RG flow, screening witnesses, strong-field geometry | DEMO-66 |
+| **Quantum mechanics** | Probability-safe coarse graining, double-slit, dispersion | DEMO-60 |
+| **Navier–Stokes** | 3D Taylor–Green vortex benchmark under operator admissibility | DEMO-67 |
+| **Neutrino sector** | Absolute masses (m₁, m₂, m₃), Σm, m_β, m_ββ, CP phase | DEMO-75 |
+| **Higgs sector** | EW rational locks, UV critical coupling λ*, mode-ladder SU(2) lock | DEMO-70 |
+
+External datasets (Planck, CAMB, PDG) are used **only** as evaluation overlays. They never enter the derivation.
+
+---
+
+## How to break this
+
+Every demo ships its own falsification contract. But the fastest attacks on the framework are:
+
+**"This is numerology — it depends on base 10."**
+Run [DEMO-64](demos/substrate/demo-64-base-gauge-invariance-integer-selector/). The selector operates identically in bases 2, 7, 10, and 16. If the triple changes under re-encoding, the claim is dead.
+
+**"You tuned parameters to fit known values."**
+Every demo includes counterfactual triples (e.g., the 409-class). These are processed through the identical pipeline. If counterfactuals produce comparable closures, the method is fit-dependent. They do not. Counterfactual certification scores degrade by 6× or more.
+
+**"The operators are chosen to get the right answer."**
+Every demo with a spectral operator tests three classes: lawful (Fejér/Cesàro, nonnegative kernel), sharp cutoff (Gibbs artifacts), and signed high-frequency injection. If illegal operators perform as well as lawful ones, the admissibility logic is vacuous. They do not — illegal controls inject measurable artifacts across every domain.
+
+**"One triple is a coincidence."**
+The selector is not a search — it is a filter. In the primary window [97, 180], exactly one triple survives all gates. In the extended window [80, 1,000,000], still one. Drop any single gate and survivor counts explode from 1 to hundreds or thousands. The necessity of every constraint is demonstrated by ablation.
 
 ---
 
@@ -13,133 +53,104 @@ This repository produces **Authority-of-Record (AoR)** bundles: it runs a determ
 python -m audits.run_master_suite --verbosity full
 ```
 
+This runs all 28 demos, captures stdout/stderr, vendors artifacts, seals everything into a cryptographic **Authority-of-Record (AoR)** bundle, and generates the launch report from that bundle.
+
 What you should expect:
-- **Deterministic** results (same outputs across runs, within declared tolerances)
-- A sealed **AoR bundle** (logs, artifacts, tables, hashes)
+
+- **Deterministic** results — identical outputs across runs, within declared tolerances
+- A sealed **AoR bundle** with logs, artifacts, tables, and SHA-256 hashes
 - A generated **GUM launch report (v32 PDF)** built from the bundle
-- A master release zip for archival or upload
+- A master release zip for archival or independent verification
 
 ---
 
-## Trophy case: headline outputs (derived + certified)
+## Authority-of-Record (AoR)
 
-These are the “fast anchors” a referee can use to orient. Each row points to a demo whose certificate and evidence table are included in the report and AoR.
+After `run_master_suite` completes, the AoR is written to `gum/authority_archive/`. Each AoR folder contains:
 
-| Anchor | What you will see | Source |
-|---|---|---|
-| **Kernel bridge (Ω→SM)** | Cross-domain bridge proof showing coupled constraint flow | **DEMO-34** |
-| **Standard Model flagship** | Full structured export of Standard Model constants, closures, and certificates | **DEMO-33** |
-| **Weak mixing rational** | Exact rational anchor appears in certificate + exports | **DEMO-33** |
-| **Strong coupling rational** | Exact rational anchor appears in certificate + exports | **DEMO-37** |
-| **Cosmology closure** | Kernel-derived cosmology parameters + falsification gates | **DEMO-36** |
-| **Visual proof anchors** | Planck/CAMB overlay and QG screening witness (bundle artifacts) | **DEMO-36 / DEMO-66** |
-| **Base-gauge invariance** | Representation independence across bases (2/7/16) | **DEMO-64** |
-| **Counterfactual teeth** | Counterfactual triples fail under the same pipeline (fit-dependence test) | **Multiple** |
+- `GUM_BUNDLE_v30_.../` — tables, logs, vendored artifacts, hashes
+- `report/` — the launch report PDF + manifest
+- `claim_ledger.jsonl` — machine-readable claim ledger
+- `runner_transcript.txt` — full CLI transcript
+- `MARI_MASTER_RELEASE_*.zip` — portable frozen snapshot
 
-**Important:** External datasets (e.g., Planck/CAMB) are used strictly as **evaluation overlays**. They do not feed upstream selection.
+**The bundle hash** (`bundle_sha256.txt`) is what you cite. It is the immutable record.
 
 ---
 
-## Where the Authority-of-Record (AoR) lives
+## Verification protocol
 
-After `run_master_suite` completes, your AoR is written under:
+### Run the full suite and generate the AoR
 
-- `gum/authority_archive/`
+```bash
+python -m audits.run_master_suite --verbosity full
+```
 
-Only the canonical release AoR is kept in the release surface. Historical runs are archived under `zz_archive/`.
-
-
-Each AoR folder contains:
-- `GUM_BUNDLE_v30_.../` (tables, logs, vendored artifacts, hashes)
-- `report/` (the report PDF + manifest copied into the AoR)
-- `claim_ledger.jsonl` (machine-readable claim ledger)
-- `runner_transcript.txt` (full CLI transcript)
-- `MARI_MASTER_RELEASE_*.zip` (portable frozen snapshot)
-
-**Bundle hash (what you cite):**
-- `gum/authority_archive/.../GUM_BUNDLE_v30_.../bundle_sha256.txt`
-
----
-
-## Verification protocol (rebuild everything)
-
-### A) Build a fresh bundle (AoR) without running the full suite
+### Build a bundle without the full suite runner
 
 ```bash
 python -m audits.gum_bundle_v30 --outroot audits/results --vendor-artifacts --demos-root demos
 ```
 
-This produces a `GUM_BUNDLE_v30_*` directory containing:
-- `logs/` (stdout/stderr per demo)
-- `vendored_artifacts/` (images/json exported by demos, hashed)
-- `tables/` (index tables, falsification matrix, constants tables)
-- `bundle_sha256.txt` (the bundle seal)
-- `codepack/` (code snapshot for reproducibility)
-
-### B) Generate the report from a specific bundle
+### Generate the report from a specific bundle
 
 ```bash
 python gum/gum_report_generator_v32.py --bundle-dir /path/to/GUM_BUNDLE_v30_*
 ```
 
-### C) Generate the report from the latest AoR bundle
+### Run individual demos
 
 ```bash
-BUNDLE="$(ls -dt gum/authority_archive/*/GUM_BUNDLE_v30_* 2>/dev/null | head -n 1)"
-python gum/gum_report_generator_v32.py --bundle-dir "$BUNDLE"
-```
-
-### D) Drill into demos individually
-
-```bash
-python demos/bridge/demo-34-omega-sm-master-flagship-v1/demo.py
 python demos/standard_model/demo-33-first-principles-standard-model-sm28-closure/demo.py
+python demos/bridge/demo-34-omega-sm-master-flagship/demo.py
 python demos/cosmo/demo-36-big-bang-master-flagship/demo.py
 python demos/quantum_gravity/demo-66-quantum-gravity-master-flagship-v4/demo.py
 python demos/substrate/demo-64-base-gauge-invariance-integer-selector/demo.py
 ```
 
+Every demo is a single `demo.py` file. No hidden dependencies between demos. No shared state.
+
 ---
 
-## How to cite results (paper rewrite recipe)
+## How to cite
 
 For any claim, cite:
-1) **Demo ID** (e.g., DEMO-36)  
-2) **AoR bundle hash** (`bundle_sha256.txt`)  
-3) **Artifact/log path inside the bundle** (e.g., `vendored_artifacts/<slug>__*.png` or `logs/<slug>.out.txt`)  
-4) **File hash prefix** (as listed in the report evidence table, or recomputed from the AoR)
 
-This makes citations stable even as the repository evolves, because the AoR is the immutable record.
+1. **Demo ID** (e.g., DEMO-36)
+2. **AoR bundle hash** (`bundle_sha256.txt`)
+3. **Artifact path inside the bundle** (e.g., `vendored_artifacts/<slug>__*.png`)
+4. **File hash prefix** (as listed in the report evidence table)
+
+Citations are stable across repository evolution because the AoR is the immutable record.
 
 ---
 
 ## Repository layout
 
-- `demos/` — canonical demo suite (`demo.py` per demo folder)
-- `audits/` — AoR bundler + full suite runner
-- `gum/` — report generator (v32), report assets, AoR archive, reports folder
-- `atlas_substrate_visualization/` — interactive DRPT explorer
-- `publication_spine/` — canonical paper spine (governance, number-theory track, physics track)  
-  - DOC is intentionally duplicated for navigation while preserving the canonical DOC anchor path.
+```
+demos/                    28 canonical demos (demo.py per folder)
+audits/                   AoR bundler + full suite runner
+gum/                      Report generator (v32), AoR archive, report assets
+atlas_substrate_visualization/   Interactive DRPT explorer
+publication_spine/        Canonical paper spine (governance, number-theory, physics tracks)
+website/                  marithmetics.com source (Vite + React)
+```
 
 ---
 
-## Falsification guide (how to break this)
+## Design principles
 
-We invite skeptical review. The suite includes negative controls designed to make failure modes obvious.
+This is not a paper making a theoretical argument. It is an execution surface.
 
-**Attack: “This is just numerology / base-10 bias.”**  
-- **Defense:** run **DEMO-64** (base-gauge invariance). It repeats the derivation across bases (e.g., 2/7/16). If invariants do not hold across representations, the claim fails.
+Every demo in this suite follows the same discipline:
 
-**Attack: “You tuned parameters to fit the data.”**  
-- **Defense:** counterfactual teeth appear across the suite (e.g., 409-class triples). If counterfactuals produce comparable closures under the same pipeline, the method is fit-dependent. The certificates include these ablations and their fail margins.
-
-**Attack: “The operators are arbitrary.”**  
-- **Defense:** demos with admissibility contracts include illegal controls (sharp/signed kernels). If illegal operators perform as well as lawful admissible ones, the logic is flawed. See operator admissibility sections (e.g., DOC-adjacent demos and PDE/continuum tests).
+- **Claim first.** The demo declares what it will compute before it computes it.
+- **Zero upstream data.** No physical measurements enter the derivation. PDG/Planck/CAMB appear only in post-hoc evaluation overlays, clearly marked.
+- **Deterministic.** Every demo produces a SHA-256 hash of its outputs. Run it twice — if the hash changes, the demo is broken.
+- **Self-auditing.** Every demo prints PASS/FAIL gates. A single FAIL anywhere in the suite is a falsification event.
+- **Negative controls.** Illegal operators (sharp cutoff, signed kernels) and counterfactual triples (409-class) are tested through the same pipeline. If controls perform as well as the primary, the logic is vacuous.
+- **No narrative without execution.** If a claim appears in the README or the report, there is a demo that computes it and a gate that falsifies it.
 
 ---
 
-## Notes on scope
-
-- This is a **technical release** focused on reproducible evidence: demos, bundles, and a launch report.
-- Interpretive and theoretical papers are being rebuilt to cite the AoR produced by this suite (see `publication_spine/`).
+**Website:** [marithmetics.com](https://marithmetics.com)

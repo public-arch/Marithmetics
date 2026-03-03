@@ -1,73 +1,67 @@
 # DEMO-60 — Quantum Master Flagship (unitarity + controls)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** Deterministic selection of triple (wU, s2, s3) = (137, 107, 103) yields budgets (N, K, eps); admissible Fejér coarse-graining is positivity-preserving and mass-conserving on quantum densities, while illegal controls (sharp/signed) create negative undershoot, higher variation, and unitarity violation; counterfactual triples and cross-resolution ladder tiers degrade by fixed eps margin.
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-60-quantum-master-flagship-unitarity-controls.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+Deterministic referee-ready, first-principles audit:
+- Deterministic selection: unique prime triple (wU, s2, s3) = (137, 107, 103) via fixed rules.
+- Budget derivation: eps = 1/√q2 ≈ 0.1826; N, K from triple invariants.
+- Operator admissibility: Fejér spectral multiplier → nonnegative real-space kernel (positivity-preserving); sharp/signed → negative kernel lobes.
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-60' | head -n 1)"
-```
+Example E1 (Density admissibility on discontinuous top-hat):
+- Fejér preserves mass (|Δ| ≤ 1e-12) and nonnegativity (min ≥ -1e-12).
+- Illegal controls create negative undershoot (≤ -eps²).
+- Counterfactual budget reduction degrades TV variation by (1+eps).
 
-**Teeth (what to check):** the reference run prints, among other lines:
+Example E2 (Double-slit interference density):
+- Unitary spectral evolution: norm drift ≤ 1e-10.
+- Illegal control distortion ≥ (1+eps) × Fejér.
+- Counterfactual budgets degrade distortion by (1+eps).
 
-```text
-PASS  DEMO-60 VERIFIED (selection + admissibility + quantum suite + ladder + time-reversal + PDE benchmark)
-```
+PREWORK 60A (Cross-resolution ladder):
+- Two tiers (N=256, N=512) jointly stable under Parseval-like scaling invariant C = distortion × √K.
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+PREWORK 60B (Time-reversal stress test):
+- Forward-backward reversibility: return to initial state within machine precision.
+- Illegal operator breaks reversibility materially.
+- Counterfactual budgets degrade lawful distortion.
 
-## Premise
+PREWORK 60C (Quantum PDE: free Schrödinger):
+- Truth: exact spectral phase evolution.
+- Baseline FD2: finite-difference Laplacian + Crank-Nicolson stepping (expected to underperform).
+- Gate: FD baseline density error ≥ (1+eps) × Fejér measurement distortion.
+- Illegal filters distort more; counterfactual budgets degrade.
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+## Falsification contract
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Fejér mass preservation: |Δ| = 0.
+5. Fejér nonnegativity: min ≥ -1e-12.
+6. Illegal undershoot: undershoot ≤ -eps².
+7. Illegal TV increase: ≥ (1+eps) × Fejér.
+8. All counterfactual tiers must degrade by (1+eps).
+9. Reversibility gates must pass (time-reversal error recovery).
+10. FD baseline must be worse than Fejér by (1+eps).
 
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
+## Controls
 
+- **Illegal operators:** Sharp spectral cutoff (negative kernel lobes), signed HF complement (stronger lobes); tested in all examples (E1-E2, ladder, time-reversal, PDE).
+- **Counterfactuals:** Alternative triples with same selection rules, different budgets (N tier variations, ladder tiers N=256/512); must degrade by (1+eps).
+- **Ablations:** Higher-budget Fejér as truth; FD2 baseline as PDE ablation.
 
-## Scope (what this demo claims)
+## Dependencies
 
-> DEMO-60 — Quantum Master Flagship
-> Referee-ready, first-principles, deterministic, single-file demo.
-> NumPy only.
+Python 3.10+ with NumPy.
 
-> What this script demonstrates (computationally, not rhetorically)
-> A) Deterministic selection:
->    A fixed selection rule identifies a unique prime triple (wU, s2, s3) in a declared window.
->    The triple deterministically sets budgets (N, K, eps). No runtime tuning.
-
-> B) Operator admissibility (probability-safe coarse graining):
->    The Fejér spectral multiplier has a nonnegative real-space kernel (positivity-preserving on densities).
->    Two non-admissible controls (sharp cutoff and signed filter) have negative kernel lobes.
-
-> C) Quantum worked examples (orthogonal checks):
->    E1) Density admissibility on a discontinuous top-hat:
->        - Fejér preserves mass and nonnegativity.
->        - Non-admissible controls create negative undershoot and higher variation.
->        - Counterfactual triples (same rules, different budgets) degrade distortion by a fixed eps margin.
-
->    E2) Double-slit interference density:
-
-## Run instructions
-
-- Dependencies: Python 3.10+ plus `numpy`.
-
-- Install (recommended):
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
+## Run
 
 ```bash
-python incoming/demo-60-quantum-master-flagship-unitarity-controls.py
+python demo.py
 ```
 
 ## Pass/Fail contract (gates)

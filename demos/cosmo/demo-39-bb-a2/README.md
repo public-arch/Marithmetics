@@ -1,73 +1,42 @@
 # DEMO-39 — BB A2 Archive Master (closure capsule)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** A deterministic stdlib-only audit reproduces the A2/BB-36 closure capsule from first principles, deriving the unique triple (wU, s2, s3) = (137, 107, 103) and all gauge/cosmology/neutrino/amplitude invariants via fixed contracts (prime window, residue filters, 2-adic coherence) with cross-base Rosetta roundtrip equality (base-7/10/16).
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-39-bb-a2-archive-master-closure-capsule.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+From a finite arithmetic substrate (primes + residue filters + 2-adic coherence):
+- Deterministic selection of the unique admissible triple (wU, s2, s3) = (137, 107, 103) via lane filters.
+- Gauge lawbook derivation: α₀⁻¹ := wU = 137, sin²θW := 7/(wU - s2) = 7/30, αₛ(MZ) := 2/q₃ = 2/17.
+- Yukawa palette closure via D1 local selector + offset sweep → Palette-B as unique best tuple.
+- Cosmology Ω-sector closure with near-flatness and H0 rank-1 closure via structural reuse.
+- Primordial sector: As, ns, tau rank-1 closures.
+- Neutrino sector: Δ₂₁, Δ₃₁, Σmν closures + hierarchy contract.
+- Amplitude sector: etaB, YHe, deltaCMB windows + ℓ₁ reuse.
+- Cross-base consistency audit (base-7, base-10, base-16): roundtrip to identical numeric values (tol ≤ 1e-15).
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-39' | head -n 1)"
-```
+## Falsification contract
 
-**Teeth (what to check):** the reference run prints, among other lines:
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. All closure gates must pass: lawbook, selector, Φ-mapping, Yukawa, cosmology, primordial, neutrino, amplitudes, Rosetta suite.
 
-```text
-alpha: 1/137 = 0.0072992700729927
-```
+## Controls
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+- **Illegal operators:** None tested (this is a pure arithmetic audit, not a field-solver demo).
+- **Counterfactuals:** Not applicable (single deterministic path; closure is unique by construction).
+- **Ablations:** All closure stages are required to pass; removing any stage would break the monolithic audit.
 
-## Premise
+## Dependencies
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+Python 3.7+ with standard library only (no third-party packages).
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
-
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
-
-
-## Scope (what this demo claims)
-
-> A2 Archive Master Script (v1.3)
-> a2_archive_master.py
-
-> Stdlib-only, deterministic, one-file archive.
-
-> What it does
-> - Reproduces the A2 / BB-36 closure capsule from first principles (as currently encoded):
->   • Gauge lawbook derivation (contracts + coherence)
->   • Gauge selector (lane filters) → unique (wU,s2,s3) = (137,107,103)
->   • Φ-mapping uniqueness (alpha, alpha_s, sin^2)
->   • Yukawa palette closure (D1 local selector + offset sweep)
->   • Cosmology Ω-sector closure + flatness
->   • H0 closure (structural reuse)
->   • Primordial closures (As, ns, tau)
->   • Neutrino closures (Δ21, Δ31, Σmν)
->   • Amplitude closures (etaB, YHe, deltaCMB) + ℓ1 reuse
->   • Cross-base compatibility / Rosetta suite (base-7/10/16)
->   • Shows explicit cross‑base roundtrip equality for key A2 constants (table + max‑error summary).
-
-> Run:
-
-## Run instructions
-
-- Dependencies: Stdlib-only (no third-party packages).
-
-- Install (recommended):
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-39-bb-a2-archive-master-closure-capsule.py
+python demo.py
 ```
 
 ## Pass/Fail contract (gates)

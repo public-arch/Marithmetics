@@ -1,72 +1,64 @@
 # DEMO-70 — Higgs Master Flagship (fixed-point mass closure)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** Deterministic selection of triple (wU, s2, s3) = (137, 107, 103) fixes all EW parameters (Θ = 4/15, sin²θW = 7/30, α₀⁻¹ = 137, αₛ = 2/17); PREWORK 70A recovers EW vacuum via lawful closed-form closure with illegal controls failing; PREWORK 70B solves λ(μ_max) ≈ 0 for UV critical edge λ* ≈ 0.173 with budget-tier vs truth-tier comparison; PREWORK 70C mode-ladder SU(2) lock selects best mode d=13 with m_H ≈ 123.88 GeV (|Δ| ≈ 1.12 GeV), illegal controls and counterfactual budgets degrading by fixed eps margin.
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-70-higgs-master-flagship-fixed-point-mass-closure.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+Single integrated deterministic audit combining three preworks:
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-70' | head -n 1)"
-```
+PREWORK 70A (Exact EW rational locks + lawful closure):
+- Exact lock gates: Θ = 4/15, sin²θW = 7/30, α₀⁻¹ = 137, αₛ = 2/17.
+- Plausibility checks: Higgs mechanism iterations ≤ 250, vacuum v ∈ [200, 400] GeV, α(MZ) ∈ [0.0075, 0.0083], MZ ∈ [80, 100] GeV.
+- Lawful “dressed” closure: fixed renormalization scheme, no tuning.
+- Illegal control separation: non-admissible operators fail closure gates.
+- Counterfactual teeth: ≥3/4 counterfactual triples out of predeclared band [80, 100] GeV.
 
-**Teeth (what to check):** the reference run prints, among other lines:
+PREWORK 70B (UV critical edge λ*):
+- Solve λ(μ_max) ≈ 0 for UV critical edge λ* via RG running.
+- Target band: λ* ∈ [0.1, 0.3] (plausibility); result λ* ≈ 0.173.
+- Truth tier (higher budget K_truth) vs budget tier (K from triple): primary budget reproduces truth within eps³.
+- Illegal controls perform much worse (err_illegal/err_primary ≈ 31.17).
+- Counterfactual budget degrades error by (1+eps).
 
-```text
-Best mode: d=13 with mH≈123.881359 (|Δ|=1.118641 GeV)
-```
+PREWORK 70C (Mode-ladder SU(2) lock):
+- Sweep coupling parameter λ₀ over mode d ∈ [12..20] (SU(2) modes).
+- Solve fixed-point equation for Higgs mass m_H(λ₀, d).
+- Best mode d = 13: m_H ≈ 123.88 GeV (|Δ| ≈ 1.119 GeV vs PDG m_H ≈ 125 GeV).
+- Illegal control: d = 15 with Δ ≈ 9.1 GeV (worse).
+- Counterfactual budget: d = 14 with Δ ≈ 5.4 GeV (degrade by (1+eps)).
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+## Falsification contract
 
-## Premise
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Primary triple must equal (137, 107, 103).
+5. Lock gates exact: Θ = 4/15, sin²θW = 7/30, α₀⁻¹ = 137, αₛ = 2/17.
+6. Plausibility: iters ≤ 250, v ∈ [200, 400], α(MZ) ∈ [0.0075, 0.0083], MZ ∈ [80, 100].
+7. λ* in sane band [0.1, 0.3].
+8. Primary budget reproduces truth within eps³.
+9. Illegal controls significantly worse (err_ill/err_prim > threshold).
+10. Counterfactual budgets degrade by (1+eps).
+11. Best SU(2) mode d = 13 with m_H offset ≈ 1.119 GeV.
+12. Illegal/counterfactual modes degrade m_H offset by (1+eps).
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+## Controls
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
+- **Illegal operators:** Non-admissible EW closure (fails lock gates), non-optimal SU(2) mode selection.
+- **Counterfactuals:** Alternative triples with same selection rules, different budgets; counterfactual modes d ∈ [12..20] must degrade m_H offset and λ* by (1+eps).
+- **Ablations:** Truth tier (K_truth) vs budget tier (K) comparison; RG running accuracy checks.
 
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
+## Dependencies
 
+Python 3.10+ with standard library. Matplotlib optional (only for PNG output).
 
-## Scope (what this demo claims)
-
-> DEMO-70 — HIGGS MASTER FLAGSHIP
-
-> This flagship demo is the *single* integrated run that combines:
-
->   • PREWORK 70A: Exact EW rational locks + lawful "dressed" closure
->                 + illegal control separation + counterfactual teeth.
-
->   • PREWORK 70B: UV critical edge λ* (solve λ(μ_max)≈0)
->                 + truth tier vs budget tier + illegal controls + teeth.
-
->   • PREWORK 70C: Mode-ladder / SU(2) lock: best mode d=13
->                 + illegal control + counterfactual budget teeth.
-
-> Goal: a maximally clear, deterministic, referee-facing certificate.
-> No fits. No hidden knobs. Everything is fixed by the deterministic triple.
-
-> Outputs:
->   • stdout (primary)
->   • optional JSON + PNG if --write is passed (safe: failures are caught)
-
-## Run instructions
-
-- Dependencies: Python 3.10+ plus `matplotlib`.
-
-- Install (recommended):
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-70-higgs-master-flagship-fixed-point-mass-closure.py
+python demo.py
+python demo.py --write  # Optional JSON + PNG output
 ```
 
 ## Pass/Fail contract (gates)

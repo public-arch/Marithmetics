@@ -1,73 +1,44 @@
 # DEMO-54 — Master Flagship Demo (single-file determinism)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** Deterministic first-principles selection of the unique triple (wU, s2, s3) = (137, 107, 103) yields gauge rationals (α₀⁻¹ = 137, sin²θW = 7/30, αₛ = 2/17), QCD scale Λ via 2-loop running, vacuum suppression <1% via fixed Zel’dovich scaling, emergent gravity from discrete Poisson, and mathematical linkages (Feigenbaum δ, twin-prime constant C₂) with counterfactual falsifiers.
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-54-master-flagship-demo-single-file-determinism.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+From first principles (primality, residue classes, Euler totient density):
+- Symmetry-Constrained Fixed-Point (SCFP++) deterministic selection: unique triple (wU, s2, s3) = (137, 107, 103) in Demo-33 window.
+- Gauge-sector rationals: α₀⁻¹ := wU = 137; sin²θW := 7/(wU - s2) = 7/30; αₛ(MZ) := 2/odd_part(wU - 1) = 2/17.
+- QCD scale: Λ_QCD via 1-loop closed form and 2-loop numeric inversion at MZ = 91.03 GeV, nf = 5.
+- Vacuum energy suppression: ρ ~ Λ⁶/M_Pl² × (1/(16π²))² × 1/(1+αₛ), compared to (H0, ΩΛ) for <1% ratio test.
+- Emergent gravity check: discrete Poisson equation on 3D periodic lattice → inverse-square slope verification; lawful (Fejér) vs illegal (sharp/signed) coarse-graining comparison.
+- Mathematical linkages: Feigenbaum δ via logistic-map superstable points (root finding + Aitken acceleration); twin-prime constant C₂ via Euler product; compute budgets derived from triple.
+- Counterfactual triples (fixed reduced-gate scan) fail as falsifier.
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-54' | head -n 1)"
-```
+## Falsification contract
 
-**Teeth (what to check):** the reference run prints, among other lines:
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Vacuum suppression ratio |pred/obs - 1| must be <1%.
+5. Inverse-square slope must be near -2 (within eps tolerance).
+6. All mathematical gates must pass (δ, C₂, emergency gravity).
+7. Counterfactual triples must separate from primary in GR emergence.
 
-```text
-Result: VERIFIED
-```
+## Controls
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+- **Illegal operators:** Sharp spectral cutoff (kernel with negative lobes), signed high-pass complement (stronger negative lobes); tested in emergent gravity suite.
+- **Counterfactuals:** Fixed reduced-gate scan of counterfactual triples; must fail GR emergence (inverse-square separation) and vacuum suppression.
+- **Ablations:** Baseline budget (expected to miss δ); coarse-graining suite (lawful vs illegal).
 
-## Premise
+## Dependencies
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+Python 3.9+ with NumPy. Matplotlib optional (only for PNG output).
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
-
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
-
-
-## Scope (what this demo claims)
-
-> DEMO 54 - MASTER FLAGSHIP DEMO (first‑principles, deterministic, single‑file)
-
-> What this demo does (in a single run, no tuning knobs):
-
-> 1) Symmetry‑Constrained Fixed‑Point (SCFP++) selection (Demo‑33 window)
->    - From first principles (primality, residue classes, Euler totient density),
->      deterministically selects a unique admissible triple (wU, s2, s3).
-
-> 2) Gauge‑sector rationals from the selected triple
->    - α0⁻¹ := wU
->    - sin²θW := 7 / (wU − s2)
->    - αs(MZ) := 2 / odd_part(wU − 1)
-
-> 3) QCD scale from αs(MZ)
->    - Λ_QCD computed both at 1‑loop (closed form) and 2‑loop (numeric inversion).
-
-> 4) Vacuum energy suppression (no tuning)
->    - Uses a fixed Zel’dovich scaling ρ ~ Λ^6 / M_Pl^2,
->      multiplied by a fixed 2‑loop factor (1/(16π²))² and a fixed dressing 1/(1+αs).
->    - Compares to an observational overlay (H0, ΩΛ) for a ratio test.
-
-## Run instructions
-
-- Dependencies: Python 3.10+ plus `matplotlib`, `numpy`.
-
-- Install (recommended):
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-54-master-flagship-demo-single-file-determinism.py
+python demo.py
 ```
 
 ## Pass/Fail contract (gates)

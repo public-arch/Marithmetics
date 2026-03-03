@@ -1,73 +1,59 @@
 # DEMO-59 — Electromagnetism (Maxwell suites + Coulomb scaling)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** Deterministic selection of triple (wU, s2, s3) = (137, 107, 103) yields budgets; two benchmark suites (electrostatics 3D Poisson with point charge → Coulomb |E(r)| ~ r⁻² scaling; Maxwell 2D filters → Gibbs overshoot on step + broadband distortion on bump) demonstrate admissible Fejér filters achieve near-truth slopes/overshoots, illegal controls fail, and counterfactual triples degrade by fixed eps margin.
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-59-electromagnetism-maxwell-suites-coulomb-scaling.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+Deterministic first-principles computational audit:
+- Deterministic selection: unique prime triple (wU, s2, s3) = (137, 107, 103) via fixed rules.
+- Budget derivation: eps = 1/√q2; N (grid size), K (spectral cutoff) from triple invariants.
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-59' | head -n 1)"
-```
+Suite A (Electrostatics 3D):
+- Poisson solver: ΔΦ = ρ on 3D periodic lattice with neutralized point charge; exact FFT eigenvalues.
+- Observable: Coulomb scaling |E(r)| ~ r⁻² and stability of r²⟨|E|⟩ across shells.
+- Operator comparison: admissible Fejér (slope ≈ -1.79, truth ≈ -1.91), illegal sharp/signed controls.
+- Gate E1-E4: slope recovery, ringing, HF injection, curvature tests.
+- Gate T_E: ≥3/4 counterfactuals degrade by (1+eps).
 
-**Teeth (what to check):** the reference run prints, among other lines:
+Suite B (Maxwell 2D):
+- Observable 1: Gibbs/overshoot on discontinuous step; Fejér preserves boundedness, sharp shows overshoot ≥ eps².
+- Observable 2: broadband distortion on smooth Gaussian bump; Fejér minimizes, illegal controls worsen.
+- Gate M1-M2: overshoot contracts, sharp cutoff Gibbs injection.
+- Gate T_M: ≥3/4 counterfactuals degrade by (1+eps).
 
-```text
-slope log|E| vs log r (expect ~ -2): truth=-1.906371 adm=-1.791637 sharp=-1.766929 signed=-2.686532
-```
+First-principles definitions:
+- Grid: periodic lattice, unit spacing.
+- Fourier transform: numpy.fft (deterministic for fixed inputs).
+- Discrete Laplacian: λ(k) = -4 Σ_d sin²(πk_d/N) (standard 2nd-order periodic Laplacian).
+- Admissible: Fejér weights (triangular Fourier multipliers, nonnegative real-space kernel).
+- Illegal: sharp cutoff, signed HF complement (both with negative kernel lobes).
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+## Falsification contract
 
-## Premise
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Coulomb slope must be near -2 (truth ≈ -1.91 ± eps).
+5. Admissible slopes/overshoots must be ≤ illegal controls.
+6. Sharp/signed Gibbs overshoot must exceed Fejér (or zero).
+7. Counterfactual triples must degrade in both suites by (1+eps).
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+## Controls
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
+- **Illegal operators:** Sharp spectral cutoff (negative kernel lobes in all suites), signed HF complement (stronger lobes).
+- **Counterfactuals:** Alternative triples from extended window; must degrade slopes and overshoots by (1+eps) in all suites.
+- **Ablations:** Higher-budget Fejér provides truth reference without external data.
 
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
+## Dependencies
 
+Python 3.10+ with NumPy.
 
-## Scope (what this demo claims)
-
-> DEMO-59 — Electromagnetism
-
-> Scope (what this demo is):
->   A deterministic, referee-facing demonstration of *operator admissibility* for
->   Fourier-domain filters used inside discrete field solvers.
-
->   The demo consists of two benchmark suites:
-
->     (A) Electrostatics (3D): Poisson solver with a neutralized point charge on a periodic lattice.
->         Observable: Coulomb scaling |E(r)| ~ r^{-2} and stability of r^2⟨|E|⟩ across shells.
-
->     (B) Maxwell-class operators (2D): filter admissibility diagnostics that are ubiquitous in
->         wave/field solvers.
->         Observable 1: Gibbs/overshoot on a discontinuous step (sharp cutoff should overshoot).
->         Observable 2: broadband distortion on a smooth Gaussian bump (budget teeth).
-
-> First-principles definitions (used throughout):
->   - Grid: periodic lattice with N points per dimension, unit lattice spacing.
->   - Fourier transform: numpy.fft (deterministic for fixed inputs).
->   - Discrete Laplacian eigenvalues: λ(k) = -4 Σ_d sin^2(π k_d / N), consistent with the
-
-## Run instructions
-
-- Dependencies: Python 3.10+ plus `numpy`.
-
-- Install (recommended):
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-59-electromagnetism-maxwell-suites-coulomb-scaling.py
+python demo.py
 ```
 
 ## Pass/Fail contract (gates)

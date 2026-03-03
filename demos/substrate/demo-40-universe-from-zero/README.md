@@ -1,73 +1,43 @@
 # DEMO-40 — Universe-from-Zero (master upgrade)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** From a finite arithmetic substrate (primes + residue filters + 2-adic coherence), a deterministic rule recovers a unique triple (wU, s2, s3) = (137, 107, 103) in a predeclared window, with counterfactual triples failing plausibility gates and proving uniqueness is not generic.
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-40-universe-from-zero-master-upgrade.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+From a finite arithmetic substrate (primes + residue filters + 2-adic coherence):
+- Deterministic selection of the unique admissible triple (wU, s2, s3) = (137, 107, 103) via lane rules and congruence filters.
+- Absorbing fixed point (explicit elimination chain, idempotent).
+- Base-gauge invariance audit (encode/decode consistency across bases).
+- Rosetta/DRPT residue reconstruction from digits (base-independent residues).
+- Uniqueness: predeclared neighborhood scan confirms uniqueness is not generic (unique_frac ≈ 0.037).
+- Causality capstones: Hilbert/DFT round-trip + Parseval consistency; Fejer kernel nonnegative (admissible) vs illegal controls.
+- Deterministic structural cosmology capsule (BB-36 monomials) with counterfactual teeth.
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-40' | head -n 1)"
-```
+## Falsification contract
 
-**Teeth (what to check):** the reference run prints, among other lines:
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Primary triple must equal (137, 107, 103).
+5. Counterfactual triples must fail plausibility gates (Gate S9: ≥3/4 fail).
+6. Rigidity gate (Gate R4) must show zero multi-triple variants.
 
-```text
-PASS  Gate P: primary equals (137,107,103)                                           selected=(137,107,103)
-```
+## Controls
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+- **Illegal operators:** Gate K2 (sharp cutoff has negative lobes), Gate K3 (signed HF injector has negative lobes).
+- **Counterfactuals:** Variant scan (5832 total variants tested); counterfactual triples chosen by same deterministic rules in larger window.
+- **Ablations:** Rigidity scan (Gate R4: no multi-triple variants); portability test (Gate G2: digit-dependent path is not portable).
 
-## Premise
+## Dependencies
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+Python 3.10+ with NumPy.
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
-
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
-
-
-## Scope (what this demo claims)
-
-> DEMO-40 — Universe-from-Zero
-
-> This is a unified "master upgrade" that preserves the audit-grade determinism of
-> the original DEMO-40 while integrating the deeper, first-principles framing
-> associated with the MARI-style master upgrade.
-
-> Design goals (strict)
-> 1) Deterministic: no stochastic inputs, no external data, no tuning.
-> 2) Portable: Python + NumPy only; optional file write is best-effort.
-> 3) Referee-facing: explicit stages, gates, illegal controls, and falsifiers.
-> 4) Non-regression: keeps *all* DEMO-40 verified components and restores suite-wide
->    invariant definitions (q2, q3, eps, budgets) consistent with the flagship line.
-
-> What is being demonstrated (narrow claim)
-> From a finite arithmetic substrate (primes + residue filters + 2-adic coherence),
-> a single triple of primes is recovered in a predeclared window:
-
->     (wU, s2, s3) = (137, 107, 103)
-
-> Then we show:
-
-## Run instructions
-
-- Dependencies: Python 3.10+ plus `numpy`.
-
-- Install (recommended):
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-40-universe-from-zero-master-upgrade.py
+python demo.py
 ```
 
 ## Pass/Fail contract (gates)

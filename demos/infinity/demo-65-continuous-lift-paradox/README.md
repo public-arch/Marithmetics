@@ -1,73 +1,60 @@
 # DEMO-65 — Continuous Lift Paradox (capstones + GR witnesses)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** Deterministic selection of triple (wU, s2, s3) = (137, 107, 103) yields budgets; discrete operators that appear harmless violate continuum legality (positivity, admissibility, invariants); admissible Fejér family (nonnegative kernel) preserves mass, nonnegativity, unitarity, and exhibits linear energy drift, while illegal operators create negative undershoot, TV increase, unitarity violation, and blow-up; counterfactual triples degrade all observables by fixed eps margin.
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-65-continuous-lift-paradox-capstones-gr-witnesses.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+Deterministic first-principles audit of the “continuous lift paradox”:
+- Deterministic triple selection: (wU, s2, s3) = (137, 107, 103); counterfactual triples via extended window.
+- Budget derivation: eps = 1/√q2; N, K from triple invariants.
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-65' | head -n 1)"
-```
+Stage 1 (Core paradox: 1D probability lift):
+- Fejér preserves mass (|Δ| ≤ 1e-12) and nonnegativity (min ≥ -1e-12).
+- Illegal operators create negative undershoot (≤ -eps²) and increase TV variation by (1+eps).
+- Counterfactual budgets degrade distortion by (1+eps).
 
-**Teeth (what to check):** the reference run prints, among other lines:
+Stage 2 (Capstones: Hilbert, Quantum2D, Noether):
+- Hilbert: FFT round-trip relative error ≤ 1e-12.
+- Quantum2D: unitary norm drift ≤ 1e-10; Fejér density nonnegative; illegal creates negative (≤ -eps²).
+- Noether: legal energy drift ≤ 1e-10; illegal blow-up ≥ 1e³.
 
-```text
-PASS  Gate Q3: illegal density negativity (<= -eps^2)                        eps^2=0.0333333
-```
+Stage 3 (GR weak-field witnesses):
+- Light-bending proxy: α(b) ~ 1/b affine fit; truth slope ≈ -1.03 ± eps, admissible ≈ -0.94 ± 0.35eps.
+- Shapiro delay proxy: D(b) ~ ln(b) affine fit; truth R² > 0.98, admissible R² > 0.95.
+- Redshift proxy: Φ(r) ~ 1/r shell means; truth R² > 0.98, admissible R² > 0.95.
+- Illegal controls inject HF beyond admissible.
+- Counterfactual triples degrade slopes/fits by (1+eps).
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+## Falsification contract
 
-## Premise
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Fejér mass preservation: |Δ| = 0.
+5. Fejér nonnegativity: min ≥ -1e-12 (all stages).
+6. Illegal undershoot: undershoot ≤ -eps² (Stages 1-2).
+7. Illegal TV/distortion increase: ≥ (1+eps) × Fejér.
+8. Unitarity: norm drift ≤ 1e-10 (admissible).
+9. Energy: legal drift ≤ 1e-10; illegal blow-up ≥ 1e³.
+10. GR slopes/fits near-truth within (1+eps)eps margin.
+11. Counterfactual triples degrade all observables by (1+eps).
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+## Controls
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
+- **Illegal operators:** Sharp spectral cutoff (negative kernel lobes), signed HF complement (stronger lobes); tested across all stages (core paradox, capstones, GR witnesses).
+- **Counterfactuals:** Alternative triples with same selection rules, different budgets; must degrade by (1+eps) in all observables (mass, nonnegativity, energy, GR slopes).
+- **Ablations:** Higher-budget Fejér provides truth reference; illegal controls forced to violate legality.
 
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
+## Dependencies
 
+Python 3.10+ with NumPy. Matplotlib optional (only for PNG output).
 
-## Scope (what this demo claims)
-
-> DEMO-65 — CONTINUOUS LIFT PARADOX
-
-> Goal
-> ----
-> Provide a deterministic, first-principles, audit-grade demonstration of the
-> "continuous lift paradox":
-
->     *Certain discrete operator choices look harmless (or even "sharp") but
->     violate continuum legality classes (positivity / admissibility / invariants).
->     An admissible operator family (Fejér / Cesàro-summed spectral projection)
->     avoids these violations and produces stable, falsifiable signatures.*
-
-> This script is deliberately self-contained:
->   - No I/O required (stdout only by default)
->   - NumPy only (optional JSON/PNG artifacts attempted but never required)
->   - Deterministic selection of a primary triple and deterministic counterfactuals
->   - Explicit legal vs illegal operator classes + "teeth" (counterfactual degradation)
-
-> What this demo *is*:
->   - A reproducible computational certificate: if you run the same code, you obtain
-
-## Run instructions
-
-- Dependencies: Python 3.10+ plus `matplotlib`, `numpy`.
-
-- Install (recommended):
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-65-continuous-lift-paradox-capstones-gr-witnesses.py
+python demo.py
 ```
 
 ## Pass/Fail contract (gates)

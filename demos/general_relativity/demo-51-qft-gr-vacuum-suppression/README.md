@@ -1,73 +1,43 @@
 # DEMO-51 — QFT+GR Vacuum Suppression (first-principles closure)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** A deterministic discrete selector yields the unique triple (wU, s2, s3) = (137, 107, 103), from which αₛ(MZ) = 2/q₃ derives Λ₅ via 2-loop running, and a fixed mechanism-grade vacuum term ρ_pred = (1/(16π²))² × (1/(1+αₛ)) × Λ₅⁶/M_Pl² achieves <1% agreement with observed ρ_Λ with no tuning.
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-51-qft-gr-vacuum-suppression-first-principles-closure.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+From a finite arithmetic substrate (primes + residue filters + 2-adic coherence):
+- Deterministic discrete selection (fixed rules, fixed window) yields unique admissible triple (wU, s2, s3) = (137, 107, 103).
+- Explicit triple linkage: wU drives α₀⁻¹ and odd-part invariant q₃; s2 enters via q₂ = wU - s2 and sin²θW = 7/q₂; s3 enters via active-flavor branch count consistency (derived_nf = 3 + v₂(s2-1) + v₂(s3-1) = 5 at MZ scale).
+- QCD scale extraction: αₛ(MZ) = 2/q₃ via 2-loop MS-bar running (numeric inversion at MZ = 91.03491 GeV, nf = 5).
+- Mechanism-grade induced vacuum term (EFT/QFT+GR) with derived loop geometry: ρ_pred = (1/(16π²))² × (1/(1+αₛ(MZ))) × Λ₅⁶/M_Pl². No continuous parameters are tuned.
+- Prediction: ρ_pred ≈ 2.836e-47 GeV⁴ achieves <1% agreement with ρ_Λ(obs) computed from (H0 = 70.476 km/s/Mpc, ΩΛ = 0.71192).
+- Robustness: μ-sweep at fixed Λ₅ (renormalization-scale dependence) and threshold matching audit (run down and back up, recover αₛ(MZ)).
+- Counterfactual triples from other windows fail strongly (Gate 101-307: ratio ≈ 3.81e-144).
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-51' | head -n 1)"
-```
+## Falsification contract
 
-**Teeth (what to check):** the reference run prints, among other lines:
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Primary triple must equal (137, 107, 103).
+5. Vacuum ratio |ratio_pred/obs - 1| must be ≤ 1% (target <0.01).
+6. Counterfactual triples must all pass robustness gates (different Λ₅, different ratio).
 
-```text
-ratio rho_pred/rho_obs = 0.990650067403
-```
+## Controls
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+- **Illegal operators:** None tested (this is a QFT/GR mechanism audit, not a field-solver demo).
+- **Counterfactuals:** Alternative admissible triples (277, 263, 239), (277, 263, 307), (307, 263, 239) from extended window; must all fail vacuum ratio gate.
+- **Ablations:** μ-sweep at fixed Λ₅ (renormalization-scale robustness); threshold matching audit (running coupling consistency).
 
-## Premise
+## Dependencies
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+Python 3.9+ with standard library only (no third-party packages).
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
-
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
-
-
-## Scope (what this demo claims)
-
-> DEMO 51 — QFT+GR VACUUM SUPPRESSION (MASTER, FIRST-PRINCIPLES, <1% CLOSURE)
-> Stdlib-only. CLI-only. No file writes.
-
-> Executive purpose
-> A single end-to-end demonstration that supports the GUM report with:
-
->   1) Deterministic discrete selection (fixed rules, fixed window) yielding a unique
->      admissible triple (wU, s2, s3) = (137, 107, 103).
->   2) Explicit linkage to all three integers:
->        - wU drives alpha0_inv and the odd-part invariant q3
->        - s2 enters via q2 = wU - s2 and sin^2(thetaW) = 7/q2
->        - s3 enters via a consistency check on the active-flavor branch count
->          (derived_nf = 3 + v2(s2-1) + v2(s3-1)), which matches nf=5 at the MZ scale.
->   3) QCD scale extraction: infer Λ5 from alpha_s(MZ)=2/q3 using 2-loop running (numeric inversion).
->   4) Mechanism-grade induced vacuum term (EFT/QFT+GR) with derived loop geometry:
->        rho_pred = (1/(16π^2))^2 * (1/(1+alpha_s(MZ))) * Λ5^6 / M_Pl^2
->      No continuous parameters are tuned.
->   5) <1% agreement with rho_Lambda(obs) computed from (H0, ΩΛ) (evaluation-only).
->   6) Correct robustness tests (no invalid “Λ3 must match Λ5” claim):
->        - μ-sweep at fixed Λ5 (renormalization-scale dependence)
-
-## Run instructions
-
-- Dependencies: Stdlib-only (no third-party packages).
-
-- Install (recommended):
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-51-qft-gr-vacuum-suppression-first-principles-closure.py
+python demo.py
 ```
 
 ## Pass/Fail contract (gates)

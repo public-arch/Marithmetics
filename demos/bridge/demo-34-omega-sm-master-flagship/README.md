@@ -1,63 +1,38 @@
-# DEMO-34 - Omega to Standard Model Bridge (Master Flagship)
+# DEMO-34 — Omega to Standard Model Bridge (Master Flagship)
 
-A deterministic, self-auditing demo with explicit gates. The claim is operational: the run must satisfy the printed pass/fail contract.
+> **Claim:** A unique admissible integer triple (wU, s2, s3) = (137, 107, 103) is selected deterministically under declared modular constraints and produces a certified bridge between Omega and Standard Model observables.
 
-## Falsify (run this)
+---
 
-```bash
-python demos/bridge/demo-34-omega-sm-master-flagship/demo.py
-```
+## What this demo computes
 
-If your folder name differs, locate by demo number:
+A Tier-A₁ joint-triple certificate that:
+1. Selects the primary (wU, s2, s3) triple in a declared band [80, 1,000,000] by transparent lane filter and coherence constraints
+2. Derives budgets (q2, q3, eps, N, K) from the triple
+3. Demonstrates necessity via ablation—removing load-bearing gates causes the survivor pool to explode (loss of uniqueness)
+4. Compares against PDG reference values to measure fit (evaluation-only; no feedback to selection)
+5. Emits a determinism hash and VERIFIED verdict when all gates pass
 
-```bash
-python "$(ls -d demos/**/demo-34-* 2>/dev/null | head -n 1)/demo.py"
-```
+## Falsification contract
 
-Falsification condition: any printed FAIL gate, a missing or invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+1. Any printed FAIL gate falsifies the demo.
+2. Any ablation marked "required" must increase the survivor count (explosion) as declared.
+3. The selected triple must equal (137, 107, 103); any other value falsifies.
+4. Determinism hash must match the reference value; any change falsifies.
+5. A missing or invalid certificate section falsifies.
 
-## Premise
+## Controls
 
-- Zero tuning and zero fitted parameters. Any external reference values are evaluation-only and do not feed back into selection.
-- Deterministic. No randomness; no network; no hidden configuration.
-- Governance-first. The selector must be identifiable under declared policies and must fail under ablations.
+- **Illegal operators:** Non-Fejér kernels (sharp cutoff with Dirichlet ringing; signed HF injection)
+- **Counterfactuals:** Ablated gates (lane removal, coherence drop) must cause explosion
+- **Necessity tests:** Mandatory gates (T1, T2) whose removal breaks uniqueness
 
-## Scope (what this demo claims)
+## Dependencies
 
-DEMO-34 is a bridge certificate connecting the Omega selection channel to Standard-Model-facing outputs under a strict audit posture:
+Python 3.10+ (stdlib-only core; numpy/matplotlib optional for diagnostics)
 
-- It produces the canonical ordered triple under the declared selector contract.
-- It includes necessity ablations that must explode (loss of uniqueness) when load-bearing gates are removed.
-- It prints rational anchor values used downstream (evaluation-only comparisons are fenced).
-- It emits a determinism hash and a final VERIFIED verdict when all gates pass.
-
-## Run instructions
-
-- Dependencies: Python 3.10+ (core logic is stdlib-only; optional plotting may require additional packages depending on your environment).
-- Execute:
+## Run
 
 ```bash
-python "$(ls -d demos/**/demo-34-* 2>/dev/null | head -n 1)/demo.py"
+python demo.py
 ```
-
-## Pass/Fail contract (gates)
-
-Dreat any regression as a hard failure:
-
-- The demo must print the selected triple and confirm it matches the canonical survivor.
-- Any ablation marked as required must increase the survivor count (explosion) or break invariance as declared.
-- Any printed FAIL gate falsifies the run.
-
-## Reference checkpoints
-
-For audit, use the AoR surfaces:
-
-- Demo stdout log for DEMO-34
-- constants_master.csv for rational anchors
-- falsification_matrix.csv for required failures
-- run_reproducibility.csv for determinism expectations
-
-## Reviewer notes
-
-- This README intentionally focuses on reproducible observables: gates, explosion counts, and deterministic identity surfaces.
-- For discrepancies, attach full stdout and your Python version.

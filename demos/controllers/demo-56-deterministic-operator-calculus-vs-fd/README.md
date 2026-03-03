@@ -1,73 +1,45 @@
 # DEMO-56 — Deterministic Operator Calculus (vs classical finite differences)
 
-A self-auditing, deterministic demo with explicit gates. The claim is **operational**: the run must satisfy the printed pass/fail contract.
+> **Claim:** Deterministic selection of triple (wU, s2, s3) = (137, 107, 103) yields invariants (q2, q3, v2, eps) that set fixed numerical budgets (N, K, dt, steps); admissible Fejér kernels prevent non-physical oscillations and achieve lower L2 error than sharp/signed illegal controls across all worked examples, with counterfactual triples degrading by fixed eps margin.
 
-## Falsify (run this)
+---
 
-```bash
-python incoming/demo-56-deterministic-operator-calculus-vs-classical-finite-differences.py
-```
+## What this demo computes
 
-If you renamed files, locate by demo number:
+- Deterministic selection: unique integer triple (wU, s2, s3) via fixed congruence rules.
+- Invariant derivation: q2 = wU - s2 = 30; q3 = odd_part(wU - 1) = 17; v2 = 2-adic valuation; eps = 1/√q2 ≈ 0.1826.
+- Deterministic budgets: N (grid size), K (spectral cutoff), dt (time step), steps (iteration count) from triple invariants.
+- Worked examples (fixed-budget, fixed-step, no tolerance loops):
+  - Admissible Fejér averaging: prevents non-physical oscillations; nonnegative real-space kernel.
+  - Illegal controls: sharp truncation (negative kernel lobes), signed filter (stronger negative lobes).
+  - Comparison metric: normalized L2 error vs truth (higher-budget Fejér); Fejér ≈ 0.545, sharp ≈ 1.153, signed ≈ 1.153.
+- Counterfactual triples: same deterministic rules, different budgets; expected to degrade by (1+eps) factor.
+- Optional industrial certificate: 3D Navier-Stokes (Taylor-Green vortex) with N=256 if --tier industrial passed.
 
-```bash
-python "incoming/$(ls incoming | grep -i '^demo-56' | head -n 1)"
-```
+## Falsification contract
 
-**Teeth (what to check):** the reference run prints, among other lines:
+1. Any printed `FAIL` gate → demo falsified.
+2. Missing or invalid certificate section → demo falsified.
+3. Materially different checkpoint beyond stated tolerances → demo falsified.
+4. Admissible kernel error must be ≤ illegal kernel errors in all worked examples.
+5. Counterfactual budget degradation must match (1+eps) margin (±tol).
+6. Fejer vs sharp/signed error ratio must be ≥1.0 (admissible strictly better or equal).
 
-```text
-Errors vs truth (normalized L2): fejer=0.5451457656 sharp=1.153051488 signed=1.153051488
-```
+## Controls
 
-**Falsification condition:** any printed `FAIL` gate, a missing/invalid certificate section, or a materially different checkpoint (beyond stated tolerances) falsifies the demo as packaged here.
+- **Illegal operators:** Sharp spectral cutoff (kernel with negative lobes), signed high-pass filter (kernel with stronger negative lobes).
+- **Counterfactuals:** Alternative triples with same selection rules but different budgets; must degrade error by (1+eps).
+- **Ablations:** Higher-budget Fejér as truth reference (to avoid external data).
 
-## Premise
+## Dependencies
 
-- **Zero tuning / zero fitted parameters.** Any external “reference” values are evaluation-only and do not feed back into selection.
+Python 3.10+ with NumPy.
 
-- **Deterministic.** No randomness; no network; no hidden configuration.
-
-- **Integer-first.** Selection and budgets are derived from fixed integer contracts (prime window + residue/coherence constraints).
-
-
-## Scope (what this demo claims)
-
-> DEMO-56 — Deterministic Operator Calculus vs Classical Finite Differences
-
-> This single script is designed to be:
->   - Self-contained (NumPy + standard library only)
->   - Deterministic (no tolerance-driven inner iterations; fixed-step updates)
->   - Falsifiable (explicit pass/fail gates and counterfactual controls)
->   - Referee-ready (no internal jargon; first-principles explanations in output)
-
-> What it does (high level)
-> 1) Selects a unique integer triple (wU, s2, s3) by a deterministic rule.
-> 2) Derives a small set of invariants (q2, q3, v2, eps).
-> 3) Uses those invariants to deterministically set numerical budgets (N, K, dt, steps).
-> 4) Runs worked examples showing:
->    - Why admissible kernels (Fejér averaging) prevent non-physical oscillations
->    - Why non-admissible kernels (sharp truncation / signed filters) fail controls
->    - Why the budgets matter (counterfactual triples degrade by a fixed margin)
-> 5) Optionally runs an industrial-scale 3D Navier–Stokes certificate (Taylor–Green vortex).
-
-> Default mode is intentionally fast ("smoke-tier") and should run on laptops.
-> For the industrial certificate (N=256), use:  --tier industrial
-
-## Run instructions
-
-- Dependencies: Python 3.10+ plus `numpy`.
-
-- Install (recommended):
+## Run
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-- Execute:
-
-```bash
-python incoming/demo-56-deterministic-operator-calculus-vs-classical-finite-differences.py
+python demo.py
+python demo.py --tier industrial  # For full 3D Navier-Stokes certificate (N=256)
 ```
 
 ## Pass/Fail contract (gates)
