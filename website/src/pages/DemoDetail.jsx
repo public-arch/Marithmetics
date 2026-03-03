@@ -46,22 +46,33 @@ export default function DemoDetail() {
       <Link
         to="/demos"
         style={{
-          color: 'var(--gold)',
+          color: 'var(--text-muted)',
           textDecoration: 'none',
-          fontSize: 13,
+          fontSize: 12,
           fontWeight: 500,
           fontFamily: 'var(--font-mono)',
-          display: 'inline-block',
-          marginBottom: 32
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 6,
+          marginBottom: 48,
+          letterSpacing: '0.05em',
+          textTransform: 'uppercase',
+          opacity: 0.6,
+          transition: 'opacity 0.2s, color 0.2s'
         }}
+        onMouseEnter={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.color = 'var(--gold)'; }}
+        onMouseLeave={e => { e.currentTarget.style.opacity = '0.6'; e.currentTarget.style.color = 'var(--text-muted)'; }}
       >
-        ← Back to Demos
+        ← All Demos
       </Link>
 
       {/* Header Section */}
-      <div style={{ marginBottom: 40 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>
+      <div style={{ marginBottom: 48 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
           <Badge text={demo.id} ok={true} />
+          <Badge category={demo.category} />
+          <Badge text={demo.status} ok={demo.status === 'certified'} />
+          {demo.flagship && <Badge text="Flagship" ok={true} />}
           <a
             href={githubDemoDir}
             target="_blank"
@@ -69,24 +80,26 @@ export default function DemoDetail() {
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               color: 'var(--text-muted)', textDecoration: 'none',
-              fontFamily: 'var(--font-mono)', fontSize: 12, opacity: 0.7,
-              transition: 'opacity 0.2s'
+              fontFamily: 'var(--font-mono)', fontSize: 11, opacity: 0.5,
+              transition: 'opacity 0.2s',
+              marginLeft: 'auto'
             }}
             onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '0.7'}
+            onMouseLeave={e => e.currentTarget.style.opacity = '0.5'}
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            View source
+            Source
           </a>
         </div>
 
         <h1 style={{
           fontFamily: 'var(--font-serif)',
-          fontSize: 'clamp(28px, 5vw, 42px)',
+          fontSize: 'clamp(32px, 5vw, 48px)',
           fontWeight: 400,
           color: 'var(--text)',
           margin: '0 0 8px 0',
-          lineHeight: 1.3
+          lineHeight: 1.2,
+          letterSpacing: '-0.01em'
         }}>
           {demo.shortTitle}
         </h1>
@@ -94,10 +107,10 @@ export default function DemoDetail() {
         {demo.title !== demo.shortTitle && (
           <p style={{
             fontFamily: 'var(--font-serif)',
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: 300,
             color: 'var(--text-muted)',
-            margin: '0 0 16px 0',
+            margin: '0 0 0 0',
             lineHeight: 1.5,
             maxWidth: 800,
             fontStyle: 'italic'
@@ -105,72 +118,231 @@ export default function DemoDetail() {
             {demo.title}
           </p>
         )}
+      </div>
 
-        <div style={{ display: 'flex', gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
-          <Badge category={demo.category} />
-          <Badge text={demo.status} ok={demo.status === 'certified'} />
-          {demo.flagship && <Badge text="Flagship" ok={true} />}
+      {/* ─── Gold divider ─── */}
+      <div style={{
+        height: 1,
+        background: 'linear-gradient(90deg, var(--gold), rgba(228,187,124,0.2) 60%, transparent)',
+        marginBottom: 48
+      }} />
+
+      {/* Claim — the thesis statement */}
+      {demo.claim && (
+        <div style={{ marginBottom: 56 }}>
+          <div style={{
+            borderLeft: '3px solid var(--gold)',
+            paddingLeft: 28,
+            maxWidth: 800
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 11,
+              color: 'var(--gold)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.12em',
+              marginBottom: 12,
+              fontWeight: 600
+            }}>
+              Claim
+            </div>
+            <p style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: 17,
+              color: 'var(--text)',
+              margin: 0,
+              lineHeight: 1.8,
+              fontWeight: 400
+            }}>
+              {demo.claim}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Description */}
-      <div style={{ marginBottom: 40 }}>
-        <p style={{
-          fontSize: 16,
-          color: 'var(--text-muted)',
-          margin: 0,
-          lineHeight: 1.7,
-          maxWidth: 800
-        }}>
-          {demo.description}
-        </p>
-      </div>
+      {/* Result — evidence with metrics dashboard */}
+      {demo.result && (
+        <div style={{ marginBottom: 56 }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 11,
+            color: 'var(--text-muted)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.12em',
+            marginBottom: 16,
+            fontWeight: 500
+          }}>
+            Result
+          </div>
+          <p style={{
+            fontFamily: 'var(--font-body)',
+            fontSize: 16,
+            color: 'rgba(255,255,255,0.75)',
+            margin: '0 0 28px 0',
+            lineHeight: 1.8,
+            maxWidth: 800
+          }}>
+            {demo.result}
+          </p>
+
+          {/* Key Outputs — instrument readout grid */}
+          {demo.keyOutputs && demo.keyOutputs.length > 0 && (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: `repeat(${Math.min(demo.keyOutputs.length, 4)}, 1fr)`,
+              gap: 1,
+              background: 'var(--border)',
+              borderRadius: 6,
+              overflow: 'hidden',
+              boxShadow: '0 2px 16px rgba(0,0,0,0.3)'
+            }}>
+              {demo.keyOutputs.map((output, i) => (
+                <div key={i} style={{
+                  padding: '20px 24px',
+                  background: 'var(--bg)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 4
+                }}>
+                  <div style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 10,
+                    color: 'var(--text-muted)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.08em',
+                    opacity: 0.7
+                  }}>
+                    {output.label}
+                  </div>
+                  <div style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 22,
+                    fontWeight: 600,
+                    color: 'var(--gold)',
+                    lineHeight: 1.2,
+                    textShadow: '0 0 24px rgba(228,187,124,0.15)'
+                  }}>
+                    {output.value}
+                  </div>
+                  {output.note && (
+                    <div style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: 10,
+                      color: 'var(--text-muted)',
+                      opacity: 0.5
+                    }}>
+                      {output.note}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Falsification — the critical section */}
+      {demo.falsification && (
+        <div style={{ marginBottom: 56 }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 11,
+            color: 'var(--text-muted)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.12em',
+            marginBottom: 8,
+            fontWeight: 500
+          }}>
+            Falsification Design
+          </div>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 11,
+            color: 'var(--gold)',
+            opacity: 0.5,
+            marginBottom: 20,
+            letterSpacing: '0.02em'
+          }}>
+            How to break this claim
+          </div>
+          <div style={{
+            background: 'rgba(228,187,124,0.04)',
+            border: '1px solid rgba(228,187,124,0.15)',
+            borderLeft: '3px solid rgba(228,187,124,0.4)',
+            borderRadius: '0 6px 6px 0',
+            padding: '28px 32px'
+          }}>
+            <p style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: 15,
+              color: 'var(--text)',
+              margin: 0,
+              lineHeight: 1.8
+            }}>
+              {demo.falsification}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Fallback description if no structured fields */}
+      {!demo.claim && (
+        <div style={{ marginBottom: 40 }}>
+          <p style={{
+            fontSize: 16,
+            color: 'var(--text-muted)',
+            margin: 0,
+            lineHeight: 1.7,
+            maxWidth: 800
+          }}>
+            {demo.description}
+          </p>
+        </div>
+      )}
+
+      {/* ─── Thin divider ─── */}
+      <div style={{
+        height: 1,
+        background: 'linear-gradient(90deg, var(--border), transparent 80%)',
+        marginBottom: 48
+      }} />
 
       {/* Audio Overview Section */}
-      <div style={{ marginBottom: 48 }}>
+      <div style={{ marginBottom: 56 }}>
         <AudioPlayer
-          src={`/audio/demo-${demo.id.split('-')[1]}.wav`}
+          src={`/audio/demo-${demo.id.split('-')[1]}.m4a`}
           title="Audio Overview"
           demoId={demo.id}
         />
       </div>
 
-      {/* Falsification Gates Section */}
-      <div style={{ marginBottom: 48 }}>
-        <SectionTitle
-          title="Falsification Gates"
-          subtitle="Built-in tests that provide negative controls and counterfactual validation"
-        />
-        <Card accent={true}>
-          <p style={{
-            fontSize: 15,
-            color: 'var(--text)',
-            margin: '0 0 12px 0',
-            lineHeight: 1.6
-          }}>
-            Each demo includes falsification gates—built-in negative controls and counterfactual tests that can break the claim.
-          </p>
-          <p style={{
-            fontSize: 15,
-            color: 'var(--text-muted)',
-            margin: 0,
-            lineHeight: 1.6
-          }}>
-            These aren't tests the author hoped would pass. They're tests designed to fail if the core claim is false. Counterfactual triples, illegal operators, and base-variant checks all run through the same deterministic pipeline. If the method is brittle or fit-dependent, the falsification gates will catch it.
-          </p>
-        </Card>
-      </div>
-
       {/* How to Reproduce Section */}
-      <div style={{ marginBottom: 48 }}>
-        <SectionTitle
-          title="How to Reproduce"
-          subtitle="Run the demo locally from source"
-        />
+      <div style={{ marginBottom: 56 }}>
+        <div style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: 11,
+          color: 'var(--text-muted)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.12em',
+          marginBottom: 8,
+          fontWeight: 500
+        }}>
+          Reproduce
+        </div>
+        <div style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: 11,
+          color: 'var(--gold)',
+          opacity: 0.5,
+          marginBottom: 20,
+          letterSpacing: '0.02em'
+        }}>
+          Run the demo locally from source
+        </div>
         <MathBlock label="Command">
           python {demoPath}
         </MathBlock>
-        <div style={{ display: 'flex', gap: 16, marginTop: 20, flexWrap: 'wrap', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 16, marginTop: 24, flexWrap: 'wrap', alignItems: 'center' }}>
           <a
             href={githubDemoFile}
             target="_blank"
@@ -196,17 +368,20 @@ export default function DemoDetail() {
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               padding: '10px 20px', borderRadius: 4,
-              border: '1px solid rgba(228,187,124,0.15)',
+              border: '1px solid rgba(228,187,124,0.12)',
               color: 'var(--text-muted)', textDecoration: 'none',
               fontFamily: 'var(--font-mono)', fontSize: 13,
               transition: 'all 0.2s'
             }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(228,187,124,0.3)'; e.currentTarget.style.color = 'var(--gold)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(228,187,124,0.15)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(228,187,124,0.12)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
           >
             Browse full folder →
           </a>
-          <span style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', opacity: 0.6 }}>
+          <span style={{
+            fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', opacity: 0.4,
+            letterSpacing: '0.04em'
+          }}>
             stdlib-only · deterministic · reproducible
           </span>
         </div>
@@ -214,58 +389,75 @@ export default function DemoDetail() {
 
       {/* Visualizer Note */}
       {demo.hasVisualizer && (
-        <div style={{ marginBottom: 48 }}>
-          <Card accent={true}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-              <span style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 24,
-                height: 24,
-                borderRadius: '50%',
-                background: 'rgba(228,187,124,0.15)',
-                color: 'var(--gold)',
-                fontWeight: 'bold',
-                fontSize: 14
-              }}>
-                ⚡
-              </span>
-              <h3 style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: 18,
-                fontWeight: 400,
+        <div style={{ marginBottom: 56 }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 14,
+            padding: '20px 28px',
+            background: 'rgba(228,187,124,0.04)',
+            border: '1px solid rgba(228,187,124,0.12)',
+            borderRadius: 6
+          }}>
+            <span style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 28,
+              height: 28,
+              borderRadius: '50%',
+              background: 'rgba(228,187,124,0.12)',
+              color: 'var(--gold)',
+              fontSize: 13,
+              flexShrink: 0
+            }}>
+              ⚡
+            </span>
+            <div>
+              <div style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 13,
+                fontWeight: 500,
                 color: 'var(--text)',
-                margin: 0
+                marginBottom: 2
               }}>
                 Interactive Visualizer Available
-              </h3>
+              </div>
+              <div style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 13,
+                color: 'var(--text-muted)',
+                opacity: 0.7
+              }}>
+                Run the demo locally for interactive output
+              </div>
             </div>
-            <p style={{
-              fontSize: 15,
-              color: 'var(--text-muted)',
-              margin: 0,
-              lineHeight: 1.6
-            }}>
-              This demo includes an interactive visualizer. Check the output when you run the demo for instructions.
-            </p>
-          </Card>
+          </div>
         </div>
       )}
 
       {/* Related Demos */}
-      <div style={{ marginTop: 60, paddingTop: 40, borderTop: '1px solid var(--border)' }}>
-        <SectionTitle title="More Demos" subtitle="Explore other demonstrations" />
+      <div style={{
+        marginTop: 64,
+        paddingTop: 40,
+        borderTop: '1px solid var(--border)'
+      }}>
         <Link
           to="/demos"
           style={{
             color: 'var(--gold)',
             textDecoration: 'none',
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: 500,
             fontFamily: 'var(--font-mono)',
-            display: 'inline-block'
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            opacity: 0.8,
+            transition: 'opacity 0.2s'
           }}
+          onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+          onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}
         >
           View all demos →
         </Link>

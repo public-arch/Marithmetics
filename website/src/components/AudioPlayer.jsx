@@ -9,6 +9,8 @@ export default function AudioPlayer({ src, title = 'Audio Overview', demoId }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [activeSrc, setActiveSrc] = useState(null);
+  const triedFormats = useRef(new Set());
 
   const formatTime = (time) => {
     if (!time || isNaN(time)) return '0:00';
@@ -52,9 +54,31 @@ export default function AudioPlayer({ src, title = 'Audio Overview', demoId }) {
     }
   };
 
+  // Try multiple audio formats: m4a first, then wav, then mp3
+  const getAudioFormats = useCallback(() => {
+    if (!src) return [];
+    const base = src.replace(/\.[^.]+$/, '');
+    return [`${base}.m4a`, `${base}.wav`, `${base}.mp3`];
+  }, [src]);
+
+  useEffect(() => {
+    const formats = getAudioFormats();
+    if (formats.length > 0 && !activeSrc) {
+      triedFormats.current.clear();
+      setActiveSrc(formats[0]);
+    }
+  }, [src, getAudioFormats, activeSrc]);
+
   const handleError = () => {
-    setHasError(true);
-    setIsLoaded(false);
+    const formats = getAudioFormats();
+    triedFormats.current.add(activeSrc);
+    const next = formats.find(f => !triedFormats.current.has(f));
+    if (next) {
+      setActiveSrc(next);
+    } else {
+      setHasError(true);
+      setIsLoaded(false);
+    }
   };
 
   const handleProgressClick = (e) => {
@@ -244,11 +268,12 @@ export default function AudioPlayer({ src, title = 'Audio Overview', demoId }) {
         </div>
       )}
 
-      {/* Hidden audio element */}
-      {src && (
+      {/* Hidden audio element — tries m4a, wav, mp3 */}
+      {activeSrc && (
         <audio
           ref={audioRef}
-          src={src}
+          key={activeSrc}
+          src={activeSrc}
           preload="metadata"
           onLoadedMetadata={handleLoadedMetadata}
           onError={handleError}

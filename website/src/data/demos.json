@@ -1,16 +1,5 @@
 [
   {
-    "id": "demo-11",
-    "slug": "demo-11-step-tests-do-not-certify-admissibility",
-    "title": "Step Tests & Admissibility",
-    "shortTitle": "Step Tests",
-    "category": "controllers",
-    "description": "Tests that step-function responses don't certify operator admissibility.",
-    "flagship": false,
-    "status": "certified",
-    "hasVisualizer": true
-  },
-  {
     "id": "demo-33",
     "slug": "demo-33-first-principles-standard-model-sm28-closure",
     "title": "First-Principles Standard Model",
@@ -19,7 +8,32 @@
     "description": "SM-28 closure pipeline: SCFP++ → Φ → SM derivation from first principles.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The full Standard Model — gauge couplings, fermion masses, CKM/PMNS mixing matrices, neutrino masses, vacuum energy, and Λ_QCD — emerges from the SCFP++ selection pipeline through a single Φ-channel with no fitted parameters.",
+    "result": "α₀⁻¹ = 137, sin²θ_W = 7/30, α_s = 2/17. Nine fermion masses, CKM unitarity defect 10⁻¹⁶, PMNS unitarity defect 4×10⁻¹⁷. Dressed predictions: v = 245.8 GeV, M_Z = 91.03 GeV, M_W = 79.71 GeV. Λ_QCD (4-loop MS̄) = 0.159 GeV.",
+    "falsification": "Drop the C2 (residue) gate and lane pool sizes explode: U(1) 3→14, SU(2) 1→6, SU(3) 2→7. The τ threshold is robust across Δτ ∈ [−0.020, 0.012]. If any gate drop fails to expand the pools, the selection is vacuous.",
+    "keyOutputs": [
+      {
+        "label": "v_dressed",
+        "value": "245.8 GeV",
+        "note": "PDG ~246"
+      },
+      {
+        "label": "M_Z",
+        "value": "91.03 GeV",
+        "note": "PDG 91.19"
+      },
+      {
+        "label": "M_W",
+        "value": "79.71 GeV",
+        "note": "PDG 80.38"
+      },
+      {
+        "label": "CKM unitarity",
+        "value": "10⁻¹⁶",
+        "note": "exact"
+      }
+    ]
   },
   {
     "id": "demo-34",
@@ -30,7 +44,32 @@
     "description": "Master demonstration of omega-to-standard-model correspondence and unification.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "A single deterministic integer triple — (137, 107, 103) — selected by number-theoretic admissibility gates on the window [97, 180], produces the Standard Model's coupling constants and mass-energy observables with no fitted parameters.",
+    "result": "α⁻¹ = 137 (exact), sin²θ_W = 7/30 = 0.2333 (Δ0.9%), α_s = 2/17 = 0.1176 (Δ0.2%). 9/11 observables within 10% of PDG. Unique triple in [80, 1M]. RMS |Δ| = 6.5%.",
+    "falsification": "Drop any gate and survivor count explodes: U(1) lock → 290, q₂ coupling → 1,089, SU(3) lock → 78,476 triples. The claim breaks if a second triple survives.",
+    "keyOutputs": [
+      {
+        "label": "α⁻¹",
+        "value": "137",
+        "note": "exact"
+      },
+      {
+        "label": "sin²θ_W",
+        "value": "0.2333",
+        "note": "PDG 0.2312"
+      },
+      {
+        "label": "α_s(M_Z)",
+        "value": "0.1176",
+        "note": "PDG 0.1179"
+      },
+      {
+        "label": "Unique triple in",
+        "value": "[80, 1M]",
+        "note": ""
+      }
+    ]
   },
   {
     "id": "demo-36",
@@ -41,7 +80,32 @@
     "description": "First-principles derivation of Big Bang dynamics from integer substrate.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": true
+    "hasVisualizer": true,
+    "claim": "Six Planck-scale cosmological parameters — H₀, Ω_b, Ω_c, A_s, n_s, τ — emerge from the same integer triple via deterministic monomial templates, with admissible (Fejér) operators controlling the primordial tilt and CMB amplitude.",
+    "result": "H₀ = 70.45, Ω_b h² = 0.0223, n_s = 0.9647, A_s = 2.10×10⁻⁹, τ = 0.054, ℓ₁ = 220 (CAMB: 222). All 8 structural gates pass. Tilt bridge matches within ε³.",
+    "falsification": "4/4 counterfactual triples produce certification scores 6× worse (0.59 vs 0.09). Signed illegal kernels inject HF energy fraction 0.23 — well above the 0.03 floor. If any counterfactual matches the primary score, the budget claim fails.",
+    "keyOutputs": [
+      {
+        "label": "H₀",
+        "value": "70.45",
+        "note": "km/s/Mpc"
+      },
+      {
+        "label": "n_s",
+        "value": "0.9647",
+        "note": "Planck ~0.965"
+      },
+      {
+        "label": "ℓ₁",
+        "value": "220",
+        "note": "CAMB 222"
+      },
+      {
+        "label": "ΔT/T",
+        "value": "10⁻⁵",
+        "note": "CMB scale"
+      }
+    ]
   },
   {
     "id": "demo-37",
@@ -52,7 +116,32 @@
     "description": "Mathematical demonstration of standard model emergence from deterministic substrate.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": true
+    "hasVisualizer": true,
+    "claim": "The same triple that produces gauge couplings also closes an independent mathematical series suite — Euler-Mascheroni, ζ(2), ζ(3), Catalan's G, ln 2, and π — to mean relative error ≤ ε³, from a deterministic term count derived from the triple.",
+    "result": "6,987 series terms (from triple). Mean relative error = 6.0×10⁻⁵ (bound: ε³ = 6.1×10⁻³). QED running: α⁻¹(M_Z) = 128.15 (ref 127.96, within ε³ tolerance). Base invariance across 11 bases. 6/6 counterfactuals miss by rel_dist ≥ 0.23.",
+    "falsification": "Illegal free-quark running (below Λ_QCD) produces α⁻¹(M_Z) = 126.54, violating the ε³-derived tolerance by 2×. If the confinement floor is unphysical, the QED closure breaks.",
+    "keyOutputs": [
+      {
+        "label": "Series terms",
+        "value": "6,987",
+        "note": "from triple"
+      },
+      {
+        "label": "Mean rel error",
+        "value": "6.0×10⁻⁵",
+        "note": "bound: 6.1×10⁻³"
+      },
+      {
+        "label": "α⁻¹(M_Z)",
+        "value": "128.15",
+        "note": "ref 127.96"
+      },
+      {
+        "label": "CFs miss",
+        "value": "6/6",
+        "note": "rel_dist ≥ 0.23"
+      }
+    ]
   },
   {
     "id": "demo-39",
@@ -63,7 +152,32 @@
     "description": "A2 archive master script for Big Bang cosmology simulations.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The A2 archive capsule re-derives the full BB-36 cosmological parameter set — including Yukawa palette, neutrino splittings, CMB amplitudes, and cross-base numeric invariance — from a single unified lawbook, verifying closure across 24 independent claims.",
+    "result": "24/24 scoreboard claims pass. H₀ = 70.45 (rank-1), A_s rank-1, n_s rank-1, τ rank-1. Yukawa D1 selects Palette-B as unique best. Neutrino hierarchy Δ₃₁/Δ₂₁ = 33.3. Cross-base roundtrip max |Δ| = 4.7×10⁻¹⁶.",
+    "falsification": "Rosetta negative controls: CRT collision exists on bad encodings, digit injection trips on designed failures. If the cross-base roundtrip fails for any constant or the neutrino hierarchy contract breaks, the archive is invalid.",
+    "keyOutputs": [
+      {
+        "label": "Claims",
+        "value": "24/24",
+        "note": "all pass"
+      },
+      {
+        "label": "H₀ rank",
+        "value": "1",
+        "note": "exact"
+      },
+      {
+        "label": "Δ₃₁/Δ₂₁",
+        "value": "33.3",
+        "note": "hierarchy"
+      },
+      {
+        "label": "Roundtrip Δ",
+        "value": "4.7×10⁻¹⁶",
+        "note": "numeric"
+      }
+    ]
   },
   {
     "id": "demo-40",
@@ -74,7 +188,32 @@
     "description": "Derives universal structure and emergent laws from zero initial conditions.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "Starting from zero initial assumptions, the finite elimination dynamics converge to (137, 107, 103) as an absorbing fixed point. The selection is rigid: only 3.7% of 5,832 neighborhood rule variants produce a unique triple, and 100% of those that do produce the primary.",
+    "result": "Absorbing fixed point verified. 5,832 variants tested: 5,616 yield no triple, 216 yield the primary, 0 yield a multi-triple. Cosmology: H₀ = 70.45, n_s = 0.9647. All counterfactual triples produce H₀ > 2,800 km/s/Mpc (implausible).",
+    "falsification": "Digit-dependent selectors are not portable (frequency 0.27 < 0.50). 4/4 counterfactual triples fail all plausibility gates (H₀ ranges from 2,880 to 6,630). Noether energy drift: legal = 2.2×10⁻¹², illegal = 2.7×10⁸⁶.",
+    "keyOutputs": [
+      {
+        "label": "Rigidity",
+        "value": "3.7%",
+        "note": "variants with unique triple"
+      },
+      {
+        "label": "Primary hits",
+        "value": "100%",
+        "note": "of unique variants"
+      },
+      {
+        "label": "CF H₀ range",
+        "value": "2.9K–6.6K",
+        "note": "all implausible"
+      },
+      {
+        "label": "Legal energy drift",
+        "value": "2×10⁻¹²",
+        "note": "vs illegal 10⁸⁶"
+      }
+    ]
   },
   {
     "id": "demo-51",
@@ -85,7 +224,32 @@
     "description": "Quantum field theory + general relativity vacuum energy suppression to <1% closure.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The cosmological constant — off by ~120 orders of magnitude in naive QFT — is derived to sub-1% accuracy from the same integer triple, using only the Standard Model's loop geometry. No new physics, no anthropic reasoning.",
+    "result": "ρ_pred/ρ_obs = 0.9907 (0.93% accuracy). Λ₅ = 0.221 GeV from 2-loop QCD at n_f = 5. Renormalization-scale sweep μ = 45–182 GeV: all ratios within 3%.",
+    "falsification": "4/4 counterfactual triples produce ratios of 10⁻⁵⁵ to 10⁻¹⁴⁶ — catastrophic failure. The mechanism works specifically for (137, 107, 103). If any counterfactual ratio approaches 1, the derivation is accidental.",
+    "keyOutputs": [
+      {
+        "label": "ρ_pred/ρ_obs",
+        "value": "0.9907",
+        "note": "0.93% accuracy"
+      },
+      {
+        "label": "Λ₅",
+        "value": "0.221 GeV",
+        "note": "2-loop, nf=5"
+      },
+      {
+        "label": "μ-sweep stability",
+        "value": "≤ 3%",
+        "note": "45–182 GeV"
+      },
+      {
+        "label": "CF ratios",
+        "value": "10⁻⁵⁵ to 10⁻¹⁴⁶",
+        "note": "all fail"
+      }
+    ]
   },
   {
     "id": "demo-53",
@@ -96,7 +260,32 @@
     "description": "Emergence of physical law structure from deterministic substrate.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "Five physical laws — Noether conservation, the inverse-square force law, continuum isotropy, and quantum unitarity — emerge as the unique fixed points of discrete selection sweeps on the integer substrate. No law is assumed; each is derived by elimination.",
+    "result": "Noether: energy drift = 1.5×10⁻⁴ at ε=0, diverges monotonically to 3.9% at ε=0.1. Inverse-square: p=2 is the unique zero of the Gauss flux score (0.000 vs nearest 0.399). Isotropy: w₂=1/6 uniquely minimizes anisotropy. Unitarity: θ=0.5 is the unique norm-preserving scheme (drift 4.4×10⁻¹⁴ vs next-best 1.2×10⁻⁴).",
+    "falsification": "Each sweep has exactly one zero/minimum. The claim breaks if any sweep has a second fixed point, or if perturbing ε doesn't monotonically degrade Noether conservation.",
+    "keyOutputs": [
+      {
+        "label": "Noether zero",
+        "value": "ε = 0",
+        "note": "unique"
+      },
+      {
+        "label": "Force law",
+        "value": "p = 2",
+        "note": "unique zero"
+      },
+      {
+        "label": "Isotropy",
+        "value": "w₂ = 1/6",
+        "note": "unique min"
+      },
+      {
+        "label": "Unitarity",
+        "value": "θ = 0.5",
+        "note": "drift 10⁻¹⁴"
+      }
+    ]
   },
   {
     "id": "demo-54",
@@ -107,7 +296,32 @@
     "description": "First-principles, deterministic, single-file standard model flagship demonstration.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": true
+    "hasVisualizer": true,
+    "claim": "A single-file, first-principles demonstration that the integer triple (137, 107, 103) produces gauge couplings, vacuum energy to <1%, neutrino mass splittings, the Feigenbaum constant, emergent gravity with inverse-square scaling, and field correlation signatures — all from one deterministic pipeline.",
+    "result": "Vacuum: ρ_pred/ρ_obs = 0.991 (<1%). Feigenbaum δ = 4.6692 (error 3.9×10⁻⁶). GR: inverse-square slope = −2.07 with illegal ringing curvature jump ≥ ε. Neutrinos: Δm²₂₁ = 7.50×10⁻⁵ eV², Σmν = 0.060 eV. 4/4 CFs separated on every observable.",
+    "falsification": "Field correlation: 4/4 counterfactuals have distance D ≥ ε = 0.18 from primary signature. GR: illegal operators increase ringing curvature from 0.067 → 0.382 (jump ≥ ε). If any counterfactual matches the primary correlation fingerprint, the emergence is trivial.",
+    "keyOutputs": [
+      {
+        "label": "ρ_pred/ρ_obs",
+        "value": "0.991",
+        "note": "<1%"
+      },
+      {
+        "label": "Feigenbaum δ",
+        "value": "4.6692",
+        "note": "err 3.9×10⁻⁶"
+      },
+      {
+        "label": "GR slope",
+        "value": "−2.07",
+        "note": "inverse-square"
+      },
+      {
+        "label": "Σmν",
+        "value": "0.060 eV",
+        "note": "below 0.12 bound"
+      }
+    ]
   },
   {
     "id": "demo-55",
@@ -118,7 +332,32 @@
     "description": "Derives proton charge radius from substrate selection rules.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The proton charge radius is derived from Λ_QCD (itself derived from α_s = 2/17) via a fixed mapping r_p = (ℏc/Λ₅)·√(1/(1+α_s)). No fit to the measured radius is performed.",
+    "result": "r_p = 0.843 fm (ref: 0.841 fm, Δ = +0.27%, +3.5σ). 2-loop Λ₅ = 0.221 GeV. Within the 1% evaluation gate.",
+    "falsification": "6/6 counterfactual triples produce r_p from 7×10⁵ to 1.6×10²⁴ fm — off by 6 to 24 orders of magnitude. The mapping is catastrophically sensitive to the triple. If any counterfactual lands within 20% of 0.84 fm, the derivation is accidental.",
+    "keyOutputs": [
+      {
+        "label": "r_p",
+        "value": "0.843 fm",
+        "note": "ref 0.841 fm"
+      },
+      {
+        "label": "Δ",
+        "value": "+0.27%",
+        "note": "3.5σ"
+      },
+      {
+        "label": "CF range",
+        "value": "10⁵–10²⁴ fm",
+        "note": "all miss"
+      },
+      {
+        "label": "Λ₅",
+        "value": "0.221 GeV",
+        "note": "2-loop"
+      }
+    ]
   },
   {
     "id": "demo-56",
@@ -129,7 +368,32 @@
     "description": "Compares deterministic operator calculus against classical finite differences.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The Fejér kernel — the admissible operator from the Marithmetics framework — outperforms classical finite differences on four benchmark problems: linear advection, Poisson inversion, reaction-diffusion, and 3D Navier-Stokes, without tuning resolution to the problem.",
+    "result": "Advection: zero overshoot (sharp: 0.068, signed: 0.137). Poisson: spectral beats FD by ratio 3.5×10⁻¹². Fisher-KPP: Fejér/FD error ratio = 5.8×10⁻⁵. NS 3D: Fejér error 0.545 vs sharp/signed 1.153. 4/4 counterfactuals degrade on every experiment.",
+    "falsification": "Non-admissible controls always ring: TV ratio (sharp/Fejér) = 2.7×, overshoot mass nonzero. Counterfactual budgets (K=20 vs K=60) produce L2 errors 1.7× worse. If any illegal kernel outperforms Fejér or any CF matches the primary, the admissibility claim is void.",
+    "keyOutputs": [
+      {
+        "label": "Advection overshoot",
+        "value": "0",
+        "note": "Fejér"
+      },
+      {
+        "label": "Poisson ratio",
+        "value": "3.5×10⁻¹²",
+        "note": "spectral vs FD"
+      },
+      {
+        "label": "NS error",
+        "value": "0.545 vs 1.153",
+        "note": "Fejér vs illegal"
+      },
+      {
+        "label": "CF degrade",
+        "value": "4/4",
+        "note": "all experiments"
+      }
+    ]
   },
   {
     "id": "demo-58",
@@ -140,7 +404,32 @@
     "description": "Derives weak-field general relativity from discrete Poisson substrate.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The three classical tests of general relativity — gravitational light bending (1/b), Shapiro delay (ln b), and gravitational redshift (1/r) — emerge from a discrete Poisson substrate filtered by admissible operators, with no continuum GR assumed.",
+    "result": "Newtonian slope: −1.94 (truth: −2.01, within ε). Light bending slope: −0.95 (truth: −1.05, within ε). Shapiro R² = 0.9996. Redshift R² = 0.9992, amplitude error 7.3%. All 4/4 CFs degrade all three scores.",
+    "falsification": "Signed illegal operators inject HF energy fraction 0.35 (floor: 0.006) and increase ringing curvature by 6.5× on light bending, 7.2× on Shapiro. If the admissible solution's curvature exceeds the illegal's, the operator selection is not doing work.",
+    "keyOutputs": [
+      {
+        "label": "Newtonian slope",
+        "value": "−1.94",
+        "note": "truth −2.01"
+      },
+      {
+        "label": "Shapiro R²",
+        "value": "0.9996",
+        "note": ""
+      },
+      {
+        "label": "Redshift R²",
+        "value": "0.9992",
+        "note": ""
+      },
+      {
+        "label": "HF injection",
+        "value": "0.35",
+        "note": "signed illegal"
+      }
+    ]
   },
   {
     "id": "demo-59",
@@ -151,7 +440,32 @@
     "description": "Electromagnetic field emergence from operator-theoretic framework.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "Coulomb's inverse-square law and Maxwell-class operator behavior emerge from the same admissible filtering framework, with Fejér kernels eliminating Gibbs ringing and preserving field boundedness where sharp and signed cutoffs fail.",
+    "result": "Electrostatics slope: −1.79 (truth: −1.91, within 2ε tolerance). Fejér overshoot: 0.000 (sharp: 0.068, signed: 0.250). TV ratio Fejér/sharp = 0.47. 4/4 CFs degrade on both electrostatics and Maxwell suites.",
+    "falsification": "Sharp cutoff exhibits 29× higher ringing curvature than Fejér in electrostatics. Signed kernel retains 100% HF energy beyond K_primary. If Fejér overshoot is nonzero or any counterfactual budget outperforms the primary, the admissibility claim fails.",
+    "keyOutputs": [
+      {
+        "label": "Coulomb slope",
+        "value": "−1.79",
+        "note": "truth −1.91"
+      },
+      {
+        "label": "Fejér overshoot",
+        "value": "0.000",
+        "note": "vs sharp 0.068"
+      },
+      {
+        "label": "Ringing ratio",
+        "value": "29×",
+        "note": "sharp vs Fejér"
+      },
+      {
+        "label": "CF degrade",
+        "value": "4/4",
+        "note": "both suites"
+      }
+    ]
   },
   {
     "id": "demo-60",
@@ -162,7 +476,32 @@
     "description": "Master-grade quantum mechanics demonstration from first principles.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "Quantum probability density, double-slit interference, time-reversal symmetry, and PDE dispersion — four independent quantum-mechanical signatures — all require admissible operators to function correctly. Illegal operators destroy unitarity, reversibility, or positivity.",
+    "result": "Probability: Fejér min density = 0.003 (positive); sharp = −0.082 (negative). Double-slit: unitary norm drift = 4.4×10⁻¹⁴. Time reversal: CN return error = 1.5×10⁻¹⁵; illegal Euler = 8.3×10⁵⁷. Ladder stability: E1 and E2 constants stable across N=256,512.",
+    "falsification": "Illegal Euler destroys time-reversal by 72 orders of magnitude (error 10⁵⁷ vs 10⁻¹⁵). Wick rotation (signed) destroys Schrödinger truth (error 1.0 vs 0.07). 4/4 CFs increase distortion on every experiment. If any illegal scheme matches CN on any metric, the admissibility requirement is unnecessary.",
+    "keyOutputs": [
+      {
+        "label": "Norm drift",
+        "value": "4.4×10⁻¹⁴",
+        "note": "CN unitary"
+      },
+      {
+        "label": "Time-reversal",
+        "value": "10⁻¹⁵ vs 10⁵⁷",
+        "note": "CN vs Euler"
+      },
+      {
+        "label": "Density min",
+        "value": "+0.003",
+        "note": "Fejér positive"
+      },
+      {
+        "label": "CF degrade",
+        "value": "4/4",
+        "note": "all experiments"
+      }
+    ]
   },
   {
     "id": "demo-63",
@@ -173,7 +512,32 @@
     "description": "Gravitational wave inspiral phase matching and dynamics.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "Gravitational-wave inspiral dephasing for binary neutron stars and binary black holes is computed from first-principles amplitude A = 0.107, derived from the triple, with counterfactual triples producing observable vectors separated by rel_dist > 1.",
+    "result": "Primary amplitude A = 0.107. BNS 1.4+1.4: 54,150 rad (Band1). BBH 30+30: 321 rad (Band1). 11/12 CFs miss by rel_dist ≥ ε. One CF (409,107,103) has near-zero separation (0.004) — the expected near-degenerate case where only wU changes.",
+    "falsification": "Counterfactual vectors diverge rapidly: (137,107,239) has rel_dist = 1.03, (137,107,919) has rel_dist = 3.84. The observable vector is sensitive to s3 specifically. If more than 1/4 of CFs land near the primary, the derivation is degenerate.",
+    "keyOutputs": [
+      {
+        "label": "Amplitude A",
+        "value": "0.107",
+        "note": "from triple"
+      },
+      {
+        "label": "BNS dephase",
+        "value": "54,150 rad",
+        "note": "Band1"
+      },
+      {
+        "label": "CFs miss",
+        "value": "11/12",
+        "note": "rel_dist ≥ ε"
+      },
+      {
+        "label": "Max CF dist",
+        "value": "3.84",
+        "note": ""
+      }
+    ]
   },
   {
     "id": "demo-64",
@@ -184,7 +548,32 @@
     "description": "Shows integer triple (137,107,103) is invariant across number bases.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The selection of (137, 107, 103) is a property of the integers themselves, not their representation. The triple, lane survivor pools, and all derived invariants are identical whether encoded in base 2, 7, 16, or any other base.",
+    "result": "11 bases tested (2–16): triple invariant, pools invariant, zero round-trip failures. Determinism hash reproduced exactly.",
+    "falsification": "A negative control deliberately violates the encoding contract: 84 failures per base, triple destroyed in all 11 bases. If the negative control ever preserves the triple, or if any base produces a different triple, the invariance claim is false.",
+    "keyOutputs": [
+      {
+        "label": "Bases tested",
+        "value": "11",
+        "note": "2 through 16"
+      },
+      {
+        "label": "RT failures",
+        "value": "0",
+        "note": ""
+      },
+      {
+        "label": "NC failures",
+        "value": "84/base",
+        "note": "all 11 bases"
+      },
+      {
+        "label": "Triple",
+        "value": "invariant",
+        "note": "all bases"
+      }
+    ]
   },
   {
     "id": "demo-65",
@@ -195,7 +584,32 @@
     "description": "Resolution of the continuous lift paradox in topological spaces.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The continuous lift paradox — negative probability densities arising from sharp spectral truncation — is resolved by admissible operators. The same resolution extends to GR weak-field tests and quantum capstone witnesses, all from one framework.",
+    "result": "Fejér density min = +0.003 (positive); sharp = −0.082 (negative, below −ε²). TV: Fejér 1.99 vs sharp 5.84. GR: light-bending slope −0.94, Shapiro R² = 0.9996, redshift R² = 0.9991. Noether drift: legal 4.3×10⁻¹³, illegal 3.2×10⁶.",
+    "falsification": "4/4 CFs degrade paradox distortion, quantum distortion, and all three GR scores simultaneously. Illegal signed kernel retains HF fraction 0.51. If Fejér ever produces negative density or any CF matches the primary across all witnesses, the resolution is trivial.",
+    "keyOutputs": [
+      {
+        "label": "Fejér density",
+        "value": "+0.003",
+        "note": "always positive"
+      },
+      {
+        "label": "Sharp density",
+        "value": "−0.082",
+        "note": "violates prob."
+      },
+      {
+        "label": "Noether drift",
+        "value": "4×10⁻¹³",
+        "note": "legal"
+      },
+      {
+        "label": "CF degrade",
+        "value": "4/4",
+        "note": "all witnesses"
+      }
+    ]
   },
   {
     "id": "demo-66",
@@ -206,7 +620,32 @@
     "description": "Master flagship demonstration of quantum gravity unification.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "GR strong-field predictions — black hole horizons, photon spheres, ISCOs — emerge from the integer substrate with a gravitational coupling that runs from 10⁻¹¹ (Mercury) to 5×10⁻³ (BH proxy) via a single screening function. No separate gravitational theory is assumed.",
+    "result": "38/38 gates pass. Horizon r₊ → 2M, photon sphere r_ph → 3M, ISCO r_ISCO → 6M. Strong-field deviations bounded by ε² ≈ 0.033. RG fit SSE = 3.6×10⁻⁵. Two independent witnesses agree to <8% relative deviation.",
+    "falsification": "Illegal control (raw Θ instead of screened g_eff) inflates Q² > 1, destroying the horizon entirely. 4/4 CFs destabilize strong-field solutions. If the horizon survives under the illegal control, the screening is not doing work.",
+    "keyOutputs": [
+      {
+        "label": "Gates",
+        "value": "38/38",
+        "note": "all pass"
+      },
+      {
+        "label": "r₊",
+        "value": "2M",
+        "note": "Schwarzschild"
+      },
+      {
+        "label": "RG SSE",
+        "value": "3.6×10⁻⁵",
+        "note": ""
+      },
+      {
+        "label": "Illegal",
+        "value": "horizon lost",
+        "note": "Q² > 1"
+      }
+    ]
   },
   {
     "id": "demo-67",
@@ -217,7 +656,32 @@
     "description": "Deterministic Navier-Stokes derivation from operator-theoretic first principles.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The Fejér kernel — the same admissible operator that selects the triple — enforces incompressible Navier-Stokes regularity on a 3D Taylor-Green vortex. The physical content is in the operator, not the fluid equations.",
+    "result": "Lawful divergence ≤ 10⁻¹⁴. Error vs truth: lawful 0.92, illegal 9.63. Certification score: lawful 7.67, illegal 28.43. 4/4 CFs produce scores of 35.8 (4.7× degradation).",
+    "falsification": "Sharp and signed controls produce errors 10× worse while maintaining incompressibility only to 10⁻⁹. If any illegal kernel beats the lawful score, or any CF matches the primary's score, the operator is not the active ingredient.",
+    "keyOutputs": [
+      {
+        "label": "Divergence",
+        "value": "≤ 10⁻¹⁴",
+        "note": "lawful"
+      },
+      {
+        "label": "Error ratio",
+        "value": "0.92 vs 9.63",
+        "note": "lawful vs illegal"
+      },
+      {
+        "label": "Score",
+        "value": "7.67 vs 28.43",
+        "note": "lawful vs illegal"
+      },
+      {
+        "label": "CF degrade",
+        "value": "4.7×",
+        "note": ""
+      }
+    ]
   },
   {
     "id": "demo-68",
@@ -228,7 +692,32 @@
     "description": "Master-grade general relativity demonstration from first principles.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "Four classical GR tests — light bending, Shapiro delay, gravitational redshift, and perihelion precession — plus an Einstein completion witness (Fermat compatibility), all emerge from a discrete Poisson substrate with DOC-legal operators. A resolution ladder confirms stability across three grid tiers.",
+    "result": "Light-bending slope: −0.94 (truth −1.03). Shapiro R² = 0.9996. Redshift R² = 0.9992. Perihelion near-field slope: −0.98 (truth: −1.12). Einstein Fermat consistency: 0.14 (illegal: 0.49). Ladder ratio: 1.04 (within 1+ε). 4/4 CFs degrade all five scores.",
+    "falsification": "Illegal controls worsen every metric: Fermat consistency jumps from 0.14 to 0.49, accuracy vs truth from 0.10 to 0.52. Designed ladder failure (K=7 instead of 15) inflates distortion from 0.078 to 0.246. If the ladder breaks or any illegal control improves a score, the DOC framework is unnecessary.",
+    "keyOutputs": [
+      {
+        "label": "Tests",
+        "value": "5/5",
+        "note": "light bending, Shapiro, redshift, precession, Einstein"
+      },
+      {
+        "label": "Fermat consistency",
+        "value": "0.14",
+        "note": "illegal 0.49"
+      },
+      {
+        "label": "Ladder ratio",
+        "value": "1.04",
+        "note": "within 1+ε"
+      },
+      {
+        "label": "CF degrade",
+        "value": "4/4",
+        "note": "all scores"
+      }
+    ]
   },
   {
     "id": "demo-69",
@@ -239,7 +728,32 @@
     "description": "Bridges operator admissibility contracts across different domains.",
     "flagship": false,
     "status": "certified",
-    "hasVisualizer": true
+    "hasVisualizer": true,
+    "claim": "The Operator Admissibility Transfer Bridge shows that the Fejér kernel's nonnegative, bounded properties transfer across domains: sharp truncation (Gibbs), classical paradoxes (Zeno, Grandi, Hilbert hotel), quantum collapse, and multi-dimensional PDE control — all fail under illegal operators, all succeed under admissible ones.",
+    "result": "UFET K(r) spread = 0.57% (near-constant 2/3). Fejér distance vs truth = 0.14 (within ε). Zeno partial sum: 1 − 9.3×10⁻¹⁰. Grandi Cesàro: exactly 0.5. Ω PDE reuse: 3D tracking improves 1.66×, 4D tracking 1.29×, vector div ratio 2.7×10⁻¹⁹. Rigidity: primary hits 0.01% of 36,288 variants.",
+    "falsification": "Sharp collapse injects 9.3×10²⁶ × more HF than OATB. Signed partitions generate illegal negative mass = −0.235. Digit-dependent selectors are not portable (5 distinct outputs across bases). If any illegal operator matches the OATB on any domain, transferability is false.",
+    "keyOutputs": [
+      {
+        "label": "K(r) spread",
+        "value": "0.57%",
+        "note": "near 2/3"
+      },
+      {
+        "label": "Paradox resolution",
+        "value": "4/4",
+        "note": "Zeno, Grandi, Gibbs, Hilbert"
+      },
+      {
+        "label": "PDE tracking",
+        "value": "1.66×",
+        "note": "3D improvement"
+      },
+      {
+        "label": "Rigidity",
+        "value": "0.01%",
+        "note": "primary hit rate"
+      }
+    ]
   },
   {
     "id": "demo-70",
@@ -250,7 +764,32 @@
     "description": "Higgs mechanism derived from deterministic substrate selection.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The Higgs boson mass emerges from the integer triple through three independent channels: electroweak dressing closure (M_Z ≈ 91.15 GeV), UV critical-edge λ* = 0.173, and a mode ladder where d=13 (the SU(2) lock) minimizes |Δ| from 125 GeV.",
+    "result": "EW closure: v = 246.3 GeV, M_Z = 91.15 GeV, α(M_Z) = 1/128.2. UV edge: λ* = 0.1734, primary budget reproduces truth within ε³ (error 1.1×10⁻⁵). Mode ladder: d=13 gives m_H = 123.9 GeV (|Δ| = 1.12 GeV from 125).",
+    "falsification": "Illegal sign-flipped palette: v = 238.0, M_Z = 85.2 (14× worse). UV illegal: 31× worse error. CF budget loses d=13 entirely, best CF |Δ| = 5.37 GeV (4.8× worse). If any illegal control or CF produces |Δ| < 1.12, the SU(2) lock is coincidental.",
+    "keyOutputs": [
+      {
+        "label": "M_Z",
+        "value": "91.15 GeV",
+        "note": "PDG 91.19"
+      },
+      {
+        "label": "λ*",
+        "value": "0.1734",
+        "note": "UV critical edge"
+      },
+      {
+        "label": "m_H",
+        "value": "123.9 GeV",
+        "note": "PDG 125.0"
+      },
+      {
+        "label": "Best mode",
+        "value": "d = 13",
+        "note": "SU(2) lock"
+      }
+    ]
   },
   {
     "id": "demo-71",
@@ -261,7 +800,32 @@
     "description": "Single-action principle emergence from integer substrate.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": true
+    "hasVisualizer": true,
+    "claim": "A single action principle — the one-action — simultaneously produces Noether conservation (classical), unitarity and time-reversibility (quantum), and energy conservation (field), all derived from the triple's invariants. Illegal integrators and anti-action sign-flips destroy all three.",
+    "result": "Classical: VV angular momentum drift = 9.5×10⁻¹⁴, symplectic area det = 1.000. Quantum: CN norm drift = 6.7×10⁻¹⁶, reversal error = 1.5×10⁻¹⁵. Field: leapfrog energy drift = 2.2×10⁻⁶. Euler breaks all: L_drift = 5.3, norm_drift = 10²¹, energy_drift = 0.04.",
+    "falsification": "Anti-action sign-flip: state magnitude blows up to 10⁶. Euler norm drift: 10²¹ (vs CN 10⁻¹⁶ — 37 orders of magnitude). CF budgets degrade VV trajectory error by 9× (0.004 → 0.041). If any illegal integrator preserves all three conservation laws, the one-action is redundant.",
+    "keyOutputs": [
+      {
+        "label": "L drift (VV)",
+        "value": "9.5×10⁻¹⁴",
+        "note": "Euler: 5.3"
+      },
+      {
+        "label": "Norm drift",
+        "value": "6.7×10⁻¹⁶",
+        "note": "Euler: 10²¹"
+      },
+      {
+        "label": "Field energy",
+        "value": "2.2×10⁻⁶",
+        "note": "Euler: 0.04"
+      },
+      {
+        "label": "Anti-action",
+        "value": "blowup 10⁶",
+        "note": ""
+      }
+    ]
   },
   {
     "id": "demo-73",
@@ -272,7 +836,32 @@
     "description": "Kernel → Yukawas → CKM+PMNS flavor completion hierarchy.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The full flavor sector — nine Yukawa couplings, CKM quark mixing (3 angles + CP phase + Jarlskog invariant), and PMNS lepton mixing — emerges from admissible kernel smoothing of the deterministic triple, with base-invariant CKM and PMNS vectors.",
+    "result": "Yukawa distance to truth: 7.1×10⁻². CKM: θ₁₂ = 4.74° (truth 4.55°), Jarlskog J = 8.5×10⁻⁵. PMNS: θ₁₂ = 55.3° (truth 54.7°), θ₂₃ = 36.9° (truth 36.3°). CKM/PMNS vectors invariant across 11 bases (max Δ = 0).",
+    "falsification": "Signed illegal textures produce negative eigenvalues (CKM: −3.3, PMNS: −3.98). Sharp illegal CKM distance = 0.56 (vs primary 0.043 — 13× worse). CF budget degrades CKM by 5.3× and PMNS by 5.1×. If any illegal operator preserves positive-definite texture, the admissibility requirement is unmotivated.",
+    "keyOutputs": [
+      {
+        "label": "CKM θ₁₂",
+        "value": "4.74°",
+        "note": "truth 4.55°"
+      },
+      {
+        "label": "PMNS θ₁₂",
+        "value": "55.3°",
+        "note": "truth 54.7°"
+      },
+      {
+        "label": "Jarlskog J",
+        "value": "8.5×10⁻⁵",
+        "note": ""
+      },
+      {
+        "label": "Base invariance",
+        "value": "Δ = 0",
+        "note": "11 bases"
+      }
+    ]
   },
   {
     "id": "demo-75",
@@ -283,7 +872,32 @@
     "description": "Tracks and validates all predictions in a cryptographic ledger.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "A prediction ledger of experimentally testable quantities — neutrino masses, PMNS angles, CP phase δ ≈ 82–98°, effective Majorana mass m_ββ, dark matter candidate mass, and strong-field black hole deviations — all derived from the triple with convergence deltas tracked.",
+    "result": "Neutrinos: Δm²₂₁ = 7.50×10⁻⁵ eV², m₃ = 0.050 eV, Σ = 0.060 eV. PMNS: sin δ = 0.991, δ = 82°/98°. m_ββ = 5.84×10⁻³ eV. Dark: m_χ = 180.8 (proxy), σ = 7.2×10⁻¹⁰. Strong-field: r₊ = 1.990, score = 0.018 (< ε²).",
+    "falsification": "Illegal Θ destroys the horizon (Q² = 1.07 > 1) and inflates σ_proxy by 10⁵. Sharp illegal shifts neutrino distance by 39×. CF triples produce infinite distance (divergent) on neutrino sector. If any CF or illegal control matches the primary ledger, the predictions are not specific to the triple.",
+    "keyOutputs": [
+      {
+        "label": "δ_CP",
+        "value": "82°/98°",
+        "note": "testable"
+      },
+      {
+        "label": "Σmν",
+        "value": "0.060 eV",
+        "note": "below 0.12"
+      },
+      {
+        "label": "m_ββ",
+        "value": "5.8×10⁻³ eV",
+        "note": "0νββ target"
+      },
+      {
+        "label": "m_χ",
+        "value": "180.8",
+        "note": "dark candidate"
+      }
+    ]
   },
   {
     "id": "demo-76",
@@ -294,7 +908,32 @@
     "description": "Primorial-based Yukawa coupling derivation from deterministic rules.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The nine Yukawa couplings are derived from the primorial Θ = φ(M₁₇)/M₁₇ and a family angle θ₁₂ = π̂/12, where π̂ is a Fejér-smoothed Leibniz series. The primorial cutoff y = q₃ = 17, the angle denominator 12, and the log base e are each uniquely selected by sensitivity scans.",
+    "result": "Yukawa distance to truth: 2.2×10⁻⁵. Hierarchies preserved: t/b = 58.8, c/s = 26.3. Sensitivity: y=17 is the unique best primorial cutoff; k=12 is the unique best angle denominator; base e is the unique best log base. dist(r) decreases monotonically with resolution.",
+    "falsification": "Sharp illegal angle (16 terms): distance 38× worse. Signflip (destroys alternating cancellation): distance 7,800× worse, θ₁₂ = 1.09 rad (physical: 0.26 rad). CFs degrade by 2,300×. If any alternative y, k, or log base matches q₃=17/k=12/base e, the selection is not unique.",
+    "keyOutputs": [
+      {
+        "label": "Yukawa dist",
+        "value": "2.2×10⁻⁵",
+        "note": "to truth"
+      },
+      {
+        "label": "Primorial",
+        "value": "M₁₇ = 510,510",
+        "note": "y = q₃ = 17"
+      },
+      {
+        "label": "θ₁₂",
+        "value": "π̂/12",
+        "note": "0.262 rad"
+      },
+      {
+        "label": "Hierarchy",
+        "value": "t/b = 58.8",
+        "note": "c/s = 26.3"
+      }
+    ]
   },
   {
     "id": "demo-77",
@@ -305,7 +944,32 @@
     "description": "Demonstrates rigidity of the emergent mathematical grammar.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The mathematical grammar that produces (137, 107, 103) is rigid: across 75 billion residue-rule instances, the canonical triple is the most frequent unique outcome under both MinLane and MinMDL policies. The grammar is not an artifact of a narrow parameter window.",
+    "result": "75.1 billion instances: 5.5% yield unique triple, 1.9% yield canonical. Canonical is #1 under both policies (2.12 billion hits, 0 disagreements). Window scan: 14/14 unique windows all yield canonical. τ scan: 5,733/5,733 unique cases all canonical. Monte Carlo: P(unique) = 0.18%, P(canonical|unique) = 71%.",
+    "falsification": "4/4 negative controls (lane swap, residue mirror, wrong v₂ coherence, wrong window) destroy the canonical triple. Extended window [50,250]: dropping C2 explodes triples from 1 to 96. If any negative control preserves the canonical triple, the grammar has a hidden symmetry.",
+    "keyOutputs": [
+      {
+        "label": "Instances",
+        "value": "75.1B",
+        "note": "exact enumeration"
+      },
+      {
+        "label": "Canonical rank",
+        "value": "#1",
+        "note": "both policies"
+      },
+      {
+        "label": "P(canon|unique)",
+        "value": "71%",
+        "note": "Monte Carlo"
+      },
+      {
+        "label": "NCs destroy",
+        "value": "4/4",
+        "note": "all break"
+      }
+    ]
   },
   {
     "id": "demo-78",
@@ -316,6 +980,31 @@
     "description": "Midlift protocol for intermediate-scale emergence and scaling.",
     "flagship": true,
     "status": "certified",
-    "hasVisualizer": false
+    "hasVisualizer": false,
+    "claim": "The midlift protocol bridges the abstract triple to physical observables through a compressed 9×3 matrix (Frobenius error 6.7×10⁻¹⁷), mapping to CKM elements, mass ratios, and the proton charge radius — with 6/6 required core targets within error budgets and 15/15 extended targets passing.",
+    "result": "Core: |V_cb| = 0.0419 (target 0.0422), |V_ub| = 0.00414 (target 0.00394), |V_us| = 0.225 (target 0.224), Δm²₂₁/Δm²₃₁ = 0.0300 (target 0.03), m_μ/m_p = 0.112 (target 0.113). Ext: r_p/λ_Cp = 3.994 (target 3.998), δ_CP/π = 1.226 (target 1.21). Gauge embedding: α₁,α₂,α₃ derived.",
+    "falsification": "Illegal signed control: 0/6 core targets pass (all fail), 1/15 extended targets pass. Signed Φ-map errors are 750× worse (α_em error 0.036 vs 4.7×10⁻⁵). 4/4 CFs miss on Φ-map. If the illegal control passes any required core target, the midlift mapping is degenerate.",
+    "keyOutputs": [
+      {
+        "label": "Core targets",
+        "value": "6/6",
+        "note": "all within budget"
+      },
+      {
+        "label": "Ext targets",
+        "value": "15/15",
+        "note": "all pass"
+      },
+      {
+        "label": "Compression",
+        "value": "9×3",
+        "note": "Frob err 10⁻¹⁷"
+      },
+      {
+        "label": "Illegal core",
+        "value": "0/6",
+        "note": "all fail"
+      }
+    ]
   }
 ]
