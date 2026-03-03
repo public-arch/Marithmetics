@@ -1,4 +1,5 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import SiteHeader from './components/SiteHeader';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -10,9 +11,16 @@ import Methodology from './pages/Methodology';
 import About from './pages/About';
 import Discovery from './pages/Discovery';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
 export default function App() {
   return (
     <HashRouter>
+      <ScrollToTop />
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <SiteHeader />
         <main style={{ flex: 1 }}>

@@ -51,7 +51,7 @@ export default function SiteHeader() {
         >
           Marithmetics
         </Link>
-        <nav style={{ display: 'flex', gap: 0, overflow: 'auto', flex: 1 }}>
+        <nav style={{ display: 'flex', gap: 0, overflow: 'auto' }}>
           {NAV_ITEMS.map(item => (
             <Link
               key={item.path}
