@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
 export default function AudioPlayer({ src, title = 'Audio Overview', demoId }) {
   const audioRef = useRef(null);
