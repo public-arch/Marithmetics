@@ -299,74 +299,117 @@ export default function About() {
         <section style={{ marginBottom: 80 }}>
           <SectionTitle
             title="About the Author"
-            subtitle="The person behind the pipeline"
+            subtitle="Why this exists"
           />
 
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr',
-            gap: 32,
-            marginTop: 24,
-            maxWidth: 800
+            maxWidth: 760,
+            marginTop: 32,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 28
           }}>
-            <Card>
+            <div style={{
+              display: 'flex',
+              gap: 32,
+              alignItems: 'flex-start',
+              flexWrap: 'wrap'
+            }}>
+              <div style={{ flex: 1 }}>
+                <Card accent>
               <p style={{
                 fontSize: 16,
-                color: 'var(--text)',
+                color: 'var(--text-muted)',
                 margin: 0,
                 lineHeight: 1.9,
-                fontFamily: 'var(--font-body)'
+                fontFamily: 'var(--font-body)',
+                fontStyle: 'italic'
               }}>
-                Marithmetics was built by <strong style={{ color: 'var(--gold)', fontWeight: 500 }}>Justin Grieshop</strong>, a data scientist and analytics leader based in Ohio. Justin holds a degree from Harvard University and currently serves as Senior Director of AI &amp; Analytics at CBTS, where he leads applied machine learning and business intelligence strategy.
+                "I do not care if I'm correct. I care only about what is correct. Establishing what is correct is unquestionably superior to taking a position and supporting that position with why it's correct."
               </p>
-            </Card>
-
-            <Card>
               <p style={{
-                fontSize: 16,
-                color: 'var(--text)',
-                margin: 0,
-                lineHeight: 1.9,
-                fontFamily: 'var(--font-body)'
-              }}>
-                His professional life spans economics, data science, and AI — but Marithmetics didn't come from any of those disciplines directly. It came from a question he couldn't let go of: <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>what if the constants of nature aren't arbitrary?</em> The pipeline is the answer to that question, tested the only way he knows how — with code that anyone can run, break, or challenge.
-              </p>
-            </Card>
-
-            <Card accent>
-              <h4 style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: 12,
-                fontWeight: 600,
+                fontSize: 13,
                 color: 'var(--gold)',
-                margin: '0 0 16px 0',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em'
+                margin: '12px 0 0 0',
+                fontFamily: 'var(--font-mono)',
+                opacity: 0.7
               }}>
-                Philosophy
-              </h4>
-              <p style={{
-                fontSize: 16,
-                color: 'var(--text)',
-                margin: 0,
-                lineHeight: 1.9,
-                fontFamily: 'var(--font-body)'
-              }}>
-                Justin's approach to this work is rooted in the teachings of <strong style={{ color: 'var(--gold)', fontWeight: 500 }}>Thich Nhat Hanh</strong> and the <strong style={{ color: 'var(--gold)', fontWeight: 500 }}>Dhammapada</strong> — a commitment to right effort, intellectual honesty, and the understanding that truth doesn't need to be defended, only presented clearly enough to be tested. The falsification-first posture of Marithmetics isn't just methodological rigor. It reflects a deeper belief: if something is true, it should welcome scrutiny. If it isn't, you should want to know.
+                — Justin Grieshop, 2010
               </p>
-            </Card>
+                </Card>
+              </div>
+              <img
+                src={`${import.meta.env.BASE_URL}author.jpg`}
+                alt="Justin Grieshop"
+                style={{
+                  width: 200,
+                  height: 'auto',
+                  borderBottom: '2px solid var(--gold)',
+                  flexShrink: 0,
+                  marginTop: 4
+                }}
+              />
+            </div>
 
-            <Card>
-              <p style={{
-                fontSize: 16,
-                color: 'var(--text)',
-                margin: 0,
-                lineHeight: 1.9,
-                fontFamily: 'var(--font-body)'
-              }}>
-                This is open research from one person with a laptop, a question, and the conviction that extraordinary claims require extraordinary transparency. Every demo, every line of code, every hash — it's all here. Not because the work is finished, but because the work is honest.
-              </p>
-            </Card>
+            <p style={{
+              fontSize: 17,
+              color: 'var(--text)',
+              margin: 0,
+              lineHeight: 2,
+              fontFamily: 'var(--font-body)'
+            }}>
+              That was written sixteen years before the first demo. The conviction behind it hasn't changed: truth has structural rigidity. You cannot introduce a false argument into a true framework and preserve consistency. If a result is real, it survives every test. If it isn't, no amount of language saves it.
+            </p>
+
+            <p style={{
+              fontSize: 17,
+              color: 'var(--text)',
+              margin: 0,
+              lineHeight: 2,
+              fontFamily: 'var(--font-body)'
+            }}>
+              Marithmetics was built by <strong style={{ color: 'var(--gold)', fontWeight: 500 }}>Justin Grieshop</strong> — Harvard-educated, Senior Director of AI &amp; Analytics at CBTS, with a career across economics, data science, and machine learning. The professional work gave him the engineering discipline. But the question that drives this program is older than the career and didn't come from any of those fields.
+            </p>
+
+            <p style={{
+              fontSize: 17,
+              color: 'var(--text)',
+              margin: 0,
+              lineHeight: 2,
+              fontFamily: 'var(--font-body)'
+            }}>
+              It came from a way of seeing. Justin's philosophical grounding is in the <strong style={{ color: 'var(--gold)', fontWeight: 500 }}>Dhammapada</strong> and the teachings of <strong style={{ color: 'var(--gold)', fontWeight: 500 }}>Thich Nhat Hanh</strong>, which he first encountered through Alan Watts. The core insight is simple: things don't exist as static objects. They emerge from conditions. A stump is wood. It's also a chair. For termites, it's food. There is no inherent "thing" — a thing is what it does, and everything does many things. Reality is relational, not symbolic.
+            </p>
+
+            <p style={{
+              fontSize: 17,
+              color: 'var(--text)',
+              margin: 0,
+              lineHeight: 2,
+              fontFamily: 'var(--font-body)'
+            }}>
+              That same principle runs through every line of the pipeline. Numbers aren't labels. Three isn't just 3 — it contains [1,2], [2,1], [3]. A number is the set of relationships it holds. Physical constants don't get assigned to integer structures. They emerge from them, the way everything emerges from conditions. The pipeline doesn't model this idea. It <em style={{ color: 'var(--gold)' }}>is</em> this idea, expressed as deterministic code.
+            </p>
+
+            <p style={{
+              fontSize: 17,
+              color: 'var(--text)',
+              margin: 0,
+              lineHeight: 2,
+              fontFamily: 'var(--font-body)'
+            }}>
+              Justin grew up in a difficult household — poverty, abuse, addiction. He was identified as gifted early on but lost academic discipline as his home fell apart. He once tried to describe a tesseract on paper and was mocked for it by a family member. He later learned it was a real mathematical object. But the lesson that lasted was simpler: if you can see something and can't show it to others in terms they can verify for themselves, it doesn't matter that you saw it.
+            </p>
+
+            <p style={{
+              fontSize: 17,
+              color: 'var(--text)',
+              margin: 0,
+              lineHeight: 2,
+              fontFamily: 'var(--font-body)'
+            }}>
+              That's why the pipeline is built the way it is. Not to be believed. To be tested.
+            </p>
           </div>
         </section>
 
