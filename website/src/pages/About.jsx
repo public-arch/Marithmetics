@@ -295,6 +295,81 @@ export default function About() {
           </Card>
         </section>
 
+        {/* About the Author */}
+        <section style={{ marginBottom: 80 }}>
+          <SectionTitle
+            title="About the Author"
+            subtitle="The person behind the pipeline"
+          />
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gap: 32,
+            marginTop: 24,
+            maxWidth: 800
+          }}>
+            <Card>
+              <p style={{
+                fontSize: 16,
+                color: 'var(--text)',
+                margin: 0,
+                lineHeight: 1.9,
+                fontFamily: 'var(--font-body)'
+              }}>
+                Marithmetics was built by <strong style={{ color: 'var(--gold)', fontWeight: 500 }}>Justin Grieshop</strong>, a data scientist and analytics leader based in Ohio. Justin holds a degree from Harvard University and currently serves as Senior Director of AI &amp; Analytics at CBTS, where he leads applied machine learning and business intelligence strategy.
+              </p>
+            </Card>
+
+            <Card>
+              <p style={{
+                fontSize: 16,
+                color: 'var(--text)',
+                margin: 0,
+                lineHeight: 1.9,
+                fontFamily: 'var(--font-body)'
+              }}>
+                His professional life spans economics, data science, and AI — but Marithmetics didn't come from any of those disciplines directly. It came from a question he couldn't let go of: <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>what if the constants of nature aren't arbitrary?</em> The pipeline is the answer to that question, tested the only way he knows how — with code that anyone can run, break, or challenge.
+              </p>
+            </Card>
+
+            <Card accent>
+              <h4 style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 12,
+                fontWeight: 600,
+                color: 'var(--gold)',
+                margin: '0 0 16px 0',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em'
+              }}>
+                Philosophy
+              </h4>
+              <p style={{
+                fontSize: 16,
+                color: 'var(--text)',
+                margin: 0,
+                lineHeight: 1.9,
+                fontFamily: 'var(--font-body)'
+              }}>
+                Justin's approach to this work is rooted in the teachings of <strong style={{ color: 'var(--gold)', fontWeight: 500 }}>Thich Nhat Hanh</strong> and the <strong style={{ color: 'var(--gold)', fontWeight: 500 }}>Dhammapada</strong> — a commitment to right effort, intellectual honesty, and the understanding that truth doesn't need to be defended, only presented clearly enough to be tested. The falsification-first posture of Marithmetics isn't just methodological rigor. It reflects a deeper belief: if something is true, it should welcome scrutiny. If it isn't, you should want to know.
+              </p>
+            </Card>
+
+            <Card>
+              <p style={{
+                fontSize: 16,
+                color: 'var(--text)',
+                margin: 0,
+                lineHeight: 1.9,
+                fontFamily: 'var(--font-body)'
+              }}>
+                This is open research from one person with a laptop, a question, and the conviction that extraordinary claims require extraordinary transparency. Every demo, every line of code, every hash — it's all here. Not because the work is finished, but because the work is honest.
+              </p>
+            </Card>
+          </div>
+        </section>
+
         {/* Get Involved */}
         <section style={{ marginBottom: 48 }}>
           <SectionTitle
