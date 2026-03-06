@@ -311,44 +311,54 @@ export default function About() {
           }}>
             <div style={{
               display: 'flex',
-              gap: 32,
-              alignItems: 'flex-start',
+              gap: 36,
+              alignItems: 'center',
               flexWrap: 'wrap'
             }}>
-              <div style={{ flex: 1 }}>
+              <div style={{
+                flexShrink: 0,
+                width: 180,
+                height: 180,
+                borderRadius: '50%',
+                padding: 3,
+                background: 'linear-gradient(135deg, var(--gold), rgba(228,187,124,0.3), var(--gold))',
+                boxShadow: '0 0 30px rgba(228,187,124,0.12), 0 4px 20px rgba(0,0,0,0.4)'
+              }}>
+                <img
+                  src={`${import.meta.env.BASE_URL}author.png`}
+                  alt="Justin Grieshop"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    display: 'block'
+                  }}
+                />
+              </div>
+              <div style={{ flex: 1, minWidth: 280 }}>
                 <Card accent>
-              <p style={{
-                fontSize: 16,
-                color: 'var(--text-muted)',
-                margin: 0,
-                lineHeight: 1.9,
-                fontFamily: 'var(--font-body)',
-                fontStyle: 'italic'
-              }}>
-                "I do not care if I'm correct. I care only about what is correct. Establishing what is correct is unquestionably superior to taking a position and supporting that position with why it's correct."
-              </p>
-              <p style={{
-                fontSize: 13,
-                color: 'var(--gold)',
-                margin: '12px 0 0 0',
-                fontFamily: 'var(--font-mono)',
-                opacity: 0.7
-              }}>
-                — Justin Grieshop, 2010
-              </p>
+                  <p style={{
+                    fontSize: 16,
+                    color: 'var(--text-muted)',
+                    margin: 0,
+                    lineHeight: 1.9,
+                    fontFamily: 'var(--font-body)',
+                    fontStyle: 'italic'
+                  }}>
+                    "I do not care if I'm correct. I care only about what is correct. Establishing what is correct is unquestionably superior to taking a position and supporting that position with why it's correct."
+                  </p>
+                  <p style={{
+                    fontSize: 13,
+                    color: 'var(--gold)',
+                    margin: '12px 0 0 0',
+                    fontFamily: 'var(--font-mono)',
+                    opacity: 0.7
+                  }}>
+                    — Justin Grieshop, 2010
+                  </p>
                 </Card>
               </div>
-              <img
-                src={`${import.meta.env.BASE_URL}author.jpg`}
-                alt="Justin Grieshop"
-                style={{
-                  width: 200,
-                  height: 'auto',
-                  borderBottom: '2px solid var(--gold)',
-                  flexShrink: 0,
-                  marginTop: 4
-                }}
-              />
             </div>
 
             <p style={{
