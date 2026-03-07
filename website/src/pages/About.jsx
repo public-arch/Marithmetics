@@ -408,6 +408,16 @@ export default function About() {
               lineHeight: 2,
               fontFamily: 'var(--font-body)'
             }}>
+              This is ZFC-conservative. If numbers are sets — and under the standard axioms, they are — then sets have structure, and structure has constraints. Those constraints are laws. The question Marithmetics asks is not whether numbers obey laws, but why we never formalized the ones they were already following. And perhaps our deepest issue with infinity was never that we hadn't explored enough of it. Perhaps it's that we never figured out how to bind it.
+            </p>
+
+            <p style={{
+              fontSize: 17,
+              color: 'var(--text)',
+              margin: 0,
+              lineHeight: 2,
+              fontFamily: 'var(--font-body)'
+            }}>
               Justin grew up in a difficult household — poverty, abuse, addiction. He was identified as gifted early on but lost academic discipline as his home fell apart. He once tried to describe a tesseract on paper and was mocked for it by a family member. He later learned it was a real mathematical object. But the lesson that lasted was simpler: if you can see something and can't show it to others in terms they can verify for themselves, it doesn't matter that you saw it.
             </p>
 
