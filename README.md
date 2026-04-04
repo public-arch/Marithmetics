@@ -2,7 +2,7 @@
 
 **A deterministic pipeline that derives physical constants from integer structure alone.**
 
-This repository contains 28 self-auditing computational demos. Each one starts from the same integer triple — **(137, 107, 103)** — selected by number-theoretic admissibility gates with zero free parameters, and derives dimensionless physical observables: coupling constants, mass ratios, cosmological parameters, mixing matrices. No fitting. No tuning. No PDG data upstream.
+This repository contains 29 self-auditing computational demos. Each one starts from the same integer triple — **(137, 107, 103)** — selected by number-theoretic admissibility gates with zero free parameters, and derives dimensionless physical observables: coupling constants, mass ratios, cosmological parameters, mixing matrices. No fitting. No tuning. No PDG data upstream.
 
 These are extraordinary claims. The entire architecture of this project exists to make them falsifiable.
 
@@ -20,6 +20,7 @@ A single deterministic selector, operating on prime structure within the window 
 | **Cosmology** | H₀, Ω_b, Ω_c, A_s, n_s, τ, ℓ₁ | DEMO-36 |
 | **General relativity** | Weak-field GR tests (bending, Shapiro, redshift, perihelion), vacuum energy | DEMO-68, DEMO-51 |
 | **Quantum gravity** | Discrete RG flow, screening witnesses, strong-field geometry | DEMO-66 |
+| **Integer selection** | Triple uniqueness: five number-theoretic gates force (137, 107, 103) | DEMO-18 |
 | **Quantum mechanics** | Probability-safe coarse graining, double-slit, dispersion | DEMO-60 |
 | **Navier–Stokes** | 3D Taylor–Green vortex benchmark under operator admissibility | DEMO-67 |
 | **Neutrino sector** | Absolute masses (m₁, m₂, m₃), Σm, m_β, m_ββ, CP phase | DEMO-75 |
@@ -43,7 +44,7 @@ Every demo includes counterfactual triples (e.g., the 409-class). These are proc
 Every demo with a spectral operator tests three classes: lawful (Fejér/Cesàro, nonnegative kernel), sharp cutoff (Gibbs artifacts), and signed high-frequency injection. If illegal operators perform as well as lawful ones, the admissibility logic is vacuous. They do not — illegal controls inject measurable artifacts across every domain.
 
 **"One triple is a coincidence."**
-The selector is not a search — it is a filter. In the primary window [97, 180], exactly one triple survives all gates. In the extended window [80, 1,000,000], still one. Drop any single gate and survivor counts explode from 1 to hundreds or thousands. The necessity of every constraint is demonstrated by ablation.
+The selector is not a search — it is a filter. In the primary window [97, 180], exactly one triple survives all gates. In the extended window [80, 1,000,000], still one. Drop any single gate and survivor counts explode from 1 to hundreds or thousands. The necessity of every constraint is demonstrated by ablation. [DEMO-18](demos/substrate/demo-18-integer-triple-uniqueness/) proves this directly: five Phi-derived gates (period extremality, Legendre parity, 2-adic branching, wheel orientation, simplicity) are each independently necessary, and jointly sufficient, to force the triple.
 
 ---
 
@@ -105,6 +106,7 @@ python demos/standard_model/demo-33-first-principles-standard-model-sm28-closure
 python demos/bridge/demo-34-omega-sm-master-flagship/demo.py
 python demos/cosmo/demo-36-big-bang-master-flagship/demo.py
 python demos/quantum_gravity/demo-66-quantum-gravity-master-flagship-v4/demo.py
+python demos/substrate/demo-18-integer-triple-uniqueness/demo.py
 python demos/substrate/demo-64-base-gauge-invariance-integer-selector/demo.py
 ```
 
@@ -128,7 +130,7 @@ Citations are stable across repository evolution because the AoR is the immutabl
 ## Repository layout
 
 ```
-demos/                    28 canonical demos (demo.py per folder)
+demos/                    29 canonical demos (demo.py per folder)
 audits/                   AoR bundler + full suite runner
 gum/                      Report generator (v32), AoR archive, report assets
 atlas_substrate_visualization/   Interactive DRPT explorer
